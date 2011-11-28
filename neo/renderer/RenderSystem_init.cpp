@@ -563,6 +563,7 @@ vidmode_t r_vidModes[] = {
     { "Mode  6: 1152x864",		1152,	864 },
     { "Mode  7: 1280x1024",		1280,	1024 },
     { "Mode  8: 1600x1200",		1600,	1200 },
+    { "Mode  9: 1920x1200",		1920,	1200 },
 };
 static int	s_numVidModes = ( sizeof( r_vidModes ) / sizeof( r_vidModes[0] ) );
 

@@ -1266,6 +1266,7 @@ void idAsyncClient::ProcessServersListMessage( const netadr_t from, const idBitM
 idAsyncClient::ProcessAuthKeyMessage
 ==================
 */
+/*
 void idAsyncClient::ProcessAuthKeyMessage( const netadr_t from, const idBitMsg &msg ) {
 	authKeyMsg_t		authMsg;
 	char				read_string[ MAX_STRING_CHARS ];
@@ -1347,7 +1348,7 @@ void idAsyncClient::ProcessAuthKeyMessage( const netadr_t from, const idBitMsg &
 		session->CDKeysAuthReply( true, NULL );
 	}
 }
-
+*/
 /*
 ==================
 idAsyncClient::ProcessVersionMessage
@@ -1541,10 +1542,10 @@ void idAsyncClient::ConnectionlessMessage( const netadr_t from, const idBitMsg &
 			return;
 		}
 	
-		if ( idStr::Icmp( string, "authKey" ) == 0 ) {
+		/*if ( idStr::Icmp( string, "authKey" ) == 0 ) {
 			ProcessAuthKeyMessage( from, msg );
 			return;
-		}
+		}*/
 
 		if ( idStr::Icmp( string, "newVersion" ) == 0 ) {
 			ProcessVersionMessage( from, msg );
@@ -1688,24 +1689,6 @@ void idAsyncClient::SetupConnection( void ) {
 		
 		if ( idAsyncNetwork::LANServer.GetBool() ) {
 			common->Printf( "net_LANServer is set, connecting in LAN mode\n" );
-		} else {
-			// emit a cd key authorization request
-			// modified at protocol 1.37 for XP key addition
-			msg.BeginWriting();
-			msg.WriteShort( CONNECTIONLESS_MESSAGE_ID );
-			msg.WriteString( "clAuth" );
-			msg.WriteLong( ASYNC_PROTOCOL_VERSION );
-			msg.WriteNetadr( serverAddress );
-			// if we don't have a com_guid, this will request a direct reply from auth with it
-			msg.WriteByte( cvarSystem->GetCVarString( "com_guid" )[0] ? 1 : 0 );
-			// send the main key, and flag an extra byte to add XP key
-			msg.WriteString( session->GetCDKey( false ) );
-			const char *xpkey = session->GetCDKey( true );
-			msg.WriteByte( xpkey ? 1 : 0 );
-			if ( xpkey ) {
-				msg.WriteString( xpkey );
-			}
-			clientPort.SendPacket( idAsyncNetwork::GetMasterAddress(), msg.GetData(), msg.GetSize() );
 		}
 	} else {
 		return;

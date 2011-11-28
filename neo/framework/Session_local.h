@@ -113,17 +113,7 @@ public:
 	virtual void		SetPlayingSoundWorld();
 
 	virtual void		TimeHitch( int msec );
-
-	virtual void		ReadCDKey( void );
-	virtual void		WriteCDKey( void );
-	virtual const char *GetCDKey( bool xp );
-	virtual bool		CheckKey( const char *key, bool netConnect, bool offline_valid[ 2 ] );
-	virtual bool		CDKeysAreValid( bool strict );
-	virtual void		ClearCDKey( bool valid[ 2 ] );
-	virtual void		SetCDKeyGuiVars( void );
-	virtual bool		WaitingForGameAuth( void );
-	virtual void		CDKeysAuthReply( bool valid, const char *auth_msg );
-
+	
 	virtual int			GetSaveGameVersion( void );
 
 	virtual const char *GetCurrentMapName();
