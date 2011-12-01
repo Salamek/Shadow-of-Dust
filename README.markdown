@@ -4,9 +4,6 @@ project2 is a opensource implementation of idtech4 engine for mmorpg game. This 
 ## Compiling on Linux
 The build system uses SCons, so you just need to run scons from the neo directory. In a Debian/Ubuntu system:
 
-## Compiling on Windows
-WIndows is not supported right now!
-
 ```bash
 pacman -Sy scons
 ```
@@ -16,6 +13,8 @@ cd ./project2
 ```bash
 scons -j 2
 ```
+## Compiling on Windows
+Windows is not supported right now...
 
 ## Compiling on Mac
 MAC OS X is not supported right now
