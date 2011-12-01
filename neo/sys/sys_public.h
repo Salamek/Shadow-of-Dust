@@ -120,7 +120,7 @@ If you have questions concerning this license or the applicable additional terms
 #endif
 
 #define _alloca							alloca
-#define _alloca16( x )					((void *)((((long)alloca( (x)+15 )) + 15) & ~15))
+#define _alloca16( x )					((void *)((((size_t)alloca( (x)+15 )) + 15) & ~15))
 
 #define ALIGN16( x )					x
 #define PACKED							__attribute__((packed))
