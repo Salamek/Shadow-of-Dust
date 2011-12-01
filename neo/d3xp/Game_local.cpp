@@ -71,7 +71,7 @@ const char *idGameLocal::sufaceTypeNames[ MAX_SURFACE_TYPES ] = {
 
 #ifdef _D3XP
 // List of all defs used by the player that will stay on the fast timeline
-static char* fastEntityList[] = {
+static const char* fastEntityList[] = {
 	"player_doommarine",
 		"weapon_chainsaw",
 		"weapon_fists",
@@ -4763,8 +4763,6 @@ idGameLocal::SelectTimeGroup
 ============
 */
 void idGameLocal::SelectTimeGroup( int timeGroup ) {
-	int i = 0;
-
 	if ( timeGroup ) {
 		fast.Get( time, previousTime, msec, framenum, realClientTime );
 	} else {
