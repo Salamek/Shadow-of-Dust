@@ -54,7 +54,7 @@ public:
 	virtual void			ResetTime(int time);
 
 private:
-	unsigned int			mcomp[256];
+	unsigned long			mcomp[256];
 	byte **					qStatus[2];
 	idStr					fileName;
 	int						CIN_WIDTH, CIN_HEIGHT;
