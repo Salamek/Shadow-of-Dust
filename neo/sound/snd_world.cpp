@@ -588,7 +588,7 @@ void idSoundWorldLocal::AVIUpdate() {
 	}
 
 	float	mix[MIXBUFFER_SAMPLES*6+16];
-	float	*mix_p = (float *)((( int)mix + 15 ) & ~15);	// SIMD align
+	float	*mix_p = (float *)(((std::ptrdiff_t)mix + 15 ) & ~15);	// SIMD align
 
 	SIMDProcessor->Memset( mix_p, 0, MIXBUFFER_SAMPLES*sizeof(float)*numSpeakers );
 
