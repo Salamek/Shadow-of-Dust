@@ -45,7 +45,7 @@ If you have questions concerning this license or the applicable additional terms
 #endif
 
 #if ID_ENABLE_CURL
-	#include "../curl/include/curl/curl.h"
+	#include <curl/curl.h>
 #endif
 
 /*
@@ -3175,6 +3175,7 @@ idFile *idFileSystemLocal::OpenFileReadFlags( const char *relativePath, int sear
 	if ( relativePath[0] == '\0' ) {
 		return NULL;
 	}
+
 
 	//
 	// search through the path, one element at a time
