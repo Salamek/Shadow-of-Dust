@@ -2524,7 +2524,17 @@ bool idFileSystemLocal::UpdateGamePakChecksums( void ) {
 
 	if ( !cvarSystem->GetCVarBool( "net_serverAllowServerMod" ) &&
 		gamePakChecksum != gamePakForOS[ BUILD_OS_ID ] ) {
-		common->Warning( "The current game code doesn't match pak files (net_serverAllowServerMod is off)" );
+		if(gamePakChecksum != gamePakForOS[ BUILD_OS_ID ])
+		{
+			common->Warning( "The current game code doesn't match pak files (Checksum not match)" );
+			common->Printf( "A game pack for OS sum is %d \n", gamePakForOS[ BUILD_OS_ID ] );
+			common->Printf( "A game pack sum is %d \n", gamePakChecksum );
+
+		}
+		else
+		{
+			common->Warning( "The current game code doesn't match pak files (net_serverAllowServerMod is off)" );
+		}
 		return false;
 	}
 
