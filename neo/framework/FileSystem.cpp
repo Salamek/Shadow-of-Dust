@@ -1988,7 +1988,7 @@ void idFileSystemLocal::Path_f( const idCmdArgs &args ) {
 				} else {
 					status += ")\n";
 				}
-				common->Printf( status.c_str() );
+				common->Printf("%s\n", status.c_str() );
 			} else {
 				common->Printf( "%s (%i files)\n", sp->pack->pakFilename.c_str(), sp->pack->numfiles );
 			}
@@ -3648,7 +3648,10 @@ dword BackgroundDownloadThread( void *parms ) {
 			#if defined(WIN32)
 				_read( static_cast<idFile_Permanent*>(bgl->f)->GetFilePtr()->_file, bgl->file.buffer, bgl->file.length );
 			#else
-				fread(  bgl->file.buffer, bgl->file.length, 1, static_cast<idFile_Permanent*>(bgl->f)->GetFilePtr() );
+				int len = fread(  bgl->file.buffer, bgl->file.length, 1, static_cast<idFile_Permanent*>(bgl->f)->GetFilePtr() );
+				if ( len != bgl->file.length) {
+					bgl->completed = false;
+				}
 			#endif
 			bgl->completed = true;
 		} else {
