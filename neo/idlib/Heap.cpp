@@ -590,7 +590,7 @@ void idHeap::SmallFree( void *ptr ) {
 	((byte *)(ptr))[-1] = INVALID_ALLOC;
 
 	byte *d = ( (byte *)ptr ) - SMALL_HEADER_SIZE;
-	dword *dt = (long *)ptr;
+	long *dt = (long *)ptr;
 	// index into the table with free small memory blocks
 	dword ix = *d;
 
