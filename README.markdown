@@ -2,13 +2,13 @@
 project2 is a opensource implementation of idtech4 engine for mmorpg game. This project is based on the Doom 3 GPL source code, release by id Software on 2011.
 
 ## Compiling on Linux
-The build system uses SCons, so you just need to run scons from the neo directory. In a Debian/Ubuntu system:
+The build system uses SCons, so you just need to run scons from the neo directory. In a Archlinux system:
 
 ```bash
 pacman -Sy scons
 ```
 ```bash
-cd ./project2
+cd ./project2/neo
 ```
 ```bash
 scons -j 2

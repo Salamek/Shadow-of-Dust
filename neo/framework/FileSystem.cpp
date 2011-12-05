@@ -2524,11 +2524,16 @@ bool idFileSystemLocal::UpdateGamePakChecksums( void ) {
 
 	if ( !cvarSystem->GetCVarBool( "net_serverAllowServerMod" ) &&
 		gamePakChecksum != gamePakForOS[ BUILD_OS_ID ] ) {
+		if(!gamePakChecksum)
+		{
+			common->Warning("Game DLL is not in game pak, skipping checksum\n");
+			return true;
+		}
 		if(gamePakChecksum != gamePakForOS[ BUILD_OS_ID ])
 		{
 			common->Warning( "The current game code doesn't match pak files (Checksum not match)" );
-			common->Printf( "A game pack for OS sum is %d \n", gamePakForOS[ BUILD_OS_ID ] );
-			common->Printf( "A game pack sum is %d \n", gamePakChecksum );
+			common->Printf( "A game pack for OS sum is 0x%x \n", gamePakForOS[ BUILD_OS_ID ] );
+			common->Printf( "A game pack sum is 0x%x \n", gamePakChecksum );
 
 		}
 		else
@@ -3891,6 +3896,8 @@ void idFileSystemLocal::FindDLL( const char *name, char _dllPath[ MAX_OSPATH ], 
 		dllPath.StripFilename( );
 		dllPath.AppendPath( dllName );
 		dllFile = OpenExplicitFileRead( dllPath );
+		if(dllFile)
+			common->Printf("found DLL in exe dir\n");
 	}
 	if ( !dllFile ) {
 		if ( !serverPaks.Num() ) {
