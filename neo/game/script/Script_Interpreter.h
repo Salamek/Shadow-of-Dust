@@ -232,7 +232,7 @@ idInterpreter::GetEntity
 ================
 */
 ID_INLINE idEntity *idInterpreter::GetEntity( int entnum ) const{
-	assert( entnum <= MAX_GENTITIES );
+	//assert( entnum <= MAX_GENTITIES );
 	if ( ( entnum > 0 ) && ( entnum <= MAX_GENTITIES ) ) {
 		return gameLocal.entities[ entnum - 1 ];
 	}

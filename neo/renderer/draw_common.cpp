@@ -1147,12 +1147,19 @@ static void RB_T_Shadow( const drawSurf_t *surf ) {
 	if ( !external ) {
 		// "preload" the stencil buffer with the number of volumes
 		// that get clipped by the near or far clip plane
-		qglStencilOp( GL_KEEP, tr.stencilDecr, tr.stencilDecr );
-		GL_Cull( CT_FRONT_SIDED );
-		RB_DrawShadowElementsWithCounters( tri, numIndexes );
-		qglStencilOp( GL_KEEP, tr.stencilIncr, tr.stencilIncr );
+		//qglStencilOp( GL_KEEP, tr.stencilDecr, tr.stencilDecr );
+		//GL_Cull( CT_FRONT_SIDED );
+		//RB_DrawShadowElementsWithCounters( tri, numIndexes );
+		//qglStencilOp( GL_KEEP, tr.stencilIncr, tr.stencilIncr );
+		//GL_Cull( CT_BACK_SIDED );
+		//RB_DrawShadowElementsWithCounters( tri, numIndexes );
+		qglStencilOp( GL_KEEP, tr.stencilIncr, GL_KEEP );
 		GL_Cull( CT_BACK_SIDED );
 		RB_DrawShadowElementsWithCounters( tri, numIndexes );
+		GL_Cull( CT_FRONT_SIDED );
+		qglStencilOp( GL_KEEP, tr.stencilDecr, GL_KEEP );
+		RB_DrawShadowElementsWithCounters( tri, numIndexes );
+		return;
 	}
 
 	// traditional depth-pass stencil shadows

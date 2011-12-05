@@ -1254,9 +1254,11 @@ idVarDef *idProgram::AllocDef( idTypeDef *type, const char *name, idVarDef *scop
 		if ( !strcmp( name, RESULT_STRING ) ) {
 			// <RESULT> vector defs don't need the _x, _y and _z components
 			assert( scope->Type() == ev_function );
-			def->value.stackOffset	= scope->value.functionPtr->locals;
+			//def->value.stackOffset	= scope->value.functionPtr->locals;
+			def->value.stackOffset  = -1;
 			def->initialized		= idVarDef::stackVariable;
-			scope->value.functionPtr->locals += type->Size();
+			//scope->value.functionPtr->locals += type->Size();
+			scope->value.functionPtr->stackVars.Append(def);
 		} else if ( scope->TypeDef()->Inherits( &type_object ) ) {
 			idTypeDef	newtype( ev_field, NULL, "float field", 0, &type_float );
 			idTypeDef	*type = GetType( newtype, true );
@@ -1289,8 +1291,16 @@ idVarDef *idProgram::AllocDef( idTypeDef *type, const char *name, idVarDef *scop
 			def_z = AllocDef( &type_float, element, scope, constant );
 
 			// point the vector def to the x coordinate
-			def->value			= def_x->value;
+			//def->value			= def_x->value;
 			def->initialized	= def_x->initialized;
+			def->copyOf = def_x;
+			if(def->initialized == idVarDef::stackVariable) {
+				// The variable is allocated on the stack, we need to defer the copy till later.
+				scope->value.functionPtr->deferredCopies.Append(def);
+			} else {
+				def->value = def_x->value;
+			}
+			
 		}
 	} else if ( scope->TypeDef()->Inherits( &type_object ) ) {
 		//
@@ -1304,15 +1314,19 @@ idVarDef *idProgram::AllocDef( idTypeDef *type, const char *name, idVarDef *scop
 		//
 		// since we don't know how many local variables there are,
 		// we have to have them go backwards on the stack
-		def->value.stackOffset	= scope->value.functionPtr->locals;
+		//def->value.stackOffset	= scope->value.functionPtr->locals;
+		// or what types they will end up with, we defer allocating
+		// them on the stack until the entire function has been parsed
 		def->initialized		= idVarDef::stackVariable;
 
-		if ( type->Inherits( &type_object ) ) {
+		/*if ( type->Inherits( &type_object ) ) {
 			// objects only have their entity number on the stack, not the entire object
 			scope->value.functionPtr->locals += type_object.Size();
 		} else {
 			scope->value.functionPtr->locals += type->Size();
-		}
+		}*/
+		scope->value.functionPtr->stackVars.Append(def);
+		def->value.stackOffset  = -1;
 	} else {
 		//
 		// global variable
