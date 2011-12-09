@@ -6,6 +6,7 @@ Working idtech4 on modern systems with doom3 game files (original doom3)
 ++ Remove bunded vorbis
 ++ Why we use md4 AND md5 ??? (check)
 ++ Is there anything we can modernize ? (check)
+++ Clean out ALL (i mean rly all) compile warnings (yes its slavery, but i dont want be surprised)
 
 Here starts a real fun!
 --------------------------------------------------------------------------------
@@ -13,7 +14,7 @@ Here starts a real fun!
 ++ Time to rename project ? (in source files and so)
 ++ Edit menu and route new game on some testing map
 ++ Set up testing server
-++ Server/Client 
+++ Server/Client this will be loooooong dream less night(s)
 ++ And many more in future ...
 
 
