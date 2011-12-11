@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -2657,7 +2657,7 @@ void idAI::AnimMove( void ) {
 
 	AI_BLOCKED = false;
 
-	if ( move.moveCommand < NUM_NONMOVING_COMMANDS ){ 
+	if ( move.moveCommand < NUM_NONMOVING_COMMANDS ){
 		move.lastMoveOrigin.Zero();
 		move.lastMoveTime = gameLocal.time;
 	}
@@ -2776,7 +2776,7 @@ void idAI::SlideMove( void ) {
 
 	AI_BLOCKED = false;
 
-	if ( move.moveCommand < NUM_NONMOVING_COMMANDS ){ 
+	if ( move.moveCommand < NUM_NONMOVING_COMMANDS ){
 		move.lastMoveOrigin.Zero();
 		move.lastMoveTime = gameLocal.time;
 	}
@@ -2957,7 +2957,7 @@ void idAI::AdjustFlyHeight( idVec3 &vel, const idVec3 &goalPos ) {
 			vel.z += addVel.z;
 			goLower = true;
 		}
-        
+
 		if ( ai_debugMove.GetBool() ) {
 			gameRenderWorld->DebugBounds( goLower ? colorRed : colorGreen, physicsObj.GetBounds(), path.endPos, gameLocal.msec );
 		}
@@ -3318,7 +3318,7 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 	EndAttack();
 
 	if ( g_debugDamage.GetBool() ) {
-		gameLocal.Printf( "Damage: joint: '%s', zone '%s'\n", animator.GetJointName( ( jointHandle_t )location ), 
+		gameLocal.Printf( "Damage: joint: '%s', zone '%s'\n", animator.GetJointName( ( jointHandle_t )location ),
 			GetDamageGroup( location ) );
 	}
 
@@ -4514,7 +4514,7 @@ idAI::UpdateMuzzleFlash
 ================
 */
 void idAI::UpdateMuzzleFlash( void ) {
-	if ( worldMuzzleFlashHandle != -1 ) { 
+	if ( worldMuzzleFlashHandle != -1 ) {
 		if ( gameLocal.time >= muzzleFlashEnd ) {
 			gameRenderWorld->FreeLightDef( worldMuzzleFlashHandle );
 			worldMuzzleFlashHandle = -1;

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -710,7 +710,7 @@ void CDialogParticleEditor::OnBnClickedImpact() {
 	SetParticleView();
 }
 
-void CDialogParticleEditor::OnBnClickedMuzzle(){ 
+void CDialogParticleEditor::OnBnClickedMuzzle(){
 	visualization = MUZZLE;
 	SetParticleView();
 }
@@ -725,8 +725,8 @@ void CDialogParticleEditor::OnBnClickedSelected() {
 	SetParticleView();
 }
 
-void CDialogParticleEditor::SetParticleVisualization( int i ) { 
-	visualization = i; 
+void CDialogParticleEditor::SetParticleVisualization( int i ) {
+	visualization = i;
 	SetParticleView();
 }
 
@@ -738,7 +738,7 @@ void CDialogParticleEditor::SetParticleView() {
 	cmdSystem->BufferCommandText( CMD_EXEC_NOW, "testmodel" );
 	idStr str;
 	switch ( visualization ) {
-		case TESTMODEL : 
+		case TESTMODEL :
 			str = idp->GetName();
 			str.SetFileExtension( ".prt" );
 			cmdSystem->BufferCommandText( CMD_EXEC_NOW, va("testmodel %s\n", str.c_str() ) );
@@ -1075,7 +1075,7 @@ void CDialogParticleEditor::DlgVarsToCurStage() {
 	ps->cycles = atof( cycles );
 	ps->cycleMsec = ( ps->particleLife + ps->deadTime ) * 1000;
 
-	sscanf( customParms, "%f %f %f %f %f %f %f %f", &ps->customPathParms[0], &ps->customPathParms[1], &ps->customPathParms[2], 
+	sscanf( customParms, "%f %f %f %f %f %f %f %f", &ps->customPathParms[0], &ps->customPathParms[1], &ps->customPathParms[2],
 		   &ps->customPathParms[3], &ps->customPathParms[4], &ps->customPathParms[5],
 		   &ps->customPathParms[6], &ps->customPathParms[7] );
 
@@ -1138,7 +1138,7 @@ void CDialogParticleEditor::OnBnClickedButtonSave() {
 	}
 
 	if ( strstr( idp->GetFileName(), "implicit" ) ) {
-		// defaulted, need to choose a file 
+		// defaulted, need to choose a file
 		CFileDialog dlgSave( FALSE, "prt", NULL, OFN_OVERWRITEPROMPT, "Particle Files (*.prt)|*.prt||All Files (*.*)|*.*||", AfxGetMainWnd() );
 		if ( dlgSave.DoModal() == IDOK ) {
 			idStr fileName;
@@ -1396,37 +1396,37 @@ void CDialogParticleEditor::UpdateSelectedOrigin( float x, float y, float z ) {
 	}
 }
 
-void CDialogParticleEditor::OnBtnYup() 
+void CDialogParticleEditor::OnBtnYup()
 {
 	UpdateSelectedOrigin(0, 8, 0);
 }
 
-void CDialogParticleEditor::OnBtnYdn() 
+void CDialogParticleEditor::OnBtnYdn()
 {
 	UpdateSelectedOrigin(0, -8, 0);
 }
 
-void CDialogParticleEditor::OnBtnXdn() 
+void CDialogParticleEditor::OnBtnXdn()
 {
 	UpdateSelectedOrigin(-8, 0, 0);
 }
 
-void CDialogParticleEditor::OnBtnXup() 
+void CDialogParticleEditor::OnBtnXup()
 {
 	UpdateSelectedOrigin(8, 0, 0);
 }
 
-void CDialogParticleEditor::OnBtnZup() 
+void CDialogParticleEditor::OnBtnZup()
 {
 	UpdateSelectedOrigin(0, 0, 8);
 }
 
-void CDialogParticleEditor::OnBtnZdn() 
+void CDialogParticleEditor::OnBtnZdn()
 {
 	UpdateSelectedOrigin(0, 0, -8);
 }
 
-void CDialogParticleEditor::OnBtnDrop() 
+void CDialogParticleEditor::OnBtnDrop()
 {
 	idStr		classname;
 	idStr		key;

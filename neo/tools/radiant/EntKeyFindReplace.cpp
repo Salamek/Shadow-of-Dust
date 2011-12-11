@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -53,10 +53,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CEntKeyFindReplace dialog
 
-CEntKeyFindReplace::CEntKeyFindReplace(	CString* p_strFindKey, 
-										CString* p_strFindValue, 
-										CString* p_strReplaceKey, 
-										CString* p_strReplaceValue, 
+CEntKeyFindReplace::CEntKeyFindReplace(	CString* p_strFindKey,
+										CString* p_strFindValue,
+										CString* p_strReplaceKey,
+										CString* p_strReplaceValue,
 										bool*	 p_bWholeStringMatchOnly,
 										bool*	 p_bSelectAllMatchingEnts,
 										CWnd*	 pParent /*=NULL*/)
@@ -106,12 +106,12 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CEntKeyFindReplace message handlers
 
-void CEntKeyFindReplace::OnCancel() 
+void CEntKeyFindReplace::OnCancel()
 {	
 	CDialog::OnCancel();
 }
 
-void CEntKeyFindReplace::OnReplace() 
+void CEntKeyFindReplace::OnReplace()
 {
 	// quick check, if no key value is specified then there's not much to do...
 	//
@@ -179,7 +179,7 @@ void CEntKeyFindReplace::CopyFields()
 }
 
 
-void CEntKeyFindReplace::OnKeycopy() 
+void CEntKeyFindReplace::OnKeycopy()
 {
 	UpdateData(DIALOG_TO_DATA);
 
@@ -188,7 +188,7 @@ void CEntKeyFindReplace::OnKeycopy()
 	UpdateData(DATA_TO_DIALOG);	
 }
 
-void CEntKeyFindReplace::OnValuecopy() 
+void CEntKeyFindReplace::OnValuecopy()
 {
 	UpdateData(DIALOG_TO_DATA);
 

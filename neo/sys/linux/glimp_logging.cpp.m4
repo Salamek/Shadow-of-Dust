@@ -11,7 +11,7 @@ dnl =====================================================
 dnl utils
 dnl =====================================================
 
-define(`forloop', 
+define(`forloop',
 	`pushdef(`$1', `$2')_forloop(`$1', `$2', `$3', `$4')popdef(`$1')')
 define(`_forloop',
 	`$4`'ifelse($1, `$3', ,
@@ -160,7 +160,7 @@ void GLimp_EnableLogging(bool enable) {
 #else
 			// scan for an unused filename
 			for ( i = 0 ; i < 9999 ; i++ ) {
-				sprintf( qpath, "renderlog_%i.txt", i ); 
+				sprintf( qpath, "renderlog_%i.txt", i );
 				if ( fileSystem->ReadFile( qpath, NULL, NULL ) == -1 ) {
 					break;		// use this name
 				}

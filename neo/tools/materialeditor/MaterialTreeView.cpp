@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ BEGIN_MESSAGE_MAP(MaterialTreeView, CTreeView)
 	ON_MESSAGE(MSG_RENAME_MATERIAL_COMPLETE, OnRenameMaterialComplete)	
 END_MESSAGE_MAP()
 
-/** 
+/**
 * Constructor for MaterialTreeView
 */
 MaterialTreeView::MaterialTreeView() {
@@ -87,13 +87,13 @@ MaterialTreeView::MaterialTreeView() {
 	internalChange = false;
 }
 
-/** 
+/**
 * Destructor for MaterialTreeView
 */
 MaterialTreeView::~MaterialTreeView() {
 }
 
-/** 
+/**
 * Clears the tree and rebuilds it.
 * @param includeFile Should the list include the filename
 * @param filename The file to load or NULL to load all files.
@@ -112,7 +112,7 @@ void MaterialTreeView::InitializeMaterialList(bool includeFile, const char* file
 	BuildMaterialList(includeFile, filename);
 }
 
-/** 
+/**
 * Builds the tree of materials.
 * @param includeFile Should the list include the filename
 * @param filename The file to load or NULL to load all files.
@@ -190,7 +190,7 @@ void MaterialTreeView::MV_OnMaterialChange(MaterialDoc* pMaterial) {
 }
 
 /**
-* Called when the material changes have been applied. 
+* Called when the material changes have been applied.
 * @param pMaterial The selected material.
 */
 void MaterialTreeView::MV_OnMaterialApply(MaterialDoc* pMaterial) {
@@ -207,7 +207,7 @@ void MaterialTreeView::MV_OnMaterialApply(MaterialDoc* pMaterial) {
 }
 
 /**
-* Called when the material changes have been saved. 
+* Called when the material changes have been saved.
 * @param pMaterial The saved material.
 */
 void MaterialTreeView::MV_OnMaterialSaved(MaterialDoc* pMaterial) {
@@ -643,7 +643,7 @@ HTREEITEM MaterialTreeView::AddFolder(const char* name, HTREEITEM parent) {
 	HTREEITEM newItem = tree.InsertItem(name, parent);
 	tree.SetItemImage(newItem, IMAGE_MATERIAL_FOLDER, IMAGE_MATERIAL_FOLDER);
 	tree.SetItemData(newItem, TYPE_MATERIAL_FOLDER);
-	tree.Expand(newItem, TVE_EXPAND); 
+	tree.Expand(newItem, TVE_EXPAND);
 
 	//Make sure the tree is still sorted
 	tree.SortChildren(parent);
@@ -675,7 +675,7 @@ void MaterialTreeView::RenameFolder(HTREEITEM item, const char* name) {
 
 	tree.SetItemText(item, name);
 
-	PostMessage(MSG_RENAME_FOLDER_COMPLETE); 
+	PostMessage(MSG_RENAME_FOLDER_COMPLETE);
 }
 
 /**
@@ -759,7 +759,7 @@ void MaterialTreeView::OnTvnBeginlabeledit(NMHDR *pNMHDR, LRESULT *pResult) {
 }
 
 /**
-* Makes sure that a rename operation can be performed after a label edit is complete and 
+* Makes sure that a rename operation can be performed after a label edit is complete and
 * performs the folder or material rename.
 */
 void MaterialTreeView::OnTvnEndlabeledit(NMHDR *pNMHDR, LRESULT *pResult) {
@@ -810,7 +810,7 @@ void MaterialTreeView::OnTvnEndlabeledit(NMHDR *pNMHDR, LRESULT *pResult) {
 				internalChange = false;
 
 				renamedFolder = pTVDispInfo->item.hItem;
-				PostMessage(MSG_RENAME_MATERIAL_COMPLETE); 
+				PostMessage(MSG_RENAME_MATERIAL_COMPLETE);
 
 				*pResult = 1;
 			}
@@ -826,7 +826,7 @@ void MaterialTreeView::OnTvnEndlabeledit(NMHDR *pNMHDR, LRESULT *pResult) {
 			affectedMaterials.Clear();
 			GetMaterialPaths(renamedFolder, &affectedMaterials);
 
-			PostMessage(MSG_RENAME_FOLDER_COMPLETE); 
+			PostMessage(MSG_RENAME_FOLDER_COMPLETE);
 
 			RenameMaterialFolderModifier* mod = new RenameMaterialFolderModifier(materialDocManager, pTVDispInfo->item.pszText, this, pTVDispInfo->item.hItem, tree.GetItemText(pTVDispInfo->item.hItem));
 			materialDocManager->AddMaterialUndoModifier(mod);

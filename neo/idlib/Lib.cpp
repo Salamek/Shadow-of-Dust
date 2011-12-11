@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -169,12 +169,12 @@ UnpackColor
 void UnpackColor( const dword color, idVec4 &unpackedColor ) {
 #if defined(_WIN32) || defined(__linux__) || (defined(MACOS_X) && defined(__i386__))
 	unpackedColor.Set( ( ( color >> 0 ) & 255 ) * ( 1.0f / 255.0f ),
-						( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ), 
+						( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ),
 						( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ),
 						( ( color >> 24 ) & 255 ) * ( 1.0f / 255.0f ) );
 #elif (defined(MACOS_X) && defined(__ppc__))
 	unpackedColor.Set( ( ( color >> 24 ) & 255 ) * ( 1.0f / 255.0f ),
-						( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ), 
+						( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ),
 						( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ),
 						( ( color >> 0 ) & 255 ) * ( 1.0f / 255.0f ) );
 #else
@@ -211,7 +211,7 @@ UnpackColor
 void UnpackColor( const dword color, idVec3 &unpackedColor ) {
 #if defined(_WIN32) || defined(__linux__) || (defined(MACOS_X) && defined(__i386__))
 	unpackedColor.Set( ( ( color >> 0 ) & 255 ) * ( 1.0f / 255.0f ),
-						( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ), 
+						( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ),
 						( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ) );
 #elif (defined(MACOS_X) && defined(__ppc__))
 	unpackedColor.Set( ( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ),
@@ -412,13 +412,13 @@ void RevBytesSwap( void *bp, int elsize, int elcount ) {
 /*
  =====================================================================
  RevBytesSwap
- 
+
  Reverses byte order in place, then reverses bits in those bytes
- 
+
  INPUTS
  bp       bitfield structure to reverse
  elsize   size of the underlying data type
- 
+
  RESULTS
  Reverses the bitfield of size elsize.
  ===================================================================== */

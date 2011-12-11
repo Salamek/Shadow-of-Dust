@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ rvGEWindowWrapper * rvGEWindowWrapper::GetWrapper( idWindow *window ) {
 ================
 rvGEWindowWrapper::UpdateRect
 
-Updates the gui editor's representation of the window rectangle from the 
+Updates the gui editor's representation of the window rectangle from the
 windows rectangle
 ================
 */
@@ -198,7 +198,7 @@ void rvGEWindowWrapper::SetRect( idRectangle &rect ) {
 ================
 rvGEWindowWrapper::SetHidden
 
-Sets the wrappers hidden state 
+Sets the wrappers hidden state
 ================
 */
 void rvGEWindowWrapper::SetHidden( bool h ) {
@@ -243,7 +243,7 @@ void rvGEWindowWrapper::SetState( const idDict &dict ) {
 ================
 rvGEWindowWrapper::SetStateKey
 
-Sets the given state key and updates the 
+Sets the given state key and updates the
 ================
 */
 void rvGEWindowWrapper::SetStateKey( const char *key,const char *value,bool update ) {
@@ -263,7 +263,7 @@ void rvGEWindowWrapper::SetStateKey( const char *key,const char *value,bool upda
 ================
 rvGEWindowWrapper::DeleteStateKey
 
-Sets the given state key and updates the 
+Sets the given state key and updates the
 ================
 */
 void rvGEWindowWrapper::DeleteStateKey( const char *key ) {
@@ -278,7 +278,7 @@ void rvGEWindowWrapper::DeleteStateKey( const char *key ) {
 ================
 rvGEWindowWrapper::UpdateWindowState
 
-Updates the windows real state with wrappers internal state.  Visibility is 
+Updates the windows real state with wrappers internal state.  Visibility is
 handled specially
 ================
 */

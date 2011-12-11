@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -61,9 +61,9 @@ ToggleListView::~ToggleListView() {
 
 
 /**
-* Sets the tree icons to dispay for each of the three states. Sets the 
-* icons to display for each of the three states. The values passed in 
-* are the resource name that can be generated using MAKEINTRESOUCE. If 
+* Sets the tree icons to dispay for each of the three states. Sets the
+* icons to display for each of the three states. The values passed in
+* are the resource name that can be generated using MAKEINTRESOUCE. If
 * the value passed in is NULL then an icon will not be drawn for that
 * state.
 * @param disabled The icon to draw when the state is TOGGLE_STATE_DISABLED.
@@ -169,13 +169,13 @@ void ToggleListView::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct) {
 void ToggleListView::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult) {
 	CListCtrl& list = GetListCtrl();
 
-	DWORD dwpos = GetMessagePos(); 
+	DWORD dwpos = GetMessagePos();
 
 	LVHITTESTINFO info;
 	info.pt.x = LOWORD(dwpos);
 	info.pt.y = HIWORD(dwpos);		
 
-	::MapWindowPoints(HWND_DESKTOP, pNMHDR->hwndFrom, &info.pt, 1);      
+	::MapWindowPoints(HWND_DESKTOP, pNMHDR->hwndFrom, &info.pt, 1);
 
 	int index = list.HitTest(&info);
 	if ( index != -1 ) {
@@ -270,7 +270,7 @@ void ToggleListView::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) {
 	if ( lpDrawItemStruct->itemState & ODS_SELECTED ) {
 		FillRect ( lpDrawItemStruct->hDC, &rDraw, GetSysColorBrush ( COLOR_HIGHLIGHT ) );			
 	} else {
-		FillRect ( lpDrawItemStruct->hDC, &rDraw, GetSysColorBrush ( COLOR_WINDOW ) ); 
+		FillRect ( lpDrawItemStruct->hDC, &rDraw, GetSysColorBrush ( COLOR_WINDOW ) );
 	}
 
 	rDraw.left += TEXT_OFFSET;
@@ -289,16 +289,16 @@ void ToggleListView::Draw3dRect (HDC hDC, RECT* rect, HBRUSH topLeft, HBRUSH bot
 	RECT rOut;
 
 	SetRect ( &rOut, rect->left, rect->top, rect->right - 1, rect->top + 1 );
-	FillRect ( hDC,&rOut, topLeft ); 
+	FillRect ( hDC,&rOut, topLeft );
 
 	SetRect ( &rOut, rect->left, rect->top, rect->left + 1, rect->bottom );
-	FillRect( hDC,&rOut, topLeft ); 
+	FillRect( hDC,&rOut, topLeft );
 
 	SetRect ( &rOut, rect->right, rect->top, rect->right -1, rect->bottom  );
-	FillRect( hDC,&rOut, bottomRight ); 
+	FillRect( hDC,&rOut, bottomRight );
 
 	SetRect ( &rOut, rect->left, rect->bottom, rect->right, rect->bottom - 1 );
-	FillRect( hDC,&rOut, bottomRight ); 
+	FillRect( hDC,&rOut, bottomRight );
 }
 
 

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -664,7 +664,7 @@ void Sys_InitNetworking( void ) {
 	// the necessary size into the ulOutBufLen variable
 	if( GetAdaptersInfo( pAdapterInfo, &ulOutBufLen ) == ERROR_BUFFER_OVERFLOW ) {
 		free( pAdapterInfo );
-		pAdapterInfo = (IP_ADAPTER_INFO *)malloc( ulOutBufLen ); 
+		pAdapterInfo = (IP_ADAPTER_INFO *)malloc( ulOutBufLen );
 		if( !pAdapterInfo ) {
 			common->FatalError( "Sys_InitNetworking: Couldn't malloc( %ld )", ulOutBufLen );
 		}
@@ -794,12 +794,12 @@ bool Sys_IsLANAddress( const netadr_t adr ) {
 		unsigned long ip;
 		p_ip = (unsigned long *)&adr.ip[0];
 		ip = ntohl( *p_ip );
-                
+
 		for( i=0; i < num_interfaces; i++ ) {
 			if( ( netint[i].ip & netint[i].mask ) == ( ip & netint[i].mask ) ) {
 				return true;
 			}
-		} 
+		}
 	}	
 	return false;
 }
@@ -1101,7 +1101,7 @@ bool idTCP::Init( const char *host, short port ) {
 	if ( !address.port ) {
 		address.port = port;
 	}
-	common->Printf( "\"%s\" resolved to %i.%i.%i.%i:%i\n", host, 
+	common->Printf( "\"%s\" resolved to %i.%i.%i.%i:%i\n", host,
 					address.ip[0], address.ip[1], address.ip[2], address.ip[3], address.port );
 	Net_NetadrToSockadr( &address, &sadr );
 

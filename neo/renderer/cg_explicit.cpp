@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -164,9 +164,9 @@ bool init_explicit_Cg()
 {
     HMODULE hmod;
     int failed = 0;
-    
+
     hmod = LoadLibrary("cg.dll");
-    
+
     if(0 == (cgCreateContext = (PFNCGCREATECONTEXTPROC)GetProcAddress( hmod, "cgCreateContext" )))
         failed++;
     if(0 == (cgDestroyContext = (PFNCGDESTROYCONTEXTPROC)GetProcAddress( hmod, "cgDestroyContext" )))
@@ -264,12 +264,12 @@ bool init_explicit_Cg()
     if(0 == (cgGetErrorCallback = (PFNCGGETERRORCALLBACKPROC)GetProcAddress( hmod, "cgGetErrorCallback" )))
         failed++;
 
-    
-    
+
+
     hmod = LoadLibrary("cgGL.dll");
 
-    
-    
+
+
     if(0 == (cgGLIsProfileSupported = (PFNCGGLISPROFILESUPPORTEDPROC)GetProcAddress( hmod, "cgGLIsProfileSupported" )))
         failed++;
     if(0 == (cgGLEnableProfile = (PFNCGGLENABLEPROFILEPROC)GetProcAddress( hmod, "cgGLEnableProfile" )))
@@ -416,8 +416,8 @@ bool init_explicit_Cg()
         failed++;
     if(0 == (cgGLGetTextureEnum = (PFNCGGLGETTEXTUREENUMPROC)GetProcAddress( hmod, "cgGLGetTextureEnum" )))
         failed++;
-    
-    return failed == 0;   
-    
+
+    return failed == 0;
+
 }
 #endif

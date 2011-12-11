@@ -17,7 +17,7 @@
  *  Boston, MA  02111-1307, USA.
  * Or go to http://www.gnu.org/copyleft/lgpl.html
  */
- 
+
 #ifndef _ALUT_H_
 #define _ALUT_H_
 
@@ -29,7 +29,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-   
+
 #ifdef TARGET_OS_MAC
    #if TARGET_OS_MAC
        #pragma export on

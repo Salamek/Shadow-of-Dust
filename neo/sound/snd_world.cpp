@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -426,7 +426,7 @@ void idSoundWorldLocal::MixLoop( int current44kHz, int numSpeakers, float *final
 		if ( idSoundSystemLocal::useOpenAL )
 			alListenerf( AL_GAIN, 0.0f );
 		return;
-	} 
+	}
 
 	// update the listener position and orientation
 	if ( idSoundSystemLocal::useOpenAL ) {
@@ -464,7 +464,7 @@ void idSoundWorldLocal::MixLoop( int current44kHz, int numSpeakers, float *final
 				if (!effect)
 					soundSystemLocal.EFXDatabase.FindEffect( defaultStr, &effect, &EnvironmentID );
 				
-				// only update if change in settings 
+				// only update if change in settings
 				if ( soundSystemLocal.s_muteEAXReverb.GetBool() || ( listenerEnvironmentID != EnvironmentID ) ) {
 					EAXREVERBPROPERTIES EnvironmentParameters;
 					
@@ -887,7 +887,7 @@ idSoundWorldLocal::PlaceListener
   this is called by the main thread
 ===================
 */
-void idSoundWorldLocal::PlaceListener( const idVec3& origin, const idMat3& axis, 
+void idSoundWorldLocal::PlaceListener( const idVec3& origin, const idMat3& axis,
 									const int listenerId, const int gameTime, const idStr& areaName  ) {
 
 	int current44kHzTime;
@@ -1129,7 +1129,7 @@ void idSoundWorldLocal::WriteToSaveGame( idFile *savefile ) {
 		WriteToSaveGameSoundShaderParams( savefile, &def->parms );
 		savefile->WriteFloat( def->amplitude );
 		savefile->WriteInt( def->ampTime );
-		for (int k = 0; k < SOUND_MAX_CHANNELS; k++) 
+		for (int k = 0; k < SOUND_MAX_CHANNELS; k++)
 			WriteToSaveGameSoundChannel( savefile, &def->channels[k] );
 		savefile->WriteFloat( def->distance );
 		savefile->WriteBool( def->hasShakes );
@@ -1196,10 +1196,10 @@ void idSoundWorldLocal::WriteToSaveGameSoundChannel( idFile *saveGame, idSoundCh
 	saveGame->WriteInt( ch->trigger44kHzTime );
 	saveGame->WriteInt( ch->triggerGame44kHzTime );
 	WriteToSaveGameSoundShaderParams( saveGame, &ch->parms );
-	saveGame->WriteInt( (int)ch->leadinSample );
+	saveGame->WriteInt( 0 /*(int)ch->leadinSample*/ );
 	saveGame->WriteInt( ch->triggerChannel );
-	saveGame->WriteInt( (int)ch->soundShader );
-	saveGame->WriteInt( (int)ch->decoder );
+	saveGame->WriteInt( 0 /*(int)ch->soundShader*/ );
+	saveGame->WriteInt( 0 /*(int)ch->decoder*/ );
 	saveGame->WriteFloat(ch->diversity );
 	saveGame->WriteFloat(ch->lastVolume );
 	for (int m = 0; m < 6; m++)
@@ -1273,7 +1273,7 @@ void idSoundWorldLocal::ReadFromSaveGame( idFile *savefile ) {
 		ReadFromSaveGameSoundShaderParams( savefile, &def->parms );
 		savefile->ReadFloat( def->amplitude );
 		savefile->ReadInt( def->ampTime );
-		for (int k = 0; k < SOUND_MAX_CHANNELS; k++) 
+		for (int k = 0; k < SOUND_MAX_CHANNELS; k++)
 			ReadFromSaveGameSoundChannel( savefile, &def->channels[k] );
 		savefile->ReadFloat( def->distance );
 		savefile->ReadBool( def->hasShakes );
@@ -1294,7 +1294,7 @@ void idSoundWorldLocal::ReadFromSaveGame( idFile *savefile ) {
 
 			idSoundChannel *chan = &def->channels[channel];
 
-			if ( chan->decoder != NULL ) {
+			if ( !chan->decoder ) {
 				// The pointer in the save file is not valid, so we grab a new one
 				chan->decoder = idSampleDecoder::Alloc();
 			}
@@ -1361,16 +1361,22 @@ void idSoundWorldLocal::ReadFromSaveGameSoundShaderParams( idFile *saveGame, sou
 void idSoundWorldLocal::ReadFromSaveGameSoundChannel( idFile *saveGame, idSoundChannel *ch ) {
 	saveGame->ReadBool( ch->triggerState );
 	char tmp;
+	int i;
 	saveGame->ReadChar( tmp );
 	saveGame->ReadChar( tmp );
 	saveGame->ReadChar( tmp );
 	saveGame->ReadInt( ch->trigger44kHzTime );
 	saveGame->ReadInt( ch->triggerGame44kHzTime );
 	ReadFromSaveGameSoundShaderParams( saveGame, &ch->parms );
-	saveGame->ReadInt( (int&)ch->leadinSample );
+	//saveGame->ReadInt( (int&)ch->leadinSample );
+	saveGame->ReadInt( i );
 	saveGame->ReadInt( ch->triggerChannel );
-	saveGame->ReadInt( (int&)ch->soundShader );
-	saveGame->ReadInt( (int&)ch->decoder );
+	//saveGame->ReadInt( (int&)ch->soundShader );
+	//saveGame->ReadInt( (int&)ch->decoder );
+	saveGame->ReadInt( i );
+	ch->soundShader = NULL;
+	saveGame->ReadInt( i );
+	ch->decoder = NULL;
 	saveGame->ReadFloat(ch->diversity );
 	saveGame->ReadFloat(ch->lastVolume );
 	for (int m = 0; m < 6; m++)
@@ -1548,9 +1554,9 @@ void idSoundWorldLocal::CalcEars( int numSpeakers, idVec3 spatializedOrigin, idV
 			ears[1] = idSoundSystemLocal::s_minVolume2.GetFloat();
 		}
 
-		ears[2] = 
-		ears[3] = 
-		ears[4] = 
+		ears[2] =
+		ears[3] =
+		ears[4] =
 		ears[5] = 0.0f;
 	}
 }
@@ -1715,7 +1721,7 @@ void idSoundWorldLocal::AddChannelContribution( idSoundEmitterLocal *sound, idSo
 	float *alignedInputSamples = (float *) ( ( ( (intptr_t)inputSamples ) + 15 ) & ~15 );
 	//
 	// allocate and initialize hardware source
-	// 
+	//
 	if ( idSoundSystemLocal::useOpenAL && sound->removeStatus < REMOVE_STATUS_SAMPLEFINISHED ) {
 		if ( !alIsSource( chan->openalSource ) ) {
 			chan->openalSource = soundSystemLocal.AllocOpenALSource( chan, !chan->leadinSample->hardwareBuffer || !chan->soundShader->entries[0]->hardwareBuffer || looping, chan->leadinSample->objectInfo.nChannels == 2 );
@@ -1921,7 +1927,7 @@ idSoundWorldLocal::FindAmplitude
   which would be problematic in multiplayer
 ===============
 */
-float idSoundWorldLocal::FindAmplitude( idSoundEmitterLocal *sound, const int localTime, const idVec3 *listenerPosition, 
+float idSoundWorldLocal::FindAmplitude( idSoundEmitterLocal *sound, const int localTime, const idVec3 *listenerPosition,
 									   const s_channelType channel, bool shakesOnly ) {
 	int		i, j;
 	soundShaderParms_t *parms;
@@ -2090,7 +2096,7 @@ void	idSoundWorldLocal::FadeSoundClasses( const int soundClass, const float to, 
 	int	length44kHz = soundSystemLocal.MillisecondsToSamples( over * 1000 );
 
 	// if it is already fading to this volume at this rate, don't change it
-	if ( fade->fadeEndVolume == to && 
+	if ( fade->fadeEndVolume == to &&
 		fade->fadeEnd44kHz - fade->fadeStart44kHz == length44kHz ) {
 		return;
 	}

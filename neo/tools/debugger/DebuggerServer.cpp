@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ bool rvDebuggerServer::Initialize ( void )
 
 void rvDebuggerServer::OSPathToRelativePath( const char *osPath, idStr &qpath )
 {
-	if ( strchr( osPath, ':' ) ) 
+	if ( strchr( osPath, ':' ) )
 	{
 		qpath = fileSystem->OSPathToRelativePath( osPath );
 	}
@@ -273,7 +273,7 @@ void rvDebuggerServer::HandleAddBreakpoint ( msg_t* msg )
 	
 	MSG_ReadString ( msg, filename, MAX_PATH );
 	
-	// Since breakpoints are used by both threads we need to 
+	// Since breakpoints are used by both threads we need to
 	// protect them with a crit section	
 	EnterCriticalSection ( &mCriticalSection );
 	mBreakpoints.Append ( new rvDebuggerBreakpoint ( filename, lineNumber, id ) );
@@ -285,7 +285,7 @@ void rvDebuggerServer::HandleAddBreakpoint ( msg_t* msg )
 rvDebuggerServer::HandleRemoveBreakpoint
 
 Handle the DBMSG_REMOVEBREAKPOINT message being sent by the debugger client.  This
-message is handled by removing the breakpoint that matches the given id from the 
+message is handled by removing the breakpoint that matches the given id from the
 list.
 ================
 */
@@ -297,7 +297,7 @@ void rvDebuggerServer::HandleRemoveBreakpoint ( msg_t* msg )
 	// ID that we are to remove
 	id = MSG_ReadLong ( msg );
 
-	// Since breakpoints are used by both threads we need to 
+	// Since breakpoints are used by both threads we need to
 	// protect them with a crit section	
 	EnterCriticalSection ( &mCriticalSection );
 	
@@ -478,7 +478,7 @@ void rvDebuggerServer::HandleInspectVariable ( msg_t* in_msg )
 ================
 rvDebuggerServer::CheckBreakpoints
 
-Check to see if any breakpoints have been hit.  This includes "break next", 
+Check to see if any breakpoints have been hit.  This includes "break next",
 "step into", and "step over" break points
 ================
 */
@@ -524,8 +524,8 @@ void rvDebuggerServer::CheckBreakpoints	( idInterpreter* interpreter, idProgram*
 	// Only break on the same callstack depth and thread as the break over	
 	if ( mBreakStepOver )
 	{			
-		if ( ( interpreter->GetCurrentFunction ( ) == mBreakStepOverFunc1 || 
-		       interpreter->GetCurrentFunction ( ) == mBreakStepOverFunc2    )&& 
+		if ( ( interpreter->GetCurrentFunction ( ) == mBreakStepOverFunc1 ||
+		       interpreter->GetCurrentFunction ( ) == mBreakStepOverFunc2    )&&
 		     ( interpreter->GetCallstackDepth ( )  <= mBreakStepOverDepth ) )
 		{
 			Break ( interpreter, program, instructionPointer );
@@ -570,7 +570,7 @@ void rvDebuggerServer::CheckBreakpoints	( idInterpreter* interpreter, idProgram*
 		// We hit a breakpoint, so break
 		Break ( interpreter, program, instructionPointer );
 		
-		// Back into the critical section since we are going to have to leave it 
+		// Back into the critical section since we are going to have to leave it
 		EnterCriticalSection ( &mCriticalSection );
 		
 		break;
@@ -630,7 +630,7 @@ void rvDebuggerServer::Break ( idInterpreter* interpreter, idProgram* program, i
 	// Let the debugger client know that we have started back up again
 	SendMessage ( DBMSG_RESUMED );
 
-	// This is to give some time between the keypress that 
+	// This is to give some time between the keypress that
 	// told us to resume and the setforeground window.  Otherwise the quake window
 	// would just flash
 	Sleep ( 150 );

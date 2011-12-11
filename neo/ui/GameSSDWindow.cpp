@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -104,10 +104,10 @@ void SSDCrossHair::Draw(idDeviceContext *dc, const idVec2& cursor) {
 */
 
 SSDEntity::SSDEntity() {
-	EntityInit(); 
+	EntityInit();
 }
 
-SSDEntity::~SSDEntity() { 
+SSDEntity::~SSDEntity() {
 }
 
 void SSDEntity::WriteToSaveGame( idFile *savefile ) {
@@ -1532,13 +1532,13 @@ void idGameSSDWindow::ParseAsteroidData(int level, const idStr& asteroidDataStri
 	idToken token;
 	parser.LoadMemory(asteroidDataString.c_str(), asteroidDataString.Length(), "AsteroidData");
 
-	asteroidData[level].speedMin = parser.ParseFloat(); //Speed Min 
+	asteroidData[level].speedMin = parser.ParseFloat(); //Speed Min
 	asteroidData[level].speedMax = parser.ParseFloat(); //Speed Max
 
-	asteroidData[level].sizeMin = parser.ParseFloat(); //Size Min 
+	asteroidData[level].sizeMin = parser.ParseFloat(); //Size Min
 	asteroidData[level].sizeMax = parser.ParseFloat(); //Size Max
 
-	asteroidData[level].rotateMin = parser.ParseFloat(); //Rotate Min (rotations per second) 
+	asteroidData[level].rotateMin = parser.ParseFloat(); //Rotate Min (rotations per second)
 	asteroidData[level].rotateMax = parser.ParseFloat(); //Rotate Max (rotations per second)
 
 	asteroidData[level].spawnMin = parser.ParseInt(); //Spawn Min
@@ -1555,10 +1555,10 @@ void idGameSSDWindow::ParsePowerupData(int level, const idStr& powerupDataString
 	idToken token;
 	parser.LoadMemory(powerupDataString.c_str(), powerupDataString.Length(), "PowerupData");
 
-	powerupData[level].speedMin = parser.ParseFloat(); //Speed Min 
+	powerupData[level].speedMin = parser.ParseFloat(); //Speed Min
 	powerupData[level].speedMax = parser.ParseFloat(); //Speed Max
 
-	powerupData[level].rotateMin = parser.ParseFloat(); //Rotate Min (rotations per second) 
+	powerupData[level].rotateMin = parser.ParseFloat(); //Rotate Min (rotations per second)
 	powerupData[level].rotateMax = parser.ParseFloat(); //Rotate Max (rotations per second)
 
 	powerupData[level].spawnMin = parser.ParseInt(); //Spawn Min
@@ -1572,7 +1572,7 @@ void idGameSSDWindow::ParseWeaponData(int weapon, const idStr& weaponDataString)
 	idToken token;
 	parser.LoadMemory(weaponDataString.c_str(), weaponDataString.Length(), "WeaponData");
 
-	weaponData[weapon].speed = parser.ParseFloat(); 
+	weaponData[weapon].speed = parser.ParseFloat();
 	weaponData[weapon].damage = parser.ParseFloat();
 	weaponData[weapon].size = parser.ParseFloat();
 }
@@ -1583,10 +1583,10 @@ void idGameSSDWindow::ParseAstronautData(int level, const idStr& astronautDataSt
 	idToken token;
 	parser.LoadMemory(astronautDataString.c_str(), astronautDataString.Length(), "AstronautData");
 
-	astronautData[level].speedMin = parser.ParseFloat(); //Speed Min 
+	astronautData[level].speedMin = parser.ParseFloat(); //Speed Min
 	astronautData[level].speedMax = parser.ParseFloat(); //Speed Max
 
-	astronautData[level].rotateMin = parser.ParseFloat(); //Rotate Min (rotations per second) 
+	astronautData[level].rotateMin = parser.ParseFloat(); //Rotate Min (rotations per second)
 	astronautData[level].rotateMax = parser.ParseFloat(); //Rotate Max (rotations per second)
 
 	astronautData[level].spawnMin = parser.ParseInt(); //Spawn Min
@@ -1645,7 +1645,7 @@ void idGameSSDWindow::ResetGameStats() {
 
 	gameStats.health = 100;
 
-} 
+}
 
 void idGameSSDWindow::ResetLevelStats() {
 	
@@ -1696,7 +1696,7 @@ void idGameSSDWindow::BeginLevel(int level) {
 * Continue game resets the players health
 */
 void idGameSSDWindow::ContinueGame() {
-	gameStats.health = 100; 
+	gameStats.health = 100;
 
 	StartGame();
 }
@@ -1857,20 +1857,20 @@ void idGameSSDWindow::CheckForHits() {
 void idGameSSDWindow::ZOrderEntities() {
 	//Z-Order the entities
 	//Using a simple sorting method
-	for (int i = entities.Num()-1; i >= 0; i--) { 
+	for (int i = entities.Num()-1; i >= 0; i--) {
 		bool flipped = false;
-		for (int j = 0;  j<i ; j++) { 
-			if (entities[j]->position.z > entities[j+1]->position.z) { 
+		for (int j = 0;  j<i ; j++) {
+			if (entities[j]->position.z > entities[j+1]->position.z) {
 				SSDEntity* ent = entities[j];
-				entities[j] = entities[j+1]; 
-				entities[j+1] = ent; 
-				flipped = true; 
-			} 
-		} 
-		if (!flipped) { 
+				entities[j] = entities[j+1];
+				entities[j+1] = ent;
+				flipped = true;
+			}
+		}
+		if (!flipped) {
 			//Jump out because it is sorted
-			break; 
-		} 
+			break;
+		}
 	}
 }
 
@@ -1985,7 +1985,7 @@ void idGameSSDWindow::HitAsteroid(SSDAsteroid* asteroid, int key) {
 
 		AddScore(asteroid, asteroidData[gameStats.currentLevel].asteroidPoints);
 
-		//Don't let the player hit it anymore because 
+		//Don't let the player hit it anymore because
 		asteroid->noHit = true;
 
 		gameStats.levelStats.destroyedAsteroids++;
@@ -2060,7 +2060,7 @@ void idGameSSDWindow::OnNuke() {
 
 			AddScore(entities[i], asteroidData[gameStats.currentLevel].asteroidPoints);
 
-			//Don't let the player hit it anymore because 
+			//Don't let the player hit it anymore because
 			entities[i]->noHit = true;
 
 			gameStats.levelStats.destroyedAsteroids++;

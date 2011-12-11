@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -813,7 +813,7 @@ typedef struct nodetype {
 	struct nodetype *next, *prev;			// doubly-linked list
 	struct nodetype **head;					// highest ranked node in block
 	int				weight;
-	int				symbol; 
+	int				symbol;
 } huffmanNode_t;
 
 class idCompressor_Huffman : public idCompressor_None {
@@ -904,7 +904,7 @@ void idCompressor_Huffman::Init( idFile *f, bool compress, int wordLength ) {
 		tree->parent = tree->left = tree->right = NULL;
 		loc[NYT] = tree;
 	} else {
-		// Initialize the tree & list with the NYT node 
+		// Initialize the tree & list with the NYT node
 		tree = lhead = ltail = loc[NYT] = &nodeList[blocNode++];
 		tree->symbol = NYT;
 		tree->weight = 0;
@@ -1011,7 +1011,7 @@ idCompressor_Huffman::Swap
   Swap the location of the given two nodes in the tree.
 ================
 */
-void idCompressor_Huffman::Swap( huffmanNode_t *node1, huffmanNode_t *node2 ) { 
+void idCompressor_Huffman::Swap( huffmanNode_t *node1, huffmanNode_t *node2 ) {
 	huffmanNode_t *par1, *par2;
 
 	par1 = node1->parent;
@@ -1036,7 +1036,7 @@ void idCompressor_Huffman::Swap( huffmanNode_t *node1, huffmanNode_t *node2 ) {
 	} else {
 		tree = node1;
 	}
-  
+
 	node1->parent = par2;
 	node2->parent = par1;
 }
@@ -1107,7 +1107,7 @@ void idCompressor_Huffman::Increment( huffmanNode_t *node ) {
 	node->weight++;
 	if ( node->next && node->next->weight == node->weight ) {
 		node->head = node->next->head;
-	} else { 
+	} else {
 		node->head = Get_ppnode();
 		*node->head = node;
 	}
@@ -1150,7 +1150,7 @@ void idCompressor_Huffman::AddRef( byte ch ) {
 		}
 		lhead->next = tnode2;
 		tnode2->prev = lhead;
- 
+
 		tnode->symbol = ch;
 		tnode->weight = 1;
 		tnode->next = lhead->next;
@@ -1171,7 +1171,7 @@ void idCompressor_Huffman::AddRef( byte ch ) {
 		lhead->next = tnode;
 		tnode->prev = lhead;
 		tnode->left = tnode->right = NULL;
- 
+
 		if ( lhead->parent ) {
 			if ( lhead->parent->left == lhead ) { /* lhead is guaranteed to by the NYT */
 				lhead->parent->left = tnode2;
@@ -1179,17 +1179,17 @@ void idCompressor_Huffman::AddRef( byte ch ) {
 				lhead->parent->right = tnode2;
 			}
 		} else {
-			tree = tnode2; 
+			tree = tnode2;
 		}
- 
+
 		tnode2->right = tnode;
 		tnode2->left = lhead;
- 
+
 		tnode2->parent = lhead->parent;
 		lhead->parent = tnode->parent = tnode2;
-     
+
 		loc[ch] = tnode;
- 
+
 		Increment( tnode2->parent );
 	} else {
 		Increment( loc[ch] );
@@ -1246,7 +1246,7 @@ idCompressor_Huffman::Transmit
 */
 void idCompressor_Huffman::Transmit( int ch, byte *fout ) {
 	int i;
-	if ( loc[ch] == NULL ) { 
+	if ( loc[ch] == NULL ) {
 		/* huffmanNode_t hasn't been transmitted, send a NYT, then the symbol */
 		Transmit( NYT, fout );
 		for ( i = 7; i >= 0; i-- ) {
@@ -1335,7 +1335,7 @@ int idCompressor_Huffman::Read( void *outData, int outLength ) {
 				ch = ( ch << 1 ) + Get_bit();
 			}
 		}
-    
+
 		((byte *)outData)[i] = ch;			/* Write symbol */
 		AddRef( (byte) ch );				/* Increment node */
 	}
@@ -2339,7 +2339,7 @@ int idCompressor_LZW::Lookup( int w, int k ) {
 		return k;
 	} else {
 		for ( j = index.First( w ^ k ); j >= 0 ; j = index.Next( j ) ) {
-			if ( dictionary[ j ].k == k && dictionary[ j ].w == w ) { 
+			if ( dictionary[ j ].k == k && dictionary[ j ].w == w ) {
 				return j;
 			}
 		}

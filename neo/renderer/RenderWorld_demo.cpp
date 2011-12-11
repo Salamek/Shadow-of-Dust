@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -143,7 +143,7 @@ bool		idRenderWorldLocal::ProcessDemoCommand( idDemoFile *readDemo, renderView_t
 		if ( !readDemo->ReadInt( (int&)renderView->globalMaterial ) ) {
 			 return false;
 		 }
-												 
+												
 		if ( r_showDemo.GetBool() ) {
 			common->Printf( "DC_RENDERVIEW: %i\n", renderView->time );
 		}
@@ -682,7 +682,7 @@ void	idRenderWorldLocal::ReadRenderEntity() {
 		ent.referenceSound = session->sw->EmitterForIndex( index );
 	}
 	if ( ent.numJoints ) {
-		ent.joints = (idJointMat *)Mem_Alloc16( ent.numJoints * sizeof( ent.joints[0] ) ); 
+		ent.joints = (idJointMat *)Mem_Alloc16( ent.numJoints * sizeof( ent.joints[0] ) );
 		for ( int i = 0; i < ent.numJoints; i++) {
 			float *data = ent.joints[i].ToFloatPtr();
 			for ( int j = 0; j < 12; ++j)

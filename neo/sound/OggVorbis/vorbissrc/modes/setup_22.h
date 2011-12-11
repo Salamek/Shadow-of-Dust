@@ -10,7 +10,7 @@
  *                                                                  *
  ********************************************************************
 
- function: 22kHz settings 
+ function: 22kHz settings
  last mod: $Id: setup_22.h,v 1.3 2002/07/11 10:02:29 xiphmont Exp $
 
  ********************************************************************/
@@ -32,7 +32,7 @@ ve_setup_data_template ve_setup_22_stereo={
   2,
   19000,
   26000,
-  
+
   blocksize_16_short,
   blocksize_16_long,
 
@@ -50,7 +50,7 @@ ve_setup_data_template ve_setup_22_stereo={
   _psy_noisebias_16_short,
   _psy_noisebias_16,
   _psy_noise_suppress,
-  
+
   _psy_compand_8,
   _psy_compand_8_mapping,
   _psy_compand_8_mapping,
@@ -61,7 +61,7 @@ ve_setup_data_template ve_setup_22_stereo={
 
   _psy_ath_floater_16,
   _psy_ath_abs_16,
-  
+
   _psy_lowpass_22,
 
   _psy_global_44,
@@ -83,7 +83,7 @@ ve_setup_data_template ve_setup_22_uncoupled={
   -1,
   19000,
   26000,
-  
+
   blocksize_16_short,
   blocksize_16_long,
 
@@ -101,7 +101,7 @@ ve_setup_data_template ve_setup_22_uncoupled={
   _psy_noisebias_16_short,
   _psy_noisebias_16,
   _psy_noise_suppress,
-  
+
   _psy_compand_8,
   _psy_compand_8_mapping,
   _psy_compand_8_mapping,
@@ -112,7 +112,7 @@ ve_setup_data_template ve_setup_22_uncoupled={
 
   _psy_ath_floater_16,
   _psy_ath_abs_16,
-  
+
   _psy_lowpass_22,
 
   _psy_global_44,

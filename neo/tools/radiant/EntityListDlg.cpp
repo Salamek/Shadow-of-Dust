@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ CEntityListDlg g_EntityListDlg;
 void CEntityListDlg::ShowDialog() {
 	if (g_EntityListDlg.GetSafeHwnd() == NULL) {
 		g_EntityListDlg.Create(IDD_DLG_ENTITYLIST);
-	} 
+	}
 	g_EntityListDlg.UpdateList();
 	g_EntityListDlg.ShowWindow(SW_SHOW);
 
@@ -82,7 +82,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CEntityListDlg message handlers
 
-void CEntityListDlg::OnSelect() 
+void CEntityListDlg::OnSelect()
 {
 	int index = listEntities.GetCurSel();
 	if (index != LB_ERR) {
@@ -115,7 +115,7 @@ void CEntityListDlg::OnCancel() {
 	DestroyWindow();
 }
 
-BOOL CEntityListDlg::OnInitDialog() 
+BOOL CEntityListDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	

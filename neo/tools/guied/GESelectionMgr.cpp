@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -462,7 +462,7 @@ idWindow* rvGESelectionMgr::GetBottomMost ( void )
 		// Calculate the depth of the window by iterating back through the windows parents
 		for ( tempDepth = 0, parent = mSelections[i]; parent; parent = parent->GetParent ( ), tempDepth++ );
 		
-		// If the new depth is less than the current depth then this window is below 
+		// If the new depth is less than the current depth then this window is below
 		if ( tempDepth < depth )
 		{
 			depth  = tempDepth;

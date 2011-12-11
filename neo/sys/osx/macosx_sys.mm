@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -194,7 +194,7 @@ char *ansiColors[8] =
 	  "\033[36m" ,  /* ANSI Cyan */
 	  "\033[35m" ,	/* ANSI Magenta */
 	  "\033[37m" }; /* ANSI White */
-	  
+	
 void Sys_Print(const char *text)
 {
 #if 0
@@ -207,7 +207,7 @@ void Sys_Print(const char *text)
 	fputs("\033[0m", stdout);
 	
 	while(*scan) {
-		/* See if we have a color control code.  If so, snarf the character, 
+		/* See if we have a color control code.  If so, snarf the character,
 		print what we have so far, print the ANSI Terminal color code,
 		skip over the color control code and continue */
 		if(Q_IsColorString(scan)) {

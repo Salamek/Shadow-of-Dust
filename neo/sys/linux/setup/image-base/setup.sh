@@ -36,7 +36,7 @@ DetectARCH()
 	    i?86 | i86*)
 		echo "x86"
 		status=0;;
-	    90*/*) 
+	    90*/*)
 		echo "hppa"
 		status=0;;
 	    *)
@@ -76,10 +76,10 @@ DetectLIBC()
 #		if [ fgrep GLIBC_2.1 /lib/libc.so.6* 2> $NULL >> $NULL ]; then
 #			echo "glibc-2.1"
 #			status=0
-#		else    
+#		else
 #			echo "glibc-2.0"
 #			status=0
-#		fi        
+#		fi
 	elif [ -f /lib/libc.so.5 ]; then
 			echo "libc5"
 			status=0
@@ -153,7 +153,7 @@ try_run()
 
     setup=$1
     shift
-    
+
     # First find the binary we want to run
     failed=0
     if [ "$absolute" -eq 0 ]
@@ -183,7 +183,7 @@ __EOF__
       # NOTE TTimo: this is dangerous, we also use $setup to store the name of the try_run
       setup="$HOME/.setup$$"
       rm -f "$setup"
-      cp "$setup_bin" "$setup"    
+      cp "$setup_bin" "$setup"
       chmod 700 "$setup"
 	  trap "rm -f $setup" 1 2 3 15
     fi

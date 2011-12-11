@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -346,7 +346,7 @@ int nDWidth,nDHeight;
 	nDWidth = nSWidth*xRatio;
 	nDHeight = nSHeight*yRatio;
 
-	nDWidth = nXDest+nDWidth > width ? width-nXDest : nDWidth ; 
+	nDWidth = nXDest+nDWidth > width ? width-nXDest : nDWidth ;
 	nDHeight = nYDest+nDHeight > height ? height-nYDest : nDHeight;
 
 	xNum = nDWidth/xRatio;
@@ -387,7 +387,7 @@ int i,j,k;
 void CDIB::StretchBlt(int nXDest,int nYDest,int nDWidth,int nDHeight,CDIB& dibSrc,int xSrc,int ySrc,int  nSWidth,int nSHeight)
 {
 	SetPalette(dibSrc.m_pRGB);
-	nDWidth = nXDest+nDWidth > width ? width-nXDest : nDWidth ; 
+	nDWidth = nXDest+nDWidth > width ? width-nXDest : nDWidth ;
 	nDHeight = nYDest+nDHeight > height ? height-nYDest : nDHeight;
 
 	nSWidth = xSrc+nSWidth > dibSrc.width ? dibSrc.width-xSrc : nSWidth;
@@ -490,7 +490,7 @@ void CDIB::BitBlt(int nXDest,int nYDest,int nWidth,int nHeight,CDIB& dibSrc,int 
 		nHeight += nSrcY;
 		nSrcY=0;
 	}
-	nWidth = nXDest+nWidth > width ? width-nXDest : nWidth ; 
+	nWidth = nXDest+nWidth > width ? width-nXDest : nWidth ;
 	nHeight = nYDest+nHeight > height ? height-nYDest : nHeight;
 
 	nWidth = nSrcX+nWidth > dibSrc.width ? dibSrc.width-nSrcX : nWidth;
@@ -630,14 +630,14 @@ RGBQUAD *pRgb;
 	width = pHead->biWidth;
 	height = pHead->biHeight;
 	m_nBits = pHead->biBitCount;
-	if(pHead->biCompression != BI_RGB) 
+	if(pHead->biCompression != BI_RGB)
 	{
 		GlobalUnlock(lpVoid);
 		return FALSE;
 	}
 	if(pHead->biBitCount >= 15)
 	{
-		if(pHead->biBitCount != 24) 
+		if(pHead->biBitCount != 24)
 		{
 			GlobalUnlock(lpVoid);
 			return FALSE;
@@ -775,7 +775,7 @@ unsigned char cols[16];
 		for(j=0 ; j < w; j++,dPtr++)
 		{
 			if(!(j&1)) n = (*sPtr & 0xf0)>>4;
-			else 
+			else
 			{
 				n = *sPtr & 0x0f;
 				sPtr++;
@@ -820,7 +820,7 @@ unsigned int pSize=GetPaletteSize();
 	{
 		if(CachePtr[i])
 		{
-			if(!memcmp((void *)&CacheQuad[i],(void *)pRgb,3)) 
+			if(!memcmp((void *)&CacheQuad[i],(void *)pRgb,3))
 			{
 				return i;
 			}
@@ -829,13 +829,13 @@ unsigned int pSize=GetPaletteSize();
 	for(i=0; i < pSize; i++,pQuad++)
 	{
 		d = Distance(*pRgb,*pQuad);
-		if(!d) 
+		if(!d)
 		{
 			CacheQuad[i]=*pRgb;
 			CachePtr[i]=1;
 			return i;
 		}		
-		if(dist > d) 
+		if(dist > d)
 		{
 			c = i;
 			dist = d;

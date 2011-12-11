@@ -10,7 +10,7 @@
  *                                                                  *
  ********************************************************************
 
- function: 11kHz settings 
+ function: 11kHz settings
  last mod: $Id: setup_11.h,v 1.2 2002/07/11 06:41:04 xiphmont Exp $
 
  ********************************************************************/
@@ -44,7 +44,7 @@ ve_setup_data_template ve_setup_11_stereo={
   2,
   9000,
   15000,
-  
+
   blocksize_11,
   blocksize_11,
 
@@ -62,7 +62,7 @@ ve_setup_data_template ve_setup_11_stereo={
   NULL,
   NULL,
   _psy_noise_suppress,
-  
+
   _psy_compand_8,
   _psy_compand_8_mapping,
   NULL,
@@ -73,7 +73,7 @@ ve_setup_data_template ve_setup_11_stereo={
 
   _psy_ath_floater_8,
   _psy_ath_abs_8,
-  
+
   _psy_lowpass_11,
 
   _psy_global_44,
@@ -95,7 +95,7 @@ ve_setup_data_template ve_setup_11_uncoupled={
   -1,
   9000,
   15000,
-  
+
   blocksize_11,
   blocksize_11,
 
@@ -113,7 +113,7 @@ ve_setup_data_template ve_setup_11_uncoupled={
   NULL,
   NULL,
   _psy_noise_suppress,
-  
+
   _psy_compand_8,
   _psy_compand_8_mapping,
   NULL,
@@ -124,7 +124,7 @@ ve_setup_data_template ve_setup_11_uncoupled={
 
   _psy_ath_floater_8,
   _psy_ath_abs_8,
-  
+
   _psy_lowpass_11,
 
   _psy_global_44,

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -115,7 +115,7 @@ bool rvDebuggerWindow::RegisterClass ( void )
 {
 	WNDCLASSEX wcex;
 
-	wcex.cbSize = sizeof(WNDCLASSEX); 
+	wcex.cbSize = sizeof(WNDCLASSEX);
 
 	wcex.style			= CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc	= (WNDPROC)WndProc;
@@ -152,7 +152,7 @@ bool rvDebuggerWindow::Create ( HINSTANCE instance )
 	mClient = &gDebuggerApp.GetClient();
 
 	// Create the debugger window
-	mWnd = CreateWindow( DEBUGGERWINDOWCLASS, "", 
+	mWnd = CreateWindow( DEBUGGERWINDOWCLASS, "",
 						 WS_OVERLAPPEDWINDOW,
 						 CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, mInstance, this);
 
@@ -188,7 +188,7 @@ int CALLBACK rvDebuggerWindow::ScriptWordBreakProc (LPTSTR text, int current, in
 {
 	static TCHAR delimiters[]=TEXT("!@#$%^&*()-+=[]{}|\\;:'\"/,.<>? \t\r\n") ;
 
-	switch ( action ) 
+	switch ( action )
 	{
 		default:
 			break;
@@ -219,8 +219,8 @@ int CALLBACK rvDebuggerWindow::ScriptWordBreakProc (LPTSTR text, int current, in
 
 		case WB_MOVEWORDRIGHT:
         case WB_RIGHT:
-        
-			// If we are already on a delimiter then just return the current index       
+
+			// If we are already on a delimiter then just return the current index
 			if ( _tcschr ( delimiters, *(text + current * 2) ) )
 			{
 				return current;
@@ -240,7 +240,7 @@ int CALLBACK rvDebuggerWindow::ScriptWordBreakProc (LPTSTR text, int current, in
 
 			return current;
     }
-    
+
     return 0;
   }
 
@@ -619,23 +619,23 @@ rvDebuggerWindow::HandleInitMenu
 Handles the initialization of the main menu
 ================
 */
-int rvDebuggerWindow::HandleInitMenu ( WPARAM wParam, LPARAM lParam ) 
-{ 
-    int		cMenuItems = GetMenuItemCount((HMENU)wParam); 
-    int		nPos; 
-    int		id; 
-    UINT	flags; 
+int rvDebuggerWindow::HandleInitMenu ( WPARAM wParam, LPARAM lParam )
+{
+    int		cMenuItems = GetMenuItemCount((HMENU)wParam);
+    int		nPos;
+    int		id;
+    UINT	flags;
     HMENU	hmenu;
- 
+
 	hmenu = (HMENU) wParam;
 
 	// Run through all the menu items in the menu and see if any of them need
 	// modification in any way
-    for (nPos = 0; nPos < cMenuItems; nPos++) 
-    { 
-        id    = GetMenuItemID(hmenu, nPos); 
+    for (nPos = 0; nPos < cMenuItems; nPos++)
+    {
+        id    = GetMenuItemID(hmenu, nPos);
         flags = 0;
- 
+
 		// Handle popup menus too
 		if ( id < 0 )
 		{
@@ -744,7 +744,7 @@ rvDebuggerWindow::HandleCreate
 Handles the WM_CREATE command
 ================
 */
-int rvDebuggerWindow::HandleCreate ( WPARAM wparam, LPARAM lparam ) 
+int rvDebuggerWindow::HandleCreate ( WPARAM wparam, LPARAM lparam )
 {
 	UINT		tabsize = 16;
 	TEXTMETRIC	tm;
@@ -856,7 +856,7 @@ int rvDebuggerWindow::HandleCreate ( WPARAM wparam, LPARAM lparam )
 	col.pszText = "Value";
 	ListView_InsertColumn ( mWndWatch, 1, &col );
 
-	// Create the image list that is used by the threads window, callstack window, and 
+	// Create the image list that is used by the threads window, callstack window, and
 	// margin window
 	mImageList = ImageList_Create ( 16, 16, ILC_COLOR|ILC_MASK, 0, 2 );
 	ImageList_AddIcon ( mImageList, (HICON)LoadImage ( mInstance, MAKEINTRESOURCE(IDI_DBG_EMPTY), IMAGE_ICON, 16, 16, LR_DEFAULTSIZE|LR_DEFAULTCOLOR) );
@@ -930,8 +930,8 @@ rvDebuggerWindow::HandleCommand
 Handles the WM_COMMAND message for this window
 ================
 */
-int rvDebuggerWindow::HandleCommand ( WPARAM wparam, LPARAM lparam ) 
-{ 
+int rvDebuggerWindow::HandleCommand ( WPARAM wparam, LPARAM lparam )
+{
 	int event = HIWORD(wparam);
 	int id    = LOWORD(wparam);
 
@@ -1368,13 +1368,13 @@ LRESULT CALLBACK rvDebuggerWindow::WndProc ( HWND wnd, UINT msg, WPARAM wparam, 
 										window->mWatches.Remove ( (rvDebuggerWatch*)item.lParam );
 										delete (rvDebuggerWatch*)item.lParam;
 
-										ListView_SetItemState ( hdr->hwndFrom, 
+										ListView_SetItemState ( hdr->hwndFrom,
 															    sel,
 															    LVIS_SELECTED, LVIS_SELECTED );
 										
 										if ( ListView_GetNextItem ( hdr->hwndFrom, -1, LVNI_SELECTED ) == -1 )
 										{
-											ListView_SetItemState ( hdr->hwndFrom, 
+											ListView_SetItemState ( hdr->hwndFrom,
 																    ListView_GetItemCount ( hdr->hwndFrom ) - 1,
 																    LVIS_SELECTED, LVIS_SELECTED );
 										}
@@ -1598,7 +1598,7 @@ void rvDebuggerWindow::ProcessNetMessage ( msg_t* msg )
 					item.mask = LVIF_PARAM;
 					item.iItem = l;
 					ListView_GetItem ( mWndWatch, &item );
-					if ( item.lParam == (LPARAM) watch ) 
+					if ( item.lParam == (LPARAM) watch )
 					{					
 						ListView_RedrawItems ( mWndWatch, l, l );
 						UpdateWindow ( mWndWatch );
@@ -1680,7 +1680,7 @@ void rvDebuggerWindow::ProcessNetMessage ( msg_t* msg )
 				{
 					ListView_SetItemText ( mWndThreads, item.iItem, 3, "Stopped" );
 				}
-				else 
+				else
 				{
 					ListView_SetItemText ( mWndThreads, item.iItem, 3, "Running" );
 				}
@@ -1780,7 +1780,7 @@ bool rvDebuggerWindow::OpenScript ( const char* filename, int lineNumber )
 		int		c;
 		
 		// Put the caret on the line number specified and scroll it into position.
-		// This is a bit of a hack since we set the selection twice, but setting the 
+		// This is a bit of a hack since we set the selection twice, but setting the
 		// selection to (c,c) didnt work for scrolling the caret so we do (c,c+1)
 		// and then scroll before going back to (c,c).
 		// NOTE: We scroll to the line before the one we want so its more visible
@@ -1888,11 +1888,11 @@ void rvDebuggerWindow::CreateToolbar ( void )
 	tbmet.cyBarPad = 0;
 	SendMessage ( mWndToolbar, TB_SETMETRICS, 0, (LPARAM)&tbmet );
 
-	// Add the bitmap containing button images to the toolbar. 
-	TBADDBITMAP	tbab; 
-	tbab.hInst = mInstance; 
-	tbab.nID = IDB_DBG_TOOLBAR; 
-	SendMessage( mWndToolbar, TB_ADDBITMAP, (WPARAM)4, (LPARAM) &tbab ); 
+	// Add the bitmap containing button images to the toolbar.
+	TBADDBITMAP	tbab;
+	tbab.hInst = mInstance;
+	tbab.nID = IDB_DBG_TOOLBAR;
+	SendMessage( mWndToolbar, TB_ADDBITMAP, (WPARAM)4, (LPARAM) &tbab );
 
 	// Add the buttons to the toolbar
 	TBBUTTON tbb[] = { { 0, 0,					TBSTATE_ENABLED, BTNS_SEP,    0, 0, -1 },
@@ -1906,7 +1906,7 @@ void rvDebuggerWindow::CreateToolbar ( void )
 					   { 6, ID_DBG_DEBUG_STEPOUT, TBSTATE_ENABLED, BTNS_BUTTON, 0, 0, -1 },
 					   { 0, 0,					TBSTATE_ENABLED, BTNS_SEP,    0, 0, -1 } };
 
-	SendMessage( mWndToolbar, TB_ADDBUTTONS, (WPARAM)sizeof(tbb)/sizeof(TBBUTTON), (LPARAM) tbb ); 
+	SendMessage( mWndToolbar, TB_ADDBUTTONS, (WPARAM)sizeof(tbb)/sizeof(TBBUTTON), (LPARAM) tbb );
 }
 
 /*
@@ -2036,7 +2036,7 @@ void rvDebuggerWindow::EnableWindows ( bool state )
 ================
 rvDebuggerWindow::AddWatch
 
-Add a variable to the watch window.  If update is set to true then also query the 
+Add a variable to the watch window.  If update is set to true then also query the
 debugger client for the value
 ================
 */
@@ -2146,7 +2146,7 @@ void rvDebuggerWindow::UpdateRecentFiles ( void )
 ================
 rvDebuggerWindow::GetSelectedText
 
-Function to retrieve the text that is currently selected in the 
+Function to retrieve the text that is currently selected in the
 script control
 ================
 */
@@ -2188,7 +2188,7 @@ rvDebuggerWindow::FindNext
 
 Finds the next match of the find text in the active script.  The next is
 always relative to the current selection.  If the text parameter is NULL
-then the last text used will be searched for. 
+then the last text used will be searched for.
 ================
 */
 bool rvDebuggerWindow::FindNext ( const char* text )
@@ -2242,7 +2242,7 @@ rvDebuggerWindow::FindPrev
 
 Finds the previous match of the find text in the active script.  The previous is
 always relative to the current selection.  If the text parameter is NULL
-then the last text used will be searched for. 
+then the last text used will be searched for.
 ================
 */
 bool rvDebuggerWindow::FindPrev ( const char* text )
@@ -2331,7 +2331,7 @@ int rvDebuggerWindow::HandleDrawItem ( WPARAM wparam, LPARAM lparam )
 		FillRect ( dis->hDC, &dis->rcItem, GetSysColorBrush ( IsWindowEnabled ( mWndWatch ) ? COLOR_WINDOW : COLOR_3DFACE ) );		
 	}
 		
-	// Run through the columns and draw each with a frame around it and the text 
+	// Run through the columns and draw each with a frame around it and the text
 	// vertically centered in it
 	for ( index = 0; ListView_GetColumn ( mWndWatch, index, &col ); index ++ )
 	{

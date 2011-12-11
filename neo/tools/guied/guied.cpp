@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ GUIEditorInit
 Start the gui editor
 ================
 */
-void GUIEditorInit( void ) 
+void GUIEditorInit( void )
 {
 	gApp.Initialize();
 }
@@ -81,26 +81,26 @@ bool GUIEditorHandleMessage ( void *msg )
 ================
 GUIEditorRun
 
-Run a frame 
+Run a frame
 ================
 */
-void GUIEditorRun() 
+void GUIEditorRun()
 {
     MSG			msg;
 
 	// pump the message loop
-	while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE)) 
+	while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE))
 	{
-		if ( !GetMessage (&msg, NULL, 0, 0) ) 
+		if ( !GetMessage (&msg, NULL, 0, 0) )
 		{
 			common->Quit();
 		}
 
 		// save the msg time, because wndprocs don't have access to the timestamp
-		if ( win32.sysMsgTime && win32.sysMsgTime > (int)msg.time ) 
+		if ( win32.sysMsgTime && win32.sysMsgTime > (int)msg.time )
 		{
-		} 
-		else 
+		}
+		else
 		{
 			win32.sysMsgTime = msg.time;
 		}
@@ -109,7 +109,7 @@ void GUIEditorRun()
 		{
 			continue;
 		}
- 
+
 		TranslateMessage (&msg);
 		DispatchMessage (&msg);
 	}
@@ -145,9 +145,9 @@ Returns true if the given string is an expression
 */
 bool IsExpression ( const char* s )
 {
-	idParser src( s, strlen ( s ), "", 
-				  LEXFL_ALLOWMULTICHARLITERALS		| 
-				  LEXFL_NOSTRINGCONCAT				| 
+	idParser src( s, strlen ( s ), "",
+				  LEXFL_ALLOWMULTICHARLITERALS		|
+				  LEXFL_NOSTRINGCONCAT				|
 				  LEXFL_ALLOWBACKSLASHSTRINGCONCAT	|
 				  LEXFL_NOFATALERRORS );
 

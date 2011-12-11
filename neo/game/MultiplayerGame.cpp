@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -504,7 +504,7 @@ void idMultiplayerGame::UpdateScoreboard( idUserInterface *scoreBoard, idPlayer 
 
 	} else {
 		livesinfo = va( "%s: %i", common->GetLanguageDict()->GetString( "#str_01982" ), gameLocal.serverInfo.GetInt( "si_fragLimit" ) );
-	} 
+	}
 	if ( gameLocal.serverInfo.GetInt( "si_timeLimit" ) > 0 ) {
 		timeinfo = va( "%s: %i", common->GetLanguageDict()->GetString( "#str_01983" ), gameLocal.serverInfo.GetInt( "si_timeLimit" ) );
 	} else {
@@ -827,7 +827,7 @@ void idMultiplayerGame::UpdateWinsLosses( idPlayer *winner ) {
 					PlayGlobalSound( player->entityNumber, SND_YOULOSE );
 				}
 			} else if ( gameLocal.gameType == GAME_TOURNEY ) {
-				if ( player == winner ) { 
+				if ( player == winner ) {
 					playerState[ i ].wins++;
 					PlayGlobalSound( player->entityNumber, SND_YOUWIN );
 				} else if ( i == currentTourneyPlayer[ 0 ] || i == currentTourneyPlayer[ 1 ] ) {
@@ -928,7 +928,7 @@ void idMultiplayerGame::PlayerStats( int clientNum, char *data, const int len ) 
 	}
 
 	// find which team this player is on
-	ent = gameLocal.entities[ clientNum ]; 
+	ent = gameLocal.entities[ clientNum ];
 	if ( ent && ent->IsType( idPlayer::Type ) ) {
 		team = static_cast< idPlayer * >(ent)->team;
 	} else {
@@ -2645,7 +2645,7 @@ void idMultiplayerGame::ClientCallVote( vote_flags_t voteIndex, const char *vote
 	idBitMsg	outMsg;
 	byte		msgBuf[ MAX_GAME_MESSAGE_SIZE ];
 
-	// send 
+	// send
 	outMsg.Init( msgBuf, sizeof( msgBuf ) );
 	outMsg.WriteByte( GAME_RELIABLE_MESSAGE_CALLVOTE );
 	outMsg.WriteByte( voteIndex );
@@ -2944,7 +2944,7 @@ void idMultiplayerGame::SwitchToTeam( int clientNum, int oldteam, int newteam ) 
 		if ( i == clientNum ) {
 			continue;
 		}
-		ent = gameLocal.entities[ i ]; 
+		ent = gameLocal.entities[ i ];
 		if ( ent && ent->IsType( idPlayer::Type ) && static_cast< idPlayer * >(ent)->team == newteam ) {
 			playerState[ clientNum ].teamFragCount = playerState[ i ].teamFragCount;
 			break;
@@ -3028,7 +3028,7 @@ void idMultiplayerGame::ProcessChatMessage( int clientNum, bool team, const char
 		}
 	} else {
 		for ( i = 0; i < gameLocal.numClients; i++ ) {
-			ent = gameLocal.entities[ i ]; 
+			ent = gameLocal.entities[ i ];
 			if ( !ent || !ent->IsType( idPlayer::Type ) ) {
 				continue;
 			}
@@ -3349,7 +3349,7 @@ void idMultiplayerGame::ServerWriteInitialReliableMessages( int clientNum ) {
 	outMsg.WriteShort( startFragLimit );
 	// send the powerup states and the spectate states
 	for( i = 0; i < gameLocal.numClients; i++ ) {
-		ent = gameLocal.entities[ i ]; 
+		ent = gameLocal.entities[ i ];
 		if ( i != clientNum && ent && ent->IsType( idPlayer::Type ) ) {
 			outMsg.WriteShort( i );
 			outMsg.WriteShort( static_cast< idPlayer * >( ent )->inventory.powerups );

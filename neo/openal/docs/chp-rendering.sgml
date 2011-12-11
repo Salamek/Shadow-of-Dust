@@ -6,7 +6,7 @@
     <sect1 id="object-state">
      <title>Basic Listener and Source Attributes</title>
     <para>
-       This section introduces basic attributes that can be set both for 
+       This section introduces basic attributes that can be set both for
        the Listener object and for Source objects.
     </para>
 
@@ -16,30 +16,30 @@
        two types:  non-positional and positional.
        Non-positional properties include gain control and Environment Name."
      </para><para>
-      I said: (low pass) Filters are applied to the sound during processing 
-      at various stages. The exact sequence in which Filters are applied is 
-      determined based on the location of the Objects they are 
+      I said: (low pass) Filters are applied to the sound during processing
+      at various stages. The exact sequence in which Filters are applied is
+      determined based on the location of the Objects they are
       set for - spatial arrangement of Objects determines the
       sequence unless invariance is guaranteed, or invariance
      violation is permitted by the specification and current &AL;
      configuration state.
       </para><para>
-      Is there a required order of application, i.e. a pipeline? 
+      Is there a required order of application, i.e. a pipeline?
       </para><para>
       Filter Parameters vs. Non-positional properties.
       Spatialization vs. Positional properties.
       Spatial attributes?
-      Let's postpone grouping of attributes. 
+      Let's postpone grouping of attributes.
       </para></note>
      ]]>
 
-   
+
     <para>
-      The &AL; Listener and Sources have attributes to describe 
+      The &AL; Listener and Sources have attributes to describe
       their position, velocity and orientation in three dimensional space.
-      &AL; like &OGL;, uses a right-handed Cartesian coordinate system (RHS), 
+      &AL; like &OGL;, uses a right-handed Cartesian coordinate system (RHS),
       where in a frontal default view X (thumb) points right,
-      Y (index finger) points up, and Z (middle finger) points towards 
+      Y (index finger) points up, and Z (middle finger) points towards
       the viewer/camera. To switch from a left handed coordinate system (LHS)
       to a right handed coordinate systems, flip the sign on the Z coordinate.
     </para>
@@ -53,7 +53,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -61,15 +61,15 @@
        <entry>POSITION</>
        <entry>3fv, 3f</>
        <entry> any except NaN </>
-       <entry> { 0.0f, 0.0f, 0.0f } </>        
+       <entry> { 0.0f, 0.0f, 0.0f } </>
     </row>
     </tbody>
     </tgroup>
     </table>
     Description:
         POSITION specifies the current location of the Object in the
- 	world coordinate system. Any 3-tuple of valid float/double values 
- 	is allowed. Implementation behavior on encountering &NaN; and &Infty; 
+ 	world coordinate system. Any 3-tuple of valid float/double values
+ 	is allowed. Implementation behavior on encountering &NaN; and &Infty;
         is not defined. The Object position is always defined in the
         world coordinate system.
     </para>
@@ -91,7 +91,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -99,25 +99,25 @@
        <entry>VELOCITY</>
        <entry>3fv, 3f</>
        <entry> any except NaN </>
-       <entry> { 0.0f, 0.0f, 0.0f } </>        
+       <entry> { 0.0f, 0.0f, 0.0f } </>
     </row>
     </tbody>
     </tgroup>
-    </table>     
+    </table>
     Description:
         VELOCITY specifies the current velocity (speed and direction) of
- 	the Object, in the world coordinate system. Any 3-tuple of valid 
- 	float/double values is allowed. The Object VELOCITY does not affect 
+ 	the Object, in the world coordinate system. Any 3-tuple of valid
+ 	float/double values is allowed. The Object VELOCITY does not affect
         its position.
         &AL; does not calculate the velocity from subsequent position
  	updates, nor does it adjust the position over time based on
  	the specified velocity. Any such calculation is left to the
  	application. For the purposes of sound processing, position and
  	velocity are independent parameters affecting different aspects
- 	of the sounds. 
+ 	of the sounds.
        </para><para>
-        VELOCITY is taken into account by the driver to synthesize the 
-        Doppler effect perceived by the Listener for each source, based 
+        VELOCITY is taken into account by the driver to synthesize the
+        Doppler effect perceived by the Listener for each source, based
         on the velocity of both Source and Listener, and the Doppler
         related parameters.
     </para>
@@ -134,7 +134,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -142,7 +142,7 @@
        <entry>GAIN</>
        <entry>f</>
        <entry>0.0f, (0.0f, any</>
-       <entry> 1.0f</>        
+       <entry> 1.0f</>
     </row>
     </tbody>
     </tgroup>
@@ -150,13 +150,13 @@
      Description:
         GAIN defines a scalar amplitude multiplier. As a Source attribute, it applies
  	to that particular source only. As a Listener attribute, it effectively
-        applies to all Sources in the current Context. The default 1.0 means 
-        that the sound is un-attenuated. A GAIN value of 0.5 is equivalent to 
-        an attenuation of 6 dB. The value zero equals silence (no output). Driver 
-        implementations are free to optimize this case and skip mixing and 
-        processing stages where applicable. The implementation is in charge of 
-        ensuring artifact-free (click-free) changes of gain values and is free 
-        to defer actual modification of the sound samples, within the limits of 
+        applies to all Sources in the current Context. The default 1.0 means
+        that the sound is un-attenuated. A GAIN value of 0.5 is equivalent to
+        an attenuation of 6 dB. The value zero equals silence (no output). Driver
+        implementations are free to optimize this case and skip mixing and
+        processing stages where applicable. The implementation is in charge of
+        ensuring artifact-free (click-free) changes of gain values and is free
+        to defer actual modification of the sound samples, within the limits of
         acceptable latencies.
     </para>
     <para>
@@ -170,23 +170,23 @@
     <![ %Annote [
       <note><title>Annotation/ Effective Minimal Distance</title><para>
          Presuming that the sample uses the entire dynamic range of
-         the encoding format, an effective gain of 1 represents the 
+         the encoding format, an effective gain of 1 represents the
          maximum volume at which a source can reasonably be played.
          During processing, the implementation combines the Source
          GAIN (or MIN_GAIN, if set and larger) with distance based
          attenuation. The distance at which the effective gain is 1
-         is equivalent to the DirectSound3D MIN_DISTANCE parameter.  
+         is equivalent to the DirectSound3D MIN_DISTANCE parameter.
          Once the effective gain has reached the maximum possible
          value, it will not increase with decreasing distance anymore.
       </para></note>
     ]]>
 
-   
+
     <![ %Annote [
       <note><title>Annotation (Muting a Context)</title><para>
          To mute the current context, simply set Listener GAIN to zero.
          The implementation is expected to optimize for this case,
-         calculating necessary (offset) updates but bypassing the 
+         calculating necessary (offset) updates but bypassing the
          mixing and releasing hardware resources.
          The specification does not guarantee that the implementation
          will release hardware resources used by a muted context.
@@ -196,15 +196,15 @@
     <![ %Annote [
       <note><title>Annotation (Muting a Source)</title><para>
         To mute a Source, set Source GAIN to zero. The &AL; implementation
-        is encouraged to optimize for this case. 
+        is encouraged to optimize for this case.
        </para></note>
     ]]>
 
     <![ %RFC [
     <para>
-        <note id="rf-bk000503-01"><title>RFC: GAIN &gt; 1?</title><para>       
-        GAIN could exceed 1 (to compensate attenuation elsewhere, or to account 
-        for grater dynamic range of the hardware? No guarantees are made with 
+        <note id="rf-bk000503-01"><title>RFC: GAIN &gt; 1?</title><para>
+        GAIN could exceed 1 (to compensate attenuation elsewhere, or to account
+        for grater dynamic range of the hardware? No guarantees are made with
         respect to range overflows? Precision loss? Culling by effective gain?
         Does &AL; clip values during processing, and when/at what stages?
         </para></note>
@@ -214,11 +214,11 @@
         to synthesize the Doppler effect perceived by the listener for each
  	source, based on the relative velocity of this source with respect
  	to the listener."
-        Doppler is calculated using Source and Listener velocities measured 
+        Doppler is calculated using Source and Listener velocities measured
         with respect to the medium. Do we have to account for the medium
         to move (offsetting listener/source) in later revisions (air/water currents)?
         </para></note>
-   
+
         <note id="rfc-bk000619-03"><title>RFC: </title><para>
         JM removed: "For the purposes of sound processing, position and
         velocity are independent parameters affecting different paths
@@ -250,28 +250,28 @@
       headphones or 2 speakers, 4.1 speakers, or other arrangements,
       whether (and which) HRTF's are applied, etc..
     </para>
-    
+
     <![ %Annote [
       <note><title>Annotation (Listener Anatomy)</title><para>
-       The API is ignorant with respect to the real world 
-       listener, it does not need to make assumptions on the 
-       listening capabilities of the user, its species or its 
-       number of ears. It only describes a scene and the position 
+       The API is ignorant with respect to the real world
+       listener, it does not need to make assumptions on the
+       listening capabilities of the user, its species or its
+       number of ears. It only describes a scene and the position
        of the listener in this scene.  It is the &AL; implementation
-       that is designed for humans with ears on either side of the 
+       that is designed for humans with ears on either side of the
        head.
        </para></note>
     ]]>
 
- 
+
     <![ %Annote [
       <note><title>Annotation (Listener State Evaluation)</title><para>
        Some Listener state (GAIN) affects only the very last
-       stage of sound synthesis, and is thus applied to the sound stream 
+       stage of sound synthesis, and is thus applied to the sound stream
        as sampled at the Listener position. Other Listener state is
-       applied earlier. One example is Listener velocity as used to 
+       applied earlier. One example is Listener velocity as used to
        compute the amount of Doppler pitch-shifting applied to each source:
-       In a typical implementation, pitch-shifting (sample-rate conversion) 
+       In a typical implementation, pitch-shifting (sample-rate conversion)
        might be the first stage of the audio processing for each source.
        </para></note>
     ]]>
@@ -291,7 +291,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -299,22 +299,22 @@
        <entry>ORIENTATION</>
        <entry> fv </>
        <entry> any except NaN </>
-       <entry>  { { 0.0f, 0.0f, -1.0f },       { 0.0f, 1.0f, 0.0f } } </>        
+       <entry>  { { 0.0f, 0.0f, -1.0f },       { 0.0f, 1.0f, 0.0f } } </>
     </row>
     </tbody>
     </tgroup>
     </table>
       Description:
-        ORIENTATION is a pair of 3-tuples representing the 'at' direction vector  
+        ORIENTATION is a pair of 3-tuples representing the 'at' direction vector
         and 'up' direction of the Object in Cartesian space. &AL; expects two
         vectors that are orthogonal to each other. These
-        vectors are not expected to be normalized. If one or more vectors 
+        vectors are not expected to be normalized. If one or more vectors
         have zero length, implementation behavior is undefined. If the two
         vectors are linearly dependent, behavior is undefined.
      </para>
      <![ %RFC [
       <note id="rfc-bk000503-01"><title>RFC: Orientation Paranoia</title><para>
-        Watch LHS vs. RHS (sign on 'at'). 
+        Watch LHS vs. RHS (sign on 'at').
         Confirm sequence is (up, at) not vice versa.
         Do we want to allow for different representations down the road?
       </para></note>
@@ -325,7 +325,7 @@
     <title>Changing Listener Attributes</title>
     <para>
       Listener attributes are changed using the Listener group of commands.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> Listener{n}{sifd}{v} </function></funcdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
       <paramdef> &type; <parameter> values </parameter></paramdef>
@@ -337,9 +337,9 @@
     <title>Querying Listener Attributes</title>
     <para>
       Listener state is maintained inside the &AL; implementation and can be
-      queried in full. See Querying Object Attributes. The valid values for 
+      queried in full. See Querying Object Attributes. The valid values for
       paramName are identical to the ones for the Listener* command.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> GetListener{sifd}v </function></funcdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
       <paramdef> &type;* <parameter> values </parameter></paramdef>
@@ -357,22 +357,22 @@
        sample data. By controlling a Source's attributes the
        application can modify and parameterize the static sample data provided
        by the Buffer referenced by the Source.
-       Sources define a localized sound, and encapsulate 
-       a set of attributes applied to a sound at its origin, i.e. in the 
-       very first stage of the processing on the way to the listener. 
-       Source related effects have to be applied 
+       Sources define a localized sound, and encapsulate
+       a set of attributes applied to a sound at its origin, i.e. in the
+       very first stage of the processing on the way to the listener.
+       Source related effects have to be applied
        before Listener related effects unless the output is invariant
-       to any collapse or reversal of order. 
+       to any collapse or reversal of order.
      </para>
      <para>
       &AL; also provides additional functions to manipulate and query the
-      execution state of Sources: the current playing status of a 
+      execution state of Sources: the current playing status of a
       source (started, stopped, paused), including access to the current
-      sampling position within the associated Buffer. 
+      sampling position within the associated Buffer.
      </para>
-  
+
     <![ %RFC [
-      <note id="rfc-briareos000629-01"><title>RFC: Mike on Source Types</title><para>  
+      <note id="rfc-briareos000629-01"><title>RFC: Mike on Source Types</title><para>
         AL_SOURCE_ABSOLUTE and AL_SOURCE_AMBIENT have been
         deprecated. AL_SOURCE_ABSOLUTE was simply the converse of the
         AL_SOURCE_RELATIVE pname, and as such was unnecessary. The
@@ -382,30 +382,30 @@
         type to AL_SOURCE_RELATIVE, and is therefore also unnecessary.
       </para></note>
    ]]>
- 
+
 
    <![ %RFC [
      <note id="rfc-bk000721-02"><title>RFC: Bernd on Source Types</title><para>
        Mike seems to miss a few problems here. W/o a converse we can't
-       reset source attributes to ABSOLUTE. Ambient sounds are not 
+       reset source attributes to ABSOLUTE. Ambient sounds are not
        necessarily trivial. A3D manual suggested some magic number
        to fake the effect of ambient (i.e. sound that ideally
-       can't be localized by listener). If we can get away with such magic 
+       can't be localized by listener). If we can get away with such magic
        numbers in a tutorial in a driver-independent way, fine. If there is any
        risk that the impression of ambient sound requires driver specific
        hacks, then we need AMBIENT. As soon as we have a third localization
        type, ABSOLUTE and RELATIVE are needed as there is no unambiguous
        converse.
 
-       From the A3D 2.0 Optimize.doc: 
-       "Adding some ambient background noise is a great way to fill in the gaps 
-        when the audio content is reduced.  A great way to make an ambient sound 
-        seem like it is coming from everywhere is to load up two buffers with the 
-        same sound, and position them about 2 meters behind the listener at 
+       From the A3D 2.0 Optimize.doc:
+       "Adding some ambient background noise is a great way to fill in the gaps
+        when the audio content is reduced.  A great way to make an ambient sound
+        seem like it is coming from everywhere is to load up two buffers with the
+        same sound, and position them about 2 meters behind the listener at
         about 4 and 8 o\rquote clock.  The waves have to be looping (make sure
-        there is no beating when you play them back).  Starting the sounds 180 
-        degrees out of phase can help, as will playing them with slightly different 
-        pitch-shift values." 
+        there is no beating when you play them back).  Starting the sounds 180
+        degrees out of phase can help, as will playing them with slightly different
+        pitch-shift values."
      </para></note>
    ]]>
 
@@ -413,20 +413,20 @@
      <note id="rfc-bk000721-03"><title>RFC: Bernd on Source Types (2)</title><para>
        There is a point to be made in using POSITION_RELATIVE and
        VELOCITY_RELATIVE iff we do not have AMBIENT to consider.
-       This makes it a call-by-call choice when setting Source3f{v} 
+       This makes it a call-by-call choice when setting Source3f{v}
        vectors, as it is applied when dereferencing.
    </para></note>
    ]]>
 
    <![ %RFC [
      <note id="rfc-bk000721-04"><title>RFC: Bernd on Source Types (3)</title><para>
-       Semantically, AMBIENT has nothing to do with coordinate systems, 
+       Semantically, AMBIENT has nothing to do with coordinate systems,
        it is a qualifier just like multichannel direct passthru.
    </para></note>
    ]]>
 
     <![ %RFC [
-      <note id="rfc-bk000721-05"><title>RFC:  Source Attenuation Clamping</title><para>  
+      <note id="rfc-bk000721-05"><title>RFC:  Source Attenuation Clamping</title><para>
          Using AL_SOURCE_ATTENUATION_MIN and AL_SOURCE_ATTENUATION_MAX
          to specify the clamping values for the normalized attenuation
          factor (which is a function of distance) is in contradiction
@@ -443,14 +443,14 @@
          during processing might.
       </para></note>
     ]]>
-    
+
 
 
 
 
     <sect2>
     <title>Managing Source Names</title>
-    <para> 
+    <para>
      &AL; provides calls to request and release Source Names handles.
      Calls to control Source Execution State are also provided.
     </para>
@@ -459,7 +459,7 @@
     <title>Requesting a Source Name</title>
     <para>
      The application requests a number of Sources using GenSources.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> &void; <function> GenSources </function></funcdef>
       <paramdef> &sizei; <parameter> n </parameter></paramdef>
       <paramdef> &uint;* <parameter> sources </parameter></paramdef>
@@ -473,7 +473,7 @@
    <para>
      The application requests deletion of a number of Sources
      by DeleteSources.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> &void; <function> DeleteSources </function></funcdef>
       <paramdef> &sizei; <parameter> n </parameter></paramdef>
       <paramdef> &uint;* <parameter> sources </parameter></paramdef>
@@ -486,7 +486,7 @@
    <para>
      The application can verify whether a source name is valid
      using the IsSource query.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> &bool; <function> IsSource </function></funcdef>
       <paramdef> &uint; <parameter> sourceName </parameter></paramdef>
       </funcprototype></funcsynopsis>
@@ -501,7 +501,7 @@
         This section lists the attributes that are set per Source,
         affecting the processing of the current buffer. Some of
         these attributes can also be set for buffer queue entries.
-    </para> 
+    </para>
     <![ %Annote [
       <note><title>Annotation (No Priorities)</title><para>
          There are no per Source priorities, and no explicit priority
@@ -509,11 +509,11 @@
          application express preferences in case that the implementation
          provides culling and prioritization mechanisms might be added
          at some later time. This topic is under discussion for GL as
-         well, which already has one exlicit priority API along with 
-         internally used MRU heuristics (for resident texture memory). 
+         well, which already has one exlicit priority API along with
+         internally used MRU heuristics (for resident texture memory).
        </para></note>
     ]]>
- 
+
 
 
 
@@ -528,7 +528,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -536,13 +536,13 @@
        <entry> SOURCE_RELATIVE </>
        <entry> &bool; </>
        <entry> FALSE, TRUE</>
-       <entry> FALSE </>        
+       <entry> FALSE </>
     </row>
     </tbody>
     </tgroup>
     </table>
        SOURCE_RELATIVE set to TRUE indicates that the values
-       specified by POSITION are to be interpreted relative 
+       specified by POSITION are to be interpreted relative
        to the listener position.
     </para>
 
@@ -572,7 +572,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -580,13 +580,13 @@
        <entry> LOOPING </>
        <entry> &uint; </>
        <entry> TURE, FALSE</>
-       <entry> FALSE </>        
+       <entry> FALSE </>
     </row>
     </tbody>
     </tgroup>
     </table>
      Description:
-       LOOPING is a flag that indicates that the Source will not 
+       LOOPING is a flag that indicates that the Source will not
        be in STOPPED state once it reaches the end of last buffer
        in the buffer queue. Instead, the Source will immediately
        promote to INITIAL and PLAYING. The default value is FALSE.
@@ -604,24 +604,24 @@
       <note><title>Annotation (Loop Control)</title><para>
         To implement a 3 stage "loop point" solution, the
         application has to queue the FadeIn buffer first,
-        then queue the buffer it wants to loop, and set 
+        then queue the buffer it wants to loop, and set
         LOOPING to TRUE once the FadeIn buffer has been
-        processed and unqueued. To fade from looping, the 
+        processed and unqueued. To fade from looping, the
         application can queue a FadeOut buffer, then
         set LOOPING to false on the PLAYING source. Alternatively,
         the application can decide to not use the LOOPING
         attribute at all, and just continue to queue the buffer
-        it wants repeated. 
+        it wants repeated.
        </para></note>
     ]]>
 
     <![ %Annote [
       <note><title>Annotation (Rejected alternatives)</title><para>
         A finite loop counter was rejected because it is
-        ambiguous with respect to persistent (initial counter) 
+        ambiguous with respect to persistent (initial counter)
         vs. transient (current counter). For similar reasons,
         a Play-equivalent command with a (transient) loop counter
-        was rejected.  
+        was rejected.
       </para></note>
     ]]>
     </sect3>
@@ -637,7 +637,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -645,20 +645,20 @@
        <entry>BUFFER</>
        <entry> &uint; </>
        <entry> any valid bufferName </>
-       <entry> &NONE; </>        
+       <entry> &NONE; </>
     </row>
     </tbody>
     </tgroup>
     </table>
-     Description: 
+     Description:
         Specifies the current Buffer object, making it the
-        head entry in the Source's queue.  Using BUFFER on a 
+        head entry in the Source's queue.  Using BUFFER on a
         STOPPED or INITIAL Source empties the entire queue,
         then appends the one Buffer specified.
     </para>
     <para>
-       For a PLAYING or PAUSED Source, using the Source command 
-       with BUFFER is an INVALID_OPERATION. 
+       For a PLAYING or PAUSED Source, using the Source command
+       with BUFFER is an INVALID_OPERATION.
        It can be applied to INITIAL and STOPPED Sources only.
        Specifying an invalid bufferName will
        result in an INVALID_VALUE error while specifying an
@@ -669,8 +669,8 @@
         Source( sName, BUFFER, 0 ) is a legal way to release the
         current buffer queue on an INITIAL or STOPPED Source,
         whether it has just one entry (current buffer) or more.
-        The Source( sName, BUFFER, NONE) call still causes an 
-        INVALID_OPERATION for any source PLAYING or PAUSED, 
+        The Source( sName, BUFFER, NONE) call still causes an
+        INVALID_OPERATION for any source PLAYING or PAUSED,
         consequently it cannot be abused to mute or stop a source.
     </para>
 
@@ -682,15 +682,15 @@
             On the other hand read-only queues do not allow for
             releasing a buffer without releasing the entire queue.
 
-            We can not require BUFFER state to be transient and lost 
-            as soon as a Source is implicitely or explicitely stopped. 
-            This contradicts queue state being part of the Source's 
-            configuration state that is preserved through Stop() 
+            We can not require BUFFER state to be transient and lost
+            as soon as a Source is implicitely or explicitely stopped.
+            This contradicts queue state being part of the Source's
+            configuration state that is preserved through Stop()
             operations and available for Play().
        </para></note>
     ]]>
 
-  
+
     </sect3>
 
 
@@ -705,7 +705,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -713,15 +713,15 @@
        <entry> BUFFERS_QUEUED </>
        <entry> &uint; </>
        <entry> [0, any]</>
-       <entry> none </>        
+       <entry> none </>
     </row>
     </tbody>
     </tgroup>
     </table>
        Query only. Query the number of buffers in the queue
        of a given Source. This includes those not yet played,
-       the one currently playing, and the ones that have been 
-       played already. This will return 0 if the current and 
+       the one currently playing, and the ones that have been
+       played already. This will return 0 if the current and
        only bufferName is 0.
     </para>
 
@@ -735,7 +735,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -743,20 +743,20 @@
        <entry> BUFFERS_PROCESSED </>
        <entry> &uint; </>
        <entry> [0, any]</>
-       <entry> none </>        
+       <entry> none </>
     </row>
     </tbody>
     </tgroup>
     </table>
        Query only. Query the number of buffers that have
-       been played by a given Source. 
+       been played by a given Source.
        Indirectly, this gives the index of the buffer
        currently playing. Used to determine how much
        slots are needed for unqueueing them.
        On an STOPPED Source, all buffers are processed.
        On an INITIAL Source, no buffers are processed,
        all buffers are pending.
-       This will return 0 if the current and 
+       This will return 0 if the current and
        only bufferName is 0.
     </para>
 
@@ -780,7 +780,7 @@
          which necessitates no looping on entire queues,
          unless we accept that no unqueueing is possible
          from Source looping over the entire queue.
-         Currently not supported, as queueing is 
+         Currently not supported, as queueing is
          primarily meant for streaming, which implies
          unqueue-refill-requeue operations.
       </para></note>
@@ -800,7 +800,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -808,18 +808,18 @@
        <entry>MIN_GAIN</>
        <entry>f</>
        <entry>0.0f, (0.0f, 1.0f]</>
-       <entry>0.0f</>        
+       <entry>0.0f</>
     </row>
     </tbody>
     </tgroup>
     </table>
      Description:
-        MIN_GAIN is a scalar amplitude threshold. It indicates the minimal GAIN 
+        MIN_GAIN is a scalar amplitude threshold. It indicates the minimal GAIN
         that is always guaranteed for this Source. At the end of the processing
         of various attenuation factors such as distance based attenuation and
         Source GAIN, the effective gain calculated is compared to this value.
         If the effective gain is lower than MIN_GAIN, MIN_GAIN is applied.
-        This happens before the Listener GAIN is applied. If a zero MIN_GAIN 
+        This happens before the Listener GAIN is applied. If a zero MIN_GAIN
         is set, then the effective gain will not be corrected.
     </para>
 
@@ -829,13 +829,13 @@
          By setting MIN_GAIN, the application implicitely defines a
          maximum distance for a given distance attenuation model and
          Source GAIN. The distance at which the effective gain is MIN_GAIN
-         can be used as a replacement to the DirectSound3D MAX_DISTANCE parameter.  
-         Once the effective gain has reached the MIN_GAIN value, it will 
+         can be used as a replacement to the DirectSound3D MAX_DISTANCE parameter.
+         Once the effective gain has reached the MIN_GAIN value, it will
          no longer decrease with increasing distance.
       </para></note>
     ]]>
 
-   
+
     <para>
     <table>
     <title>Source Maximal Gain (logarithmic)</title>
@@ -845,7 +845,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -853,20 +853,20 @@
        <entry>MAX_GAIN</>
        <entry>f</>
        <entry>0.0f, (0.0f, 1.0f]</>
-       <entry>1.0f</>        
+       <entry>1.0f</>
     </row>
     </tbody>
     </tgroup>
     </table>
      Description:
-        MAX_GAIN defines a scalar amplitude threshold. It indicates the maximal 
+        MAX_GAIN defines a scalar amplitude threshold. It indicates the maximal
         GAIN permitted for this Source. At the end of the processing
         of various attenuation factors such as distance based attenuation and
         Source GAIN, the effective gain calculated is compared to this value.
         If the effective gain is higher than MAX_GAIN, MAX_GAIN is applied.
         This happens before the Listener GAIN is applied. If the Listener gain
         times MAX_GAIN still exceeds the maximum gain the implementation can
-        handle, the implementation is free to clamp. If a zero MAX_GAIN 
+        handle, the implementation is free to clamp. If a zero MAX_GAIN
         is set, then the Source is effectively muted. The implementation is free
         to optimize for this situation, but no optimization is required or
         recommended as setting GAIN to zero is the proper way to mute a Source.
@@ -875,9 +875,9 @@
     <![ %Annote [
       <note><title>Annotation (Un-attenuated Source)</title><para>
          Setting MIN_GAIN and MAX_GAIN to the GAIN value will effectively
-         make the Source amplitude independent of distance. The 
+         make the Source amplitude independent of distance. The
          implementation is free to optimize for this situation. However, the
-         recommended way to accomplish this effect is using a ROLLOFF_FACTOR 
+         recommended way to accomplish this effect is using a ROLLOFF_FACTOR
          of zero.
        </para></note>
     ]]>
@@ -886,11 +886,11 @@
 
     <![ %Annote [
       <note><title>Annotation (Internal GAIN threshold)</title><para>
-        The &AL; implementation is free to use an internally chosen 
-        threshold level below which a Source is ignored for mixing. 
-        Reasonable choices would set this threshold low enough so 
+        The &AL; implementation is free to use an internally chosen
+        threshold level below which a Source is ignored for mixing.
+        Reasonable choices would set this threshold low enough so
         that the user will not perceive a difference.  Setting MIN_GAIN
-        for a source will override any implementation defined test.     
+        for a source will override any implementation defined test.
        </para></note>
     ]]>
     </sect3>
@@ -908,7 +908,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -916,7 +916,7 @@
        <entry> REFERENCE_DISTANCE </>
        <entry> &float; </>
        <entry> [0, any]</>
-       <entry> 1.0f </>        
+       <entry> 1.0f </>
     </row>
     </tbody>
     </tgroup>
@@ -938,7 +938,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -946,7 +946,7 @@
        <entry> ROLLOFF_FACTOR </>
        <entry> &float; </>
        <entry> [0, any]</>
-       <entry> 1.0f </>        
+       <entry> 1.0f </>
     </row>
     </tbody>
     </tgroup>
@@ -954,12 +954,12 @@
        This is used for distance attenuation calculations
        based on inverse distance with rolloff. For
        distances smaller than MAX_DISTANCE (and, depending
-       on the distance model, larger than REFERENCE_DISTANCE), 
+       on the distance model, larger than REFERENCE_DISTANCE),
        this will scale the distance attenuation over the
        applicable range. See section on distance models for
        details how the attenuation is computed as a function
        of the distance.
-    </para>   
+    </para>
     <para>
        In particular, ROLLOFF_FACTOR can be set to zero for
        those Sources that are supposed to be exempt from
@@ -977,7 +977,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -985,7 +985,7 @@
        <entry> MAX_DISTANCE </>
        <entry> &float; </>
        <entry> [0, any]</>
-       <entry> MAX_FLOAT </>        
+       <entry> MAX_FLOAT </>
     </row>
     </tbody>
     </tgroup>
@@ -997,15 +997,15 @@
        be clamped to MAX_DISTANCE.
        MAX_DISTANCE based clamping is applied before MIN_GAIN clamping,
        so if the effective gain at MAX_DISTANCE is larger than MIN_GAIN,
-       MIN_GAIN will have no effect. No culling is supported.     
+       MIN_GAIN will have no effect. No culling is supported.
     </para>
 
     <![ %Annote [
       <note><title>Annotation (No Culling)</title><para>
       This is a per-Source attribute supported for DS3D compatibility
-      only. Other API features might suffer from side effects due to 
+      only. Other API features might suffer from side effects due to
       the clamping of distance (instead of e.g. clamping to an effective
-      gain at MAX_DISTANCE). 
+      gain at MAX_DISTANCE).
       </para></note>
     ]]>
 
@@ -1025,7 +1025,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -1033,13 +1033,13 @@
        <entry>PITCH</>
        <entry>f</>
        <entry> (0.0f, 2.0f]</>
-       <entry> 1.0f</>        
+       <entry> 1.0f</>
     </row>
     </tbody>
     </tgroup>
     </table>
-     Description: 
-        Desired pitch shift, where 1.0 equals identity. Each reduction by 50 percent 
+     Description:
+        Desired pitch shift, where 1.0 equals identity. Each reduction by 50 percent
         equals a pitch shift of -12 semitones (one octave reduction). Zero is not
         a legal value.
     </para>
@@ -1052,8 +1052,8 @@
        Each Source can be directional, depending on the settings for
        CONE_INNER_ANGLE and CONE_OUTER_ANGLE. There are three zones
        defined: the inner cone, the outside zone, and the transitional
-       zone in between. 
-       The angle-dependent gain for a directional source is constant 
+       zone in between.
+       The angle-dependent gain for a directional source is constant
        inside the inner cone, and changes over the transitional zone
        to the value specified outside the outer cone.
        Source GAIN is applied for the inner cone,
@@ -1067,7 +1067,7 @@
     <![ %Annote [
       <note><title>Annotation (Interpolation Restrictions)</title><para>
          The specification does not specify the exact interpolation
-         applied in the transitional zone, to calculate gain as a 
+         applied in the transitional zone, to calculate gain as a
          function of angle. The implementation is free to use
          linear or other interpolation, as long as the values
          are monotonically decreasing from GAIN to GAIN times CONE_OUTER_GAIN.
@@ -1084,7 +1084,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -1092,26 +1092,26 @@
        <entry>DIRECTION</>
        <entry>3fv, 3f</>
        <entry> any except NaN </>
-       <entry> { 0.0f, 0.0f, 0.0f } </>        
+       <entry> { 0.0f, 0.0f, 0.0f } </>
     </row>
     </tbody>
     </tgroup>
     </table>
-     Description: 
-        If DIRECTION does not equal the zero vector, the Source is directional. 
+     Description:
+        If DIRECTION does not equal the zero vector, the Source is directional.
         The sound emission is presumed to be symmetric
         around the direction vector (cylinder symmetry). Sources are not
         oriented in full 3 degrees of freedom, only two angles are effectively
         needed.
        </para><para>
         The zero vector is default, indicating that a Source is not directional.
-        Specifying a non-zero vector will make the Source directional. 
+        Specifying a non-zero vector will make the Source directional.
         Specifying a zero vector for a directional Source will effectively
-        mark it as nondirectional. 
+        mark it as nondirectional.
     </para>
 
     <![ %RFC [
-       <note id="rfc-bk000821-01"><title>RFC: Oriented Sources </title><para>  
+       <note id="rfc-bk000821-01"><title>RFC: Oriented Sources </title><para>
          Do we want an alternative AZIMUTH/ALTITUDE parametrization?
          Do we need ORIENTATION later? Is this superimposable? Can we mix both?
       </para></note>
@@ -1122,13 +1122,13 @@
          From the point of view of the &AL; implementation, all
          Sources are directional. Certain choices for cone angles
          as well as a direction vector with zero length are treated
-         equivalent to an omnidirectional source. The &AL; 
-         implementation is free to flag and optimize these cases. 
+         equivalent to an omnidirectional source. The &AL;
+         implementation is free to flag and optimize these cases.
        </para></note>
     ]]>
 
     <![ %RFC [
-       <note id="rfc-bk000803-05"><title>RFC: Separate GenDirectionSource?</title><para>  
+       <note id="rfc-bk000803-05"><title>RFC: Separate GenDirectionSource?</title><para>
          Is there any risk that directional sources require different
          resources that have to be allocated from the beginning, and
          that we can not change an omnidirectional source to a
@@ -1146,7 +1146,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -1154,20 +1154,20 @@
        <entry>CONE_INNER_ANGLE</>
        <entry>i,f</>
        <entry>any except NaN</>
-       <entry>360.0f</>        
+       <entry>360.0f</>
     </row>
     </tbody>
     </tgroup>
     </table>
-     Description: 
+     Description:
        Inside angle of the sound cone, in degrees. The default of 360 means that the
-       inner angle covers the entire world, which is equivalent to an omnidirectional 
+       inner angle covers the entire world, which is equivalent to an omnidirectional
        source.
     </para>
     <![ %RFC [
-       <note id="rfc-bk000926-01"><title>RFC: inconsistent cone angles? </title><para>  
+       <note id="rfc-bk000926-01"><title>RFC: inconsistent cone angles? </title><para>
         Is (inner &lt;= outer) required? Do we generate an error?
-        Shouldn't this be a CONE_ANGLES 2f call specifying both angles at once?      
+        Shouldn't this be a CONE_ANGLES 2f call specifying both angles at once?
       </para></note>
     ]]>
 
@@ -1183,7 +1183,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -1191,7 +1191,7 @@
        <entry>CONE_OUTER_ANGLE</>
        <entry>i,f</>
        <entry>any except NaN</>
-       <entry>360.0f</>        
+       <entry>360.0f</>
     </row>
     </tbody>
     </tgroup>
@@ -1200,10 +1200,10 @@
        outer angle covers the entire world. If the inner angle is also 360, then
        the zone for angle-dependent attenuation is zero.
     </para>
-  
+
     <![ %RFC [
-       <note id="rfc-bk000926-02"><title>RFC: addition? </title><para>  
-     More generally, we could specify: 
+       <note id="rfc-bk000926-02"><title>RFC: addition? </title><para>
+     More generally, we could specify:
       "If the sum of inner and outer angles is larger than 360,
       CONE_OUTER_ANGLE is clamped to (360-CONE_INNER_ANGLE) and
       there is no transition zone."
@@ -1219,7 +1219,7 @@
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -1227,35 +1227,35 @@
        <entry>CONE_OUTER_GAIN</>
        <entry>i,f</>
        <entry>[0.0f, 1.0f]</>
-       <entry>0.0f</>        
+       <entry>0.0f</>
     </row>
     </tbody>
     </tgroup>
     </table>
-        Description: the factor with which GAIN is multiplied to 
+        Description: the factor with which GAIN is multiplied to
         determine the effective gain outside the cone defined by
         the outer angle. The effective gain applied outside the
         outer cone is GAIN times CONE_OUTER_GAIN. Changing
-        GAIN affects all directions, i.e. the source is attenuated 
+        GAIN affects all directions, i.e. the source is attenuated
         in all directions, for any position of the listener.
         The application has to change CONE_OUTER_GAIN as well if
         a different behavior is desired.
     </para>
-   
-  
+
+
     <![ %Annote [
       <note><title>Annotation (GAIN calculation)</title><para>
          The angle-dependend gain DGAIN is multiplied with the
          gain determined by the source's GAIN and any distance
          attenuation as applicable. Let theta be the angle
          between the source's direction vector, and the vector
-         connection the source and the listener. This multiplier 
+         connection the source and the listener. This multiplier
          DGAIN is calculated as:
         <literallayout>
           OUTER = CONE_OUTER_ANGLE/2;
           INNER = CONE_INNER_ANGLE/2;
           if      ( theta less/equal INNER )
-              DGAIN = 1               
+              DGAIN = 1
           else if ( theta greater/equal OUTER )
              DGAIN = CONE_OUTER_GAIN
           else
@@ -1264,17 +1264,17 @@
         </literallayout>
          in the case of linear interpolation. The implementation
          is free to use a different interplation across the (INNER,OUTER)
-         range as long as it is monotone. 
+         range as long as it is monotone.
        </para></note>
     ]]>
 
     <![ %Annote [
       <note><title>Annotation (CONE_OUTER_GAIN always less than GAIN)</title><para>
          CONE_OUTER_GAIN is not an absolute value, but (like all GAIN
-         parameters) a scaling factor. This avoids a possible error 
+         parameters) a scaling factor. This avoids a possible error
          case (implementations can count on effective gain outside the
          outer cone being smaller than GAIN), and ensures the common
-         case in which changing GAIN should affect inner, transitional, 
+         case in which changing GAIN should affect inner, transitional,
          and outer zone simultaneously.
       </para><para>
          In case that the application desires to have an outer zone
@@ -1292,14 +1292,14 @@
     <title>Changing Source Attributes</title>
     <para>
       The Source specifies the position and other properties as
-      taken into account during sound processing. 
-      <funcsynopsis><funcprototype> 
+      taken into account during sound processing.
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> Source{n}{sifd} </function></funcdef>
       <paramdef> &uint; <parameter> sourceName </parameter></paramdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
       <paramdef> &type; <parameter> value </parameter></paramdef>
       </funcprototype></funcsynopsis>
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> Source{n}{sifd}v </function></funcdef>
       <paramdef> &uint; <parameter> sourceName </parameter></paramdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
@@ -1312,11 +1312,11 @@
     <title>Querying Source Attributes</title>
     <para>
       Source state is maintained inside the &AL; implementation, and the
-      current attributes can be queried. The performance of such queries is 
-      implementation dependent, no performance guarantees are made. The 
-      valid values for the paramName parameter are identical to the ones 
+      current attributes can be queried. The performance of such queries is
+      implementation dependent, no performance guarantees are made. The
+      valid values for the paramName parameter are identical to the ones
       for Source*.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> GetSource{n}{sifd}{v} </function></funcdef>
       <paramdef> &uint; <parameter> sourceName </parameter></paramdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
@@ -1329,7 +1329,7 @@
       Old signature: T GetSource{sifd}{v}( uint id, enum param );
      </para></warning>
      ]]>
- 
+
     </sect2>
 
 
@@ -1344,7 +1344,7 @@
    </para>
    <para>
      There are many ways to use this feature, with
-     streaming being only one of them. 
+     streaming being only one of them.
     <itemizedlist>
     <listitem>
     <para>
@@ -1353,12 +1353,12 @@
       caching into the application and allows the
       application to select how many buffers it wants
       to use, whether these are re-used in cycle,
-      pooled, or thrown away. 
+      pooled, or thrown away.
    </para>
    </listitem>
    <listitem>
    <para>
-      Looping (over a finite number of repititions) can be 
+      Looping (over a finite number of repititions) can be
       implemented by explicitely repeating buffers
       in the queue. Infinite loops can (theoretically)
       be accomplished by sufficiently large repetition counters.
@@ -1370,7 +1370,7 @@
    <listitem>
    <para>
       Loop Points for restricted looping inside a buffer
-      can in many cases be replaced by splitting the 
+      can in many cases be replaced by splitting the
       sample into several buffers, queueing the sample
       fragments (including repetitions) accordingly.
    </para>
@@ -1384,7 +1384,7 @@
    </para>
 
     <![ %RFC [
-      <note id="bk000626-01"><title>RFC: Unified Handling</title><para>  
+      <note id="bk000626-01"><title>RFC: Unified Handling</title><para>
        Jonathan Blow has proposed removing the distinction between
        streaming and non-streaming buffers. An existing example is
        the unified for directional and omnidirectional sources, where
@@ -1396,10 +1396,10 @@
    <sect3>
    <title>Queueing command</title>
    <para>
-     The application can queue up one or multiple buffer names 
+     The application can queue up one or multiple buffer names
      using SourceQueueBuffers. The buffers will be queued in the sequence
      in which they appear in the array.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> &void; <function> alSourceQueueBuffers </function></funcdef>
       <paramdef> &uint; <parameter> sourceName </parameter></paramdef>
       <paramdef> &sizei; <parameter> numBuffers </parameter></paramdef>
@@ -1407,10 +1407,10 @@
       </funcprototype></funcsynopsis>
      This command is legal on a Source in any state (to allow for
      streaming, queueing has to be possible on a PLAYING Source).
-     Queues are read-only with exception of the unqueue operation. 
+     Queues are read-only with exception of the unqueue operation.
      The Buffer Name NONE (i.e. 0) can be queued.
     </para>
-  
+
     <![ %Annote [
       <note><title>Annotation (BUFFER vs. SourceQueueBuffers)</title><para>
        A Sourcei( sname, BUFFER, bname ) command is an immediate
@@ -1420,7 +1420,7 @@
        call is only legal if SourceUnqueueBuffers is legal.
        In particular, the Source has to be STOPPED or INITIAL.
        The application is still obliged to delete all
-       buffers as were contained in the queue.  
+       buffers as were contained in the queue.
        Sourcei( sname, BUFFER, NONE ) is a legal command,
        effectively wiping the queue without specifying an
        actually playable buffer.
@@ -1438,11 +1438,11 @@
     ]]>
 
     <![ %RFC [
-       <note id="rfc-bk000806-04"><title>RFC: Duration of bName==0? </title><para>  
+       <note id="rfc-bk000806-04"><title>RFC: Duration of bName==0? </title><para>
           The buffer is considered empty, it should have zero length,
           thus zero duration for consistency. If an application wants to
           schedule a pause, specifying duration for a gain==0 queue entry
-          might be a cleaner solution.     
+          might be a cleaner solution.
       </para></note>
     ]]>
 
@@ -1471,22 +1471,22 @@
    <sect3>
    <title>Unqueueing command</title>
    <para>
-     Once a queue entry for a buffer has been appended to a queue 
+     Once a queue entry for a buffer has been appended to a queue
      and is pending processing, it should not be changed.
-     Removal of a given queue entry is not possible unless 
+     Removal of a given queue entry is not possible unless
      either the Source is STOPPED (in which case then entire queue
      is considered processed), or if the queue entry has already
      been processed (PLAYING or PAUSED Source).
    </para>
    <para>
-     The Unqueue command removes a number of buffers entries that 
-     have finished processing, in the order of appearance, from 
+     The Unqueue command removes a number of buffers entries that
+     have finished processing, in the order of appearance, from
      the queue. The operation will fail if more buffers are
-     requested than available, leaving the destination arguments 
-     unchanged. An INVALID_VALUE error will be thrown.  
-     If no error, the destination argument will have been updated 
+     requested than available, leaving the destination arguments
+     unchanged. An INVALID_VALUE error will be thrown.
+     If no error, the destination argument will have been updated
      accordingly.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function>  SourceUnqueueBuffers </function></funcdef>
       <paramdef> &uint;    <parameter> sourceName </parameter></paramdef>
       <paramdef> &sizei;    <parameter> numEntries </parameter></paramdef>
@@ -1500,8 +1500,8 @@
          been processed for some not all of them. With the current
          interface, the application is forced to maintain its own list
          of consumers (Sources) for a buffer it wishes to unqueue.
-         For groups of Sources that are never individually PAUSED 
-         nor STOPPED, the application can save the MRU Source for 
+         For groups of Sources that are never individually PAUSED
+         nor STOPPED, the application can save the MRU Source for
          which the buffer was scheduled last.
        </para></note>
     ]]>
@@ -1510,7 +1510,7 @@
       <note><title>Annotation (Looping a Queue vs. Unqueue):</title><para>
           If a Source is playing repeatedly, it will traverse
           the entire Queue repeatedly. Consequently, no buffer
-          in the queue can be considered processed until 
+          in the queue can be considered processed until
           there is no further repetition scheduled.
        </para></note>
     ]]>
@@ -1525,7 +1525,7 @@
 
     <![ %Annote [
       <note><title>Annotation (No Index based access)</title><para>
-         No interface is provided for random access to a queue entry 
+         No interface is provided for random access to a queue entry
          by index.
        </para></note>
     ]]>
@@ -1539,9 +1539,9 @@
 
     <![ %Annote [
       <note><title>Annotation (No Queue Copying)</title><para>
-          The current queue of a source could be copied to another source, 
-         as repetition and traversal parameters are stored unless the 
-         queue entry is unqueued, or the queue is replaced using 
+          The current queue of a source could be copied to another source,
+         as repetition and traversal parameters are stored unless the
+         queue entry is unqueued, or the queue is replaced using
          AL_BUFFER.  Copying a queue is a special case of
          copying Source state in one sense, and a special case of
          a synching problem in another. Due to these unresolved issues
@@ -1554,7 +1554,7 @@
 
     <![ %Annote [
       <note><title>Annotation (No Explicit QueueClear)</title><para>
-        Sourcei( sname, BUFFER, NONE ) serves the 
+        Sourcei( sname, BUFFER, NONE ) serves the
         same purpose. The operation is also redundant
         with respect to Unqueue for a STOPPED Source.
        </para></note>
@@ -1562,18 +1562,18 @@
 
     <![ %Annote [
       <note><title>Annotation (Queueing vs. AppendData):</title><para>
-         Buffer queueing does not solve the synchronization and timing 
+         Buffer queueing does not solve the synchronization and timing
          issues raised by possible underflow, as these are inherent
-         to application-driven (pushed) streaming. However, it turns 
+         to application-driven (pushed) streaming. However, it turns
          an internal AL error condition (offset exceeds valid data)
          into an audible artifact (Source stops).
          Its main advantage is that it allows the application coder
          to operate at a scale of her own choice, selecting the
          number and size of buffers used for caching the stream,
-         and to schedule buffer refill and queueing according to 
-         preferences and constraints. Queueing effectively moves 
-         all problems related to replacing or appending Buffer data 
-         to the scale of entire arrays istead of single samples and 
+         and to schedule buffer refill and queueing according to
+         preferences and constraints. Queueing effectively moves
+         all problems related to replacing or appending Buffer data
+         to the scale of entire arrays istead of single samples and
          indices.
        </para></note>
     ]]>
@@ -1609,15 +1609,15 @@
       <note><title>Annotation (No Explicit Queue Objects)</title><para>
         Explicit Queue objects have been considered and rejected,
         as they introduce another producer-consumer dependency with
-        another level of indirection. Further, e.g. QUEUE would 
-        also require deprecating BUFFER (breaking backwards 
+        another level of indirection. Further, e.g. QUEUE would
+        also require deprecating BUFFER (breaking backwards
         compatibility) as an alSource argument, or would introduce
         a confusing set of precedence and overide rules if both
         are used in sequence. However, in the absence of explicit
         queue objects the application will be forced to keep track
-        where buffers have been queued in case it intends to 
+        where buffers have been queued in case it intends to
         unqueue them for refill or deletion. If several sources
-        use the same buffers (e.g. for synchronous or 
+        use the same buffers (e.g. for synchronous or
         asynchronous streaming) the buffer will have to be
         unqueued from each single one.
       </para></note>
@@ -1626,10 +1626,10 @@
 
     <![ %Scratch [
       <note><title>Annotation (Queue no Display List)</title><para>
-         An interface resembling &OGL; display-lists has been 
-         considered and rejected. The problem with this approach 
-         is that not only commands would have to be prohibited 
-         (similarly, not all GL calls are legal within a display 
+         An interface resembling &OGL; display-lists has been
+         considered and rejected. The problem with this approach
+         is that not only commands would have to be prohibited
+         (similarly, not all GL calls are legal within a display
          list), but also parameters (enumerations).
 
          In particular, only a small set of operations is meant
@@ -1643,14 +1643,14 @@
          Example:
          <literallayout>
          // lock this queue for overwriting/appending
-         alBeginQueue( qname, APPEND | REPLACE );  
+         alBeginQueue( qname, APPEND | REPLACE );
 
          // queue a buffer in sequence, with parameters
          // boolean: never skip? never bail?
          alQueue( AL_BUFFER, bid, loopdir, repetitions );
          ...
 
-         // end lock. 
+         // end lock.
          // Existing  queue content will be replaced
          //  or appended at this point.
          alEndQueue();
@@ -1670,7 +1670,7 @@
          queue buffer3
          play
          request deletion of buffer1,2,3
-       
+
        </programlisting>
        </example>
     ]]>
@@ -1691,7 +1691,7 @@
           fill buffer1
           queue buffer1
           ...
-       
+
        </programlisting>
        </example>
     ]]>
@@ -1710,11 +1710,11 @@
          play
          set repetitions to 0 on main when needed
          wait till post has been played
-       
+
        </programlisting>
        </example>
     ]]>
- 
+
    </sect3>
 ]]>
 
@@ -1736,30 +1736,30 @@
          FORWARD            /* linear forward   (increment) */
          BACKWARD           /* linear backward  (decrement) */
          FORWARD_AND_BACK   /* RESERVED: ping-pong-looping  */
- 
+
        </literallayout>
-       The first and the next two tokens are legal with a buffer queue command. 
+       The first and the next two tokens are legal with a buffer queue command.
        They are not legal for a Source command, in any possible
        Source state. The last token is reserved, but not yet legal to use.
-    </para>  
+    </para>
 
 
     <![ %Annote [
       <note><title>Annotation (Ping-Pong postponed)</title><para>
         Definition and implementation of ping-pong looping
         has been postponed. Applications can fake it at doubling
-        memory expense by reverse copying the buffer (2nd buffer queued 
+        memory expense by reverse copying the buffer (2nd buffer queued
         or in a double size single buffer). If there is hardware support
         for this feature, AL will have to support it eventually. A boolean
         flag is not acceptable because of this possibility.
        </para></note>
     ]]>
-    </sect3> 
+    </sect3>
 ]]> <!-- SCRATCH -->
- 
-  
+
+
    </sect2>
- 
+
 
 
 
@@ -1779,28 +1779,28 @@
     <![ %Annote [
       <note><title>Annotation/ Source Config/Exec State</title><para>
        Sources have configuration state and execution state.
-       Configuration state is directly set by the application using 
-       AL commands, starting with the INITIAL configuration. Execution 
-       state (e.g. the offset to the current sample) is not under direct 
-       application control and not exposed. 
+       Configuration state is directly set by the application using
+       AL commands, starting with the INITIAL configuration. Execution
+       state (e.g. the offset to the current sample) is not under direct
+       application control and not exposed.
        </para></note>
     ]]>
 
     <sect3>
     <title>Source State Query</title>
     <para>
-      The application can query the current state of any Source 
-      using GetSource with the parameter Name SOURCE_STATE. 
-      Each Source can be in one of four possible execution states: 
+      The application can query the current state of any Source
+      using GetSource with the parameter Name SOURCE_STATE.
+      Each Source can be in one of four possible execution states:
       INITIAL, PLAYING, PAUSED, STOPPED. Sources that are either
       PLAYING or PAUSED are considered active. Sources that are
       STOPPED or INITIAL are considered inactive. Only PLAYING
-      Sources are included in the processing. The implementation 
-      is free to skip those processing stages for Sources that 
-      have no effect on the output (e.g. mixing for a Source 
-      muted by zero GAIN, but not sample offset increments). 
+      Sources are included in the processing. The implementation
+      is free to skip those processing stages for Sources that
+      have no effect on the output (e.g. mixing for a Source
+      muted by zero GAIN, but not sample offset increments).
       Depending on the current state of a Source certain (e.g. repeated)
-      state transition commands are legal NOPs: they will be ignored, 
+      state transition commands are legal NOPs: they will be ignored,
       no error is generated.
     </para>
     </sect3>
@@ -1811,20 +1811,20 @@
       The default state of any Source is INITIAL. From this state
       it can be propagated to any other state by appropriate use
       of the commands below. There are no irreversible state
-      transitions. 
-      <funcsynopsis><funcprototype> 
+      transitions.
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> SourcePlay </function></funcdef>
       <paramdef> &uint; <parameter> sName </parameter></paramdef>
       </funcprototype></funcsynopsis>
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> SourcePause </function></funcdef>
       <paramdef> &uint; <parameter> sName </parameter></paramdef>
       </funcprototype></funcsynopsis>
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> SourceStop </function></funcdef>
       <paramdef> &uint; <parameter> sName </parameter></paramdef>
       </funcprototype></funcsynopsis>
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> SourceRewind </function></funcdef>
       <paramdef> &uint; <parameter> sName </parameter></paramdef>
       </funcprototype></funcsynopsis>
@@ -1833,25 +1833,25 @@
     </para>
     <para>
       The functions are also available as a vector variant,
-      which guarantees synchronized operation on a set of 
+      which guarantees synchronized operation on a set of
       Sources.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> SourcePlayv </function></funcdef>
       <paramdef> &sizei; <parameter> n </parameter></paramdef>
       <paramdef> &uint;* <parameter> sNames </parameter></paramdef>
       </funcprototype></funcsynopsis>
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> SourcePausev </function></funcdef>
       <paramdef> &sizei; <parameter> n </parameter></paramdef>
       <paramdef> &uint;* <parameter> sNames </parameter></paramdef>
       </funcprototype></funcsynopsis>
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> SourceStopv </function></funcdef>
       <paramdef> &sizei; <parameter> n </parameter></paramdef>
       <paramdef> &uint;* <parameter> sNames </parameter></paramdef>
       </funcprototype></funcsynopsis>
 
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> SourceRewindv </function></funcdef>
       <paramdef> &sizei; <parameter> n </parameter></paramdef>
       <paramdef> &uint;* <parameter> sNames </parameter></paramdef>
@@ -1864,18 +1864,18 @@
        <listitem>
        <para>
         Play() applied to an INITIAL Source will promote the Source
-        to PLAYING, thus the data found in the Buffer will be fed 
+        to PLAYING, thus the data found in the Buffer will be fed
         into the processing, starting at the beginning.
         Play() applied to a PLAYING Source will restart the Source
         from the beginning. It will not affect the configuration,
         and will leave the Source in PLAYING state, but reset the
         sampling offset to the beginning.
-        Play() applied to a PAUSED Source will 
-        resume processing using the Source state 
+        Play() applied to a PAUSED Source will
+        resume processing using the Source state
         as preserved at the Pause() operation.
         Play() applied to a STOPPED Source will propagate it
         to INITIAL then to PLAYING immediately.
-       </para> 
+       </para>
        </listitem>
        <listitem>
        <para>
@@ -1904,7 +1904,7 @@
         Rewind() applied to an INITIAL Source is a legal NOP.
         Rewind() applied to a PLAYING Source will change its state to
         STOPPED then INITIAL. The Source is exempt from processing:
-        its current state is preserved, with the exception of the 
+        its current state is preserved, with the exception of the
         sampling offset, which is reset to the beginning.
         Rewind() applied to a PAUSED Source will change its state
         to INITIAL, with the same consequences as on a PLAYING
@@ -1934,10 +1934,10 @@
          has indeed been PLAYING before becoming STOPPED can
          use Rewind() to reset the Source state to INITIAL.
          This is an optional operation that can safely be
-         omitted by application without this constraint. 
+         omitted by application without this constraint.
          Applications that want to guard against Play() on
          a Source that is INITIAL can query the Source state
-         first.         
+         first.
       </para></note>
     ]]>
 
@@ -1947,7 +1947,7 @@
          interpreted as an (atomic) sequence to stop and restart a
          Source. This can be used by applications that want to restart
          a sound but do not care whether the Source has finished or not,
-         and do not want an audible pause. One example is the DOOM 
+         and do not want an audible pause. One example is the DOOM
          chaingun repeatedly abbreviating the pistol sound. To guard
          against redundant Play() commands, an application can query
          the current state before executing Play(). If the application
@@ -1971,7 +1971,7 @@
     <sect3>
     <title>Resetting Configuration</title>
     <para>
-      The INITIAL state is not necessarily identical to the 
+      The INITIAL state is not necessarily identical to the
       default state in which Source is created. INITIAL merely
       indicates that the Source can be executed using the
       SourcePlay command. A STOPPED or INITIAL Source can
@@ -1980,22 +1980,22 @@
       has to specify all relevant state anyway to create a
       useful Source configuration, no reset command is provided.
     </para>
-  
+
 
     <![ %RFC [
-       <note id="rfc-bk000802-01"><title>RFC: remove INITIAL</title><para>  
+       <note id="rfc-bk000802-01"><title>RFC: remove INITIAL</title><para>
          INITIAL is identical to STOPPED. The only additional information
-         conveyed is that INITIAL indicates a source has never been played. 
-         Once a Source is STOPPED, it is not possible by state query alone 
-         to decide whether it has played again. If Sources are used only 
-         once, an application can use INITIAL to verify a Source has been 
+         conveyed is that INITIAL indicates a source has never been played.
+         Once a Source is STOPPED, it is not possible by state query alone
+         to decide whether it has played again. If Sources are used only
+         once, an application can use INITIAL to verify a Source has been
          played.
          The problem that I have with this is that if we acknowledge that
          the application might need to verify a Source has played once,
          why force the application to throw away Sources to accomplish
          this? An explicit state PLAYABLE replacing INITIAL and its
          inauspicious connotations (default state) and a state transition
-         function Rewind() that makes a STOPPED Source PLAYABLE again would 
+         function Rewind() that makes a STOPPED Source PLAYABLE again would
          be one possibility to address this need. The obvious drawback is
          that it breaks backwards compatibility.
       </para></note>
@@ -2003,7 +2003,7 @@
 
 
     <![ %RFC [
-       <note id="rfc-bk000731-01"><title>RFC: state issues </title><para>  
+       <note id="rfc-bk000731-01"><title>RFC: state issues </title><para>
         A Source is active if it is PAUSED or PLAYING.
 
         A Source that is STOPPED preserves configuration state,
@@ -2015,13 +2015,13 @@
         Sources will be stopped implicitely when reaching the
            end of a non-repeating (non-looping) buffer traversal.
         Sources can be stopped explicitely by the application
-        with either Stop() or Reset(). 
+        with either Stop() or Reset().
 
        Stop() propagates
         the source to STOPPED preserving its configuration state,
         setting its execution state to the same as if it reached
         the end of execution.
-  
+
       </para></note>
     ]]>
 
@@ -2030,7 +2030,7 @@
       <note><title>Annotation (illegal NOPs)</title><para>
           In the current specification there are no illegal NOPs.
           In other words, no sequence of commands affecting the
-          execution state will generate an INVALID_OPERATION error.  
+          execution state will generate an INVALID_OPERATION error.
       </para></note>
     ]]>
 
@@ -2067,7 +2067,7 @@
        Fade-In control - always manually?
      </para></note>
 
-     ]]>     
+     ]]>
    </sect3>
    </sect2>
    </sect1>

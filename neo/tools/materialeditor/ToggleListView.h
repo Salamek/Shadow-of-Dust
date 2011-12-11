@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ If you have questions concerning this license or the applicable additional terms
 /**
 * A simple list view that supports a toggle button. ToggleListView is a simple extension
 * to the CListView class that support a toggle button. It is limited to a single column
-* and always uses full row select. The toggle state is stored in the data for each item 
+* and always uses full row select. The toggle state is stored in the data for each item
 * so users of this class should not attempt to use the data field for storage. lparam can
 * be used instead.
 */

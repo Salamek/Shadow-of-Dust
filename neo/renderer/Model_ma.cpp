@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -207,7 +207,7 @@ bool MA_ParseVertex(idParser& parser, maAttribHeader_t* header) {
 
 	//Get the start and end index for this attribute
 	int minIndex, maxIndex;
-	if(!MA_ParseHeaderIndex(header, minIndex, maxIndex, "VertexHeader", NULL)) { 
+	if(!MA_ParseHeaderIndex(header, minIndex, maxIndex, "VertexHeader", NULL)) {
 		//This was just a header
 		return true;
 	}
@@ -862,7 +862,7 @@ bool MA_ParseConnectAttr(idParser& parser) {
 		for(int i = 0; i < maGlobal.model->objects.Num(); i++) {
 			if(!strcmp(maGlobal.model->objects[i]->name, srcName)) {
 				//maGlobal.model->objects[i]->materialRef = MA_AddMaterial(destName);
-				strcpy(maGlobal.model->objects[i]->materialName, destName); 
+				strcpy(maGlobal.model->objects[i]->materialName, destName);
 				break;
 			}
 		}

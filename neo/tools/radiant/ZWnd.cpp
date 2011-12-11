@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CZWnd message handlers
 
-int CZWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CZWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -94,7 +94,7 @@ int CZWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CZWnd::OnDestroy() 
+void CZWnd::OnDestroy()
 {
 	if (m_pZClip)
 	{
@@ -105,12 +105,12 @@ void CZWnd::OnDestroy()
 	CWnd::OnDestroy();
 }
 
-void CZWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CZWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
   g_pParentWnd->HandleKey(nChar, nRepCnt, nFlags);
 }
 
-void CZWnd::OnLButtonDown(UINT nFlags, CPoint point) 
+void CZWnd::OnLButtonDown(UINT nFlags, CPoint point)
 {
   SetFocus();
   SetCapture();
@@ -119,7 +119,7 @@ void CZWnd::OnLButtonDown(UINT nFlags, CPoint point)
 	Z_MouseDown (point.x, rctZ.Height() - 1 - point.y , nFlags);
 }
 
-void CZWnd::OnMButtonDown(UINT nFlags, CPoint point) 
+void CZWnd::OnMButtonDown(UINT nFlags, CPoint point)
 {
   SetFocus();
   SetCapture();
@@ -128,7 +128,7 @@ void CZWnd::OnMButtonDown(UINT nFlags, CPoint point)
 	Z_MouseDown (point.x, rctZ.Height() - 1 - point.y , nFlags);
 }
 
-void CZWnd::OnRButtonDown(UINT nFlags, CPoint point) 
+void CZWnd::OnRButtonDown(UINT nFlags, CPoint point)
 {
   SetFocus();
   SetCapture();
@@ -137,7 +137,7 @@ void CZWnd::OnRButtonDown(UINT nFlags, CPoint point)
 	Z_MouseDown (point.x, rctZ.Height() - 1 - point.y , nFlags);
 }
 
-void CZWnd::OnPaint() 
+void CZWnd::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
   //if (!wglMakeCurrent(m_dcZ, m_hglrcZ))
@@ -158,12 +158,12 @@ void CZWnd::OnPaint()
   }
 }
 
-void CZWnd::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI) 
+void CZWnd::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 {
 	lpMMI->ptMinTrackSize.x = ZWIN_WIDTH;
 }
 
-void CZWnd::OnMouseMove(UINT nFlags, CPoint point) 
+void CZWnd::OnMouseMove(UINT nFlags, CPoint point)
 {
   CRect rctZ;
   GetClientRect(rctZ);
@@ -175,7 +175,7 @@ void CZWnd::OnMouseMove(UINT nFlags, CPoint point)
   Z_MouseMoved (point.x, rctZ.Height() - 1 - point.y, nFlags);
 }
 
-void CZWnd::OnSize(UINT nType, int cx, int cy) 
+void CZWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize(nType, cx, cy);
   CRect rctZ;
@@ -189,29 +189,29 @@ void CZWnd::OnSize(UINT nType, int cx, int cy)
   Invalidate();
 }
 
-void CZWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp) 
+void CZWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
 {
 	CWnd::OnNcCalcSize(bCalcValidRects, lpncsp);
 }
 
-void CZWnd::OnKillFocus(CWnd* pNewWnd) 
+void CZWnd::OnKillFocus(CWnd* pNewWnd)
 {
 	CWnd::OnKillFocus(pNewWnd);
 	SendMessage(WM_NCACTIVATE, FALSE , 0 );
 }
 
-void CZWnd::OnSetFocus(CWnd* pOldWnd) 
+void CZWnd::OnSetFocus(CWnd* pOldWnd)
 {
 	CWnd::OnSetFocus(pOldWnd);
 	SendMessage(WM_NCACTIVATE, TRUE , 0 );
 }
 
-void CZWnd::OnClose() 
+void CZWnd::OnClose()
 {
 	CWnd::OnClose();
 }
 
-void CZWnd::OnLButtonUp(UINT nFlags, CPoint point) 
+void CZWnd::OnLButtonUp(UINT nFlags, CPoint point)
 {
   CRect rctZ;
   GetClientRect(rctZ);
@@ -220,7 +220,7 @@ void CZWnd::OnLButtonUp(UINT nFlags, CPoint point)
   	ReleaseCapture ();
 }
 
-void CZWnd::OnMButtonUp(UINT nFlags, CPoint point) 
+void CZWnd::OnMButtonUp(UINT nFlags, CPoint point)
 {
   CRect rctZ;
   GetClientRect(rctZ);
@@ -229,7 +229,7 @@ void CZWnd::OnMButtonUp(UINT nFlags, CPoint point)
   	ReleaseCapture ();
 }
 
-void CZWnd::OnRButtonUp(UINT nFlags, CPoint point) 
+void CZWnd::OnRButtonUp(UINT nFlags, CPoint point)
 {
   CRect rctZ;
   GetClientRect(rctZ);
@@ -239,7 +239,7 @@ void CZWnd::OnRButtonUp(UINT nFlags, CPoint point)
 }
 
 
-BOOL CZWnd::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL CZWnd::PreCreateWindow(CREATESTRUCT& cs)
 {
   WNDCLASS wc;
   HINSTANCE hInstance = AfxGetInstanceHandle();
@@ -264,7 +264,7 @@ BOOL CZWnd::PreCreateWindow(CREATESTRUCT& cs)
 }
 
 
-void CZWnd::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CZWnd::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
   g_pParentWnd->HandleKey(nChar, nRepCnt, nFlags, false);
 }

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -1369,7 +1369,7 @@ int idStr::IcmpnPath( const char *s1, const char *s2, int n ) {
 /*
 =============
 idStr::Copynz
- 
+
 Safe strncpy that ensures a trailing zero
 =============
 */
@@ -1379,7 +1379,7 @@ void idStr::Copynz( char *dest, const char *src, int destsize ) {
 		return;
 	}
 	if ( destsize < 1 ) {
-		idLib::common->Warning( "idStr::Copynz: destsize < 1" ); 
+		idLib::common->Warning( "idStr::Copynz: destsize < 1" );
 		return;
 	}
 
@@ -1492,7 +1492,7 @@ C99 standard: vsnprintf returns the number of characters (excluding the trailing
 snprintf and vsnprintf do not write more than size bytes (including the trailing '\0')
 
 win32: _vsnprintf returns the number of characters written, not including the terminating null character,
-or a negative value if an output error occurs. If the number of characters to write exceeds count, then count 
+or a negative value if an output error occurs. If the number of characters to write exceeds count, then count
 characters are written and -1 is returned and no trailing '\0' is added.
 
 idStr::vsnPrintf: always appends a trailing '\0', returns number of characters written (not including terminal \0)

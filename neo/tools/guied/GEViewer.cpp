@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -51,14 +51,14 @@ bool rvGEViewer::Create ( HWND parent )
 	wndClass.cbSize			= sizeof(WNDCLASSEX);
 	wndClass.lpszClassName	= "GUIED_VIEWER";		
 	wndClass.lpfnWndProc	= rvGEViewer::WndProc;
-	wndClass.hInstance		= gApp.GetInstance ( ); 
+	wndClass.hInstance		= gApp.GetInstance ( );
 	wndClass.style			= CS_OWNDC|CS_BYTEALIGNWINDOW|CS_VREDRAW|CS_HREDRAW;
-	wndClass.hbrBackground	= (HBRUSH) (COLOR_3DFACE + 1); 
+	wndClass.hbrBackground	= (HBRUSH) (COLOR_3DFACE + 1);
 	RegisterClassEx ( &wndClass );
 
-	mWnd = CreateWindowEx ( WS_EX_TOOLWINDOW, "GUIED_VIEWER", "GUI Viewer", 
-							WS_SYSMENU|WS_THICKFRAME|WS_CAPTION|WS_POPUP|WS_OVERLAPPED|WS_BORDER|WS_CLIPSIBLINGS|WS_CHILD, 
-							CW_USEDEFAULT, CW_USEDEFAULT, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 
+	mWnd = CreateWindowEx ( WS_EX_TOOLWINDOW, "GUIED_VIEWER", "GUI Viewer",
+							WS_SYSMENU|WS_THICKFRAME|WS_CAPTION|WS_POPUP|WS_OVERLAPPED|WS_BORDER|WS_CLIPSIBLINGS|WS_CHILD,
+							CW_USEDEFAULT, CW_USEDEFAULT, SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
 							parent, NULL, gApp.GetInstance(), this );
 
 	gApp.GetOptions().GetWindowPlacement ( "viewer", mWnd );
@@ -372,7 +372,7 @@ LRESULT CALLBACK rvGEViewer::WndProc ( HWND hwnd, UINT msg, WPARAM wParam, LPARA
 
 			viewer->mToolbar = CreateWindowEx ( 0, TOOLBARCLASSNAME, "", CCS_BOTTOM|WS_CHILD|WS_VISIBLE,0,0,0,0, hwnd, (HMENU)IDR_GUIED_VIEWERTOOLBAR, gApp.GetInstance(), NULL );
 
-		    // Send the TB_BUTTONSTRUCTSIZE message, which is required for backward compatibility. 
+		    // Send the TB_BUTTONSTRUCTSIZE message, which is required for backward compatibility.
 			SendMessage( viewer->mToolbar, TB_BUTTONSTRUCTSIZE, ( WPARAM )sizeof( TBBUTTON ), 0 );
 			
 			SendMessage ( viewer->mToolbar, TB_SETBUTTONSIZE, 0, MAKELONG(16,15) );
@@ -386,34 +386,34 @@ LRESULT CALLBACK rvGEViewer::WndProc ( HWND hwnd, UINT msg, WPARAM wParam, LPARA
 			tbmet.cyBarPad = 0;
 			SendMessage ( viewer->mToolbar, TB_SETMETRICS, 0, (LPARAM)&tbmet );
 
-		    // Add the bitmap containing button images to the toolbar. 
-		    TBADDBITMAP	tbab; 
-			tbab.hInst = win32.hInstance; 
-			tbab.nID = IDR_GUIED_VIEWERTOOLBAR; 
-			SendMessage( viewer->mToolbar, TB_ADDBITMAP, (WPARAM)4, (LPARAM) &tbab ); 
+		    // Add the bitmap containing button images to the toolbar.
+		    TBADDBITMAP	tbab;
+			tbab.hInst = win32.hInstance;
+			tbab.nID = IDR_GUIED_VIEWERTOOLBAR;
+			SendMessage( viewer->mToolbar, TB_ADDBITMAP, (WPARAM)4, (LPARAM) &tbab );
 
-		    TBBUTTON tbb[4]; 
-			tbb[0].fsStyle = BTNS_SEP; 
+		    TBBUTTON tbb[4];
+			tbb[0].fsStyle = BTNS_SEP;
 			tbb[0].fsState = 0;
 
 		    tbb[1].idCommand = ID_GUIED_VIEWER_START;
-			tbb[1].iBitmap = 2; 
-			tbb[1].fsState = 0; 
-			tbb[1].fsStyle = BTNS_BUTTON; 
-			tbb[1].dwData = 0; 
-			tbb[1].iString = -1; 
+			tbb[1].iBitmap = 2;
+			tbb[1].fsState = 0;
+			tbb[1].fsStyle = BTNS_BUTTON;
+			tbb[1].dwData = 0;
+			tbb[1].iString = -1;
 
 		    tbb[2].idCommand = ID_GUIED_VIEWER_PAUSE;
-			tbb[2].iBitmap = 1; 
-			tbb[2].fsState = TBSTATE_ENABLED; 
-			tbb[2].fsStyle = BTNS_BUTTON; 
-			tbb[2].dwData = 0; 
-			tbb[2].iString = -1; 
+			tbb[2].iBitmap = 1;
+			tbb[2].fsState = TBSTATE_ENABLED;
+			tbb[2].fsStyle = BTNS_BUTTON;
+			tbb[2].dwData = 0;
+			tbb[2].iString = -1;
 
-			tbb[3].fsStyle = BTNS_SEP; 
+			tbb[3].fsStyle = BTNS_SEP;
 			tbb[3].fsState = 0;
 
-			SendMessage( viewer->mToolbar, TB_ADDBUTTONS, (WPARAM)4, (LPARAM) &tbb ); 
+			SendMessage( viewer->mToolbar, TB_ADDBUTTONS, (WPARAM)4, (LPARAM) &tbb );
 
 			break;
 		}
@@ -453,14 +453,14 @@ bool rvGEViewer::SetupPixelFormat ( void )
 	bool result = true;
 
 	int pixelFormat = ChoosePixelFormat(hDC, &win32.pfd);
-	if (pixelFormat > 0) 
+	if (pixelFormat > 0)
 	{
-		if (SetPixelFormat(hDC, pixelFormat, &win32.pfd) == NULL) 
+		if (SetPixelFormat(hDC, pixelFormat, &win32.pfd) == NULL)
 		{
 			result = false;
 		}
 	}
-	else 
+	else
 	{
 		result = false;
 	}
@@ -476,7 +476,7 @@ void rvGEViewer::Render	( HDC dc )
 	int	backEnd;
 	
 	// Switch GL contexts to our dc
-	if (!qwglMakeCurrent( dc, win32.hGLRC )) 
+	if (!qwglMakeCurrent( dc, win32.hGLRC ))
 	{
 		common->Printf("ERROR: wglMakeCurrent failed.. Error:%i\n", qglGetError());
 		common->Printf("Please restart Q3Radiant if the Map view is not working\n");

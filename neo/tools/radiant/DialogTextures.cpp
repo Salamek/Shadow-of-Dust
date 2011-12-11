@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ If you have questions concerning this license or the applicable additional terms
 	#define new DEBUG_NEW
 	#undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
-#endif												    
+#endif												
 
 HTREEITEM FindTreeItem(CTreeCtrl *tree, HTREEITEM root, const char *text, HTREEITEM forceParent);
 extern void Select_SetKeyVal(const char *key, const char *val);
@@ -143,7 +143,7 @@ bool CDialogTextures::loadTree( HTREEITEM item, const idStr &name, CWaitDlg *dlg
 		return true;
 	}
 
-	if ( m_treeTextures.ItemHasChildren( item ) ) { 
+	if ( m_treeTextures.ItemHasChildren( item ) ) {
 
 		idStr childName;
 		HTREEITEM nextItem;
@@ -183,7 +183,7 @@ HTREEITEM CDialogTextures::findItem(const char *name, HTREEITEM item, HTREEITEM 
 	if (*foundItem || item == NULL) {
 		return *foundItem;
 	}
-	if (m_treeTextures.ItemHasChildren(item)) { 
+	if (m_treeTextures.ItemHasChildren(item)) {
 		HTREEITEM nextItem;
 		HTREEITEM childItem = m_treeTextures.GetChildItem(item);
 		while (childItem != NULL && *foundItem == NULL) {
@@ -693,7 +693,7 @@ void CDialogTextures::addSounds(bool rootItems) {
 	idStrList list(1024);
 	idStrList list2(1024);
 	HTREEITEM base = m_treeTextures.InsertItem(TypeNames[SOUNDS]);
-	 
+	
 	for(i = 0; i < declManager->GetNumDecls( DECL_SOUND ); i++) {
 		const idSoundShader *poo = declManager->SoundByIndex(i, false);
 		list.AddUnique( poo->GetFileName() );
@@ -720,7 +720,7 @@ void CDialogTextures::addSounds(bool rootItems) {
 	}
 
 }
- 
+
 void CDialogTextures::addStrList( const char *root, const idStrList &list, int id ) {
 	idStr		out, path;
 
@@ -856,7 +856,7 @@ void CDialogTextures::addGuis( bool rootItems ) {
 void CDialogTextures::addScripts(bool rootItems) {
 /*
 	idFileList *files;
-  
+
 	files = fileSystem->ListFilesExt( "def", ".script" );
 
 	if ( files->GetNumFiles() ) {
@@ -908,7 +908,7 @@ void CDialogTextures::OnPreview() {
 }
 
 
-//void CDialogTextures::OnSave() 
+//void CDialogTextures::OnSave()
 //{
 /*
 	CString str;
@@ -919,7 +919,7 @@ void CDialogTextures::OnPreview() {
 */
 //}
 
-int CDialogTextures::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CDialogTextures::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDialog::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -929,7 +929,7 @@ int CDialogTextures::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CDialogTextures::OnSize(UINT nType, int cx, int cy) 
+void CDialogTextures::OnSize(UINT nType, int cx, int cy)
 {
 	CDialog::OnSize(nType, cx, cy);
 	
@@ -962,12 +962,12 @@ void CDialogTextures::OnSize(UINT nType, int cx, int cy)
 	RedrawWindow();
 }
 
-BOOL CDialogTextures::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL CDialogTextures::PreCreateWindow(CREATESTRUCT& cs)
 {
 	return CDialog::PreCreateWindow(cs);
 }
 
-void CDialogTextures::OnCheckHideroot() 
+void CDialogTextures::OnCheckHideroot()
 {
 	BuildTree();
 }

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ If you have questions concerning this license or the applicable additional terms
 //
 //  Development Team:
 //
-//      Gilles Vollant (100144.2636@compuserve.com) 
+//      Gilles Vollant (100144.2636@compuserve.com)
 //
 //*************************************************************
 
@@ -89,8 +89,8 @@ LPMRUMENU CreateMruMenu (WORD wNbLruShowInit,
 LPMRUMENU lpMruMenu;
   lpMruMenu = (LPMRUMENU)GlobalAllocPtr(GHND,sizeof(MRUMENU));
 
-  lpMruMenu->wNbItemFill = 0;                   
-  lpMruMenu->wNbLruMenu = wNbLruMenuInit;             
+  lpMruMenu->wNbItemFill = 0;
+  lpMruMenu->wNbLruMenu = wNbLruMenuInit;
   lpMruMenu->wNbLruShow = wNbLruShowInit;
   lpMruMenu->wIdMru = wIdMruInit;
   lpMruMenu->wMaxSizeLruItem = wMaxSizeLruItemInit;
@@ -198,7 +198,7 @@ void SetNbLruShow   (LPMRUMENU lpMruMenu,WORD wNbLruShowInit)
 //  SetMenuItem()
 //
 //  Purpose:
-//              Set the filename of an item 
+//              Set the filename of an item
 //
 //  Parameters:
 //      LPMRUMENU lpMruMenu -      pointer on MRUMENU
@@ -219,10 +219,10 @@ void SetNbLruShow   (LPMRUMENU lpMruMenu,WORD wNbLruShowInit)
 //
 //*************************************************************
 BOOL SetMenuItem    (LPMRUMENU lpMruMenu,WORD wItem,LPSTR lpItem)
-{                                      
-  if (wItem >= NBMRUMENU) 
+{
+  if (wItem >= NBMRUMENU)
     return FALSE;
-  _fstrncpy((lpMruMenu->lpMRU) + 
+  _fstrncpy((lpMruMenu->lpMRU) +
             ((lpMruMenu->wMaxSizeLruItem) * (UINT)wItem),
             lpItem,lpMruMenu->wMaxSizeLruItem-1);
   lpMruMenu->wNbItemFill = max(lpMruMenu->wNbItemFill,wItem+1);
@@ -234,7 +234,7 @@ BOOL SetMenuItem    (LPMRUMENU lpMruMenu,WORD wItem,LPSTR lpItem)
 //  GetMenuItem()
 //
 //  Purpose:
-//              Get the filename of an item 
+//              Get the filename of an item
 //
 //  Parameters:
 //      LPMRUMENU lpMruMenu -      pointer on MRUMENU
@@ -262,11 +262,11 @@ BOOL SetMenuItem    (LPMRUMENU lpMruMenu,WORD wItem,LPSTR lpItem)
 BOOL GetMenuItem    (LPMRUMENU lpMruMenu,WORD wItem,
                      BOOL fIDMBased,LPSTR lpItem,UINT uiSize)
 {
-  if (fIDMBased) 
+  if (fIDMBased)
     wItem -= (lpMruMenu->wIdMru + 1);
-  if (wItem >= lpMruMenu->wNbItemFill) 
+  if (wItem >= lpMruMenu->wNbItemFill)
     return FALSE;
-  _fstrncpy(lpItem,(lpMruMenu->lpMRU) + 
+  _fstrncpy(lpItem,(lpMruMenu->lpMRU) +
                 ((lpMruMenu->wMaxSizeLruItem) * (UINT)(wItem)),uiSize);
   *(lpItem+uiSize-1) = '\0';
   return TRUE;
@@ -300,21 +300,21 @@ void AddNewItem     (LPMRUMENU lpMruMenu,LPSTR lpItem)
 {
 WORD i,j;
   for (i=0;i<lpMruMenu->wNbItemFill;i++)
-    if (lstrcmpi(lpItem,(lpMruMenu->lpMRU) + 
+    if (lstrcmpi(lpItem,(lpMruMenu->lpMRU) +
         ((lpMruMenu->wMaxSizeLruItem) * (UINT)i)) == 0)
-      {         
+      {
         // Shift the other items
         for (j=i;j>0;j--)
          lstrcpy((lpMruMenu->lpMRU) + (lpMruMenu->wMaxSizeLruItem * (UINT)j),
                  (lpMruMenu->lpMRU) + (lpMruMenu->wMaxSizeLruItem * (UINT)(j-1)));
-        _fstrncpy(lpMruMenu->lpMRU,lpItem,lpMruMenu->wMaxSizeLruItem-1);  
+        _fstrncpy(lpMruMenu->lpMRU,lpItem,lpMruMenu->wMaxSizeLruItem-1);
         return ;
       }
   lpMruMenu->wNbItemFill = min(lpMruMenu->wNbItemFill+1,lpMruMenu->wNbLruMenu);
   for (i=lpMruMenu->wNbItemFill-1;i>0;i--)
      lstrcpy(lpMruMenu->lpMRU + (lpMruMenu->wMaxSizeLruItem * (UINT)i),
              lpMruMenu->lpMRU + (lpMruMenu->wMaxSizeLruItem * (UINT)(i-1)));
-  _fstrncpy(lpMruMenu->lpMRU,lpItem,lpMruMenu->wMaxSizeLruItem-1);  
+  _fstrncpy(lpMruMenu->lpMRU,lpItem,lpMruMenu->wMaxSizeLruItem-1);
 }
 
 //*************************************************************
@@ -344,11 +344,11 @@ WORD i,j;
 //
 //*************************************************************
 BOOL DelMenuItem(LPMRUMENU lpMruMenu,WORD wItem,BOOL fIDMBased)
-{ 
+{
 WORD i;
-  if (fIDMBased) 
+  if (fIDMBased)
     wItem -= (lpMruMenu->wIdMru + 1);
-  if (lpMruMenu->wNbItemFill <= wItem) 
+  if (lpMruMenu->wNbItemFill <= wItem)
     return FALSE;
   lpMruMenu->wNbItemFill--;
   for (i=wItem;i<lpMruMenu->wNbItemFill;i++)
@@ -356,7 +356,7 @@ WORD i;
              lpMruMenu->lpMRU + (lpMruMenu->wMaxSizeLruItem * (UINT)(i+1)));
   return TRUE;
 }
-                           
+
 //*************************************************************
 //
 //  PlaceMenuMRUItem()
@@ -381,15 +381,15 @@ WORD i;
 //*************************************************************
 void PlaceMenuMRUItem(LPMRUMENU lpMruMenu,HMENU hMenu,UINT uiItem)
 {
-int  i;   
+int  i;
 WORD wNbShow;
-  if (hMenu == NULL) 
+  if (hMenu == NULL)
     return;
   // remove old MRU in menu
   for (i=0;i<=(int)(lpMruMenu->wNbLruMenu);i++)
     RemoveMenu(hMenu,i+lpMruMenu->wIdMru,MF_BYCOMMAND);
 
-  if (lpMruMenu->wNbItemFill == 0) 
+  if (lpMruMenu->wNbItemFill == 0)
     return;
 
   // If they are item, insert a separator before the files
@@ -404,7 +404,7 @@ WORD wNbShow;
         wsprintf(lpTxt,"&%lu %s",
                  (DWORD)(i+1),lpMruMenu->lpMRU + (lpMruMenu->wMaxSizeLruItem*(UINT)i));
         InsertMenu(hMenu,(((WORD)i)!=(wNbShow-1)) ? (lpMruMenu->wIdMru+i+2) : lpMruMenu->wIdMru,
-                   MF_STRING,lpMruMenu->wIdMru+i+1,lpTxt);   
+                   MF_STRING,lpMruMenu->wIdMru+i+1,lpTxt);
         GlobalFreePtr(lpTxt);
       }
   }
@@ -425,9 +425,9 @@ WORD wNbShow;
 //  Parameters:
 //      LPMRUMENU lpMruMenu -      pointer on MRUMENU
 //      LPSTR lpszSection  -       Points to a null-terminated string containing
-//                                      the name of the section 
-//      LPSTR lpszFile -           Points to a null-terminated string that names 
-//                                      the initialization file. 
+//                                      the name of the section
+//      LPSTR lpszFile -           Points to a null-terminated string that names
+//                                      the initialization file.
 //
 //  Return: (BOOL)
 //      TRUE  - Function run successfully
@@ -447,7 +447,7 @@ LPSTR lpTxt;
 WORD i;
 
   lpTxt = (LPSTR)GlobalAllocPtr(GHND,lpMruMenu->wMaxSizeLruItem + 20);
-  if (lpTxt == NULL) 
+  if (lpTxt == NULL)
     return FALSE;
 
   for (i=0;i<lpMruMenu->wNbLruMenu;i++)
@@ -459,7 +459,7 @@ WORD i;
       WritePrivateProfileString(lpszSection,szEntry,lpTxt,lpszFile);
     }
   GlobalFreePtr(lpTxt);
-  WritePrivateProfileString(NULL,NULL,NULL,lpszFile); // flush cache 
+  WritePrivateProfileString(NULL,NULL,NULL,lpszFile); // flush cache
   return TRUE;
 }
 
@@ -474,9 +474,9 @@ WORD i;
 //  Parameters:
 //      LPMRUMENU lpMruMenu -      pointer on MRUMENU
 //      LPSTR lpszSection  -       Points to a null-terminated string containing
-//                                      the name of the section 
-//      LPSTR lpszFile -           Points to a null-terminated string that names 
-//                                      the initialization file. 
+//                                      the name of the section
+//      LPSTR lpszFile -           Points to a null-terminated string that names
+//                                      the initialization file.
 //
 //  Return: (BOOL)
 //      TRUE  - Function run successfully
@@ -495,13 +495,13 @@ BOOL LoadMruInIni(LPMRUMENU lpMruMenu,LPSTR lpszSection,LPSTR lpszFile)
 LPSTR lpTxt;
 WORD i;
   lpTxt = (LPSTR)GlobalAllocPtr(GHND,lpMruMenu->wMaxSizeLruItem + 20);
-  if (lpTxt == NULL) 
+  if (lpTxt == NULL)
     return FALSE;
 
   for (i=0;i<lpMruMenu->wNbLruMenu;i++)
     {
     char szEntry[16];
-      
+
       wsprintf(szEntry,"File%lu",(DWORD)i+1);
       GetPrivateProfileString(lpszSection,szEntry,"",lpTxt,
                               lpMruMenu->wMaxSizeLruItem + 10,lpszFile);
@@ -535,8 +535,8 @@ BOOL IsWin395OrHigher(void)
 //
 //  Parameters:
 //      LPMRUMENU lpMruMenu -      pointer on MRUMENU
-//      LPSTR lpszKey  -           Points to a null-terminated string 
-//                                      specifying  the name of a key that 
+//      LPSTR lpszKey  -           Points to a null-terminated string
+//                                      specifying  the name of a key that
 //                                      this function opens or creates.
 //
 //  Return: (BOOL)
@@ -560,7 +560,7 @@ HKEY hCurKey;
 DWORD dwDisp;
 
   lpTxt = (LPSTR)GlobalAllocPtr(GHND,lpMruMenu->wMaxSizeLruItem + 20);
-  if (lpTxt == NULL) 
+  if (lpTxt == NULL)
     return FALSE;
 
   RegCreateKeyEx(HKEY_CURRENT_USER,lpszKey,0,NULL,
@@ -588,8 +588,8 @@ DWORD dwDisp;
 //
 //  Parameters:
 //      LPMRUMENU lpMruMenu -      pointer on MRUMENU
-//      LPSTR lpszKey  -           Points to a null-terminated string 
-//                                      specifying  the name of a key that 
+//      LPSTR lpszKey  -           Points to a null-terminated string
+//                                      specifying  the name of a key that
 //                                      this function opens or creates.
 //
 //  Return: (BOOL)
@@ -612,7 +612,7 @@ WORD i;
 HKEY hCurKey;
 DWORD dwType;
   lpTxt = (LPSTR)GlobalAllocPtr(GHND,lpMruMenu->wMaxSizeLruItem + 20);
-  if (lpTxt == NULL) 
+  if (lpTxt == NULL)
     return FALSE;
 
   RegOpenKeyEx(HKEY_CURRENT_USER,lpszKey,0,KEY_READ,&hCurKey);
@@ -621,7 +621,7 @@ DWORD dwType;
   for (i=0;i<lpMruMenu->wNbLruMenu;i++)
     {
     char szEntry[16];
-    DWORD dwSizeBuf;  
+    DWORD dwSizeBuf;
       wsprintf(szEntry,"File%lu",(DWORD)i+1);
       *lpTxt = '\0';
       dwSizeBuf = lpMruMenu->wMaxSizeLruItem + 10;

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 int parseRange(const char *rangeStr,int field, int skipnum[], int startnum[], int endnum[],int numfiles[],bool padding[],int numpadding[] );
 int parseTimecodeRange(const char *rangeStr,int field, int skipnum[], int startnum[], int endnum[],int numfiles[],bool padding[],int numpadding[] );
 
-void roqParam::InitFromFile( const char *fileName ) 
+void roqParam::InitFromFile( const char *fileName )
 {
 	idParser *src;
 	idToken token;
@@ -294,7 +294,7 @@ void roqParam::InitFromFile( const char *fileName )
 						range[field] = 0;
 						numfiles[field] = 1;
 						realnum++;
-					} 
+					}
 					else {
 						if ( arg1[0] == '[' )
 						{

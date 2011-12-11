@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -78,8 +78,8 @@ idRenderModelStatic::Print
 void idRenderModelStatic::Print() const {
 	common->Printf( "%s\n", name.c_str() );
 	common->Printf( "Static model.\n" );
-	common->Printf( "bounds: (%f %f %f) to (%f %f %f)\n", 
-		bounds[0][0], bounds[0][1], bounds[0][2], 
+	common->Printf( "bounds: (%f %f %f) to (%f %f %f)\n",
+		bounds[0][0], bounds[0][1], bounds[0][2],
 		bounds[1][0], bounds[1][1], bounds[1][2] );
 
 	common->Printf( "    verts  tris material\n" );
@@ -754,19 +754,19 @@ bool idRenderModelStatic::ConvertASEToModelSurfaces( const struct aseModel_s *as
 	// the modeling programs can save out multiple surfaces with a common
 	// material, but we would like to mege them together where possible
 	// meaning that this->NumSurfaces() <= ase->objects.currentElements
-	mergeTo = (int *)_alloca( ase->objects.Num() * sizeof( *mergeTo ) ); 
+	mergeTo = (int *)_alloca( ase->objects.Num() * sizeof( *mergeTo ) );
 	surf.geometry = NULL;
 	if ( ase->materials.Num() == 0 ) {
 		// if we don't have any materials, dump everything into a single surface
 		surf.shader = tr.defaultMaterial;
 		surf.id = 0;
 		this->AddSurface( surf );
-		for ( i = 0 ; i < ase->objects.Num() ; i++ ) { 
+		for ( i = 0 ; i < ase->objects.Num() ; i++ ) {
 			mergeTo[i] = 0;
 		}
 	} else if ( !r_mergeModelSurfaces.GetBool() ) {
 		// don't merge any
-		for ( i = 0 ; i < ase->objects.Num() ; i++ ) { 
+		for ( i = 0 ; i < ase->objects.Num() ; i++ ) {
 			mergeTo[i] = i;
 			object = ase->objects[i];
 			material = ase->materials[object->materialRef];
@@ -776,7 +776,7 @@ bool idRenderModelStatic::ConvertASEToModelSurfaces( const struct aseModel_s *as
 		}
 	} else {
 		// search for material matches
-		for ( i = 0 ; i < ase->objects.Num() ; i++ ) { 
+		for ( i = 0 ; i < ase->objects.Num() ; i++ ) {
 			object = ase->objects[i];
 			material = ase->materials[object->materialRef];
 			im1 = declManager->FindMaterial( material->name );
@@ -902,7 +902,7 @@ bool idRenderModelStatic::ConvertASEToModelSurfaces( const struct aseModel_s *as
 					common->Error( "ConvertASEToModelSurfaces: bad vertex index in ASE file %s", name.c_str() );
 				}
 
-				// collapse the position if it was slightly offset 
+				// collapse the position if it was slightly offset
 				v = vRemap[v];
 
 				// we may or may not have texcoords to compare
@@ -1066,7 +1066,7 @@ bool idRenderModelStatic::ConvertLWOToModelSurfaces( const struct st_lwObject *l
 
 	// the modeling programs can save out multiple surfaces with a common
 	// material, but we would like to merge them together where possible
-	mergeTo = (int *)_alloca( i * sizeof( mergeTo[0] ) ); 
+	mergeTo = (int *)_alloca( i * sizeof( mergeTo[0] ) );
 	memset( &surf, 0, sizeof( surf ) );
 
 	if ( !r_mergeModelSurfaces.GetBool() ) {
@@ -1586,7 +1586,7 @@ bool idRenderModelStatic::ConvertMAToModelSurfaces (const struct maModel_s *ma )
 	// the modeling programs can save out multiple surfaces with a common
 	// material, but we would like to mege them together where possible
 	// meaning that this->NumSurfaces() <= ma->objects.currentElements
-	mergeTo = (int *)_alloca( ma->objects.Num() * sizeof( *mergeTo ) ); 
+	mergeTo = (int *)_alloca( ma->objects.Num() * sizeof( *mergeTo ) );
 
 	surf.geometry = NULL;
 	if ( ma->materials.Num() == 0 ) {
@@ -1594,12 +1594,12 @@ bool idRenderModelStatic::ConvertMAToModelSurfaces (const struct maModel_s *ma )
 		surf.shader = tr.defaultMaterial;
 		surf.id = 0;
 		this->AddSurface( surf );
-		for ( i = 0 ; i < ma->objects.Num() ; i++ ) { 
+		for ( i = 0 ; i < ma->objects.Num() ; i++ ) {
 			mergeTo[i] = 0;
 		}
 	} else if ( !r_mergeModelSurfaces.GetBool() ) {
 		// don't merge any
-		for ( i = 0 ; i < ma->objects.Num() ; i++ ) { 
+		for ( i = 0 ; i < ma->objects.Num() ; i++ ) {
 			mergeTo[i] = i;
 			object = ma->objects[i];
 			if(object->materialRef >= 0) {
@@ -1613,7 +1613,7 @@ bool idRenderModelStatic::ConvertMAToModelSurfaces (const struct maModel_s *ma )
 		}
 	} else {
 		// search for material matches
-		for ( i = 0 ; i < ma->objects.Num() ; i++ ) { 
+		for ( i = 0 ; i < ma->objects.Num() ; i++ ) {
 			object = ma->objects[i];
 			if(object->materialRef >= 0) {
 				material = ma->materials[object->materialRef];
@@ -1747,7 +1747,7 @@ bool idRenderModelStatic::ConvertMAToModelSurfaces (const struct maModel_s *ma )
 					common->Error( "ConvertMAToModelSurfaces: bad vertex index in MA file %s", name.c_str() );
 				}
 
-				// collapse the position if it was slightly offset 
+				// collapse the position if it was slightly offset
 				v = vRemap[v];
 
 				// we may or may not have texcoords to compare

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,9 +30,9 @@ If you have questions concerning this license or the applicable additional terms
 #include "MaterialDocManager.h"
 
 /**
-* MaterialView Interface. Interface to be implemented by classes that want 
-* notifications of material changes. Classes that implement this interface 
-* must register themself with the MaterialDocManager class with the 
+* MaterialView Interface. Interface to be implemented by classes that want
+* notifications of material changes. Classes that implement this interface
+* must register themself with the MaterialDocManager class with the
 * RegisterView method.
 */
 class MaterialView {
@@ -69,13 +69,13 @@ public:
 	virtual void	MV_OnMaterialChange(MaterialDoc* pMaterial) {};
 
 	/**
-	* Called when the material changes have been applied. 
+	* Called when the material changes have been applied.
 	* @param pMaterial The selected material.
 	*/
 	virtual void	MV_OnMaterialApply(MaterialDoc* pMaterial) {};
 
 	/**
-	* Called when the material changes have been saved. 
+	* Called when the material changes have been saved.
 	* @param pMaterial The saved material.
 	*/
 	virtual void	MV_OnMaterialSaved(MaterialDoc* pMaterial) {};

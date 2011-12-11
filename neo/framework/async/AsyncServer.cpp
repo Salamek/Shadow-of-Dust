@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -2106,7 +2106,7 @@ see (client) "getInfo" -> (server) "infoResponse" -> (client)ProcessGetInfoMessa
 void idAsyncServer::PrintLocalServerInfo( void ) {
 	int i;
 
-	common->Printf( "server '%s' IP = %s\nprotocol %d.%d OS mask 0x%x\n", 
+	common->Printf( "server '%s' IP = %s\nprotocol %d.%d OS mask 0x%x\n",
 					sessLocal.mapSpawnData.serverInfo.GetString( "si_name" ),
 					Sys_NetAdrToString( serverPort.GetAdr() ),
 					ASYNC_PROTOCOL_MAJOR,
@@ -2515,7 +2515,7 @@ void idAsyncServer::RunFrame( void ) {
 
 		// dedicated will verbose to console
 		if ( idAsyncNetwork::serverDedicated.GetBool() && serverTime >= nextAsyncStatsTime ) {
-			common->Printf( "delay = %d msec, total outgoing rate = %d KB/s, total incoming rate = %d KB/s\n", GetDelay(), 
+			common->Printf( "delay = %d msec, total outgoing rate = %d KB/s, total incoming rate = %d KB/s\n", GetDelay(),
 							GetOutgoingRate() >> 10, GetIncomingRate() >> 10 );
 
 			for ( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {

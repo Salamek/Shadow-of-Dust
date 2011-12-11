@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -168,13 +168,13 @@ void ColorButton_DrawItem ( HWND hWnd, LPDRAWITEMSTRUCT dis )
 		OffsetRect(&rDraw, 1,1);
 	}
 
-	if (state & ODS_FOCUS) 
+	if (state & ODS_FOCUS)
     {
 		RECT rFocus = {rDraw.left,
 					   rDraw.top,
 					   rDraw.right - 1,
 					   rDraw.bottom};
-  
+
         DrawFocusRect ( hDC, &rFocus );
     }
 
@@ -195,7 +195,7 @@ void ColorButton_DrawItem ( HWND hWnd, LPDRAWITEMSTRUCT dis )
 
 	rDraw.right -= (GetSystemMetrics(SM_CXEDGE) * 2) + 1 ;
 
-	// Draw Color				  
+	// Draw Color				
 	if ((state & ODS_DISABLED) == 0)
 	{
 		HBRUSH color = CreateSolidBrush ( (COLORREF)GetWindowLong ( hWnd, GWL_USERDATA ) );

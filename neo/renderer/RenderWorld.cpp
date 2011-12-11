@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -405,7 +405,7 @@ void idRenderWorldLocal::UpdateLightDef( qhandle_t lightHandle, const renderLigh
 			 rlight->noShadows == light->parms.noShadows && rlight->origin == light->parms.origin &&
 			 rlight->parallel == light->parms.parallel && rlight->pointLight == light->parms.pointLight &&
 			 rlight->right == light->parms.right && rlight->start == light->parms.start &&
-			 rlight->target == light->parms.target && rlight->up == light->parms.up && 
+			 rlight->target == light->parms.target && rlight->up == light->parms.up &&
 			 rlight->shader == light->lightShader && rlight->prelightModel == light->parms.prelightModel ) {
 			justUpdate = true;
 		} else {
@@ -724,7 +724,7 @@ void idRenderWorldLocal::RenderScene( const renderView_t *renderView ) {
 	parms->floatTime = parms->renderView.time * 0.001f;
 	parms->renderWorld = this;
 
-	// use this time for any subsequent 2D rendering, so damage blobs/etc 
+	// use this time for any subsequent 2D rendering, so damage blobs/etc
 	// can use level time
 	tr.frameShaderTime = parms->floatTime;
 
@@ -1539,7 +1539,7 @@ to prevent double checking areas.
 We might alternatively choose to do this with an area flow.
 ==================
 */
-void idRenderWorldLocal::PushVolumeIntoTree_r( idRenderEntityLocal *def, idRenderLightLocal *light, const idSphere *sphere, int numPoints, const idVec3 (*points), 
+void idRenderWorldLocal::PushVolumeIntoTree_r( idRenderEntityLocal *def, idRenderLightLocal *light, const idSphere *sphere, int numPoints, const idVec3 (*points),
 								 int nodeNum ) {
 	int			i;
 	areaNode_t	*node;

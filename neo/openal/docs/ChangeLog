@@ -31,11 +31,11 @@
 2001-01-04  Bernd Kreimeier  <bk@lokigames.com>
 
 	* chp-operation.sgml: INVALID_ENUM for getters and enable,
-	not INVALID_OPERATION. Later: Delete{Object}s accepts zero. 
+	not INVALID_OPERATION. Later: Delete{Object}s accepts zero.
 
 2000-12-04  Bernd Kreimeier  <bk@lokigames.com>
 
-	* Makefile: added HTML ZIP targets ("update" for website). 
+	* Makefile: added HTML ZIP targets ("update" for website).
 
 2000-11-10  Bernd Kreimeier  <bk@lokigames.com>
 
@@ -47,7 +47,7 @@
 	Also created snapshots page (along with cronjob and
 	automated update installed by Rafael).
 
-	* Makefile: added ZIP file generation to update target. 
+	* Makefile: added ZIP file generation to update target.
 
 	* index.html: edited for snapshots/ page on www.openal.org.
 	As it is next to impossible to reproduce the Official OpenAL
@@ -61,7 +61,7 @@
 
 2000-10-27  Bernd Kreimeier  <bk@lokigames.com>
 
-	* Makefile: rendering targets for cronjob driven update. 
+	* Makefile: rendering targets for cronjob driven update.
 
 2000-10-26  Bernd Kreimeier  <bk@lokigames.com>
 
@@ -106,8 +106,8 @@
 
 2000-10-20  Bernd Kreimeier  <bk@lokigames.com>
 
-	* ent-examples.sgml: experimenting with external sample.c 
-	files as CDATA entities, to no avail. 
+	* ent-examples.sgml: experimenting with external sample.c
+	files as CDATA entities, to no avail.
 	* oalspecs.sgml: example entities.
 
 2000-10-16  Bernd Kreimeier  <bk@lokigames.com>
@@ -158,7 +158,7 @@
 	
 	* alc-context.sgml: created from original doc.
 	Note: this breaks the scheme a bit, as this is technically
-	a chapter, but if ALC turns into a multi-chapter 
+	a chapter, but if ALC turns into a multi-chapter
 	documentation at some point down the road it will have
 	to be a separate document anyway.
 	
@@ -185,7 +185,7 @@
 	The AL Specification was originally maintained as an HTML
 	document, and subsequently as a single SGML file. With the
 	split into several files, it is no longer possible or
-	desirable to maintain a single revision history. As we 
+	desirable to maintain a single revision history. As we
 	have a manually maintained revhistory within the DocBook
 	source, I decided to move the old revision history into
 	the ChangeLog.
@@ -247,7 +247,7 @@
 
         Revision 1.7  2000/08/15 02:47:03  bk
         Fixed RFC markup error needed for Full version.
- 
+
         Revision 1.6  2000/08/15 02:20:49  bk
         Clarified BUFFER_USED vs. buffer state. Started section on
         handling multichannel output. Moved out GenStreamingBuffer
@@ -280,7 +280,7 @@
         Stripped BYTE_LOKI of all but the essentials. Added placeholders
         for Callback and AppendData in same (backwards compatibility)
         section. Lots of Buffer Queueing.
- 
+
         Revision 1.4  2000/07/25 17:19:17  bk
         Changed ILLEGAL_OPERATION to ILLEGAL_COMMAND consistently. Added
         excerpts from mailinglist to scratch section. Added Appendix on
@@ -312,29 +312,29 @@
         Revision 1.1  2000/06/29 00:27:24  briareos
         Initial draft of OpenAL specs.
 
-       
+
         1.4/briareos : not in CVS
         Finished editing related to my comments, with Joe's
         feedback, in preparation for use by Creative and eventual
         public dissemination later this week.
- 
+
         1.4/bk000626 : not in CVS
         Started using id attribute on RFC note elements, to ensure unique
-        identifiers. Added Annote level. Added oal15-jm/overview.html 
+        identifiers. Added Annote level. Added oal15-jm/overview.html
         changes. Added oal15-jm/object-state.html (mostly). Removed
         Filtering/Spatialization distinction and merged attribute table.
         Moved Filter chapter to annotation. Moved Geometry to annotation,
         rewrote annotation with my latest conclusions on A3D/EAGLE like
         approach. Stripped out ALU and ALUT, added annotation on reasons.
-        Added some text to introduction chapter. Moved ALC chapter to end 
+        Added some text to introduction chapter. Moved ALC chapter to end
         of specification. Followed John Hall advice to enable section
         numbers in print stylesheet. Rewrote section on GetError. Created
         I3DL2 extension appendix. Reworked all tables for better
-        formatting with separated descriptions. Took out a bunch of 
+        formatting with separated descriptions. Took out a bunch of
         outdated RFC's. Rewrote Query and String Query section. Added
         Scratch sections. Added ARB/Ack section. Didn't get RFC comments
         from MikeV. Fixed permission to copy.
-    
+
         1.4/bk000508 : not in CVS.
         Added RFC to Device section. Made nested RFC around entire
         device section to make sure. Added trailing blanks to data type
@@ -342,13 +342,13 @@
         FuncSynopsis. Added RFC from BYTE_LOKI discussion on mailinglist.
 
         1.4/bk000507 : not in CVS.
-        Added altypes.h info on scalar types, copied Linux OpenGL Base 
-        ABI layout. Also added some missing enums. Checked alc.h header, 
-        added UpdateContext and RFC's. Changed alc*Context signatures to 
-        include ALCdevice handle. Checked al.h header, fixed outdated 
+        Added altypes.h info on scalar types, copied Linux OpenGL Base
+        ABI layout. Also added some missing enums. Checked alc.h header,
+        added UpdateContext and RFC's. Changed alc*Context signatures to
+        include ALCdevice handle. Checked al.h header, fixed outdated
         BufferData/BufferAppendData signatures, added RFC's. Added comments
         on differing return types. This pretty much concludes the inventory.
-    
+
         1.4/bk000506 : not in CVS.
         The HTML in CVS was completely mangled between the 1.2 and 1.3
         revisions. Also, redundant al and AL_ prefixes were added, and
@@ -358,21 +358,21 @@
         relevant have been added in RFC's with the bk000506 tag.
         Also added a revision history and CVS tags for future CVS based
         revision control (post-E3).
-       
+
         1.4/bk000505 : not in CVS.
         SGML version. Merges AL specification and API reference as
         of GDC (v1.2) with each other. Adds ALC placeholder.
         Addition of several RFCs based on recent discussions.
- 
-        1.3/cvogelsa : only in CVS.   
+
+        1.3/cvogelsa : only in CVS.
         api-reference.html    CVS v1.14
         specification.html    CVS v1.3
-     
+
         1.2/briareos : 8 March 2000, released at GDC.
         api-reference.html    CVS v1.13
         specification.html    CVS v1.2
 
-        x.xx/nn : early specifications. 
-        Neither the early working papers by Terry Sikes, Sean L. Palmer 
+        x.xx/nn : early specifications.
+        Neither the early working papers by Terry Sikes, Sean L. Palmer
         and others nor the first versions of the &OAL; specification
         as compiled at Loki were archived and versioned in a coherent way.

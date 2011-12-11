@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -326,7 +326,7 @@ static void ASE_KeyMESH_FACE_LIST( const char *token )
 		ASE_GetToken( false );	// skip label
 		ASE_GetToken( false );	// first vertex
 		pMesh->faces[ase.currentFace].vertexNum[0] = atoi( ase.token );
-                
+
 		ASE_GetToken( false );	// skip label
 		ASE_GetToken( false );	// second vertex
 		pMesh->faces[ase.currentFace].vertexNum[2] = atoi( ase.token );

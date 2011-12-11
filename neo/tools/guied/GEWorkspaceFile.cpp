@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -247,7 +247,7 @@ bool rvGEWorkspace::NewFile ( void )
 	idStr	ospath;	
 	idFile*	file;
 
-	// Make a temporary file with nothing in it so we can just use 
+	// Make a temporary file with nothing in it so we can just use
 	// load to do all the work
 	ospath = fileSystem->RelativePathToOSPath ( "guis/Untitled.guiednew", "fs_basepath" );
 	DeleteFile ( ospath );
@@ -326,7 +326,7 @@ bool rvGEWorkspace::LoadFile ( const char* filename, idStr* error )
 	// Let the real window system parse it first
 	mInterface = NULL;
 	result     = true;
-	try 
+	try
 	{	
 		mInterface = reinterpret_cast< idUserInterfaceLocal* >( uiManager->FindGui( tempfile, true, true ) );
 		if ( !mInterface && error )

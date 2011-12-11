@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -80,11 +80,11 @@ static RGBColor rgbGray  = { 0x5252, 0x8A8A, 0xCCCC };	// this is the blue used 
 //-----------------------------------------------------------------------------
 //	SetupUserPaneProcs
 //-----------------------------------------------------------------------------
-// 	Call this to initialize the specified user pane control before displaying 
+// 	Call this to initialize the specified user pane control before displaying
 //	the dialog window. Pass NULL for any user pane procs you don't need to install.
 
 OSErr SetupUserPaneProcs(	ControlRef inUserPane,
-							ControlUserPaneDrawProcPtr inDrawProc, 
+							ControlUserPaneDrawProcPtr inDrawProc,
 							ControlUserPaneHitTestProcPtr inHitTestProc,
 							ControlUserPaneTrackingProcPtr inTrackingProc)
 {
@@ -116,7 +116,7 @@ OSErr SetupUserPaneProcs(	ControlRef inUserPane,
 			err = memFullErr;
 		else
 			err = SetControlData(	inUserPane,
-									kControlEntireControl, 
+									kControlEntireControl,
 									kControlUserPaneHitTestProcTag,
 									sizeof(ControlUserPaneHitTestUPP),
 									(Ptr)&hitTestUPP);
@@ -129,7 +129,7 @@ OSErr SetupUserPaneProcs(	ControlRef inUserPane,
 			err = memFullErr;
 		else
 			err = SetControlData(	inUserPane,
-									kControlEntireControl, 
+									kControlEntireControl,
 									kControlUserPaneTrackingProcTag,
 									sizeof(ControlUserPaneTrackingUPP),
 									(Ptr)&trackingUPP);
@@ -350,7 +350,7 @@ OSErr SetupPickMonitorPane(ControlRef inPane, DisplayIDType inDefaultMonitor)
 			r.right = (float)r.right * scale;
 			
 			// offset rect wrt gray region
-			OffsetRect(&r, (float)(r2.left - origGrayRect.left) * scale, 
+			OffsetRect(&r, (float)(r2.left - origGrayRect.left) * scale,
 							(float)(r2.top - origGrayRect.top) * scale);
 
 			sMonitors[i].scaledRect = r;

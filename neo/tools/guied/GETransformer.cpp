@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -50,20 +50,20 @@ bool rvGETransformer::Create ( HWND parent, bool visible )
 	wndClass.cbSize = sizeof(WNDCLASSEX);
 	wndClass.lpszClassName = "GUIEDITOR_TRANSFORMER_CLASS";		
 	wndClass.lpfnWndProc = rvGETransformer::WndProc;
-	wndClass.hbrBackground = (HBRUSH)GetStockObject( LTGRAY_BRUSH );; 
-	wndClass.hCursor       = LoadCursor((HINSTANCE) NULL, IDC_ARROW); 
+	wndClass.hbrBackground = (HBRUSH)GetStockObject( LTGRAY_BRUSH );;
+	wndClass.hCursor       = LoadCursor((HINSTANCE) NULL, IDC_ARROW);
 	wndClass.lpszMenuName  = NULL;
-	wndClass.hInstance     = win32.hInstance; 
+	wndClass.hInstance     = win32.hInstance;
 	RegisterClassEx ( &wndClass );
 
-	mWnd = CreateWindowEx ( WS_EX_TOOLWINDOW, 
-							"GUIEDITOR_TRANSFORMER_CLASS", 
-							"Transformer", 
-							WS_SYSMENU|WS_CAPTION|WS_POPUP|WS_OVERLAPPED|WS_BORDER|WS_CLIPSIBLINGS|WS_CHILD, 
+	mWnd = CreateWindowEx ( WS_EX_TOOLWINDOW,
+							"GUIEDITOR_TRANSFORMER_CLASS",
+							"Transformer",
+							WS_SYSMENU|WS_CAPTION|WS_POPUP|WS_OVERLAPPED|WS_BORDER|WS_CLIPSIBLINGS|WS_CHILD,
 							0, 0, 200,100,
-							parent, 
-							NULL, 
-							win32.hInstance, 
+							parent,
+							NULL,
+							win32.hInstance,
 							this );
 							
 	if ( !mWnd )
@@ -120,7 +120,7 @@ LRESULT CALLBACK rvGETransformer::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, 
 			SetWindowLong ( hWnd, GWL_USERDATA, (LONG)trans );
 			
 			trans->mWnd = hWnd;
-			trans->mDlg = CreateDialogParam ( gApp.GetInstance(), MAKEINTRESOURCE(IDD_GUIED_TRANSFORMER), 
+			trans->mDlg = CreateDialogParam ( gApp.GetInstance(), MAKEINTRESOURCE(IDD_GUIED_TRANSFORMER),
 											  hWnd, DlgProc, (LPARAM)trans );
 			
 			RECT rDlg;
@@ -131,14 +131,14 @@ LRESULT CALLBACK rvGETransformer::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, 
 			GetClientRect ( trans->mWnd, &rClient );
 			GetWindowRect ( trans->mDlg, &rDlg );
 
-			SetWindowPos ( trans->mWnd, NULL, 0, 0, 
+			SetWindowPos ( trans->mWnd, NULL, 0, 0,
 						   (rWindow.right-rWindow.left)-(rClient.right-rClient.left) + (rDlg.right-rDlg.left),
 						   (rWindow.bottom-rWindow.top)-(rClient.bottom-rClient.top) + (rDlg.bottom-rDlg.top),
 						   SWP_NOZORDER );
 
 			ShowWindow ( trans->mDlg, SW_SHOW );
 			UpdateWindow ( trans->mDlg );
-											  
+											
 			break;
 		}
 	}
@@ -330,9 +330,9 @@ LRESULT FAR PASCAL rvGETransformer::GetMsgProc ( int nCode, WPARAM wParam, LPARA
       {
          if ( IsDialogMessage( gTransDlg, lpMsg) )
          {
-			// The value returned from this hookproc is ignored, 
+			// The value returned from this hookproc is ignored,
 			// and it cannot be used to tell Windows the message has been handled.
-			// To avoid further processing, convert the message to WM_NULL 
+			// To avoid further processing, convert the message to WM_NULL
 			// before returning.
 			lpMsg->message = WM_NULL;
 			lpMsg->lParam  = 0;
@@ -342,4 +342,4 @@ LRESULT FAR PASCAL rvGETransformer::GetMsgProc ( int nCode, WPARAM wParam, LPARA
    }
 
    return CallNextHookEx(gTransHook, nCode, wParam, lParam);
-} 
+}

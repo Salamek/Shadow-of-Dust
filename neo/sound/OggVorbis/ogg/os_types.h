@@ -49,7 +49,7 @@ void _decoder_free( void *memblock );
 
 #endif
 
-#ifdef _WIN32 
+#ifdef _WIN32
 
 #  ifndef __GNUC__
    /* MSVC/Borland */

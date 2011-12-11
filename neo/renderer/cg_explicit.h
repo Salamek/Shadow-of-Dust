@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -42,10 +42,10 @@ typedef enum
     CG_UNKNOWN_TYPE,
         CG_STRUCT,
         CG_ARRAY,
-        
+
         CG_TYPE_START_ENUM = 1024,
-        
-        
+
+
         CG_HALF ,
         CG_HALF2 ,
         CG_HALF3 ,
@@ -114,13 +114,13 @@ typedef enum
         CG_HALF1 ,
         CG_FLOAT1 ,
         CG_FIXED1 ,
-        
-        
+
+
 } CGtype;
 
 typedef enum
 {
-    
+
     CG_TEXUNIT0 = 2048,
         CG_TEXUNIT1 = 2049,
         CG_TEXUNIT2 = 2050,
@@ -137,7 +137,7 @@ typedef enum
         CG_TEXUNIT13 = 2061,
         CG_TEXUNIT14 = 2062,
         CG_TEXUNIT15 = 2063,
-        
+
         CG_ATTR0 = 2113,
         CG_ATTR1 = 2114,
         CG_ATTR2 = 2115,
@@ -154,9 +154,9 @@ typedef enum
         CG_ATTR13 = 2126,
         CG_ATTR14 = 2127,
         CG_ATTR15 = 2128,
-        
+
         CG_C = 2178,
-        
+
         CG_TEX0 = 2179,
         CG_TEX1 = 2180,
         CG_TEX2 = 2181,
@@ -165,7 +165,7 @@ typedef enum
         CG_TEX5 = 2194,
         CG_TEX6 = 2195,
         CG_TEX7 = 2196,
-        
+
         CG_HPOS = 2243,
         CG_COL0 = 2245,
         CG_COL1 = 2246,
@@ -173,7 +173,7 @@ typedef enum
         CG_COL3 = 2248,
         CG_PSIZ = 2309,
         CG_WPOS = 2373,
-        
+
         CG_POSITION0 = 2437,
         CG_POSITION1 = 2438,
         CG_POSITION2 = 2439,
@@ -378,42 +378,42 @@ typedef enum
         CG_OFFSET_TEXTURE_BIAS = 3290,
         CG_CONST_EYE = 3291,
         CG_TESSFACTOR = 3255,
-        
-        
+
+
         CG_UNDEFINED,
-        
+
  } CGresource;
- 
+
  typedef enum
  {
      CG_PROFILE_START = 6144,
          CG_PROFILE_UNKNOWN,
-         
+
          CG_PROFILE_VP20 = 6146,
          CG_PROFILE_FP20 = 6147,
          CG_PROFILE_VP30 = 6148,
          CG_PROFILE_FP30 = 6149,
          CG_PROFILE_ARBVP1 = 6150,
          CG_PROFILE_ARBFP1 = 7000,
-         
-         
+
+
          CG_PROFILE_VS_1_1 = 6153,
          CG_PROFILE_VS_2_0 = 6154,
          CG_PROFILE_VS_2_X = 6155,
-         
+
          CG_PROFILE_PS_1_1 = 6159,
          CG_PROFILE_PS_1_2 = 6160,
          CG_PROFILE_PS_1_3 = 6161,
          CG_PROFILE_PS_2_0 = 6162,
          CG_PROFILE_PS_2_X = 6163,
-         
+
          CG_PROFILE_MAX,
  } CGprofile;
- 
+
  typedef enum
  {
-     
-     
+
+
      CG_NO_ERROR = 0,
          CG_COMPILER_ERROR = 1,
          CG_INVALID_PARAMETER_ERROR = 2,
@@ -439,7 +439,7 @@ typedef enum
          CG_ARRAY_PARAM_ERROR = 22,
          CG_OUT_OF_ARRAY_BOUNDS_ERROR = 23,
  } CGerror;
- 
+
  typedef enum
  {
      CG_UNKNOWN = 4096,
@@ -454,36 +454,36 @@ typedef enum
          CG_PROGRAM_ENTRY,
          CG_COMPILED_PROGRAM,
          CG_PROGRAM_PROFILE,
-         
+
          CG_GLOBAL,
          CG_PROGRAM,
-         
+
          CG_DEFAULT,
          CG_ERROR,
-         
+
          CG_SOURCE,
          CG_OBJECT,
-         
+
  } CGenum;
- 
- 
+
+
  extern "C" {
-     
+
      typedef void (*CGerrorCallbackFunc)(void);
-     
-     
-     
+
+
+
      typedef  CGcontext  (*PFNCGCREATECONTEXTPROC)(void);
      typedef  void  (*PFNCGDESTROYCONTEXTPROC)(CGcontext ctx);
      typedef  CGbool  (*PFNCGISCONTEXTPROC)(CGcontext ctx);
      typedef  const char * (*PFNCGGETLASTLISTINGPROC)(CGcontext ctx);
-     typedef  CGprogram (*PFNCGCREATEPROGRAMPROC)(CGcontext ctx, 
+     typedef  CGprogram (*PFNCGCREATEPROGRAMPROC)(CGcontext ctx,
          CGenum program_type,
          const char *program,
          CGprofile profile,
          const char *entry,
          const char **args);
-     typedef  CGprogram (*PFNCGCREATEPROGRAMFROMFILEPROC)(CGcontext ctx, 
+     typedef  CGprogram (*PFNCGCREATEPROGRAMFROMFILEPROC)(CGcontext ctx,
          CGenum program_type,
          const char *program_file,
          CGprofile profile,
@@ -520,7 +520,7 @@ typedef enum
      typedef  CGenum  (*PFNCGGETPARAMETERVARIABILITYPROC)(CGparameter param);
      typedef  CGenum  (*PFNCGGETPARAMETERDIRECTIONPROC)(CGparameter param);
      typedef  CGbool  (*PFNCGISPARAMETERREFERENCEDPROC)(CGparameter param);
-     typedef  void (*PFNCGGETPARAMETERVALUESPROC)(CGparameter param, 
+     typedef  void (*PFNCGGETPARAMETERVALUESPROC)(CGparameter param,
          CGenum value_type,
          int *nvalues);
      typedef  const char * (*PFNCGGETTYPESTRINGPROC)(CGtype type);
@@ -533,8 +533,8 @@ typedef enum
      typedef  const char * (*PFNCGGETERRORSTRINGPROC)(CGerror error);
      typedef  void  (*PFNCGSETERRORCALLBACKPROC)(CGerrorCallbackFunc func);
      typedef  CGerrorCallbackFunc  (*PFNCGGETERRORCALLBACKPROC)(void);
-     
-     
+
+
      extern PFNCGCREATECONTEXTPROC cgCreateContext;
      extern PFNCGDESTROYCONTEXTPROC cgDestroyContext;
      extern PFNCGISCONTEXTPROC cgIsContext;
@@ -583,34 +583,34 @@ typedef enum
      extern PFNCGGETERRORSTRINGPROC cgGetErrorString;
      extern PFNCGSETERRORCALLBACKPROC cgSetErrorCallback;
      extern PFNCGGETERRORCALLBACKPROC cgGetErrorCallback;
-     
-     
+
+
  }
- 
- 
- 
+
+
+
  extern "C" {
-     
+
      typedef enum
      {
          CG_GL_MATRIX_IDENTITY = 0,
              CG_GL_MATRIX_TRANSPOSE = 1,
              CG_GL_MATRIX_INVERSE = 2,
              CG_GL_MATRIX_INVERSE_TRANSPOSE = 3,
-             
+
              CG_GL_MODELVIEW_MATRIX,
              CG_GL_PROJECTION_MATRIX,
              CG_GL_TEXTURE_MATRIX,
              CG_GL_MODELVIEW_PROJECTION_MATRIX,
-             
+
              CG_GL_VERTEX,
              CG_GL_FRAGMENT,
-             
+
      } CGGLenum;
-     
-     
-     
-     
+
+
+
+
      typedef  CGbool  (*PFNCGGLISPROFILESUPPORTEDPROC)(CGprofile profile);
      typedef  void  (*PFNCGGLENABLEPROFILEPROC)(CGprofile profile);
      typedef  void  (*PFNCGGLDISABLEPROFILEPROC)(CGprofile profile);
@@ -742,38 +742,38 @@ typedef enum
      typedef  void  (*PFNCGGLGETMATRIXPARAMETERFRPROC)(CGparameter param, float *matrix);
      typedef  void  (*PFNCGGLGETMATRIXPARAMETERDCPROC)(CGparameter param, double *matrix);
      typedef  void  (*PFNCGGLGETMATRIXPARAMETERFCPROC)(CGparameter param, float *matrix);
-     typedef  void (*PFNCGGLSETSTATEMATRIXPARAMETERPROC)(CGparameter param, 
+     typedef  void (*PFNCGGLSETSTATEMATRIXPARAMETERPROC)(CGparameter param,
          GLenum matrix,
          GLenum transform);
-     typedef  void (*PFNCGGLSETMATRIXPARAMETERARRAYFCPROC)(CGparameter param, 
+     typedef  void (*PFNCGGLSETMATRIXPARAMETERARRAYFCPROC)(CGparameter param,
          long offset,
          long nelements,
          const float *matrices);
-     typedef  void (*PFNCGGLSETMATRIXPARAMETERARRAYFRPROC)(CGparameter param, 
+     typedef  void (*PFNCGGLSETMATRIXPARAMETERARRAYFRPROC)(CGparameter param,
          long offset,
          long nelements,
          const float *matrices);
-     typedef  void (*PFNCGGLSETMATRIXPARAMETERARRAYDCPROC)(CGparameter param, 
+     typedef  void (*PFNCGGLSETMATRIXPARAMETERARRAYDCPROC)(CGparameter param,
          long offset,
          long nelements,
          const double *matrices);
-     typedef  void (*PFNCGGLSETMATRIXPARAMETERARRAYDRPROC)(CGparameter param, 
+     typedef  void (*PFNCGGLSETMATRIXPARAMETERARRAYDRPROC)(CGparameter param,
          long offset,
          long nelements,
          const double *matrices);
-     typedef  void (*PFNCGGLGETMATRIXPARAMETERARRAYFCPROC)(CGparameter param, 
+     typedef  void (*PFNCGGLGETMATRIXPARAMETERARRAYFCPROC)(CGparameter param,
          long offset,
          long nelements,
          float *matrices);
-     typedef  void (*PFNCGGLGETMATRIXPARAMETERARRAYFRPROC)(CGparameter param, 
+     typedef  void (*PFNCGGLGETMATRIXPARAMETERARRAYFRPROC)(CGparameter param,
          long offset,
          long nelements,
          float *matrices);
-     typedef  void (*PFNCGGLGETMATRIXPARAMETERARRAYDCPROC)(CGparameter param, 
+     typedef  void (*PFNCGGLGETMATRIXPARAMETERARRAYDCPROC)(CGparameter param,
          long offset,
          long nelements,
          double *matrices);
-     typedef  void (*PFNCGGLGETMATRIXPARAMETERARRAYDRPROC)(CGparameter param, 
+     typedef  void (*PFNCGGLGETMATRIXPARAMETERARRAYDRPROC)(CGparameter param,
          long offset,
          long nelements,
          double *matrices);
@@ -782,8 +782,8 @@ typedef enum
      typedef  void  (*PFNCGGLENABLETEXTUREPARAMETERPROC)(CGparameter param);
      typedef  void  (*PFNCGGLDISABLETEXTUREPARAMETERPROC)(CGparameter param);
      typedef  GLenum  (*PFNCGGLGETTEXTUREENUMPROC)(CGparameter param);
-     
-     
+
+
      extern PFNCGGLISPROFILESUPPORTEDPROC cgGLIsProfileSupported;
      extern PFNCGGLENABLEPROFILEPROC cgGLEnableProfile;
      extern PFNCGGLDISABLEPROFILEPROC cgGLDisableProfile;
@@ -856,8 +856,8 @@ typedef enum
      extern PFNCGGLENABLETEXTUREPARAMETERPROC cgGLEnableTextureParameter;
      extern PFNCGGLDISABLETEXTUREPARAMETERPROC cgGLDisableTextureParameter;
      extern PFNCGGLGETTEXTUREENUMPROC cgGLGetTextureEnum;
-     
-     
+
+
 }
 
 bool init_explicit_Cg();

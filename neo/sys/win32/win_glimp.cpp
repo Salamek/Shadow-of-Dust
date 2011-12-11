@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ PFNWGLRELEASEPBUFFERDCARBPROC	wglReleasePbufferDCARB;
 PFNWGLDESTROYPBUFFERARBPROC	wglDestroyPbufferARB;
 PFNWGLQUERYPBUFFERARBPROC	wglQueryPbufferARB;
 
-// WGL_ARB_render_texture 
+// WGL_ARB_render_texture
 PFNWGLBINDTEXIMAGEARBPROC		wglBindTexImageARB;
 PFNWGLRELEASETEXIMAGEARBPROC	wglReleaseTexImageARB;
 PFNWGLSETPBUFFERATTRIBARBPROC	wglSetPbufferAttribARB;
@@ -303,7 +303,7 @@ void GLW_CheckWGLExtensions( HDC hDC ) {
 	wglDestroyPbufferARB = (PFNWGLDESTROYPBUFFERARBPROC)GLimp_ExtensionPointer("wglDestroyPbufferARB");
 	wglQueryPbufferARB = (PFNWGLQUERYPBUFFERARBPROC)GLimp_ExtensionPointer("wglQueryPbufferARB");
 
-	// WGL_ARB_render_texture 
+	// WGL_ARB_render_texture
 	wglBindTexImageARB = (PFNWGLBINDTEXIMAGEARBPROC)GLimp_ExtensionPointer("wglBindTexImageARB");
 	wglReleaseTexImageARB = (PFNWGLRELEASETEXIMAGEARBPROC)GLimp_ExtensionPointer("wglReleaseTexImageARB");
 	wglSetPbufferAttribARB = (PFNWGLSETPBUFFERATTRIBARBPROC)GLimp_ExtensionPointer("wglSetPbufferAttribARB");
@@ -365,7 +365,7 @@ shown, and create the rendering context
 ====================
 */
 static bool GLW_InitDriver( glimpParms_t parms ) {
-    PIXELFORMATDESCRIPTOR src = 
+    PIXELFORMATDESCRIPTOR src =
 	{
 		sizeof(PIXELFORMATDESCRIPTOR),	// size of this pfd
 		1,								// version number
@@ -402,7 +402,7 @@ static bool GLW_InitDriver( glimpParms_t parms ) {
 		common->Printf( "succeeded\n" );
 	}
 
-	// the multisample path uses the wgl 
+	// the multisample path uses the wgl
 	if ( wglChoosePixelFormatARB && parms.multiSamples > 1 ) {
 		int		iAttributes[20];
 		FLOAT	fAttributes[] = {0, 0};
@@ -589,7 +589,7 @@ static bool GLW_CreateWindow( glimpParms_t parms ) {
 		x = win32.win_xpos.GetInteger();
 		y = win32.win_ypos.GetInteger();
 
-		// adjust window coordinates if necessary 
+		// adjust window coordinates if necessary
 		// so that the window is completely on screen
 		if ( x + w > win32.desktopWidth ) {
 			x = ( win32.desktopWidth - w );
@@ -606,7 +606,7 @@ static bool GLW_CreateWindow( glimpParms_t parms ) {
 	}
 
 	win32.hWnd = CreateWindowEx (
-		 exstyle, 
+		 exstyle,
 		 WIN32_WINDOW_CLASS_NAME,
 		 GAME_NAME,
 		 stylebits,
@@ -861,7 +861,7 @@ bool GLimp_Init( glimpParms_t parms ) {
 ===================
 GLimp_SetScreenParms
 
-Sets up the screen based on passed parms.. 
+Sets up the screen based on passed parms..
 ===================
 */
 bool GLimp_SetScreenParms( glimpParms_t parms ) {
@@ -905,7 +905,7 @@ bool GLimp_SetScreenParms( glimpParms_t parms ) {
 		x = win32.win_xpos.GetInteger();
 		y = win32.win_ypos.GetInteger();
 
-		// adjust window coordinates if necessary 
+		// adjust window coordinates if necessary
 		// so that the window is completely on screen
 		if ( x + w > win32.desktopWidth ) {
 			x = ( win32.desktopWidth - w );

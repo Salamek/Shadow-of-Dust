@@ -16,7 +16,7 @@ class idSoundEffect
 public:
 	idSoundEffect() {
 	};
-	~idSoundEffect() { 
+	~idSoundEffect() {
 		if ( data && datasize ) {
 			Mem_Free( data );
 			data = NULL;
@@ -39,7 +39,7 @@ public:
     // Public data members.
 
 private:
-    
+
 public:
 	idEFXFile();
 	~idEFXFile();

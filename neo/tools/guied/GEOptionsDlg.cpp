@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ static INT_PTR CALLBACK GEOptionsDlg_GeneralProc ( HWND hwnd, UINT msg, WPARAM w
 	switch ( msg )
 	{
 		case WM_INITDIALOG:
-			ColorButton_SetColor ( GetDlgItem ( hwnd, IDC_GUIED_SELECTIONCOLOR ), 
+			ColorButton_SetColor ( GetDlgItem ( hwnd, IDC_GUIED_SELECTIONCOLOR ),
 									RGB(gApp.GetOptions().GetSelectionColor()[0]*255,
 										gApp.GetOptions().GetSelectionColor()[1]*255,
 										gApp.GetOptions().GetSelectionColor()[2]*255) );					
@@ -194,8 +194,8 @@ bool GEOptionsDlg_DoModal ( HWND parent )
 
 	propsh.dwSize			= sizeof(PROPSHEETHEADER);
 	propsh.nStartPage		= gApp.GetOptions().GetLastOptionsPage ( );
-	propsh.dwFlags			= PSH_PROPSHEETPAGE|PSH_NOAPPLYNOW|PSH_NOCONTEXTHELP; 
-	propsh.hwndParent		= parent; 
+	propsh.dwFlags			= PSH_PROPSHEETPAGE|PSH_NOAPPLYNOW|PSH_NOCONTEXTHELP;
+	propsh.hwndParent		= parent;
 	propsh.pszCaption		= "Options";
 	propsh.nPages			= 2;
 	propsh.ppsp				= (LPCPROPSHEETPAGE)&propsp;

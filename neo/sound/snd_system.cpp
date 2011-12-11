@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -561,7 +561,7 @@ int idSoundSystemLocal::GetCurrent44kHzTime( void ) const {
 		return CurrentSoundTime;
 	} else {
 		// NOTE: this would overflow 31bits within about 1h20 ( not that important since we get a snd_audio_hw right away pbly )
-		//return ( ( Sys_Milliseconds()*441 ) / 10 ) * 4; 
+		//return ( ( Sys_Milliseconds()*441 ) / 10 ) * 4;
 		return idMath::FtoiFast( (float)Sys_Milliseconds() * 176.4f );
 	}
 }
@@ -823,7 +823,7 @@ float idSoundSystemLocal::dB2Scale( const float val ) const {
 	} else if ( val <= -60.0f ) {
 		return 0.0f;
 	} else if ( val >= 60.0f ) {
-		return powf( 2.0f, val * ( 1.0f / 6.0f ) ); 
+		return powf( 2.0f, val * ( 1.0f / 6.0f ) );
 	}
 	int ival = (int)( ( val + 60.0f ) * 10.0f );
 	return volumesDB[ival];

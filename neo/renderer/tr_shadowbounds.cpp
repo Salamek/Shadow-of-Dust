@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ If you have questions concerning this license or the applicable additional terms
 
 // Compute conservative shadow bounds as the intersection
 // of the object's bounds' shadow volume and the light's bounds.
-// 
+//
 // --cass
 
 
@@ -136,10 +136,10 @@ idVec4 compute_homogeneous_plane(idVec4 a, idVec4 b, idVec4 c)
 
     idVec3 vb = homogeneous_difference(a, b);
     idVec3 vc = homogeneous_difference(a, c);
-    
+
     idVec3 n = vb.Cross(vc);
     n.Normalize();
-    
+
 	v.x = n.x;
 	v.y = n.y;
 	v.z = n.z;
@@ -228,7 +228,7 @@ struct polyhedron
                             fprintf(stderr,"why am I here?\n");
                         }
                     }
-                    if( found ) 
+                    if( found )
                         break;
                 }
             }
@@ -329,13 +329,13 @@ polyhedron make_sv(const polyhedron & oc, idVec4 light)
 		ph = oc;
 
 		int V = ph.v.size();
-		for( int j = 0; j < V; j++ ) 
+		for( int j = 0; j < V; j++ )
 		{
 			idVec3 proj = homogeneous_difference( light, ph.v[j] );
 			ph.v.push_back( idVec4(proj.x, proj.y, proj.z, 0) );
 		}
 
-		ph.p.empty(); 
+		ph.p.empty();
 
 		for(unsigned int i=0; i < oc.p.size(); i++)
 		{
@@ -384,7 +384,7 @@ polyhedron make_sv(const polyhedron & oc, idVec4 light)
 	// initalize vertices
 	ph2.v = oc.v;
 	int V = ph2.v.size();
-	for( int j = 0; j < V; j++ ) 
+	for( int j = 0; j < V; j++ )
 	{
 		idVec3 proj = homogeneous_difference( light, ph2.v[j] );
 		ph2.v.push_back( idVec4(proj.x, proj.y, proj.z, 0) );
@@ -439,7 +439,7 @@ void clip_segments(const polyhedron & ph, MySegments & is, MySegments & os)
                 code |= 1;
 
 
-            switch ( code ) 
+            switch ( code )
             {
             case 3:
                 discard = true;
@@ -510,7 +510,7 @@ void world_to_hclip( const viewDef_t *viewDef, const idVec4 &global, idVec4 &cli
 	idVec4	view;
 
 	for ( i = 0 ; i < 4 ; i ++ ) {
-		view[i] = 
+		view[i] =
 			global[0] * viewDef->worldSpace.modelViewMatrix[ i + 0 * 4 ] +
 			global[1] * viewDef->worldSpace.modelViewMatrix[ i + 1 * 4 ] +
 			global[2] * viewDef->worldSpace.modelViewMatrix[ i + 2 * 4 ] +
@@ -519,7 +519,7 @@ void world_to_hclip( const viewDef_t *viewDef, const idVec4 &global, idVec4 &cli
 
 
 	for ( i = 0 ; i < 4 ; i ++ ) {
-		clip[i] = 
+		clip[i] =
 			view[0] * viewDef->projectionMatrix[ i + 0 * 4 ] +
 			view[1] * viewDef->projectionMatrix[ i + 1 * 4 ] +
 			view[2] * viewDef->projectionMatrix[ i + 2 * 4 ] +
@@ -579,7 +579,7 @@ idScreenRect R_CalcIntersectionScissor( const idRenderLightLocal * lightDef,
 	// clip them by the shadow volume
     clip_segments(sv, in_segs, out_segs);
 
-	// debug // 
+	// debug //
 	if ( r_useInteractionScissors.GetInteger() == -2 ) {
 		draw_segments( viewDef, out_segs, colorGreen );
 	}

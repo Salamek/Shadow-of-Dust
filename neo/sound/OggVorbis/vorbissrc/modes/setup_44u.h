@@ -33,7 +33,7 @@ ve_setup_data_template ve_setup_44_uncoupled={
   -1,
   40000,
   50000,
-  
+
   blocksize_short_44,
   blocksize_long_44,
 
@@ -51,7 +51,7 @@ ve_setup_data_template ve_setup_44_uncoupled={
   _psy_noisebias_trans,
   _psy_noisebias_long,
   _psy_noise_suppress,
-  
+
   _psy_compand_44,
   _psy_compand_short_mapping,
   _psy_compand_long_mapping,
@@ -62,7 +62,7 @@ ve_setup_data_template ve_setup_44_uncoupled={
 
   _psy_ath_floater,
   _psy_ath_abs,
-  
+
   _psy_lowpass_44,
 
   _psy_global_44,
@@ -84,7 +84,7 @@ ve_setup_data_template ve_setup_44_uncoupled_low={
   -1,
   40000,
   50000,
-  
+
   blocksize_short_44_low,
   blocksize_long_44_low,
 
@@ -102,7 +102,7 @@ ve_setup_data_template ve_setup_44_uncoupled_low={
   _psy_noisebias_trans_low,
   _psy_noisebias_long_low,
   _psy_noise_suppress,
-  
+
   _psy_compand_44,
   _psy_compand_short_mapping,
   _psy_compand_long_mapping,
@@ -113,7 +113,7 @@ ve_setup_data_template ve_setup_44_uncoupled_low={
 
   _psy_ath_floater,
   _psy_ath_abs,
-  
+
   _psy_lowpass_44_low,
 
   _psy_global_44,

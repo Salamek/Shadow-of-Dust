@@ -19,38 +19,38 @@
      the listener position.
     </para>
     <para>
-      The I3DL2 Environment is a filter that alters the 
-      way the user experiences the virtual world. As 
+      The I3DL2 Environment is a filter that alters the
+      way the user experiences the virtual world. As
       filters require DSP operations it is limited by hardware
       processing capabilities.
     </para>
     <para>
-      The I3DL2 Environment models the surroundings of the 
+      The I3DL2 Environment models the surroundings of the
       listener by simplifying the presumed acoustic properties
       of those surroundings into a small set of parameters.
-      It allows to reproduce the effects of sound reflections 
+      It allows to reproduce the effects of sound reflections
       and reverberation caused by walls and obstacles, and
-      the muffling effects of obstacles inside environments 
+      the muffling effects of obstacles inside environments
       or partitions between environments.
     </para>
     <para>
-      Environment properties: 
-      Early reflections level and delay. 
-      Late reverberation level and delay, low- and high-frequency decay time. 
-      Reverberation diffusion, density and spectrum. 
+      Environment properties:
+      Early reflections level and delay.
+      Late reverberation level and delay, low- and high-frequency decay time.
+      Reverberation diffusion, density and spectrum.
     </para>
     <para>
-      Source properties: 
-      Direct path intensity and spectrum. 
+      Source properties:
+      Direct path intensity and spectrum.
       Reverberation intensity and spectrum.
-    </para>            
+    </para>
    </section>
 
    <section id="al-objects-filters">
       <title>On Filters</title>
       <para>
         RFC/bk000502: Filters as the general concept of modifiers?
-        Environment as a special case filter? 
+        Environment as a special case filter?
         Can we break down EAX environments into ReverbFilters where we
         parametrize late reflections, and ReflectFilters, which fake
         early reflections? Do we need this separation if we have
@@ -62,19 +62,19 @@
       </para>
       <para>
         RFC/bk000502: old text.
-        (Environment) Properties: 
-        Geometry - geometry is specified using an immediate mode API which is 
-        similar to OpenGL. Support for scene lists are also provided on a basis 
-        similar to OpenGL's display lists. 
-        Materials - specify the absorptive and reflective qualities of a piece 
-        of geometry. &AL; should provide a facility for accessing preset 
-        materials, and storing and retrieving new materials at runtime. 
+        (Environment) Properties:
+        Geometry - geometry is specified using an immediate mode API which is
+        similar to OpenGL. Support for scene lists are also provided on a basis
+        similar to OpenGL's display lists.
+        Materials - specify the absorptive and reflective qualities of a piece
+        of geometry. &AL; should provide a facility for accessing preset
+        materials, and storing and retrieving new materials at runtime.
       </para>
       <para>
-        RFC/nn: Atmospheric/ambient properties? 
-        REF/nn: A3D 2.0 IA3dMaterial 
+        RFC/nn: Atmospheric/ambient properties?
+        REF/nn: A3D 2.0 IA3dMaterial
       </para>
- 
+
       <section id="al-objects-filters-atmospheric">
       <title>Atmospheric Filter</title>
       <para>
@@ -99,10 +99,10 @@
       <title>Listener Reverb</title>
       <para>
         Listener Reverb is a parameterized filter that modifies the sound at
-        listener position to emulate effects of the surroundings, namely 
+        listener position to emulate effects of the surroundings, namely
         effects of late reflections. Without simulating sound propagation
         this reverb accounts for the averaged outcome of different arrangements
-        of reflecting/absorbing surfaces around the listener. 
+        of reflecting/absorbing surfaces around the listener.
       </para>
       </section>
 
@@ -117,7 +117,7 @@
       <title>Reflection Filter</title>
       <para>
         First order reflection (and, if support, O(n) reflection for small n)
-        can choose to simulate the effects of different materials by 
+        can choose to simulate the effects of different materials by
         parametrizing reflection filters.
         There is currently no support for reflections.
       </para>
@@ -138,7 +138,7 @@
       </para>
       </section>
     </section>
-    
+
     <section>
     <title>Parameterization over Time</title>
     <para>
@@ -152,7 +152,7 @@
        </listitem>
        <listitem>
        <para>
-         parameterize, i.e. specify a target gain, 
+         parameterize, i.e. specify a target gain,
           a duration over which to interpolate, and an interpolation function
        </para>
        </listitem>
@@ -163,7 +163,7 @@
        </para>
        </listitem>
       The last mechanism also works for early reflections and echos,
-      and any other temporal filtering. The first and second approach 
+      and any other temporal filtering. The first and second approach
       also work for attributes like Pitch.
     </para>
     </section>
@@ -174,7 +174,7 @@
      <para>
         Both the A3D API and implementation as well as EAX related utilities
         like EAGLE seem to indicate that any effort to handle scene geoemtry
-        at API level will inevitably duplicate modules found in common game 
+        at API level will inevitably duplicate modules found in common game
         engines for purposes of collision detection, path planning, AI
         support, visibility and sound propagation culling.
       </para>
@@ -234,13 +234,13 @@
         listener reverb....
       </para>
    </section>
-  
+
    <section>
    <title>No ALU</title>
       <note id="bk000019-01"><title>RFC</title><para>
          ALU, like GLU, is a problem: linkage dependencies, multiple drivers
          sharing one ALU etc. It would be best to not clutter the specification
-         with ALU/ALUT. Any support code/template repository/SDK can be 
+         with ALU/ALUT. Any support code/template repository/SDK can be
          maintained as a separate open source project.
       </para></note>
      <para>
@@ -257,20 +257,20 @@
        and not bothering to load it. A vendor-neutral open source ALU
        works for me, but we can not accept link time dependencies to AL.
        ALU (like GLU) is meant for minimal convenience, in small
-       building blocks, it is not meant as an SDK. 
-     </para>   
+       building blocks, it is not meant as an SDK.
+     </para>
      <para>
        RFC/bk000502: old text.
-       ALU is the AL Utility library, and provide functions for performing audio 
-       conversion, preset material properties, and a compatability layer for 
-       legacy stereo format audio. This includes support for panning and per 
+       ALU is the AL Utility library, and provide functions for performing audio
+       conversion, preset material properties, and a compatability layer for
+       legacy stereo format audio. This includes support for panning and per
        channel volume control.
-     </para> 
+     </para>
      <para>
-       RFC/nn: Er, what else does the world of 2D sound usually need? 
+       RFC/nn: Er, what else does the world of 2D sound usually need?
      </para>
    </section>
- 
+
 
    <section>
    <title>No ALUT</title>
@@ -284,8 +284,8 @@
      </para>
      <para>
       ALUT is a utility toolkit for &AL;. It sits on top of ALC.
-      It provides convenience functions for accessing files, for playing sounds, 
-      and an API for accessing CDROM functionality.      
+      It provides convenience functions for accessing files, for playing sounds,
+      and an API for accessing CDROM functionality.
      </para>
    </section>
 

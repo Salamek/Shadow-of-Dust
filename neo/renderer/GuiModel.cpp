@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -208,7 +208,7 @@ EmitToCurrentView
 void idGuiModel::EmitToCurrentView( float modelMatrix[16], bool depthHack ) {
 	float	modelViewMatrix[16];
 
-	myGlMultMatrix( modelMatrix, tr.viewDef->worldSpace.modelViewMatrix, 
+	myGlMultMatrix( modelMatrix, tr.viewDef->worldSpace.modelViewMatrix,
 			modelViewMatrix );
 
 	for ( int i = 0 ; i < surfaces.Num() ; i++ ) {
@@ -356,7 +356,7 @@ void idGuiModel::SetColor( float r, float g, float b, float a ) {
 DrawStretchPic
 =============
 */
-void idGuiModel::DrawStretchPic( const idDrawVert *dverts, const glIndex_t *dindexes, int vertCount, int indexCount, const idMaterial *hShader, 
+void idGuiModel::DrawStretchPic( const idDrawVert *dverts, const glIndex_t *dindexes, int vertCount, int indexCount, const idMaterial *hShader,
 									   bool clip, float min_x, float min_y, float max_x, float max_y ) {
 	if ( !glConfig.isInitialized ) {
 		return;

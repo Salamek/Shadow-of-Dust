@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -458,7 +458,7 @@ idAsyncNetwork::CheckNewVersion_f
 ==================
 */
 void idAsyncNetwork::CheckNewVersion_f( const idCmdArgs &args ) {
-	client.SendVersionCheck(); 
+	client.SendVersionCheck();
 }
 
 /*

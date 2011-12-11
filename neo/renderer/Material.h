@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -197,7 +197,7 @@ typedef struct {
 	int					numFragmentProgramImages;
 	idImage *			fragmentProgramImages[MAX_FRAGMENT_IMAGES];
 
-	idMegaTexture		*megaTexture;		// handles all the binding and parameter setting 
+	idMegaTexture		*megaTexture;		// handles all the binding and parameter setting
 } newShaderStage_t;
 
 typedef struct {
@@ -508,7 +508,7 @@ public:
 						// get sort order
 	const float			GetSort( void ) const { return sort; }
 						// this is only used by the gui system to force sorting order
-						// on images referenced from tga's instead of materials. 
+						// on images referenced from tga's instead of materials.
 						// this is done this way as there are 2000 tgas the guis use
 	void				SetSort( float s ) const { sort = s; };
 
@@ -575,7 +575,7 @@ public:
 	const int			GetNumRegisters() const { return numRegisters; }
 
 						// regs should point to a float array large enough to hold GetNumRegisters() floats
-	void				EvaluateRegisters( float *regs, const float entityParms[MAX_ENTITY_SHADER_PARMS], 
+	void				EvaluateRegisters( float *regs, const float entityParms[MAX_ENTITY_SHADER_PARMS],
 											const struct viewDef_s *view, idSoundEmitter *soundEmitter = NULL ) const;
 
 						// if a material only uses constants (no entityParm or globalparm references), this

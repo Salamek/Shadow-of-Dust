@@ -38,7 +38,7 @@ POSSIBILITY OF SUCH DAMAGE.
 idBase64::Encode
 ============
 */
-static const char sixtet_to_base64[] = 
+static const char sixtet_to_base64[] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 void idBase64::Encode( const byte *from, int size ) {

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ const idSoundSample* idSoundCache::GetObject( const int index ) const {
 	if (index<0 || index>listCache.Num()) {
 		return NULL;
 	}
-	return listCache[index]; 
+	return listCache[index];
 }
 
 /*
@@ -485,7 +485,7 @@ void idSoundSample::Load( void ) {
 	// optionally convert it to 22kHz to save memory
 	CheckForDownSample();
 
-	// create hardware audio buffers 
+	// create hardware audio buffers
 	if ( idSoundSystemLocal::useOpenAL ) {
 		// PCM loads directly
 		if ( objectInfo.wFormatTag == WAVE_FORMAT_TAG_PCM ) {
@@ -524,7 +524,7 @@ void idSoundSample::Load( void ) {
 					hardwareBuffer = true;
 				}
 			}
-		} 
+		}
 		
 		// OGG decompressed at load time (when smaller than s_decompressionLimit seconds, 6 seconds by default)
 		if ( objectInfo.wFormatTag == WAVE_FORMAT_TAG_OGG ) {

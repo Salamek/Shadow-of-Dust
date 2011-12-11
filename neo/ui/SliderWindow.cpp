@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -106,7 +106,7 @@ bool idSliderWindow::ParseInternalVar(const char *_name, idParser *src) {
 }
 
 idWinVar *idSliderWindow::GetWinVarByName(const char *_name, bool fixup, drawWin_t** owner) {
- 
+
 	if (idStr::Icmp(_name, "value") == 0) {
 		return &value;
 	}
@@ -135,7 +135,7 @@ const char *idSliderWindow::HandleEvent(const sysEvent_t *event, bool *updateVis
 		SetCapture(this);
 		RouteMouseCoords(0.0f, 0.0f);
 		return "";
-	} 
+	}
 
 	if ( key == K_RIGHTARROW || key == K_KP_RIGHTARROW || ( key == K_MOUSE2 && gui->CursorY() > thumbRect.y ) )  {
 		value = value + stepSize;

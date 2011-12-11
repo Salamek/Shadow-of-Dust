@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -143,7 +143,7 @@ idCVar r_testGammaBias( "r_testGammaBias", "0", CVAR_RENDERER | CVAR_FLOAT, "if 
 idCVar r_testStepGamma( "r_testStepGamma", "0", CVAR_RENDERER | CVAR_FLOAT, "if > 0 draw a grid pattern to test gamma levels" );
 idCVar r_lightScale( "r_lightScale", "2", CVAR_RENDERER | CVAR_FLOAT, "all light intensities are multiplied by this" );
 idCVar r_lightSourceRadius( "r_lightSourceRadius", "0", CVAR_RENDERER | CVAR_FLOAT, "for soft-shadow sampling" );
-idCVar r_flareSize( "r_flareSize", "1", CVAR_RENDERER | CVAR_FLOAT, "scale the flare deforms from the material def" ); 
+idCVar r_flareSize( "r_flareSize", "1", CVAR_RENDERER | CVAR_FLOAT, "scale the flare deforms from the material def" );
 
 idCVar r_useExternalShadows( "r_useExternalShadows", "1", CVAR_RENDERER | CVAR_INTEGER, "1 = skip drawing caps when outside the light volume, 2 = force to no caps for testing", 0, 2, idCmdSystem::ArgCompletion_Integer<0,2> );
 idCVar r_useOptimizedShadows( "r_useOptimizedShadows", "1", CVAR_RENDERER | CVAR_BOOL, "use the dmap generated static shadow volumes" );
@@ -209,7 +209,7 @@ idCVar r_showSkel( "r_showSkel", "0", CVAR_RENDERER | CVAR_INTEGER, "draw the sk
 idCVar r_jointNameScale( "r_jointNameScale", "0.02", CVAR_RENDERER | CVAR_FLOAT, "size of joint names when r_showskel is set to 1" );
 idCVar r_jointNameOffset( "r_jointNameOffset", "0.5", CVAR_RENDERER | CVAR_FLOAT, "offset of joint names when r_showskel is set to 1" );
 
-idCVar r_cgVertexProfile( "r_cgVertexProfile", "best", CVAR_RENDERER | CVAR_ARCHIVE, "arbvp1, vp20, vp30" );     
+idCVar r_cgVertexProfile( "r_cgVertexProfile", "best", CVAR_RENDERER | CVAR_ARCHIVE, "arbvp1, vp20, vp30" );
 idCVar r_cgFragmentProfile( "r_cgFragmentProfile", "best", CVAR_RENDERER | CVAR_ARCHIVE, "arbfp1, fp30" );
 
 idCVar r_debugLineDepthTest( "r_debugLineDepthTest", "0", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "perform depth test on debug lines" );
@@ -232,7 +232,7 @@ void ( APIENTRY *qglCombinerParameterfNV )( GLenum pname, const GLfloat param );
 void ( APIENTRY *qglCombinerParameteriNV )( GLenum pname, const GLint param );
 void ( APIENTRY *qglCombinerInputNV )( GLenum stage, GLenum portion, GLenum variable, GLenum input,
 											  GLenum mapping, GLenum componentUsage );
-void ( APIENTRY *qglCombinerOutputNV )( GLenum stage, GLenum portion, GLenum abOutput, GLenum cdOutput, 
+void ( APIENTRY *qglCombinerOutputNV )( GLenum stage, GLenum portion, GLenum abOutput, GLenum cdOutput,
 											   GLenum sumOutput, GLenum scale, GLenum bias, GLboolean abDotProduct,
 											   GLboolean cdDotProduct, GLboolean muxSum );
 void ( APIENTRY *qglFinalCombinerInputNV )( GLenum variable, GLenum input, GLenum mapping, GLenum componentUsage );
@@ -406,7 +406,7 @@ static void R_CheckPortableExtensions( void ) {
 	// GL_EXT_texture3D (not currently used for anything)
 	glConfig.texture3DAvailable = R_CheckExtension( "GL_EXT_texture3D" );
 	if ( glConfig.texture3DAvailable ) {
-		qglTexImage3D = 
+		qglTexImage3D =
 			(void (APIENTRY *)(GLenum, GLint, GLint, GLsizei, GLsizei, GLsizei, GLint, GLenum, GLenum, const GLvoid *) )
 			GLimp_ExtensionPointer( "glTexImage3D" );
 	}
@@ -437,7 +437,7 @@ static void R_CheckPortableExtensions( void ) {
 		qglCombinerInputNV = (void (APIENTRY *)( GLenum stage, GLenum portion, GLenum variable, GLenum input,
 											  GLenum mapping, GLenum componentUsage ))
 			GLimp_ExtensionPointer( "glCombinerInputNV" );
-		qglCombinerOutputNV = (void (APIENTRY *)( GLenum stage, GLenum portion, GLenum abOutput, GLenum cdOutput, 
+		qglCombinerOutputNV = (void (APIENTRY *)( GLenum stage, GLenum portion, GLenum abOutput, GLenum cdOutput,
 											   GLenum sumOutput, GLenum scale, GLenum bias, GLboolean abDotProduct,
 											   GLboolean cdDotProduct, GLboolean muxSum ))
 			GLimp_ExtensionPointer( "glCombinerOutputNV" );
@@ -1055,13 +1055,13 @@ void R_ReportImageDuplication_f( const idCmdArgs &args ) {
 	common->Printf( "%i / %i collisions\n", count, globalImages->images.Num() );
 }
 
-/* 
-============================================================================== 
- 
+/*
+==============================================================================
+
 						THROUGHPUT BENCHMARKING
- 
-============================================================================== 
-*/ 
+
+==============================================================================
+*/
 
 /*
 ================
@@ -1134,13 +1134,13 @@ void R_Benchmark_f( const idCmdArgs &args ) {
 }
 
 
-/* 
-============================================================================== 
- 
-						SCREEN SHOTS 
- 
-============================================================================== 
-*/ 
+/*
+==============================================================================
+
+						SCREEN SHOTS
+
+==============================================================================
+*/
 
 /*
 ====================
@@ -1188,7 +1188,7 @@ void R_ReadTiledPixels( int width, int height, byte *buffer, renderView_t *ref =
 			}
 
 			qglReadBuffer( GL_FRONT );
-			qglReadPixels( 0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, temp ); 
+			qglReadPixels( 0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, temp );
 
 			int	row = ( w * 3 + 3 ) & ~3;		// OpenGL pads to dword boundaries
 
@@ -1214,7 +1214,7 @@ void R_ReadTiledPixels( int width, int height, byte *buffer, renderView_t *ref =
 
 
 /*
-================== 
+==================
 TakeScreenshot
 
 Move to tr_imagefiles.c...
@@ -1222,8 +1222,8 @@ Move to tr_imagefiles.c...
 Will automatically tile render large screen shots if necessary
 Downsample is the number of steps to mipmap the image before saving it
 If ref == NULL, session->updateScreen will be used
-================== 
-*/  
+==================
+*/
 void idRenderSystemLocal::TakeScreenshot( int width, int height, const char *fileName, int blends, renderView_t *ref ) {
 	byte		*buffer;
 	int			i, j, c, temp;
@@ -1291,16 +1291,16 @@ void idRenderSystemLocal::TakeScreenshot( int width, int height, const char *fil
 }
 
 
-/* 
-================== 
+/*
+==================
 R_ScreenshotFilename
 
 Returns a filename with digits appended
 if we have saved a previous screenshot, don't scan
 from the beginning, because recording demo avis can involve
 thousands of shots
-================== 
-*/  
+==================
+*/
 void R_ScreenshotFilename( int &lastNumber, const char *base, idStr &fileName ) {
 	int	a,b,c,d, e;
 
@@ -1338,15 +1338,15 @@ void R_ScreenshotFilename( int &lastNumber, const char *base, idStr &fileName ) 
 }
 
 /*
-================== 
+==================
 R_BlendedScreenShot
 
 screenshot
 screenshot [filename]
 screenshot [width] [height]
 screenshot [width] [height] [samples]
-================== 
-*/ 
+==================
+*/
 #define	MAX_BLENDS	256	// to keep the accumulation in shorts
 void R_ScreenShot_f( const idCmdArgs &args ) {
 	static int lastNumber = 0;
@@ -1423,7 +1423,7 @@ void R_StencilShot( void ) {
 
 	byte *byteBuffer = (byte *)Mem_Alloc(pix);
 
-	qglReadPixels( 0, 0, width, height, GL_STENCIL_INDEX , GL_UNSIGNED_BYTE, byteBuffer ); 
+	qglReadPixels( 0, 0, width, height, GL_STENCIL_INDEX , GL_UNSIGNED_BYTE, byteBuffer );
 
 	for ( i = 0 ; i < pix ; i++ ) {
 		buffer[18+i*3] =
@@ -1446,15 +1446,15 @@ void R_StencilShot( void ) {
 	Mem_Free( byteBuffer );	
 }
 
-/* 
-================== 
+/*
+==================
 R_EnvShot_f
 
 envshot <basename>
 
 Saves out env/<basename>_ft.tga, etc
-================== 
-*/  
+==================
+*/
 void R_EnvShot_f( const idCmdArgs &args ) {
 	idStr		fullname;
 	const char	*baseName;
@@ -1463,7 +1463,7 @@ void R_EnvShot_f( const idCmdArgs &args ) {
 	renderView_t	ref;
 	viewDef_t	primary;
 	int			blends;
-	const char	*extensions[6] =  { "_px.tga", "_nx.tga", "_py.tga", "_ny.tga", 
+	const char	*extensions[6] =  { "_px.tga", "_nx.tga", "_py.tga", "_ny.tga",
 		"_pz.tga", "_nz.tga" };
 	int			size;
 
@@ -1529,7 +1529,7 @@ void R_EnvShot_f( const idCmdArgs &args ) {
 	}
 
 	common->Printf( "Wrote %s, etc\n", fullname.c_str() );
-} 
+}
 
 //============================================================================
 
@@ -1587,15 +1587,15 @@ void R_SampleCubeMap( const idVec3 &dir, int size, byte *buffers[6], byte result
 	result[3] = buffers[axis][(y*size+x)*4+3];
 }
 
-/* 
-================== 
+/*
+==================
 R_MakeAmbientMap_f
 
 R_MakeAmbientMap_f <basename> [size]
 
 Saves out env/<basename>_amb_ft.tga, etc
-================== 
-*/  
+==================
+*/
 void R_MakeAmbientMap_f( const idCmdArgs &args ) {
 	idStr fullname;
 	const char	*baseName;
@@ -1603,7 +1603,7 @@ void R_MakeAmbientMap_f( const idCmdArgs &args ) {
 	renderView_t	ref;
 	viewDef_t	primary;
 	int			downSample;
-	const char	*extensions[6] =  { "_px.tga", "_nx.tga", "_py.tga", "_ny.tga", 
+	const char	*extensions[6] =  { "_px.tga", "_nx.tga", "_py.tga", "_ny.tga",
 		"_pz.tga", "_nz.tga" };
 	int			outSize;
 	byte		*buffers[6];
@@ -1726,7 +1726,7 @@ void R_MakeAmbientMap_f( const idCmdArgs &args ) {
 			Mem_Free( buffers[i] );
 		}
 	}
-} 
+}
 
 //============================================================================
 

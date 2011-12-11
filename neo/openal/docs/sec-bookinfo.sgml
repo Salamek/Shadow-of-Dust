@@ -1,5 +1,5 @@
 
-  <bookinfo> 
+  <bookinfo>
     <title>
       &OAL; Specification and Reference
     </title>
@@ -43,11 +43,10 @@
       <para> All other trademarks are property of their respective owners.</para>
     </legalnotice>
 
-    <releaseinfo> 
+    <releaseinfo>
       Draft document of &OAL; Specification.
-    </releaseinfo>   
+    </releaseinfo>
 
-   
+
 
   </bookinfo>
- 

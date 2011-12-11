@@ -1,6 +1,6 @@
 
    <appendix>
-   <title>Global Constants</title> 
+   <title>Global Constants</title>
      <para>
     <table>
     <title>Misc. &AL; Global Constants</title>
@@ -11,8 +11,8 @@
     <row>
        <entry>Name            </>
        <entry>&OAL; datatype  </>
-       <entry>Description     </>        
-       <entry>Literal value   </>  
+       <entry>Description     </>
+       <entry>Literal value   </>
     </row>
     </thead>
     <tbody>
@@ -35,7 +35,7 @@
 
 
     <![ %RFC [
-      <note id="bk000621-01"><title>RFC</title><para>  
+      <note id="bk000621-01"><title>RFC</title><para>
         NONE, ONE, ZERO needed?
       </para></note>
     ]]>

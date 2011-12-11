@@ -1,6 +1,6 @@
 
    <appendix>
-   <title>Extension Process</title> 
+   <title>Extension Process</title>
    <para>
      There are two ways to suggest an Extension to AL or ALC.
      The simplest way is to write an ASCII text that matches
@@ -32,5 +32,5 @@
     the specification is available by CVS, and the Appendix
     on Extensions can be used as a template. Contact the
     maintainer for details.
-   </para> 
+   </para>
    </appendix>

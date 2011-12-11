@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "Game_local.h"
 
-// a mover will update any gui entities in it's target list with 
+// a mover will update any gui entities in it's target list with
 // a key/val pair of "mover" "state" from below.. guis can represent
 // realtime info like this
 // binary only
@@ -297,7 +297,7 @@ void idMover::Restore( idRestoreGame *savefile ) {
 		savefile->ReadInt( useAngles );
 
 		PostEventMS( &EV_PostRestore, 0, starttime, totaltime, accel, decel, useAngles );
-	} 
+	}
 }
 
 /*
@@ -975,7 +975,7 @@ void idMover::BeginRotation( idThread *thread, bool stopwhendone ) {
 
 /***********************************************************************
 
-	Script callable routines  
+	Script callable routines
 	
 ***********************************************************************/
 
@@ -1756,7 +1756,7 @@ void idElevator::Think( void ) {
 				MoveToPos( fi->pos );
 			}
 		}
-	} 
+	}
 	RunPhysics();
 	Present();
 }
@@ -2498,7 +2498,7 @@ void idMover_Binary::Event_MatchActivateTeam( moverState_t newstate, int time ) 
 ================
 idMover_Binary::BindTeam
 
-All entities in a mover team will be bound 
+All entities in a mover team will be bound
 ================
 */
 void idMover_Binary::BindTeam( idEntity *bindTo ) {
@@ -3494,7 +3494,7 @@ void idDoor::Use( idEntity *other, idEntity *activator ) {
 		}
 		ActivateTargets( activator );
 		Use_BinaryMover( activator );
-	} 
+	}
 }
 
 /*

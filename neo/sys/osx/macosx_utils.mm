@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -52,9 +52,9 @@ static long size_save;
 
 void *osxAllocateMemoryNV(long size, float readFrequency, float writeFrequency, float priority)
 {
-    kern_return_t kr;    
+    kern_return_t kr;
     vm_address_t buffer;
-    
+
     kr = vm_allocate(mach_task_self(),
                     (vm_address_t *)&buffer,
                     size,
@@ -83,9 +83,9 @@ void osxFreeMemoryNV(void *pointer)
 
 void *osxAllocateMemory(long size)
 {
-    kern_return_t kr;    
+    kern_return_t kr;
     vm_address_t buffer;
-    
+
     size += sizeof( int );
     kr = vm_allocate(mach_task_self(),
                     (vm_address_t *)&buffer,
@@ -154,15 +154,15 @@ static inline void __dcbz(void *base, unsigned long offset)
 
 void	Sys_FlushCacheMemory( void *base, int bytes ) {
 	unsigned long i;
-        
+
         for(i = 0; i <  bytes; i+= 32) {
             __dcbf(base,i);
         }
         __sync();
         __isync();
         __dcbf(base, i);
-        __sync(); 
+        __sync();
         __isync();
         *(volatile unsigned long *)(base + i);
-        __isync(); 
+        __isync();
 }

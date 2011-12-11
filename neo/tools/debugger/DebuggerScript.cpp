@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ void rvDebuggerScript::Unload ( void )
 ================
 rvDebuggerScript::Load
 
-Loads the debugger script and attempts to compile it using the method 
+Loads the debugger script and attempts to compile it using the method
 appropriate for the file being loaded.  If the script cant be compiled
 the loading of the script fails
 ================
@@ -117,7 +117,7 @@ bool rvDebuggerScript::Load ( const char* filename )
 	// Cleanup
 	fileSystem->FreeFile ( buffer );
 
-	// Now compile the script so we can tell what a valid line is, etc..  If its 
+	// Now compile the script so we can tell what a valid line is, etc..  If its
 	// a gui file then we need to parse it using the userinterface system rather
 	// than the normal script compiler.
 	try

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -266,7 +266,7 @@ BOOL CEditViewDlg::PreTranslateMessage(MSG* pMsg) {
 		// then replace that selection with a TAB
 		editInfo.ReplaceSel("\t", TRUE);
 		return TRUE;
-	} 
+	}
 
 	return CDialog::PreTranslateMessage(pMsg);
 }
@@ -289,7 +289,7 @@ LRESULT CEditViewDlg::OnFindDialogMessage(WPARAM wParam, LPARAM lParam) {
         findStr = findDlg->GetFindString().GetBuffer(0);
 		CString str;
 		editInfo.GetWindowText(str);
-		editText = str; 
+		editText = str;
 		int start, end;
 		editInfo.GetSel(start, end);
 		start = editText.Find(findStr, false, end);

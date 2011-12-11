@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ If you have questions concerning this license or the applicable additional terms
 /*
 Save game related helper classes.
 
-Save games are implemented in two classes, idSaveGame and idRestoreGame, that implement write/read functions for 
+Save games are implemented in two classes, idSaveGame and idRestoreGame, that implement write/read functions for
 common types.  They're passed in to each entity and object for them to archive themselves.  Each class
 implements save/restore functions for it's own data.  When restoring, all the objects are instantiated,
 then the restore function is called on each, superclass first, then subclasses.
@@ -227,7 +227,7 @@ void idSaveGame::WriteBool( const bool value ) {
 ================
 idSaveGame::WriteString
 ================
-*/  
+*/
 void idSaveGame::WriteString( const char *string ) {
 	int len;
 

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -195,7 +195,7 @@ idHeap::~idHeap( void ) {
 	if ( smallCurPage ) {
 		FreePage( smallCurPage );			// free small-heap current allocation page
 	}
-	p = smallFirstUsedPage;					// free small-heap allocated pages 
+	p = smallFirstUsedPage;					// free small-heap allocated pages
 	while( p ) {
 		idHeap::page_s *next = p->next;
 		FreePage( p );
@@ -761,7 +761,7 @@ void *idHeap::MediumAllocate( dword bytes ) {
 		}
 		mediumFirstUsedPage = p;
 		return data;
-	} 
+	}
 
 	// re-order linked list (so that next malloc query starts from current
 	// matching block) -- this speeds up both the page walks and block walks
@@ -902,7 +902,7 @@ void idHeap::MediumFree( void *ptr ) {
 		if ( !mediumFirstFreePage ) {
 			mediumFirstFreePage = p;
 		}
-	} 
+	}
 }
 
 //===============================================================

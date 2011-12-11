@@ -51,7 +51,7 @@ typedef struct bitrate_manager_state {
 
   int            next_to_flush;
   int            last_to_flush;
-  
+
   double         avgfloat;
 
   /* unfortunately, we need to hold queued packet data somewhere */

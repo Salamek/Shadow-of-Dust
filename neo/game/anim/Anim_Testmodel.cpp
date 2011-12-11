@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ If you have questions concerning this license or the applicable additional terms
 
 Model viewing can begin with either "testmodel <modelname>"
 
-The names must be the full pathname after the basedir, like 
+The names must be the full pathname after the basedir, like
 "models/weapons/v_launch/tris.md3" or "players/male/tris.md3"
 
 Extension will default to ".ase" if not specified.
@@ -766,7 +766,7 @@ void idTestModel::TestModel_f( const idCmdArgs &args ) {
 			// without appending an ase
 			if ( name[ 0 ] != '_' ) {
 				name.DefaultFileExtension( ".ase" );
-			} 
+			}
 			
 			if ( strstr( name, ".ma" ) || strstr( name, ".mb" ) ) {
 				idModelExport exporter;

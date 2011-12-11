@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -751,7 +751,7 @@ idGameEdit::FindEntity
 ================
 */
 idEntity *idGameEdit::FindEntity( const char *name ) const {
-	return gameLocal.FindEntity( name ); 
+	return gameLocal.FindEntity( name );
 }
 
 /*
@@ -876,7 +876,7 @@ void idGameEdit::EntityChangeSpawnArgs( idEntity *ent, const idDict *newArgs ) {
 	if ( ent ) {
 		for ( int i = 0 ; i < newArgs->GetNumKeyVals () ; i ++ ) {
 			const idKeyValue *kv = newArgs->GetKeyVal( i );
-	        
+	
 			if ( kv->GetValue().Length() > 0 ) {
 				ent->spawnArgs.Set ( kv->GetKey() ,kv->GetValue() );
 			} else {
@@ -1107,7 +1107,7 @@ int idGameEdit::MapGetEntitiesMatchingClassWithString( const char *classname, co
 			if (ent) {
 				idStr work = ent->epairs.GetString("classname");
 				if ( work.Icmp( classname ) == 0 ) {
-					if ( match && *match ) { 
+					if ( match && *match ) {
 						work = ent->epairs.GetString( "soundgroup" );
 						if ( count < max && work.Icmp( match ) == 0 ) {
 							list[count++] = ent->epairs.GetString( "name" );

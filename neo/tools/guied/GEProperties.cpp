@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -64,20 +64,20 @@ bool rvGEProperties::Create ( HWND parent, bool visible )
 	wndClass.cbSize = sizeof(WNDCLASSEX);
 	wndClass.lpszClassName = "GUIEDITOR_PROPERTIES_CLASS";
 	wndClass.lpfnWndProc   = WndProc;
-	wndClass.hbrBackground = (HBRUSH)GetSysColorBrush ( COLOR_3DFACE ); 
-	wndClass.hCursor       = LoadCursor((HINSTANCE) NULL, IDC_ARROW); 
+	wndClass.hbrBackground = (HBRUSH)GetSysColorBrush ( COLOR_3DFACE );
+	wndClass.hCursor       = LoadCursor((HINSTANCE) NULL, IDC_ARROW);
 	wndClass.lpszMenuName  = NULL;
-	wndClass.hInstance     = win32.hInstance; 
+	wndClass.hInstance     = win32.hInstance;
 	RegisterClassEx ( &wndClass );
 
-	mWnd = CreateWindowEx ( WS_EX_TOOLWINDOW, 
-							"GUIEDITOR_PROPERTIES_CLASS", 
-							"Properties", 
-							WS_SYSMENU|WS_THICKFRAME|WS_CAPTION|WS_POPUP|WS_OVERLAPPED|WS_BORDER|WS_CLIPSIBLINGS|WS_CHILD, 
+	mWnd = CreateWindowEx ( WS_EX_TOOLWINDOW,
+							"GUIEDITOR_PROPERTIES_CLASS",
+							"Properties",
+							WS_SYSMENU|WS_THICKFRAME|WS_CAPTION|WS_POPUP|WS_OVERLAPPED|WS_BORDER|WS_CLIPSIBLINGS|WS_CHILD,
 							0, 0, 200,300,
-							parent, 
-							NULL, 
-							win32.hInstance, 
+							parent,
+							NULL,
+							win32.hInstance,
 							this );
 							
 	if ( !mWnd )
@@ -235,8 +235,8 @@ LRESULT CALLBACK rvGEProperties::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, L
 								const char* prop;
 								
 								prop = kv->mGrid.GetItemName(sel);
-								if ( !idStr::Icmp ( prop, "rect" )		|| 
-									 !idStr::Icmp ( prop, "visible" )	|| 
+								if ( !idStr::Icmp ( prop, "rect" )		||
+									 !idStr::Icmp ( prop, "visible" )	||
 									 !idStr::Icmp ( prop, "name" ) )
 								{
 									MessageBeep ( MB_ICONASTERISK );

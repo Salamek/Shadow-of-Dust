@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -383,7 +383,7 @@ void idEntityFx::Run( int time ) {
 				}
 				laction.delay = totalDelay;
 				laction.start = time;
-			} 
+			}
 			continue;
 		}
 
@@ -457,7 +457,7 @@ void idEntityFx::Run( int time ) {
 			case FX_DECAL: {
 				if ( !useAction->decalDropped ) {
 					useAction->decalDropped = true;
-					gameLocal.ProjectDecal( GetPhysics()->GetOrigin(), GetPhysics()->GetGravity(), 8.0f, true, fxaction.size, fxaction.data ); 
+					gameLocal.ProjectDecal( GetPhysics()->GetOrigin(), GetPhysics()->GetGravity(), 8.0f, true, fxaction.size, fxaction.data );
 				}
 				break;
 			}
@@ -789,8 +789,8 @@ idEntityFx::ClientPredictionThink
 =================
 */
 void idEntityFx::ClientPredictionThink( void ) {
-	if ( gameLocal.isNewFrame ) { 
-		Run( gameLocal.time ); 
+	if ( gameLocal.isNewFrame ) {
+		Run( gameLocal.time );
 	}
 	RunPhysics();
 	Present();

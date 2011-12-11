@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -332,20 +332,20 @@ int CCamWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 	QEW_SetupPixelFormat(hDC, true);
 
 	HFONT hfont = CreateFont(
-				12,	// logical height of font 
-				0,	// logical average character width 
-				0,	// angle of escapement 
-				0,	// base-line orientation angle 
-				0,	// font weight 
-				0,	// italic attribute flag 
-				0,	// underline attribute flag 
-				0,	// strikeout attribute flag 
-				0,	// character set identifier 
-				0,	// output precision 
-				0,	// clipping precision 
-				0,	// output quality 
-				FIXED_PITCH | FF_MODERN,	// pitch and family 
-				"Lucida Console" 	// pointer to typeface name string 
+				12,	// logical height of font
+				0,	// logical average character width
+				0,	// angle of escapement
+				0,	// base-line orientation angle
+				0,	// font weight
+				0,	// italic attribute flag
+				0,	// underline attribute flag
+				0,	// strikeout attribute flag
+				0,	// character set identifier
+				0,	// output precision
+				0,	// clipping precision
+				0,	// output quality
+				FIXED_PITCH | FF_MODERN,	// pitch and family
+				"Lucida Console" 	// pointer to typeface name string
 				);
 
 	if (!hfont) {
@@ -580,7 +580,7 @@ void CCamWnd::Cam_MouseControl(float dtime) {
 		VectorMA(camera.origin, xf * dtime * g_nMoveSpeed, camera.right, camera.origin);
 	}
 	else
-#endif 
+#endif
 	{
 		xf *= 1.0f - idMath::Fabs(yf);
 		if ( xf < 0.0f ) {
@@ -983,7 +983,7 @@ void CCamWnd::Cam_Draw() {
 	qglTranslatef(-m_Camera.origin[0], -m_Camera.origin[1], -m_Camera.origin[2]);
 
 	Cam_BuildMatrix();
-   
+
 	for (brush = active_brushes.next; brush != &active_brushes; brush = brush->next) {
 
 		if ( CullBrush(brush, false) ) {
@@ -1061,7 +1061,7 @@ void CCamWnd::Cam_Draw() {
 			Face_Draw(selFace);
 			DrawAxial(selFace);
 		}
-	} 
+	}
 
 	// non-zbuffered outline
 	qglDisable(GL_BLEND);
@@ -1424,7 +1424,7 @@ void Tris_ToOBJ(const char *outFile, idTriList *tris, idMatList *mats) {
 				int i1, i2, i3;
 				i1 = tri->indexes[j+2] + indexBase;
 				i2 = tri->indexes[j+1] + indexBase;
-				i3 = tri->indexes[j] + indexBase; 
+				i3 = tri->indexes[j] + indexBase;
 				f->Printf( "f %i/%i/%i %i/%i/%i %i/%i/%i\n", i1,i1,i1, i2,i2,i2, i3,i3,i3 );
 			}
 
@@ -1722,7 +1722,7 @@ void CCamWnd::BuildRendererState() {
 	worldModel = renderModelManager->AllocModel();
 	worldModel->InitEmpty( "EditorWorldModel" );
 
-	for ( brush_t *brushList = &active_brushes ; brushList ; 
+	for ( brush_t *brushList = &active_brushes ; brushList ;
 		brushList = (brushList == &active_brushes) ? &selected_brushes : NULL ) {
 
 		for (brush = brushList->next; brush != brushList; brush = brush->next) {
@@ -2095,7 +2095,7 @@ void CCamWnd::Cam_Render() {
 	refdef.fov_x = 90;
 	refdef.fov_y = 2 * atan((float)m_Camera.height / m_Camera.width) * idMath::M_RAD2DEG;
 
-	// only set in animation mode to give a consistent look 
+	// only set in animation mode to give a consistent look
 	if (animationMode) {
 		refdef.time = eventLoop->Milliseconds();
 	}
@@ -2118,7 +2118,7 @@ void CCamWnd::Cam_Render() {
 }
 
 
-void CCamWnd::OnTimer(UINT nIDEvent) 
+void CCamWnd::OnTimer(UINT nIDEvent)
 {
 	if (animationMode || nIDEvent == 1) {
 		Sys_UpdateWindows(W_CAMERA);

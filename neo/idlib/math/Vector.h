@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -1121,7 +1121,7 @@ ID_INLINE float& idVec5::operator[]( int index ) {
 	return ( &x )[ index ];
 }
 
-ID_INLINE idVec5 &idVec5::operator=( const idVec3 &a ) { 
+ID_INLINE idVec5 &idVec5::operator=( const idVec3 &a ) {
 	x = a.x;
 	y = a.y;
 	z = a.z;
@@ -1549,7 +1549,7 @@ ID_INLINE idVecX idVecX::operator-() const {
 	return m;
 }
 
-ID_INLINE idVecX &idVecX::operator=( const idVecX &a ) { 
+ID_INLINE idVecX &idVecX::operator=( const idVecX &a ) {
 	SetSize( a.size );
 #ifdef VECX_SIMD
 	SIMDProcessor->Copy16( p, a.p, a.size );
@@ -1969,7 +1969,7 @@ ID_INLINE idPolar3 idPolar3::operator-() const {
 	return idPolar3( radius, -theta, -phi );
 }
 
-ID_INLINE idPolar3 &idPolar3::operator=( const idPolar3 &a ) { 
+ID_INLINE idPolar3 &idPolar3::operator=( const idPolar3 &a ) {
 	radius = a.radius;
 	theta = a.theta;
 	phi = a.phi;

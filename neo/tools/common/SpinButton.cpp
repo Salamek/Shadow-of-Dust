@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -43,10 +43,10 @@ void SpinButton_SetRange ( HWND hWnd, float minRange, float maxRange )
 
 void SpinButton_HandleNotify ( NMHDR* hdr )
 {
-	// Return if incorrect data in edit box 
+	// Return if incorrect data in edit box
 	NM_UPDOWN* udhdr= (NM_UPDOWN*)hdr;
 
-	// Change with 0.1 on each click 
+	// Change with 0.1 on each click
 	char strValue[64];
 	float value;				
 	GetWindowText ( (HWND)SendMessage ( hdr->hwndFrom, UDM_GETBUDDY, 0, 0 ), strValue, 63 );
@@ -67,11 +67,11 @@ void SpinButton_HandleNotify ( NMHDR* hdr )
 	value  = atof(strValue);				
 	value += (udhdr->iDelta)*(inc);
 
-	// Avoid round-off errors 
+	// Avoid round-off errors
 	value = floor(value*1e3+0.5)/1e3;
 	
 	LONG minRange;
-	LONG maxRange; 
+	LONG maxRange;
 	SendMessage ( hdr->hwndFrom, UDM_GETRANGE32, (LONG)&minRange, (LONG)&maxRange );
 	if ( minRange !=  0 || maxRange != 0 )
 	{

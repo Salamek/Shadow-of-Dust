@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ rvGEInsertModifier::rvGEInsertModifier ( const char* name, idWindow* window, idW
 	}		
 
 	// Since rectangles are relative to the parent rectangle we need to figure
-	// out the new x and y coordinate as if this window were a child 
+	// out the new x and y coordinate as if this window were a child
 	rvGEWindowWrapper* parentWrapper;		
 	parentWrapper = rvGEWindowWrapper::GetWrapper ( mParent );
 	mRect.x = mWrapper->GetScreenRect( )[0] - parentWrapper->GetScreenRect()[0];

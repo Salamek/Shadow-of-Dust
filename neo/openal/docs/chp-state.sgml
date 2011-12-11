@@ -2,14 +2,14 @@
     <chapter id="state-requests">
     <title>State and State Requests</title>
     <para>
-      The majority of &AL; state is associated with individual &AL; objects, 
-      and has to be set and queried referencing the objects. However, some 
-      state - e.g. processing errors - is 
-      defined context specific. &AL; has global state that affects all 
-      objects and  processing equally. This state is set using a variety 
+      The majority of &AL; state is associated with individual &AL; objects,
+      and has to be set and queried referencing the objects. However, some
+      state - e.g. processing errors - is
+      defined context specific. &AL; has global state that affects all
+      objects and  processing equally. This state is set using a variety
       of functions, and
       can be queried using query functions. The majority of queries
-      has to use the interface described in "Simple Queries". 
+      has to use the interface described in "Simple Queries".
     </para>
 
 
@@ -22,25 +22,25 @@
     <para>
        Like &OGL;, &AL; uses a simplified interface for querying global
        state. The following functions accept a set of enumerations.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function>   GetBooleanv  </function></funcdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
       <paramdef> &bool;* <parameter> dest </parameter></paramdef>
       </funcprototype></funcsynopsis>
 
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function>   GetIntegerv  </function></funcdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
       <paramdef> &int;* <parameter> dest </parameter></paramdef>
       </funcprototype></funcsynopsis>
 
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function>   GetFloatv  </function></funcdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
       <paramdef> &float;* <parameter> dest </parameter></paramdef>
       </funcprototype></funcsynopsis>
 
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function>   GetDoublev  </function></funcdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
       <paramdef> &double;* <parameter> dest </parameter></paramdef>
@@ -60,7 +60,7 @@
    </para>
 
     </sect2>
-  
+
     <sect2>
     <title>Data Conversions</title>
     <para>
@@ -83,23 +83,23 @@
       <note><title>Annotation (Query of Modes)</title><para>
          Modes (e.g. the current distance model) can be queried
          using the respective tokens. The recommended query
-         command is GetIntegerv.  
+         command is GetIntegerv.
        </para></note>
     ]]>
 
     </sect2>
-       
+
     <sect2>
     <title>String Queries</title>
     <para>
-      The application can retrieve state information global to the current 
+      The application can retrieve state information global to the current
       &AL; Context. GetString will return a pointer to a constant string.
       Valid values for param are VERSION, RENDERER, VENDOR, and EXTENSIONS,
       as well as the error codes defined by &AL;. The application can
       use GetString to retrieve a string for an error code.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> const &ubyte;* <function> GetString </function></funcdef>
-      <paramdef> &enum; <parameter> paramName</parameter></paramdef>      
+      <paramdef> &enum; <parameter> paramName</parameter></paramdef>
       </funcprototype></funcsynopsis>
     </para>
     </sect2>
@@ -111,8 +111,8 @@
     <para>
       By default, &AL; uses seconds and Hertz as units for
       time and frequency, respectively.
-      A float or integral value of one 
-      for a variable that specifies quantities like duration, 
+      A float or integral value of one
+      for a variable that specifies quantities like duration,
       latency, delay, or any other parameter measured as time,
       specifies 1 second.
       For frequency, the basic unit is 1/second, or Hertz.
@@ -120,12 +120,12 @@
       cut-offs or filter parameters specifying frequencies
       are expressed in units of Hertz.
     </para>
-  
+
     <![ %RFC [
-       <note id="rfc-bk000927-01"><title>RFC: Query and Factor?</title><para>  
+       <note id="rfc-bk000927-01"><title>RFC: Query and Factor?</title><para>
         Will time be an &AL; state that can be queried and scaled?
-        &AL; usually (always) implements a real-time 
-         process with the constraint that it has to be 
+        &AL; usually (always) implements a real-time
+         process with the constraint that it has to be
          synchronized with the time as experienced by the user.
          Do the units used with respect to time and frequency have
         a fixed meaning?
@@ -133,11 +133,11 @@
     ]]>
 
     <![ %RFC [
-       <note id="rfc-bk000803-03"><title>RFC: Setting Time/Long</title><para>  
+       <note id="rfc-bk000803-03"><title>RFC: Setting Time/Long</title><para>
          Given a frequency range from a few Hz to 50kHz or more,
          we need a temporal resolution of 20 microseconds or less.
          For simplicity that means we either resolve Milliseconds
-         and loose precision, or we resolve microseconds.  
+         and loose precision, or we resolve microseconds.
         Applications might run hours or days, which is 10E5 seconds
         or more. If we cover 12 orders of magnitude (10E6 to 10E-6)
         32bit unsigned integer will not suffice. Do we introduce
@@ -157,19 +157,19 @@
         depending).
     </para>
     <para>
-        We need to divorce sample (memory) count from duration, 
-        because of compression and differences between 
+        We need to divorce sample (memory) count from duration,
+        because of compression and differences between
         internal and external sample format.
     </para>
     <para>
-        Duration can be queried in microsecond resolution in 
+        Duration can be queried in microsecond resolution in
         case we want to account for O(10Khz) sampling
-        frequencies properly, or milliseconds if we 
-        do not anticipate the need to go beyond typical 
+        frequencies properly, or milliseconds if we
+        do not anticipate the need to go beyond typical
         operating system time resolution.
     </para>
     <para>
-        We need query as double, float, and possibly 
+        We need query as double, float, and possibly
         long (as of now an undefined data type).
         We might need an INVALID_RANGE error on the getter,
         especially if large reptition counters can be set.
@@ -179,7 +179,7 @@
         information. INFINITE is not needed,
         no is UNKNOWN as we operate on known
         queues.
-       </para></note> 
+       </para></note>
       ]]>
 
     <![ %Scratch [
@@ -189,7 +189,7 @@
           for the current buffer (zero if the Source is STOPPED,
           duration of the first buffer if the source is INITIAL).
           Sourcel( sName, REMAINDER_QUEUE, &amp;rem ) queries the remainder
-          of the entire queue.  
+          of the entire queue.
           A STOPPED Source has remainder==0.
           An INITIAL Source has full remainder.
        </para></note>
@@ -204,22 +204,22 @@
           Sources and Buffers should not share these attributes:
           there is no Buffer REMAINDER and no Source DURATION.
        </para></note>
-    ]]>    
+    ]]>
     ]]>
     </sect1>
-  
 
 
-   
+
+
     <sect1 id="scaling">
     <title>Space and Distance</title>
     <para>
        &AL; does not define the units of measurement for distances.
        The application is free to use meters, inches, or parsecs.
-       &AL; provides means for simulating the natural attenuation 
-       of sound according to distance, and to exagerate or reduce 
-       this effect. However, the resulting effects do not depend on 
-       the distance unit used by the application to express source 
+       &AL; provides means for simulating the natural attenuation
+       of sound according to distance, and to exagerate or reduce
+       this effect. However, the resulting effects do not depend on
+       the distance unit used by the application to express source
        and listener coordinates. &AL; calculations are scale
        invariant.
     </para>
@@ -228,33 +228,33 @@
        distances, and mandates that if two Sources are
        sorted with respect to the Euclidean metric, the
        distance calculation used by the implementation has
-       to preserve that order. 
+       to preserve that order.
     </para>
 
     <![ %Annote [
       <note><title>Annotation (No DistanceFactor)</title><para>
          &AL; does not provide a global, per Context DISTANCE_FACTOR,
-         as all calculations are scale invariant.   
+         as all calculations are scale invariant.
       </para></note>
     ]]>
-  
+
     <![ %Annote [
       <note><title>Annotation (Distance Calculations)</title><para>
          The specification does not enforce that distances
          are calculated using the euclidean norm, to permit
-         using computationally cheaper approximations. 
+         using computationally cheaper approximations.
          Implementations that opt to use approximations
          might cause audible artifacts. The specification does
-         not enforce any upper limits on distance calculation 
-         errors yet. 
+         not enforce any upper limits on distance calculation
+         errors yet.
        </para></note>
     ]]>
 
     <![ %RFC [
-       <note id="rfc-bk000915-02"><title>RFC: Limiting Errors</title><para>  
+       <note id="rfc-bk000915-02"><title>RFC: Limiting Errors</title><para>
           Do we limit permissible errors on distance or gain
           calculations? How much quality
-          and accuracy do we expect from conformant implementations? 
+          and accuracy do we expect from conformant implementations?
       </para></note>
     ]]>
 
@@ -264,12 +264,12 @@
          The DS3D documentation explicitely states that the default
          unit is 1 meter. &AL; does not specify any units.
          &AL; calculations are scale invariant. The main purpose
-         of the DS3D DistanceFactor (modifying Doppler Shift 
+         of the DS3D DistanceFactor (modifying Doppler Shift
          by scaling velocity but not reference velocity) is
          accomplished using DOPPLER_VELOCITY in &AL;.  &AL;
          does not have an equivalent to A3D's SetUnitsPerMeter
          either.
-         <!-- http://msdn.microsoft.com/library/psdk/directx/dsover_6jj8.htm --> 
+         <!-- http://msdn.microsoft.com/library/psdk/directx/dsover_6jj8.htm -->
        </para></note>
     ]]>
     </sect1>
@@ -279,39 +279,39 @@
 
     <sect1 id="attenuation-by-distance">
     <title>Attenuation By Distance</title>
-    <para>  
+    <para>
          Samples usually use the entire dynamic range of the
          chosen format/encoding, independent of their real world
          intensity. In other words, a jet engine and a clockwork
-         both will have samples with full amplitude. The application 
+         both will have samples with full amplitude. The application
          will then have to adjust Source GAIN accordingly to account
-         for relative differences. 
+         for relative differences.
     </para>
     <para>
          Source GAIN is then attenuated by distance.
          The effective attenuation of a Source depends on many
          factors, among which distance attenuation and source
-         and Listener GAIN are only some of the contributing 
-         factors. Even if the source and Listener GAIN exceed 1.0 
+         and Listener GAIN are only some of the contributing
+         factors. Even if the source and Listener GAIN exceed 1.0
          (amplification beyond the guaranteed dynamic range),
          distance and other attenuation might ultimately limit
          the overall GAIN to a value below 1.0.
-    </para> 
+    </para>
     <para>
          &AL; currently supports three modes of operation
-         with respect to distance attenuation. It supports 
+         with respect to distance attenuation. It supports
          two distance-dependent attenuation models, including one
-         that is similar to the IASIG I3DL2 (and DS3D) model. 
+         that is similar to the IASIG I3DL2 (and DS3D) model.
          The application chooses one of these two models (or
          chooses to disable distance-dependent attenuation)
          on a per-context basis.
-         <funcsynopsis><funcprototype> 
+         <funcsynopsis><funcprototype>
          <funcdef> void <function> DistanceModel </function></funcdef>
-         <paramdef> &enum; <parameter> modelName </parameter></paramdef>      
+         <paramdef> &enum; <parameter> modelName </parameter></paramdef>
          </funcprototype></funcsynopsis>
          Legal arguments are NONE, INVERSE_DISTANCE, and
-         INVERSE_DISTANCE_CLAMPED. NONE bypasses all distance 
-         attenuation calculation for all Sources. The implementation 
+         INVERSE_DISTANCE_CLAMPED. NONE bypasses all distance
+         attenuation calculation for all Sources. The implementation
          is expected to optimize this situation. INVERSE_DISTANCE_CLAMPED
          is the DS3D model, with REFERENCE_DISTANCE indicating both the
          reference distance and the distance below which gain will
@@ -320,12 +320,12 @@
          clamping. The &AL; implementation is still free to apply
          any range clamping as necessary. The current distance model
          chosen can be queried using GetIntegerv and DISTANCE_MODEL.
-    </para>    
+    </para>
 
     <![ %Annote [
       <note><title>Annotation (Inverse Square Law)</title><para>
-       The "inverse square law" used in physics applies to sound 
-       intensity (energy), which is proportional to the square 
+       The "inverse square law" used in physics applies to sound
+       intensity (energy), which is proportional to the square
        of linear gain (amplitude). Thus the inverse distance model
        describes a physically correct inverse square behavior
        if ROLLOFF_FACTOR is set to 1.0.
@@ -343,55 +343,55 @@
        </para></note>
     ]]>
 
-     
-    <sect2> 
+
+    <sect2>
     <title>Inverse Distance Rolloff Model</title>
     <para>
      The following formula describes the distance attenutation
-     defined by the Rolloff Attenutation Model, as logarithmic 
-     calculation. 
+     defined by the Rolloff Attenutation Model, as logarithmic
+     calculation.
      <literallayout>
 
       G_dB = GAIN - 20*log10(1 + ROLLOFF_FACTOR*(dist-REFERENCE_DISTANCE)/REFERENCE_DISTANCE );
       G_dB = min(G_dB,MAX_GAIN);
       G_dB = max(G_dB,MIN_GAIN);
 
-     </literallayout>      
+     </literallayout>
      The REFERENCE_DISTANCE parameter used here is a per-Source attribute
      that can be set and queried using the REFERENCE_DISTANCE token.
      REFERENCE_DISTANCE is the distance at which the Listener will
      experience GAIN (unless the implementation had to clamp effective
      GAIN to the available dynamic range).
-     ROLLOFF_FACTOR is per-Source parameter the application can use 
+     ROLLOFF_FACTOR is per-Source parameter the application can use
      to increase or decrease the range of a source by decreasing
      or increasing the attenuation, respectively. The default value
      is 1. The implementation is free to optimize for a
      ROLLOFF_FACTOR value of 0, which indicates that the application
-     does not wish any distance attenuation on the respective Source.    
+     does not wish any distance attenuation on the respective Source.
     </para>
 
     <![ %Annote [
       <note><title>Annotation (Linear Calculation)</title><para>
       The logarithmic formula above is equivalent to
-      <literallayout>                     
+      <literallayout>
        G  = gain_linear / ( 1 + ROLLOFF_FACTOR*((dist-REFERENCE_DISTANCE)/REFERENCE_DISTANCE) );
        G = min(G,max_gain_linear);
        G = max(G,min_gain_linear);
       </literallayout>
-       with linear gains calculated from the logarithmic GAIN, 
+       with linear gains calculated from the logarithmic GAIN,
        MIN_GAIN, MAX_GAIN accordingly.
        By means of explanation: linear GAIN is applied to the sample, which describes
        an amplitude ultimately (DAC) converted into voltage. The actual power of the
        signal is proportional to the square of the amplitude (voltage). Logarithmic
        measurement is done by comparing the actual power with a reference value,
-       i.e. the power (e.g in Watt) at the reference distance. The original Bel unit 
-       of measure (named after Alexander Graham Bell) was defined to account for the 
+       i.e. the power (e.g in Watt) at the reference distance. The original Bel unit
+       of measure (named after Alexander Graham Bell) was defined to account for the
        logarithmic response of the human ear: our subjective impression of "loudness"
-       is not linear in the power of the acoustic signal. For practical purposes (range 
+       is not linear in the power of the acoustic signal. For practical purposes (range
        of volumes the human ear can handle) the deciBel (dB) is a better unit:
      <literallayout>
         dB = 10 * log( P/P0 ) = 10 * log( sqr(A/A0 ) = 20 * log( A/A0 )
-     </literallayout>  
+     </literallayout>
        Common power/amplitude ratios and attenuations per distance are:
      <table>
      <title>Logarithmic Scale and Gain</title>
@@ -401,7 +401,7 @@
        <entry>Distance</>
        <entry>Attenuation</>
        <entry>Power Ratio</>
-       <entry>Amplitude Ratio</>        
+       <entry>Amplitude Ratio</>
     </row>
     </thead>
     <tbody>
@@ -409,37 +409,37 @@
        <entry>REF</>
        <entry> 0dB </>
        <entry> 1:1 </>
-       <entry> 1:1 </>        
+       <entry> 1:1 </>
     </row>
     <row>
        <entry> 2*REF </>
        <entry> -6dB </>
        <entry>  1:4 </>
-       <entry>  1:2 </>        
+       <entry>  1:2 </>
     </row>
     <row>
        <entry> 4*REF </>
        <entry> -12dB </>
        <entry>  1:16 </>
-       <entry>  1:4 </>        
+       <entry>  1:4 </>
     </row>
     <row>
        <entry> 8*REF </>
        <entry> -18dB </>
        <entry>  1:64 </>
-       <entry>  1:8 </>        
+       <entry>  1:8 </>
     </row>
     <row>
        <entry> 0.5*REF </>
        <entry>  6dB </>
        <entry>  2:1 </>
-       <entry>  4:1 </>        
+       <entry>  4:1 </>
     </row>
     <row>
        <entry> 0.25*REF </>
        <entry> 12dB </>
        <entry>  4:1 </>
-       <entry> 16:1 </>        
+       <entry> 16:1 </>
     </row>
 
     </tbody>
@@ -456,7 +456,7 @@
 
     <![ %Annote [
       <note><title>Annotation (Rolloff quantization)</title><para>
-         Implementations that use lookup tables to speed up 
+         Implementations that use lookup tables to speed up
          distance attenuation calculation may opt to map
          ROLLOFF_FACTOR to a limited set of internally used
          values, to minimize expense of per-Source calculations
@@ -471,10 +471,10 @@
          clamping behavior might change.
          The &AL; implementation should not clamp intermediate
          values of effective gain to unit range.
-         Any clamping, if necessary, should be applied at the latest 
-         possible stage. In other words, GAIN&gt;1 is perfectly 
-         valid as the implementation is free to clamp the value as 
-         needed for maximum mixing accuracy and to account for the 
+         Any clamping, if necessary, should be applied at the latest
+         possible stage. In other words, GAIN&gt;1 is perfectly
+         valid as the implementation is free to clamp the value as
+         needed for maximum mixing accuracy and to account for the
          actual dynamic range of the output device.
        </para></note>
     ]]>
@@ -482,26 +482,26 @@
 
      <![ %Annote [
       <note><title>Annotation (Extended Dynamic Range)</title><para>
-         For applications that 
+         For applications that
          change GAIN but do not want to adjust ROLLOFF_FACTOR
          and REFERENCE_DISTANCE to account for different ranges,
          the separation in this distance model might allow for
          more intuitive adjustments:
-         If we put a damper on the jet engine by lowering GAIN, 
-         we still want the listener to perceive the full volume, 
-         but now at a closer distance, without changing the 
+         If we put a damper on the jet engine by lowering GAIN,
+         we still want the listener to perceive the full volume,
+         but now at a closer distance, without changing the
          reference distance.
       </para></note>
     ]]>
     </sect2>
 
-    <sect2> 
+    <sect2>
     <title>Inverse Distance Clamped Model</title>
     <para>
          This is essentially the Inverse Distance model,
          extended to guarantee that for distances below
          REFERENCE_DISTANCE, gain is clamped. This mode
-         is equivalent to the IASIG I3DL2 (and DS3D) distance 
+         is equivalent to the IASIG I3DL2 (and DS3D) distance
          model.
      <literallayout>
       dist = max(dist,REFERENCE_DISTANCE);
@@ -509,13 +509,13 @@
       G_dB = GAIN - 20*log10(1 + ROLLOFF_FACTOR*(dist-REFERENCE_DISTANCE)/REFERENCE_DISTANCE )
       G_dB = min(G_dB,MAX_GAIN);
       G_dB = max(G_dB,MIN_GAIN);
-     </literallayout>      
+     </literallayout>
     </para>
-     
+
 
     <![ %Annote [
       <note><title>Annotation (DS3D MIN_DISTANCE)</title><para>
-         The DS3D attenuation model is extended by an explicit 
+         The DS3D attenuation model is extended by an explicit
          clamping mechanism. REFERENCE_DISTANCE is equivalent
          to DS3D MIN_DISTANCE if the INVERSE_DISTANCE_CLAMPED
          mode is used.
@@ -527,7 +527,7 @@
          To simulate different atmospheric conditions, a frequency
          dependent attenuation is used in A3D and EAX.
          At this time &AL; does not have a mechanism to specify
-         lowpass filtering parameterized by distance. 
+         lowpass filtering parameterized by distance.
       </para></note>
     ]]>
     </sect2>
@@ -540,9 +540,9 @@
        While amplification/attenuation commute (mulplication of
        scaling factors), clamping operations do not. The order
        in which various gain related operations are applied is:
-       Distance attenuation is calculated first, including 
+       Distance attenuation is calculated first, including
        minimum (REFERENCE_DISTANCE) and maximum (MAX_DISTANCE)
-       thresholds. If the Source is directional (CONE_INNER_ANGLE 
+       thresholds. If the Source is directional (CONE_INNER_ANGLE
        less than CONE_OUTER_ANGLE), an angle-dependent attenuation
        is calculated depending on CONE_OUTER_GAIN, and multiplied
        with the distance dependent attenuation.
@@ -557,16 +557,16 @@
        implementation constraints.
     </para>
     </sect1>
-    
+
 
 
     <sect1 id="culling-by-distance">
     <title>No Culling By Distance</title>
-    <para>  
+    <para>
       With the DS3D compatible Inverse Clamped Distance Model,
       &AL; provides a per-Source MAX_DISTANCE attribute
       that can be used to define a distance beyond which the Source will
-      not be further attenuated by distance.  
+      not be further attenuated by distance.
        The DS3D distance attenuation model and its clamping of volume
        is also extended by a mechanism to cull (mute) sources from proccessing,
        based on distance. However, &AL; does not
@@ -595,15 +595,15 @@
     ]]>
 
     <![ %RFC [
-       <note id="rfc-bk000803-07"><title>RFC: DS3D-like Extension</title><para>  
+       <note id="rfc-bk000803-07"><title>RFC: DS3D-like Extension</title><para>
          For ease of portability, should we define an Extension that
          provides MAX_DISTANCE for MUTE mode?
       </para></note>
-    ]]>   
+    ]]>
     </sect1>
 
 
-    
+
     <![ %Scratch [
     <sect1 id="sound-speed">
     <title>NO Sound Propagation Speed</title>
@@ -616,7 +616,7 @@
       with respect to the scaled unit. If D I S T A N C E _ S C A L E is changed,
       this will affect both the distance and the propagation speed,
       leaving the propagation time unaffected.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function>  PropagationSpeed </function></funcdef>
       <paramdef> &float; <parameter> propSpeed </parameter></paramdef>
       </funcprototype></funcsynopsis>
@@ -627,8 +627,8 @@
       setting can be queried using GetFloatv and PROPAGATION_SPEED.
     </para>
     </sect1>
-    ]]> 
-    
+    ]]>
+
     <sect1 id="doppler-scale">
     <title>Velocity Dependent Doppler Effect</title>
     <para>
@@ -648,7 +648,7 @@
       by the formula below. Effects of the medium (air, water)
       moving with respect to listener and source are ignored.
       DOPPLER_VELOCITY is the propagation speed relative to
-      which the Source velocities are interpreted. 
+      which the Source velocities are interpreted.
       <literallayout>
         VD:  DOPPLER_VELOCITY
         DF:  DOPPLER_FACTOR
@@ -662,9 +662,9 @@
         vl<0, vs>0 :  source and listener approaching each other
         vl>0, vs<0 :  source and listener moving away from each other
       </literallayout>
-      The implementation has to clamp the projected Listener 
+      The implementation has to clamp the projected Listener
       velocity vl, if abs(vl) is greater or equal to VD. It similarly has to
-      clamp the projected Source velocity vs if abs(vs) is greater or equal 
+      clamp the projected Source velocity vs if abs(vs) is greater or equal
       to VD.
     </para>
     <para>
@@ -672,7 +672,7 @@
       control of the two related parameters. DOPPLER_FACTOR is a simple
       scaling to exaggerate or deemphasize the Doppler (pitch) shift
       resulting from the calculation.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> DopplerFactor </function></funcdef>
       <paramdef> &float; <parameter> dopplerFactor </parameter></paramdef>
       </funcprototype></funcsynopsis>
@@ -685,20 +685,20 @@
 
     <![ %Annote [
       <note><title>Annotation (No Enable)</title><para>
-         There is currently no mechanism to switch on/off Doppler 
+         There is currently no mechanism to switch on/off Doppler
          calculation using e.g. a DOPPLER_SHIFT token and Enable/Disable.
          For the time being, DopplerFactor(0) may be used to signal
          to the implementation that no Doppler Effect calculation is
          required.
        </para></note>
     ]]>
- 
+
    <para>
       DOPPLER_VELOCITY allows the application to change the
       reference (propagation) velocity used in the Doppler Effect
       calculation. This permits the application to use a velocity
       scale appropriate to its purposes.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> DopplerVelocity </function></funcdef>
       <paramdef> &float; <parameter> dopplerVelocity</parameter></paramdef>
       </funcprototype></funcsynopsis>
@@ -706,7 +706,7 @@
       command is ignored. The default value is 1.
       The current setting can be queried using GetFloatv and DOPPLER_VELOCITY.
     </para>
-    
+
     <![ %Annote [
       <note><title>Annotation (No Sideeffects on Delay)</title><para>
          To permit independent control of Doppler Effect as opposed
@@ -720,7 +720,7 @@
       <note><title>Annotation (SetUnitsPerMeter)</title><para>
          DOPPLER_VELOCITY accomplishes the purposes of DS3D
          scaling parameters in a straightforward way, without
-         introducing the undesirable connotations of real world 
+         introducing the undesirable connotations of real world
          units.
        </para></note>
     ]]>

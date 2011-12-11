@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -149,7 +149,7 @@ public:
 	idParticleParm			speed;
 	float					gravity;				// can be negative to float up
 	bool					worldGravity;			// apply gravity in world space
-	bool					randomDistribution;		// randomly orient the quad on emission ( defaults to true ) 
+	bool					randomDistribution;		// randomly orient the quad on emission ( defaults to true )
 	bool					entityColor;			// force color from render entity ( fadeColor is still valid )
 	
 	//------------------------------	// custom path will completely replace the standard path calculations
@@ -164,7 +164,7 @@ public:
 	int						animationFrames;	// if > 1, subdivide the texture S axis into frames and crossfade
 	float					animationRate;		// frames per second
 
-	float					initialAngle;		// in degrees, random angle is used if zero ( default ) 
+	float					initialAngle;		// in degrees, random angle is used if zero ( default )
 	idParticleParm			rotationSpeed;		// half the particles will have negative rotation speeds
 	
 	prtOrientation_t		orientation;	// view, aimed, or axis fixed
@@ -177,7 +177,7 @@ public:
 	idVec4					fadeColor;			// either 0 0 0 0 for additive, or 1 1 1 0 for blended materials
 	float					fadeInFraction;		// in 0.0 to 1.0 range
 	float					fadeOutFraction;	// in 0.0 to 1.0 range
-	float					fadeIndexFraction;	// in 0.0 to 1.0 range, causes later index smokes to be more faded 
+	float					fadeIndexFraction;	// in 0.0 to 1.0 range, causes later index smokes to be more faded
 
 	bool					hidden;				// for editor use
 	//-----------------------------------

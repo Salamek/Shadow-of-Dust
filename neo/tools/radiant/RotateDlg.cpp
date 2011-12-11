@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -80,13 +80,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CRotateDlg message handlers
 
-void CRotateDlg::OnOK() 
+void CRotateDlg::OnOK()
 {
   OnApply();
   CDialog::OnOK();
 }
 
-void CRotateDlg::OnApply() 
+void CRotateDlg::OnApply()
 {
   UpdateData(TRUE);
 	float f = atof(m_strX);
@@ -100,7 +100,7 @@ void CRotateDlg::OnApply()
     Select_RotateAxis(2,f);
 }
 
-BOOL CRotateDlg::OnInitDialog() 
+BOOL CRotateDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	m_wndSpin1.SetRange(0, 359);
@@ -110,21 +110,21 @@ BOOL CRotateDlg::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CRotateDlg::OnDeltaposSpin1(NMHDR* pNMHDR, LRESULT* pResult) 
+void CRotateDlg::OnDeltaposSpin1(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
 	Select_RotateAxis(0, pNMUpDown->iDelta);
 	*pResult = 0;
 }
 
-void CRotateDlg::OnDeltaposSpin2(NMHDR* pNMHDR, LRESULT* pResult) 
+void CRotateDlg::OnDeltaposSpin2(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
 	Select_RotateAxis(1, pNMUpDown->iDelta);
 	*pResult = 0;
 }
 
-void CRotateDlg::OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult) 
+void CRotateDlg::OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
 	Select_RotateAxis(2, pNMUpDown->iDelta);

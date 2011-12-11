@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -208,9 +208,9 @@ LRESULT FAR PASCAL AlphaSelectDlg_GetMsgProc(int nCode, WPARAM wParam, LPARAM lP
       {
          if ( IsDialogMessage( gAlphaDlg, lpMsg) )
          {
-            // The value returned from this hookproc is ignored, 
+            // The value returned from this hookproc is ignored,
             // and it cannot be used to tell Windows the message has been handled.
-            // To avoid further processing, convert the message to WM_NULL 
+            // To avoid further processing, convert the message to WM_NULL
             // before returning.
             lpMsg->message = WM_NULL;
             lpMsg->lParam  = 0;
@@ -220,7 +220,7 @@ LRESULT FAR PASCAL AlphaSelectDlg_GetMsgProc(int nCode, WPARAM wParam, LPARAM lP
    }
 
    return CallNextHookEx(gAlphaHook, nCode, wParam, lParam);
-} 
+}
 
 /*
 ================
@@ -244,7 +244,7 @@ INT_PTR CALLBACK AlphaSelectDlg_WndProc ( HWND hwnd, UINT msg, WPARAM wParam, LP
 			// The lParam for the alpha select dialog is the window handle of the button pressed
 			SetWindowLong ( hwnd, GWL_USERDATA, lParam );
 			
-			// Subclass the alpha 
+			// Subclass the alpha
 			SetWindowLong ( GetDlgItem ( hwnd, IDC_GUIED_ALPHASLIDER ), GWL_USERDATA, MAKELONG(0,color) );
 
 			// Numbers only on the edit box and start it with the current alpha value.
@@ -278,7 +278,7 @@ INT_PTR CALLBACK AlphaSelectDlg_WndProc ( HWND hwnd, UINT msg, WPARAM wParam, LP
 					GetDlgItemText ( hwnd, IDC_GUIED_ALPHA, temp, 64 );
 					value = atof ( temp );
 					
-					if ( value < 0.0f ) 
+					if ( value < 0.0f )
 					{
 						value = 0.0f;
 					}
@@ -329,7 +329,7 @@ void AlphaButton_OpenPopup ( HWND button )
 	wndClass.cbSize			= sizeof(WNDCLASSEX);
 	wndClass.lpszClassName	= "GUIED_ALPHASLIDER";		
 	wndClass.lpfnWndProc	= AlphaSlider_WndProc;
-	wndClass.hInstance		= win32.hInstance; 
+	wndClass.hInstance		= win32.hInstance;
 	RegisterClassEx ( &wndClass );
 
 	GetWindowRect ( button, &rWindow );

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -337,7 +337,7 @@ void idSoundChannel::GatherChannelSamples( int sampleOffset44k, int sampleCount4
 /*
 ===============
 idSoundEmitterLocal::idSoundEmitterLocal
-  
+
 ===============
 */
 idSoundEmitterLocal::idSoundEmitterLocal( void ) {	
@@ -387,7 +387,7 @@ void idSoundEmitterLocal::Clear( void ) {
 idSoundEmitterLocal::OverrideParms
 ==================
 */
-void idSoundEmitterLocal::OverrideParms( const soundShaderParms_t *base, 
+void idSoundEmitterLocal::OverrideParms( const soundShaderParms_t *base,
 									  const soundShaderParms_t *over, soundShaderParms_t *out ) {
 	if ( !over ) {
 		*out = *base;
@@ -1007,7 +1007,7 @@ void idSoundEmitterLocal::FadeSound( const s_channelType channel, float to, floa
 		}
 
 		// if it is already fading to this volume at this rate, don't change it
-		if ( chan->channelFade.fadeEndVolume == to && 
+		if ( chan->channelFade.fadeEndVolume == to &&
 			chan->channelFade.fadeEnd44kHz - chan->channelFade.fadeStart44kHz == length44kHz ) {
 			continue;
 		}

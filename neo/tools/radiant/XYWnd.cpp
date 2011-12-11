@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -1368,7 +1368,7 @@ void CXYWnd::OnMouseMove(UINT nFlags, CPoint point) {
 		SetCursor(::LoadCursor(NULL, IDC_ARROW));
 	}
 
-	/// If precision crosshair is active, force redraw of the 2d view on mouse move 
+	/// If precision crosshair is active, force redraw of the 2d view on mouse move
 	if( m_precisionCrosshairMode != PRECISION_CROSSHAIR_NONE )
 	{
 		/// Force 2d view redraw (so that the precision cursor moves with the mouse)
@@ -2097,7 +2097,7 @@ bool MergeMenu(CMenu * pMenuDestination, const CMenu * pMenuAdd, bool bTopLevel 
 			// insert the new popup menu into the destination menu
 			HMENU hNewMenu = NewPopupMenu.GetSafeHmenu();
 			if (pMenuDestination->InsertMenu(iInsertPosDefault,
-				MF_BYPOSITION | MF_POPUP | MF_ENABLED, 
+				MF_BYPOSITION | MF_POPUP | MF_ENABLED,
 				(UINT)hNewMenu, sMenuAddString ))
 			{
 				// don't forget to correct the item count
@@ -2785,7 +2785,7 @@ void CXYWnd::XY_DrawGrid() {
 
 	int stepSize = 64 * 0.1 / m_fScale;
 	if (stepSize < 64) {
-		stepSize = max ( 64 , g_qeglobals.d_gridsize ); 
+		stepSize = max ( 64 , g_qeglobals.d_gridsize );
 	}
 	else {
 		int i;
@@ -3092,7 +3092,7 @@ void CXYWnd::DrawCameraIcon() {
 		a = g_pParentWnd->GetCamera()->Camera().angles[PITCH] * idMath::M_DEG2RAD;
 	}
 
-	float scale = 1.0/m_fScale;	//jhefty - keep the camera icon proportionally the same size 
+	float scale = 1.0/m_fScale;	//jhefty - keep the camera icon proportionally the same size
 
 	qglColor3f(0.0, 0.0, 1.0);
 	qglBegin(GL_LINE_STRIP);
@@ -3186,7 +3186,7 @@ bool FilterBrush(brush_t *pb) {
 			//
 			if (pb->mins[2] > g_pParentWnd->GetZWnd()->m_pZClip->GetTop()	// brush bottom edge is above clip top
 				||
-				pb->maxs[2] < g_pParentWnd->GetZWnd()->m_pZClip->GetBottom()// brush top edge is below clip bottom 
+				pb->maxs[2] < g_pParentWnd->GetZWnd()->m_pZClip->GetBottom()// brush top edge is below clip bottom
 				)
 			{
 				return TRUE;
@@ -3823,7 +3823,7 @@ void CXYWnd::XY_Draw() {
 		DrawRotateIcon();
 	}
 
-	/// Draw a "precision crosshair" if enabled 
+	/// Draw a "precision crosshair" if enabled
 	if( m_precisionCrosshairMode != PRECISION_CROSSHAIR_NONE )
 		DrawPrecisionCrosshair();
 
@@ -4383,7 +4383,7 @@ void CXYWnd::OnTimer(UINT nIDEvent) {
 		// m_vOrigin[nDim1] -= m_ptDrag.x / m_fScale; m_vOrigin[nDim1] -= m_ptDrag.x /
 		// m_fScale;
 		//
-	} 
+	}
 }
 
 /*
@@ -4450,7 +4450,7 @@ BOOL CXYWnd::OnEraseBkgnd(CDC *pDC) {
 }
 
 extern void AssignModel();
-void CXYWnd::OnDropNewmodel() 
+void CXYWnd::OnDropNewmodel()
 {
 	CPoint point;
 	GetCursorPos(&point);
@@ -4459,7 +4459,7 @@ void CXYWnd::OnDropNewmodel()
 	g_Inspectors->AssignModel();
 }
 
-BOOL CXYWnd::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) 
+BOOL CXYWnd::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	if (zDelta > 0) {
 		g_pParentWnd->OnViewZoomin();
@@ -4474,7 +4474,7 @@ BOOL CXYWnd::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 
  //---------------------------------------------------------------------------
  // CyclePrecisionCrosshairMode
- // 
+ //
  // Called when the user presses the "cycle precision cursor mode" key.
  // Cycles the precision cursor among the following three modes:
  //		PRECISION_CURSOR_NONE
@@ -4493,11 +4493,11 @@ BOOL CXYWnd::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
  }
 
  //---------------------------------------------------------------------------
-// DrawPrecisionCrosshair 
-// 
+// DrawPrecisionCrosshair
+//
 // Draws a precision crosshair beneath the cursor in the 2d (XY) view,
 //  depending on one of the following values for m_precisionCrosshairMode:
-// 
+//
 // PRECISION_CROSSHAIR_NONE		No crosshair is drawn.  Do not force refresh of XY view.
 // PRECISION_CROSSHAIR_SNAP		Crosshair snaps to grid size.  Force refresh of XY view.
 // PRECISION_CROSSHAIR_FREE		Crosshair does not snap to grid.  Force refresh of XY view.

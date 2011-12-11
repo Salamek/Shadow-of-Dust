@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ If you have questions concerning this license or the applicable additional terms
 
 // Old color picker
 
-class CMyColorDialog : public CColorDialog 
+class CMyColorDialog : public CColorDialog
 {
   DECLARE_DYNCREATE(CMyColorDialog);
      // Construction
@@ -109,7 +109,7 @@ void CMyColorDialog::SaveCustColors() {
 	}
 }
 
-CMyColorDialog::CMyColorDialog( COLORREF clrInit, DWORD dwFlags, 
+CMyColorDialog::CMyColorDialog( COLORREF clrInit, DWORD dwFlags,
 		CWnd* pParentWnd) : CColorDialog(clrInit,dwFlags,pParentWnd)
 {
      //{{AFX_DATA_INIT(CMyColorDialog)
@@ -549,7 +549,7 @@ void CDialogColorPicker::OnLButtonDown(UINT nFlags, CPoint point) {
 	CDialog::OnLButtonDown(nFlags, point);
 }
 
-void CDialogColorPicker::OnLButtonUp(UINT nFlags, CPoint point) 
+void CDialogColorPicker::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	if(GetCapture() == this)
 	{
@@ -559,7 +559,7 @@ void CDialogColorPicker::OnLButtonUp(UINT nFlags, CPoint point)
 	CDialog::OnLButtonUp(nFlags, point);
 }
 
-void CDialogColorPicker::OnMouseMove(UINT nFlags, CPoint point) 
+void CDialogColorPicker::OnMouseMove(UINT nFlags, CPoint point)
 {
 	if(GetCapture() == this && m_nMouseIn)
 	{
@@ -655,7 +655,7 @@ void CDialogColorPicker::OnMouseMove(UINT nFlags, CPoint point)
 	CDialog::OnMouseMove(nFlags, point);
 }
 
-void CDialogColorPicker::OnPaint() 
+void CDialogColorPicker::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 
@@ -663,7 +663,7 @@ void CDialogColorPicker::OnPaint()
 	DrawRGB(&dc);
 }
 
-BOOL CDialogColorPicker::OnInitDialog() 
+BOOL CDialogColorPicker::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	
@@ -930,7 +930,7 @@ void CDialogColorPicker::DrawLines(CDC *pDC)
 	/*
 	Draw the following lines :
 		
-		1 -2 
+		1 -2
 		2 -3
 		3 - 4
 		4- 5
@@ -1007,7 +1007,7 @@ void CDialogColorPicker::CalcSlopes()
 
   Draw the following lines :
 	
-	1 -2 
+	1 -2
 	2 -3
 	3 - 4
 	4- 5
@@ -1110,7 +1110,7 @@ void CDialogColorPicker::SetEditVals()
 
 }
 
-void CDialogColorPicker::OnChangeEditBlue() 
+void CDialogColorPicker::OnChangeEditBlue()
 {
 	int b;
 
@@ -1125,7 +1125,7 @@ void CDialogColorPicker::OnChangeEditBlue()
 	}
 }
 
-void CDialogColorPicker::OnChangeEditGreen() 
+void CDialogColorPicker::OnChangeEditGreen()
 {
 	int g;
 	
@@ -1140,7 +1140,7 @@ void CDialogColorPicker::OnChangeEditGreen()
 	}
 }
 
-void CDialogColorPicker::OnChangeEditRed() 
+void CDialogColorPicker::OnChangeEditRed()
 {
 	int r;
 
@@ -1155,7 +1155,7 @@ void CDialogColorPicker::OnChangeEditRed()
 	}
 }
 
-void CDialogColorPicker::OnChangeEditHue() 
+void CDialogColorPicker::OnChangeEditHue()
 {
 	int h;
 
@@ -1170,7 +1170,7 @@ void CDialogColorPicker::OnChangeEditHue()
 	}
 }
 
-void CDialogColorPicker::OnChangeEditSat() 
+void CDialogColorPicker::OnChangeEditSat()
 {
 	int s;
 
@@ -1185,7 +1185,7 @@ void CDialogColorPicker::OnChangeEditSat()
 	}
 }
 
-void CDialogColorPicker::OnChangeEditVal() 
+void CDialogColorPicker::OnChangeEditVal()
 {
 	int v;
 

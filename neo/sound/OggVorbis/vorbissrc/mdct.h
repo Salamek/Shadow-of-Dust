@@ -56,7 +56,7 @@
 typedef struct {
   int n;
   int log2n;
-  
+
   DATA_TYPE *trig;
   int       *bitrev;
 

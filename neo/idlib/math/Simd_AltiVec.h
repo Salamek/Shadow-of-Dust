@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ If you have questions concerning this license or the applicable additional terms
 // Turns on/off TracePointCull, DecalPointCull, and OverlayPoint
 // The Enable_Cull routines breaks the g_decals functionality, DecalPointCull is
 // the likely suspect. Bullet holes do not appear on the walls when this optimization
-// is enabled. 
+// is enabled.
 //#define ENABLE_CULL
 
 // Turns on/off DeriveTriPlanes, DeriveTangents, DeriveUnsmoothedTangents, NormalizeTangents
@@ -105,7 +105,7 @@ If you have questions concerning this license or the applicable additional terms
 
 class idSIMD_AltiVec : public idSIMD_Generic {
 #if defined(MACOS_X) && defined(__ppc__)
-// This turns on support for PPC intrinsics in the SIMD_AltiVec.cpp file. Right now it's only used for frsqrte. GCC 
+// This turns on support for PPC intrinsics in the SIMD_AltiVec.cpp file. Right now it's only used for frsqrte. GCC
 // supports these intrinsics but XLC does not.
 #define PPC_INTRINSICS
 public:
@@ -121,11 +121,11 @@ public:
  	virtual void VPCALL Mul( float *dst, const float constant, const float *src, const int count);
 	virtual void VPCALL Mul( float *dst, const float *src0, const float *src1, const int count );
 	virtual void VPCALL Div( float *dst, const float constant, const float *divisor, const int count );
-	virtual void VPCALL Div( float *dst, const float *src0, const float *src1, const int count ); 
+	virtual void VPCALL Div( float *dst, const float *src0, const float *src1, const int count );
 	virtual void VPCALL MulAdd( float *dst, const float constant, const float *src, const int count );
 	virtual void VPCALL MulAdd( float *dst, const float *src0, const float *src1, const int count );
 	virtual void VPCALL MulSub( float *dst, const float constant, const float *src, const int count );
-	virtual void VPCALL MulSub( float *dst, const float *src0, const float *src1, const int count ); 
+	virtual void VPCALL MulSub( float *dst, const float *src0, const float *src1, const int count );
 #endif
 
 #ifdef ENABLE_DOT

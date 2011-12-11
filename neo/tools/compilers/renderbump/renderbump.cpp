@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -403,7 +403,7 @@ Returns the distance from the point to the intersection, or DIST_NO_INTERSECTION
 =================
 */
 #define	DIST_NO_INTERSECTION	-999999999.0f
-static float TraceToMeshFace( const srfTriangles_t *highMesh, int faceNum, 
+static float TraceToMeshFace( const srfTriangles_t *highMesh, int faceNum,
 							 float minDist, float maxDist,
 							const idVec3 &point, const idVec3 &normal, idVec3 &sampledNormal,
 							byte sampledColor[4] ) {
@@ -505,14 +505,14 @@ static float TraceToMeshFace( const srfTriangles_t *highMesh, int faceNum,
 ================
 SampleHighMesh
 
-Find the best surface normal in the high poly mesh 
+Find the best surface normal in the high poly mesh
 for a ray coming from the surface of the low poly mesh
 
 Returns false if the trace doesn't hit anything
 ================
 */
 static bool SampleHighMesh( const renderBump_t *rb,
-							const idVec3 &point, const idVec3 &direction, idVec3 &sampledNormal, 
+							const idVec3 &point, const idVec3 &direction, idVec3 &sampledNormal,
 							byte sampledColor[4] ) {
 	idVec3	p;
 	binLink_t	*bl;
@@ -572,7 +572,7 @@ static bool SampleHighMesh( const renderBump_t *rb,
 			link = &rb->hash->linkBlocks[ linkNum / MAX_LINKS_PER_BLOCK ][ linkNum % MAX_LINKS_PER_BLOCK ];
 
 			faceNum = link->faceNum;
-			dist = TraceToMeshFace( rb->mesh, faceNum, 
+			dist = TraceToMeshFace( rb->mesh, faceNum,
 								 bestDist, maxDist, point, normal, sampledNormal, sampledColor );
 			if ( dist == DIST_NO_INTERSECTION ) {
 				continue;
@@ -1207,7 +1207,7 @@ void RenderBump_f( const idCmdArgs &args ) {
 		// parse the renderbump parameters for this surface
 		cmdLine = ms->shader->GetRenderBump();
 
-		common->Printf( "surface %i, shader %s\nrenderBump = %s ", i, 
+		common->Printf( "surface %i, shader %s\nrenderBump = %s ", i,
 			ms->shader->GetName(), cmdLine );
 
 		if ( !ms->geometry ) {
@@ -1282,8 +1282,8 @@ void RenderBump_f( const idCmdArgs &args ) {
 				continue;
 			}
 			// all the other parameters must match, or it is an error
-			if ( idStr::Icmp( rb->highName, opt.highName) || rb->width != opt.width || 
-				rb->height != opt.height || rb->antiAlias != opt.antiAlias || 
+			if ( idStr::Icmp( rb->highName, opt.highName) || rb->width != opt.width ||
+				rb->height != opt.height || rb->antiAlias != opt.antiAlias ||
 				rb->traceFrac != opt.traceFrac ) {
 				common->Error( "mismatched renderbump parameters on image %s", rb->outputName );
 				continue;
@@ -1433,7 +1433,7 @@ void RenderBumpFlat_f( const idCmdArgs &args ) {
 
 	qglMatrixMode( GL_PROJECTION );
 	qglLoadIdentity();
-	qglOrtho( bounds[0][0], bounds[1][0], bounds[0][2], 
+	qglOrtho( bounds[0][0], bounds[1][0], bounds[0][2],
 		bounds[1][2], -( bounds[0][1] - 1 ), -( bounds[1][1] + 1 ) );
 
 	qglMatrixMode( GL_MODELVIEW );
@@ -1547,7 +1547,7 @@ void RenderBumpFlat_f( const idCmdArgs &args ) {
 			qglEnd();
 			qglFlush();
 			GLimp_SwapBuffers();
-			qglReadPixels( 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer ); 
+			qglReadPixels( 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer );
 
 			if ( colorPass ) {
 				// add to the sum buffer

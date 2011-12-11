@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -366,7 +366,7 @@ void *R_FrameAlloc( int bytes ) {
 	frameData_t		*frame;
 	frameMemoryBlock_t	*block;
 	void			*buf;
-    
+
 	bytes = (bytes+16)&~15;
 	// see if it can be satisfied in the current block
 	frame = frameData;
@@ -688,7 +688,7 @@ void R_TransformModelToClip( const idVec3 &src, const float *modelMatrix, const 
 	int i;
 
 	for ( i = 0 ; i < 4 ; i++ ) {
-		eye[i] = 
+		eye[i] =
 			src[0] * modelMatrix[ i + 0 * 4 ] +
 			src[1] * modelMatrix[ i + 1 * 4 ] +
 			src[2] * modelMatrix[ i + 2 * 4 ] +
@@ -696,7 +696,7 @@ void R_TransformModelToClip( const idVec3 &src, const float *modelMatrix, const 
 	}
 
 	for ( i = 0 ; i < 4 ; i++ ) {
-		dst[i] = 
+		dst[i] =
 			eye[0] * projectionMatrix[ i + 0 * 4 ] +
 			eye[1] * projectionMatrix[ i + 1 * 4 ] +
 			eye[2] * projectionMatrix[ i + 2 * 4 ] +
@@ -720,7 +720,7 @@ void R_GlobalToNormalizedDeviceCoordinates( const idVec3 &global, idVec3 &ndc ) 
 	if ( !tr.viewDef ) {
 
 		for ( i = 0 ; i < 4 ; i ++ ) {
-			view[i] = 
+			view[i] =
 				global[0] * tr.primaryView->worldSpace.modelViewMatrix[ i + 0 * 4 ] +
 				global[1] * tr.primaryView->worldSpace.modelViewMatrix[ i + 1 * 4 ] +
 				global[2] * tr.primaryView->worldSpace.modelViewMatrix[ i + 2 * 4 ] +
@@ -728,7 +728,7 @@ void R_GlobalToNormalizedDeviceCoordinates( const idVec3 &global, idVec3 &ndc ) 
 		}
 
 		for ( i = 0 ; i < 4 ; i ++ ) {
-			clip[i] = 
+			clip[i] =
 				view[0] * tr.primaryView->projectionMatrix[ i + 0 * 4 ] +
 				view[1] * tr.primaryView->projectionMatrix[ i + 1 * 4 ] +
 				view[2] * tr.primaryView->projectionMatrix[ i + 2 * 4 ] +
@@ -738,7 +738,7 @@ void R_GlobalToNormalizedDeviceCoordinates( const idVec3 &global, idVec3 &ndc ) 
 	} else {
 
 		for ( i = 0 ; i < 4 ; i ++ ) {
-			view[i] = 
+			view[i] =
 				global[0] * tr.viewDef->worldSpace.modelViewMatrix[ i + 0 * 4 ] +
 				global[1] * tr.viewDef->worldSpace.modelViewMatrix[ i + 1 * 4 ] +
 				global[2] * tr.viewDef->worldSpace.modelViewMatrix[ i + 2 * 4 ] +
@@ -747,7 +747,7 @@ void R_GlobalToNormalizedDeviceCoordinates( const idVec3 &global, idVec3 &ndc ) 
 
 
 		for ( i = 0 ; i < 4 ; i ++ ) {
-			clip[i] = 
+			clip[i] =
 				view[0] * tr.viewDef->projectionMatrix[ i + 0 * 4 ] +
 				view[1] * tr.viewDef->projectionMatrix[ i + 1 * 4 ] +
 				view[2] * tr.viewDef->projectionMatrix[ i + 2 * 4 ] +

@@ -60,9 +60,9 @@ static float unitnorm(float x){
 #define todB(x)   (*(x)==0?-400.f:log(*(x)**(x))*4.34294480f)
 #define todB_nn(x)   (*(x)==0.f?-400.f:log(*(x))*8.6858896f)
 
-#endif 
+#endif
 
-#define fromdB(x) (exp((x)*.11512925f))  
+#define fromdB(x) (exp((x)*.11512925f))
 
 /* The bark scale equations are approximations, since the original
    table was somewhat hand rolled.  The below are chosen to have the

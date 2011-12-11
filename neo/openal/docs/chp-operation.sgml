@@ -5,7 +5,7 @@
      <sect1>
      <title>&OAL; Fundamentals</title>
      <para>
-       &OAL; (henceforth, the "&AL;") is concerned only with rendering audio 
+       &OAL; (henceforth, the "&AL;") is concerned only with rendering audio
        into an output buffer,
        and primarily meant for spatialized audio.
        There is no support for reading audio input from buffers at this
@@ -14,12 +14,12 @@
        mechanisms to obtain audio (e.g. voice) input or generate music.
      </para>
      <para>
-       The &AL; has three fundamental primitives or objects -- Buffers, Sources, 
+       The &AL; has three fundamental primitives or objects -- Buffers, Sources,
        and a single Listener. Each object can be changed independently,
        the setting of one object does not affect the setting of others.
        The application can also set modes that affect processing. Modes
        are set, objects specified, and other &AL; operations performed
-       by sending commands in the form of function or procedure calls. 
+       by sending commands in the form of function or procedure calls.
      </para><para>
        Sources store locations, directions, and other attributes of an object in 3D
        space and have a buffer associated with them for playback.  There are
@@ -31,16 +31,16 @@
        initialize a large set of buffers when the program first starts (or at
        non-critical times during execution -- between levels in a game, for instance).
        Buffers are referred to by Sources. Data (audio sample data) is associated
-       with buffers. 
+       with buffers.
      </para><para>
        There is only one listener (per audio context).  The listener attributes are
        similar to source attributes, but are used to represent where the user is
        hearing the audio from.  The influence of all the sources from the
        perspective of the listener is mixed and played for the user.
     </para>
-  
+
     <![ %RFC [
-       <note id="rfc-bk000926-03"><title>RFC: Data Binding</title><para>  
+       <note id="rfc-bk000926-03"><title>RFC: Data Binding</title><para>
          Have to specifiy when pointer arguments are dereferenced.
       </para></note>
     ]]>
@@ -50,10 +50,10 @@
         As &AL; is meant to allow for seamless integration with &OGL; code
         if needed, the &AL; primitive (scalar) data types mimic the
         &OGL; data types. Guaranteed minimum sizes are stated for &OGL;
-        data types (see table 2.2 of the &OGL; 1.2 Specification), but 
-        the actual choice of C datatype is left to the implementation. 
-        All implementations on a given binary architecture, however, must 
-        use a common definition of these datatypes. 
+        data types (see table 2.2 of the &OGL; 1.2 Specification), but
+        the actual choice of C datatype is left to the implementation.
+        All implementations on a given binary architecture, however, must
+        use a common definition of these datatypes.
      </para>
 
      <![ %RFC [
@@ -71,7 +71,7 @@
      while they might be omitted from the rest of the document
      for brevity. GCC equivalents are given for IA32, i.e. a
      portable and widely available compiler on the most common
-     target architecture. 
+     target architecture.
     <table>
     <title>&AL; Primitive Data Types</title>
     <tgroup cols="4" align="left" colsep=1 rowsep=1>
@@ -80,8 +80,8 @@
     <thead>
     <row>
        <entry>AL Type</>
-       <entry>Description</>        
-       <entry>GL Type</>  
+       <entry>Description</>
+       <entry>GL Type</>
        <entry>GCC IA32</entry>
     </row>
     </thead>
@@ -190,12 +190,12 @@
     </para>
 
 
-      
+
     <![ %Annote [
        <note><title>Annotation on Type Sizes</title><para>
          It would be desirable to guarantee the bit size of &AL; data
          types, but this might affect the mapping to &OGL; types
-         for which the &OGL; specification only guarantees a minimum 
+         for which the &OGL; specification only guarantees a minimum
          size.
        </para></note>
        <note><title>Annotation on 64bit integral</title><para>
@@ -206,7 +206,7 @@
          &enum; is not a C or C++ enumeration, but implemented as
          C preprocesor defines. This makes it easier to handle
          extensions to the &AL; namespace, in particular in
-         dealing with delays in distributing updated reference 
+         dealing with delays in distributing updated reference
          headers.
        </para></note>
     ]]>
@@ -230,7 +230,7 @@
      </para>
     </sect2>
     </sect1>
-     
+
     <sect1>
      <title>AL State</title>
      <para>
@@ -241,7 +241,7 @@
        although we describe operations that the &AL; performs on the
        implied output buffer, the outbut buffer is not part of the
        &AL; state. Certain states of &AL; objects (e.g. buffer states
-       with respect to queueing) are introduced for discussion purposes, 
+       with respect to queueing) are introduced for discussion purposes,
        but not exposed through the API.
      </para>
     </sect1>
@@ -251,9 +251,9 @@
      <para>
         &AL; commands are functions or procedures. Various groups of
         commands perform the same operation but differ in how
-        arguments are supplied to them. To conveniently accomodate 
+        arguments are supplied to them. To conveniently accomodate
         this variation, we adopt the &OGL; nnotation for describing
-        commands and their arguments. 
+        commands and their arguments.
      </para>
 
      <![ %Annote [
@@ -262,7 +262,7 @@
           &OGL; offers. Certain entry points are supported only for
           some data types. In general, &AL; tends to use less entry
           points, using setter commands that use the same tokens
-          as the matching query commands.  
+          as the matching query commands.
        </para></note>
     ]]>
 
@@ -278,13 +278,13 @@
      </para>
     <para>
        For an &OGL;/&AL; program, most of the audio programming will be in two
-       places in the code: initialization of the program, and the rendering loop. 
-       An &OGL;/&AL; program will typically contain a section where the graphics and 
+       places in the code: initialization of the program, and the rendering loop.
+       An &OGL;/&AL; program will typically contain a section where the graphics and
        audio systems are initialized, although it may be spread into multiple functions.
        For OpenAL, initialization normally consists of creating a context, creating
-       the initial set of buffers, loading the buffers with sample data, creating 
-       sources, attaching buffers to sources, setting locations and directions for 
-       the listener and sources, and setting the initial values for state global 
+       the initial set of buffers, loading the buffers with sample data, creating
+       sources, attaching buffers to sources, setting locations and directions for
+       the listener and sources, and setting the initial values for state global
        to &AL;.
     </para>
 
@@ -293,11 +293,11 @@
      <para>
           &sample.c;
      </para>
-   <programlisting>    
+   <programlisting>
   </programlisting>
        </example>
 
-    <![ %Example [   
+    <![ %Example [
       <example>
       <title>Initialization Example</title>
       <programlisting>
@@ -349,7 +349,7 @@ void 3DEnvironemnt:PlaceCamera()
    {
       alSourceStop(source[1]);
    }
-}       
+}
        </programlisting>
        </example>
     ]]>
@@ -363,12 +363,12 @@ void 3DEnvironemnt:PlaceCamera()
        considered errors. This is because in many cases error checking
        would adversely impact the performance of an error-free program.
        The command
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> &enum; <function> GetError </function></funcdef>
       <void>
       </funcprototype></funcsynopsis>
       is used to obtain error information. Each detectable error is
-      assigned a numeric code. When an error is detected by AL, 
+      assigned a numeric code. When an error is detected by AL,
       a flag is set and the error code is recorded. Further errors,
       if they occur, do not affect this recorded code. When GetError
       is called, the code is returned and the flag is cleared, so that
@@ -376,14 +376,14 @@ void 3DEnvironemnt:PlaceCamera()
       returns NO_ERROR then there has been no detectable error since
       the last call to GetError (or since the AL was initialized).
      </para>
-   
+
     <![ %RFC [
-       <note id="rfc-bk000926-04"><title>RFC: GL distributed error </title><para>  
+       <note id="rfc-bk000926-04"><title>RFC: GL distributed error </title><para>
       To allow for distributed implementations there may be several
       flag/code pairs. In this case, after a call to GetError returns a
-      value other than NO_ERROR each subsequent call returns the 
-      non-NO_ERROR code of another distinct flag-code pair (in 
-      unspecified order), until all NO_ERROR codes have been returned. 
+      value other than NO_ERROR each subsequent call returns the
+      non-NO_ERROR code of another distinct flag-code pair (in
+      unspecified order), until all NO_ERROR codes have been returned.
       When there are no more non-NO_ERROR codes, all flags be reset.
       The initial state of all flags is cleared and the initial value
       of all codes is NO_ERROR.
@@ -398,7 +398,7 @@ void 3DEnvironemnt:PlaceCamera()
 
       </para></note>
     ]]>
-    
+
 
     <![ %Annote [
       <note><title>Annotation (Only First Error)</title><para>
@@ -409,19 +409,19 @@ void 3DEnvironemnt:PlaceCamera()
 
     <para>
       Error codes can be mapped to strings. The GetString function
-      returns a pointer to a constant (literal) string that is 
+      returns a pointer to a constant (literal) string that is
       identical to the identifier used for the enumeration value,
-      as defined in the specification. 
+      as defined in the specification.
     </para>
 
     <![ %Annote [
       <note><title>Annotation/ Verbose Error String</title><para>
         There is no need to maintain a separate GetErrorString
-        function (inspired by the proposed gluGetErrorStrings) 
+        function (inspired by the proposed gluGetErrorStrings)
         as the existing GetString entry point can be used.
       </para></note>
-    ]]> 
-   
+    ]]>
+
 
     <para>
     <table>
@@ -432,33 +432,33 @@ void 3DEnvironemnt:PlaceCamera()
     <thead>
     <row>
        <entry>Name</>
-       <entry>Description</>        
+       <entry>Description</>
     </row>
     </thead>
     <tbody>
     <row>
        <entry>NO_ERROR</>
-       <entry>"No Error" token.</>  
+       <entry>"No Error" token.</>
     </row>
     <row>
        <entry>INVALID_NAME</>
-       <entry>Invalid Name parameter.</>  
+       <entry>Invalid Name parameter.</>
     </row>
     <row>
        <entry>INVALID_ENUM</>
-       <entry>Invalid parameter.</> 
+       <entry>Invalid parameter.</>
     </row>
     <row>
        <entry>INVALID_VALUE</>
-       <entry>Invalid enum parameter value.</>  
+       <entry>Invalid enum parameter value.</>
     </row>
     <row>
        <entry>INVALID_OPERATION</>
-       <entry>Illegal call.</>  
+       <entry>Illegal call.</>
     </row>
     <row>
        <entry>OUT_OF_MEMORY</>
-       <entry>Unable to allocate memory.</>  
+       <entry>Unable to allocate memory.</>
     </row>
     </tbody>
     </tgroup>
@@ -479,7 +479,7 @@ void 3DEnvironemnt:PlaceCamera()
        an enumerated value is passed a value that is not one of those
        specified as allowable for that command, the error INVALID_ENUM
        results. This is the case even if the argument is a pointer to
-       a symbolic constant if that value is not allowable for the given 
+       a symbolic constant if that value is not allowable for the given
        command.
        This will occur whether the value is allowable for other functions,
        or an invalid integer value.
@@ -495,9 +495,9 @@ void 3DEnvironemnt:PlaceCamera()
        &sizei; is specified, the error INVALID_VALUE results. The same
        error will result from attempts to set integral and floating
        point values for attributes exceeding the legal range for
-       these. The specification does not guarantee that the implementation 
-       emits INVALID_VALUE if a &NaN; or &Infty; value is 
-       passed in for a &float; or &double; argument (as the specification 
+       these. The specification does not guarantee that the implementation
+       emits INVALID_VALUE if a &NaN; or &Infty; value is
+       passed in for a &float; or &double; argument (as the specification
        does not enforce possibly expensive testing of floating point
        values).
     </para>
@@ -505,8 +505,8 @@ void 3DEnvironemnt:PlaceCamera()
    <para>
       Commands can be invalid. For example, certain commands might not be
       applicable to a given object. There are also illegal combinations
-      of tokens and values as arguments to a command.  &AL; responds to any 
-      such illegal command with an INVALID_OPERATION error.  
+      of tokens and values as arguments to a command.  &AL; responds to any
+      such illegal command with an INVALID_OPERATION error.
     </para>
 
      <![ %Scratch [
@@ -514,9 +514,9 @@ void 3DEnvironemnt:PlaceCamera()
          No longer true except for extensions. To be avoided
          in general:    &AL; has
          mutually exclusive commands operating on similar objects.
-         One example is treating a streaming buffer as a 
-         non-streaming buffer, another is appending data to a 
-         non-streaming buffer. 
+         One example is treating a streaming buffer as a
+         non-streaming buffer, another is appending data to a
+         non-streaming buffer.
        </para>
     ]]>
 
@@ -530,13 +530,13 @@ void 3DEnvironemnt:PlaceCamera()
        system.
     </para>
     <para>
-       Otherwise errors are generated only for conditions that are 
+       Otherwise errors are generated only for conditions that are
        explicitely described in this specification.
     </para>
 
-   
+
     <![ %RFC [
-       <note id="rfc-bk000807-01"><title>RFC: INVALID_SIZE?</title><para>  
+       <note id="rfc-bk000807-01"><title>RFC: INVALID_SIZE?</title><para>
            Specific error case in which the size argument is
            negative, or mismatches internal conditions for a getter?
       </para></note>
@@ -544,15 +544,15 @@ void 3DEnvironemnt:PlaceCamera()
 
 
     <![ %RFC [
-       <note id="rfc-bk000802-03"><title>RFC: INVALID_POINTER?</title><para>  
+       <note id="rfc-bk000802-03"><title>RFC: INVALID_POINTER?</title><para>
          GL seemingly does not specify a response to NULL pointer
          destinations, and does not assign an error case. INVALID_VALUE
          could be used, also we could introduce a separate INVALID_POINTER.
-         Is there a good reason not to catch these cases? 
+         Is there a good reason not to catch these cases?
       </para></note>
     ]]>
-   
-  
+
+
     </sect1>
 
 
@@ -560,24 +560,24 @@ void 3DEnvironemnt:PlaceCamera()
     <sect1 id="control">
     <title>Controlling AL Execution</title>
    <para>
-     The application can temporarily disable certain AL capabilities 
-     on a per Context basis. This allows the driver implementation 
+     The application can temporarily disable certain AL capabilities
+     on a per Context basis. This allows the driver implementation
      to optimize for certain subsets of operations.
       Enabling and disabling capabilities is handled using a function
-      pair. 
-      <funcsynopsis><funcprototype> 
+      pair.
+      <funcsynopsis><funcprototype>
       <funcdef> &void; <function> Enable </function></funcdef>
-      <paramdef> &enum; <parameter> target </parameter></paramdef>      
+      <paramdef> &enum; <parameter> target </parameter></paramdef>
       </funcprototype></funcsynopsis>
-     <funcsynopsis><funcprototype> 
+     <funcsynopsis><funcprototype>
       <funcdef> &void; <function> Disable </function></funcdef>
-      <paramdef> &enum; <parameter> target </parameter></paramdef>      
+      <paramdef> &enum; <parameter> target </parameter></paramdef>
       </funcprototype></funcsynopsis>
      The application can also query whether a given capability is
      currently enabled or not.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> &bool; <function> IsEnabled </function></funcdef>
-      <paramdef> &enum; <parameter> target </parameter></paramdef>      
+      <paramdef> &enum; <parameter> target </parameter></paramdef>
       </funcprototype></funcsynopsis>
      If the token used to specify target is not legal,
      an  INVALID_ENUM error will be generated.
@@ -597,40 +597,40 @@ void 3DEnvironemnt:PlaceCamera()
           mechanism to accomplish the same is not needed.
        </para></note>
     ]]>
- 
+
     </sect1>
 
     <sect1 id="objects">
     <title>Object Paradigm</title>
     <para>
      &AL; is an object-oriented API, but it does not expose classes, structs,
-     or other explicit data structures to the application. 
+     or other explicit data structures to the application.
     </para>
 
 
     <sect2 id="object-overview-categories">
      <title>Object Categories</title>
     <para>
-     &AL; has three primary categories of Objects: 
+     &AL; has three primary categories of Objects:
      <itemizedlist>
        <listitem>
        <para>
           one unique Listener per Context
        </para>
        </listitem>
-       <listitem> 
+       <listitem>
        <para>
           multiple Buffers shared among Contexts
        </para>
        </listitem>
-       <listitem> 
+       <listitem>
        <para>
           multiple Sources, each local to a Context
        </para>
-       </listitem> 
+       </listitem>
      </itemizedlist>
-     In the following, "{Object}" will stand for either Source, 
-     Listener, or Buffer.    
+     In the following, "{Object}" will stand for either Source,
+     Listener, or Buffer.
     </para>
     </sect2>
 
@@ -638,9 +638,9 @@ void 3DEnvironemnt:PlaceCamera()
      <title>Static vs. Dynamic Objects</title>
     <para>
      The vast majority of &AL; objects are dynamic, and will be created
-     on application demand. There are also &AL; objects that do not have 
-     to be created, and can not be created, on application demand. 
-     Currently, the Listener is the only such static object in &AL;. 
+     on application demand. There are also &AL; objects that do not have
+     to be created, and can not be created, on application demand.
+     Currently, the Listener is the only such static object in &AL;.
 
     </para>
     </sect2>
@@ -648,18 +648,18 @@ void 3DEnvironemnt:PlaceCamera()
     <sect2>
      <title>Object Names</title>
     <para>
-     Dynamic Objects are manipulated using an integer, which in 
-     analogy to &OGL; is referred to as the object's "name". These 
+     Dynamic Objects are manipulated using an integer, which in
+     analogy to &OGL; is referred to as the object's "name". These
      are of type unsigned integer (uint). Names can be valid
      beyond the lifetime of the context they were requested
      if the objects in question can be shared among contexts.
-     No guarantees or assumptions are 
+     No guarantees or assumptions are
      made in the specification about the precise values or their distribution
      over the lifetime of the application. As objects might be shared,
-     Names are guaranteed to be 
+     Names are guaranteed to be
      unique within a class of &AL; objects, but no guarantees are made
-     across different classes of objects. Objects that are unique 
-     (singletons), like the Listener, do not require and do not have 
+     across different classes of objects. Objects that are unique
+     (singletons), like the Listener, do not require and do not have
      an integer "name".
     </para>
     </sect2>
@@ -668,20 +668,20 @@ void 3DEnvironemnt:PlaceCamera()
     <sect2>
     <title>Requesting Object Names</title>
     <para>
-     &AL; provides calls to obtain Object Names. The application requests 
+     &AL; provides calls to obtain Object Names. The application requests
      a number of Objects of a given category using Gen{Object}s.
      If the number n of Objects requested is negative,
      an INVALID_VALUE error will caused. The actual values of the
-     Names returned are implementation dependent. No guarantees on 
-     range or value are made. Unlike &OGL; &OAL does not offer alternative 
+     Names returned are implementation dependent. No guarantees on
+     range or value are made. Unlike &OGL; &OAL does not offer alternative
      means to define (bind) a Name.
     </para>
     <para>
      Allocation of Object Names does not imply immediate allocation of
-     resources or creation of Objects: the implementation is free to 
-     defer this until a given Object is actually used in mutator calls. 
+     resources or creation of Objects: the implementation is free to
+     defer this until a given Object is actually used in mutator calls.
      The Names are written at the memory location specified by the caller.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> Gen{Object}s </function></funcdef>
       <paramdef> &sizei; <parameter> n </parameter></paramdef>
       <paramdef> &uint;* <parameter> objectNames </parameter></paramdef>
@@ -689,8 +689,8 @@ void 3DEnvironemnt:PlaceCamera()
     </para>
     <para>
       Requesting zero names is a legal NOP. Requesting a negative
-      number of names causes an INVALID_VALUE error. 
-      &AL; will respond with an OUT_OF_MEMORY if the application 
+      number of names causes an INVALID_VALUE error.
+      &AL; will respond with an OUT_OF_MEMORY if the application
       requests too many objects. The specification does not guarantee
       that the &AL; implementation will allocate all resources
       needed for the actual objects at the time the names are
@@ -707,7 +707,7 @@ void 3DEnvironemnt:PlaceCamera()
       implementations throwing OUT_OF_MERMORY errors on allocation of
       Names? No - we don't even specify buffer sizes. Ambiguity - could
       an implementation throw OOM because of no names, or OOM because
-      of a (worst case) estimate of object sizes? Do we need OUT_OF_NAMES?   
+      of a (worst case) estimate of object sizes? Do we need OUT_OF_NAMES?
     </para></note>
     ]]>
 
@@ -730,15 +730,15 @@ void 3DEnvironemnt:PlaceCamera()
            that have many modules using the AL implementation (a problem
            encountered in GL, when the two generation mechanisms are
            mixed), this also leaves open the door to feed different
-           kinds of objects by Name through the same API entry points. 
+           kinds of objects by Name through the same API entry points.
        </para></note>
     ]]>
- 
+
     <![ %Annote [
       <note><title>Annotate (Negative/zero sizei)</title><para>
          The specification does not guarantee that sizei is an
          unsigned integer, but legal values have to be non-negative.
-         However, requesting zero names is a legal NOP. 
+         However, requesting zero names is a legal NOP.
       </para></note>
     ]]>
 
@@ -750,7 +750,7 @@ void 3DEnvironemnt:PlaceCamera()
      <note id=rfc-bk000626-03><title>RFC: Zero Name</title><para>
       Do we reserve the name "0"? &OGL; provides an alternative mechanism
       which lets the application pick texture names, which we discarded
-      because it is prone to create error conditions when mixing both 
+      because it is prone to create error conditions when mixing both
       approaches. As all our names are generated using GenXXXX, there
       is no real need to treat "0" special.
      </para></note>
@@ -763,43 +763,43 @@ void 3DEnvironemnt:PlaceCamera()
    <title>Releasing Object Names</title>
    <para>
      &AL; provides calls to the application to release Object Names
-     using Delete{Object}s, implicitly requesting deletion of the 
-     Objects associated with the Names released. If the number n of Objects named 
+     using Delete{Object}s, implicitly requesting deletion of the
+     Objects associated with the Names released. If the number n of Objects named
      is negative, an INVALID_VALUE error will be caused.
-     If one or more of the specified Names is not valid, an INVALID_NAME 
-     error will be caused. Implementation behavior following any error 
-     is undefined. 
+     If one or more of the specified Names is not valid, an INVALID_NAME
+     error will be caused. Implementation behavior following any error
+     is undefined.
    </para>
    <para>
-     Once deleted (even if an error occured on deletion), the Names are 
+     Once deleted (even if an error occured on deletion), the Names are
      no longer valid for use with any &AL; function calls including
-     calls to Delete{Objects}s. Any such use will cause an INVALID_NAME 
-     error. 
+     calls to Delete{Objects}s. Any such use will cause an INVALID_NAME
+     error.
    </para>
    <para>
-     The &AL; implementation is free to defer actual release of 
+     The &AL; implementation is free to defer actual release of
      resources. Ideally, resources should be released as soon as
      possible, but no guarantees are made.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef>&void;<function>Delete{Object}s</function></funcdef>
       <paramdef>&sizei;<parameter>n</parameter></paramdef>
       <paramdef>&uint;*<parameter>objectNames</parameter></paramdef>
       </funcprototype></funcsynopsis>
     </para>
-   
+
     <![ %Annote [
       <note><title>Annotation</title><para>
-      GenXXX and DeleteXXX can not reasonably be expected to be used 
+      GenXXX and DeleteXXX can not reasonably be expected to be used
       for controlling driver-side resource management from the
       application. A driver might never release a Source once allocated
-      during the lifetime of the application.   
+      during the lifetime of the application.
     </para></note>
     ]]>
 
     <![ %RFC [
-       <note id="rfc-bk000724-18"><title>RFC: Deletion Errors</title><para>  
-          chasan@acm.org:  
-          What happens if an active source (or its associated buffer) is deleted? 
+       <note id="rfc-bk000724-18"><title>RFC: Deletion Errors</title><para>
+          chasan@acm.org:
+          What happens if an active source (or its associated buffer) is deleted?
           The source should be stopped? Or the delete operation is invalid?
       </para></note>
     ]]>
@@ -815,10 +815,10 @@ void 3DEnvironemnt:PlaceCamera()
      using the Is{Object} query. There is no vector (array)
      version of this function as it defeats the purpose of
      unambiguous (in)valdiation. Returns &TRUE; if id is a
-     valid Object Name, and &FALSE; otherwise. Object Names are 
+     valid Object Name, and &FALSE; otherwise. Object Names are
      valid between request (Gen{Object}s) and release (Delete{Object}s).
-     Is{Object} does not distinguish between invalid and deleted Names. 
-      <funcsynopsis><funcprototype> 
+     Is{Object} does not distinguish between invalid and deleted Names.
+      <funcsynopsis><funcprototype>
       <funcdef>&bool;<function>Is{Object}</function></funcdef>
       <paramdef>&uint;<parameter>objectName</parameter></paramdef>
       </funcprototype></funcsynopsis>
@@ -841,16 +841,16 @@ void 3DEnvironemnt:PlaceCamera()
      These depend on the actual properties of a given Object
      Category. The precise API is discussed for each category,
      below. Each &AL; command affecting the state of
-     a named Object is usually of the form 
-      <funcsynopsis><funcprototype> 
+     a named Object is usually of the form
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> {Object}{n}{sifd}{v} </function></funcdef>
       <paramdef> &uint; <parameter> objectName </parameter></paramdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
       <paramdef> &type; <parameter> values </parameter></paramdef>
       </funcprototype></funcsynopsis>
-     In the case of unnamed (unique) Objects, the (integer) objectName 
+     In the case of unnamed (unique) Objects, the (integer) objectName
      is omitted, as it is implied by the {Object} part of function name:
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> {Object}{n}{sifd}{v} </function></funcdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
       <paramdef> &type; <parameter> values </parameter></paramdef>
@@ -860,18 +860,18 @@ void 3DEnvironemnt:PlaceCamera()
    </para>
    <para>
       The objectName specifies the &AL; object affected by this call.
-      Use of an invalid Name will cause an INVALID_NAME error. 
+      Use of an invalid Name will cause an INVALID_NAME error.
    </para>
-   <para> 
+   <para>
       The Object's Attribute to be affected has to be named
       as paramName. &AL; parameters applicable to one category
-      of Objects are not necessarily legal for another catetgory 
+      of Objects are not necessarily legal for another catetgory
       of &AL; Objects. Specification of a parameter illegal for
-      a given object will cause an INVALID_OPERATION error.  
+      a given object will cause an INVALID_OPERATION error.
     </para>
     <para>
-      Not all possible values for a type will be legal for a 
-      given objectName and parameterName. Use of an illegal value 
+      Not all possible values for a type will be legal for a
+      given objectName and parameterName. Use of an illegal value
       or a NULL value pointer will cause an INVALID_VALUE error.
     </para>
     <para>
@@ -886,18 +886,18 @@ void 3DEnvironemnt:PlaceCamera()
      current attributes are provided.
      These depend on the actual properties of a given Object
      Category. The performance of such queries is implementation
-     dependent, no performance guarantees are made. The valid values for the 
+     dependent, no performance guarantees are made. The valid values for the
      parameter paramName are identical to the ones legal for the complementing
      attribute setting function.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> Get{Object}{n}{sifd}{v} </function></funcdef>
       <paramdef> &uint; <parameter> objectName </parameter></paramdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
       <paramdef> &type;* <parameter> destination </parameter></paramdef>
       </funcprototype></funcsynopsis>
-     For unnamed unique Objects, the objectName is omitted as it is 
+     For unnamed unique Objects, the objectName is omitted as it is
      implied by the function name:
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> void <function> Get{Object}{n}{sifd}{v} </function></funcdef>
       <paramdef> &enum; <parameter> paramName </parameter></paramdef>
       <paramdef> &type;* <parameter> destination </parameter></paramdef>
@@ -905,15 +905,15 @@ void 3DEnvironemnt:PlaceCamera()
     </para>
     <para>
      The precise API is discussed for each category separately, below.
-     Unlike their matching mutators, Query functions for non-scalar 
+     Unlike their matching mutators, Query functions for non-scalar
      properties (vectors etc.) are only available in array form.
    </para>
    <para>
-     Use of an invalid Name will cause an INVALID_NAME error. 
-     Specification of an illegal parameter type (token) will cause 
+     Use of an invalid Name will cause an INVALID_NAME error.
+     Specification of an illegal parameter type (token) will cause
      an INVALID_ENUM error.  A call with a destination
-     NULL pointer will be quietly ignored. The &AL; state will not 
-     be affected by errors. In case of errors, destination memory 
+     NULL pointer will be quietly ignored. The &AL; state will not
+     be affected by errors. In case of errors, destination memory
      will not be changed.
     </para>
    </sect2>
@@ -943,7 +943,7 @@ void 3DEnvironemnt:PlaceCamera()
        <entry>&Par;</>
        <entry>&Sig;</>
        <entry>&Val</>
-       <entry>&Def;</>        
+       <entry>&Def;</>
     </row>
     </thead>
     <tbody>
@@ -951,7 +951,7 @@ void 3DEnvironemnt:PlaceCamera()
        <entry>paramName</>
        <entry>T</>
        <entry> range or set </>
-       <entry> scalar or n-tuple </>        
+       <entry> scalar or n-tuple </>
     </row>
     </tbody>
     </tgroup>

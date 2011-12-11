@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ If you have questions concerning this license or the applicable additional terms
 
   Snaping verts can drag some triangles backwards or collapse them to points,
   which will cause them to be removed.
-  
+
 
   When snapping to ints, a point can move a maximum of sqrt(3)/2 distance
   Two points that were an epsilon apart can then become sqrt(3) apart
@@ -148,7 +148,7 @@ struct hashVert_s	*GetHashVert( idVec3 &v ) {
 #endif
 	}
 
-	// create a new one 
+	// create a new one
 	hv = (hashVert_t *)Mem_Alloc( sizeof( *hv ) );
 
 	hv->next = hashVerts[block[0]][block[1]][block[2]];

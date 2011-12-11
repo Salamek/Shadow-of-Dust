@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -182,7 +182,7 @@ void Sys_ShutdownInput( void ) {
 
 void processMouseMovedEvent( NSEvent *mouseMovedEvent ) {
     CGMouseDelta dx, dy;
-    
+
     if ( !mouseActive ) {
         return;
 	}
@@ -210,12 +210,12 @@ void processMouseMovedEvent( NSEvent *mouseMovedEvent ) {
 #endif
 
     CGGetLastMouseDelta(&dx, &dy);
-    
+
     if ( dx || dy ) {
-  #if 0 // this is be handled by the mouse driver clean me out later       
+  #if 0 // this is be handled by the mouse driver clean me out later
       CGMouseDelta distSqr;
         float m0, N;
-        
+
         distSqr = dx * dx + dy * dy;
         //Com_Printf("distSqr = %d\n", distSqr);
 
@@ -225,12 +225,12 @@ void processMouseMovedEvent( NSEvent *mouseMovedEvent ) {
 
         if (distSqr < N*N) {
             float dist, accel, scale;
-            
+
             //m0 = in_mouseLowEndSlope->value;
 			m0 = 1;
             dist = sqrt(distSqr);
             accel = (((m0 - 1.0)/(N*N) * dist + (2.0 - 2.0*m0)/N) * dist + m0) * dist;
-            
+
             scale = accel / dist;
             //Com_Printf("dx = %d, dy = %d, dist = %f, accel = %f, scale = %f\n", dx, dy, dist, accel, scale);
 
@@ -292,7 +292,7 @@ void OSX_ProcessKeyEvent( NSEvent *keyEvent, bool keyDownFlag ) {
 	int doomKey = (unsigned char)vkeyTable[vkey];
 	Posix_QueEvent( SE_KEY, doomKey, keyDownFlag, 0, NULL );
 	if ( keyDownFlag ) {
-		if ( OSX_LookupCharacter(vkey, modifiers, keyDownFlag, &character ) && 
+		if ( OSX_LookupCharacter(vkey, modifiers, keyDownFlag, &character ) &&
 			 character != Sys_GetConsoleKey( false ) && character != Sys_GetConsoleKey( true ) ) {
 			Posix_QueEvent( SE_CHAR, character, 0, 0, NULL);
 		}
@@ -330,16 +330,16 @@ void processSystemDefinedEvent( NSEvent *systemDefinedEvent ) {
     int buttonsDelta;
     int buttons;
     int isDown;
-    
+
     if ( [systemDefinedEvent subtype] == 7 ) {
 
         if ( !mouseActive ) {
             return;
-		}        
-    
+		}
+
 		buttons = [systemDefinedEvent data2];
         buttonsDelta = oldButtons ^ buttons;
-        
+
         //common->Printf( "uberbuttons: %08lx %08lx\n", buttonsDelta, buttons );
 
 		if (buttonsDelta & 1) {
@@ -365,13 +365,13 @@ void processSystemDefinedEvent( NSEvent *systemDefinedEvent ) {
             Posix_QueEvent( SE_KEY, K_MOUSE4, isDown, 0, NULL);
 			Posix_AddMousePollEvent( M_ACTION4, isDown );
         }
-        
+
 		if (buttonsDelta & 16) {
             isDown = buttons & 16;
             Posix_QueEvent( SE_KEY, K_MOUSE5, isDown, 0, NULL);
 			Posix_AddMousePollEvent( M_ACTION5, isDown );
 		}
-        
+
         oldButtons = buttons;
     }
 }
@@ -434,9 +434,9 @@ void processEvent( NSEvent *event ) {
 void Posix_PollInput( void ) {
     NSEvent *event;
     unsigned int eventMask;
-    
+
     eventMask = NSAnyEventMask;
-     
+
     while ( ( event = [ NSApp nextEventMatchingMask: eventMask
 							  untilDate: distantPast
 							  inMode: NSDefaultRunLoopMode

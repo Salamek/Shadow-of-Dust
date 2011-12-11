@@ -15,8 +15,8 @@ NEW AND IMPORTANT:
 If you're used to the source distribution from the first two beta
 releases, things are now rearranged a bit.  Specifically, the
 'vorbis' CVS module contains only the libvorbis, libvorbisfile, and
-libvorbisenc libraries.  Because Ogg bitstreams are to be used by other 
-Ogg codecs, Ogg framing and streaming functionality is now in libogg 
+libvorbisenc libraries.  Because Ogg bitstreams are to be used by other
+Ogg codecs, Ogg framing and streaming functionality is now in libogg
 (the 'ogg' CVS module).  Vorbis utilities are in 'vorbis-tools' and various
 player plugins are in 'vorbis-plugins'.  For now, you'll need to check
 out these other modules seperately. (Note: the xmms plugin is in the xmms
@@ -47,7 +47,7 @@ Directory:
 
 ./doc           Vorbis documentation
 
-./examples	Example code illustrating programmatic use of libvorbis, 
+./examples	Example code illustrating programmatic use of libvorbis,
 		libvorbisfile and libvorbisenc
 
 ./mac 		Codewarrior project files and build tweaks for MacOS.
@@ -56,7 +56,7 @@ Directory:
 
 ./win32		Win32 projects files and build automation
 
-./vq 		Internal utilities for training/building new LSP/residue 
+./vq 		Internal utilities for training/building new LSP/residue
 		and auxiliary codebooks.
 
 WHAT IS VORBIS:
@@ -73,14 +73,14 @@ patent concerns.
 This package contains:
 
 .) libvorbis, a BSD-style license software implementation of
-the Vorbis specification by the Xiph.Org Foundation (http://www.xiph.org/) 
+the Vorbis specification by the Xiph.Org Foundation (http://www.xiph.org/)
 
 .) libvorbisfile, a BSD-style license convenience library
 built on Vorbis designed to simplify common uses and a number of GPL
 example programs
 
 .) libvorbisenc, a BSD-style license library that provides a simple,
-programmatic encoding setup interface 
+programmatic encoding setup interface
 
 .) example code making use of libogg, libvorbis, libvorbisfile and
 libvorbisenc
@@ -95,7 +95,7 @@ pre-built utilities may be found there.
 BUILDING FROM CVS:
 
 ./autogen.sh
-make 
+make
 
 and as root if desired:
 

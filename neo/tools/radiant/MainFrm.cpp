@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -693,7 +693,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_COMMAND_RANGE(ID_VIEW_NEAREST, ID_TEXTURES_FLATSHADE, OnViewNearest)
 	ON_COMMAND_RANGE(ID_GRID_POINT0625, ID_GRID_64, OnGrid1)
 #if _MSC_VER < 1300
-	ON_REGISTERED_MESSAGE(g_msgBSPDone, OnBSPDone) 
+	ON_REGISTERED_MESSAGE(g_msgBSPDone, OnBSPDone)
 	ON_REGISTERED_MESSAGE(g_msgBSPStatus, OnBSPStatus)
 	ON_MESSAGE(WM_DISPLAYCHANGE, OnDisplayChange)
 #endif
@@ -1026,7 +1026,7 @@ void MFCCreate( HINSTANCE hInstance )
 		g_qeglobals.d_savedinfo.fGamma = 1.0;
 		g_qeglobals.d_savedinfo.iTexMenu = ID_VIEW_BILINEARMIPMAP;
 		g_qeglobals.d_savedinfo.m_nTextureTweak = 1.0;
-  
+
 		//g_qeglobals.d_savedinfo.exclude = INCLUDE_EASY | INCLUDE_NORMAL | INCLUDE_HARD | INCLUDE_DEATHMATCH;
 		g_qeglobals.d_savedinfo.show_coordinates = true;
 		g_qeglobals.d_savedinfo.show_names       = false;
@@ -2176,7 +2176,7 @@ void RunBsp (const char *command) {
 		
 		::GetStartupInfo (&startupinfo);
 		if (!CreateProcess(NULL, sys, NULL, NULL, FALSE, 0, NULL, NULL, &startupinfo, &ProcessInformation)) {
-			common->Printf("Could not start bsp process %s %s/n", buff, sys);  
+			common->Printf("Could not start bsp process %s %s/n", buff, sys);
 		}
 		g_pParentWnd->SetFocus();
 
@@ -2764,7 +2764,7 @@ bool FindNextBrush(brush_t* pPrevFoundBrush)	// can be NULL for fresh search
 	brush_t* pNextBrush;		
 	for (brush_t* b = pStartBrush; b != &active_brushes ; b = pNextBrush)
 	{	
-		// setup the <nextbrush> ptr before going any further (because selecting a brush down below moves it to a 
+		// setup the <nextbrush> ptr before going any further (because selecting a brush down below moves it to a
 		//	different link list), but we need to ensure that the next brush has a different ent-owner than the current
 		//	one, or multi-brush ents will confuse the list process if they get selected (infinite loop badness)...
 		//
@@ -5681,7 +5681,7 @@ void CMainFrame::OnPatchTab() {
 				Select_Brush(b2, false);
 				Sys_UpdateWindows(W_ALL);
 			}
-		} 
+		}
 	}
 }
 
@@ -6481,13 +6481,13 @@ void CMainFrame::OnSelectionMoveonly() {
 	m_wndToolBar.GetToolBarCtrl().CheckButton(ID_SELECTION_MOVEONLY, (g_moveOnly) ? TRUE : FALSE);
 }
 
-void CMainFrame::OnSelectBrushlight() 
+void CMainFrame::OnSelectBrushlight()
 {
 	// TODO: Add your command handler code here
 	
 }
 
-void CMainFrame::OnSelectionCombine() 
+void CMainFrame::OnSelectionCombine()
 {
 	if (g_qeglobals.d_select_count < 2) {
 		Sys_Status("Must have at least two things selected.", 0);
@@ -6507,7 +6507,7 @@ void CMainFrame::OnSelectionCombine()
 	idMat3 mat;
 	idVec3 v;
 	if (e1->eclass->nShowFlags & ECLASS_LIGHT) {
-		// copy the lights origin and rotation matrix to 
+		// copy the lights origin and rotation matrix to
 		// light_origin and light_rotation
 		e1->trackLightOrigin = true;
 		e1->brushes.onext->trackLightOrigin = true;
@@ -6575,7 +6575,7 @@ void CMainFrame::OnPatchCombine() {
 	}
 }
 
-void CMainFrame::OnShowDoom() 
+void CMainFrame::OnShowDoom()
 {
 	int show = ::IsWindowVisible(win32.hWnd) ? SW_HIDE : SW_NORMAL;
 	if (show == SW_NORMAL) {
@@ -6584,14 +6584,14 @@ void CMainFrame::OnShowDoom()
 	::ShowWindow(win32.hWnd, show);
 }
 
-void CMainFrame::OnViewRendermode() 
+void CMainFrame::OnViewRendermode()
 {
 	m_pCamWnd->ToggleRenderMode();
 	CheckMenuItem(::GetMenu(GetSafeHwnd()), ID_VIEW_RENDERMODE, MF_BYCOMMAND | (m_pCamWnd->GetRenderMode()) ? MF_CHECKED : MF_UNCHECKED);
 	Sys_UpdateWindows(W_ALL);
 }
 
-void CMainFrame::OnViewRebuildrenderdata() 
+void CMainFrame::OnViewRebuildrenderdata()
 {
 	m_pCamWnd->BuildRendererState();
 	if (!m_pCamWnd->GetRenderMode()) {
@@ -6600,21 +6600,21 @@ void CMainFrame::OnViewRebuildrenderdata()
 	Sys_UpdateWindows(W_ALL);
 }
 
-void CMainFrame::OnViewRealtimerebuild() 
+void CMainFrame::OnViewRealtimerebuild()
 {
 	m_pCamWnd->ToggleRebuildMode();
 	CheckMenuItem(::GetMenu(GetSafeHwnd()), ID_VIEW_REALTIMEREBUILD, MF_BYCOMMAND | (m_pCamWnd->GetRebuildMode()) ? MF_CHECKED : MF_UNCHECKED);
 	Sys_UpdateWindows(W_ALL);
 }
 
-void CMainFrame::OnViewRenderentityoutlines() 
+void CMainFrame::OnViewRenderentityoutlines()
 {
 	m_pCamWnd->ToggleEntityMode();
 	CheckMenuItem(::GetMenu(GetSafeHwnd()), ID_VIEW_RENDERENTITYOUTLINES, MF_BYCOMMAND | (m_pCamWnd->GetEntityMode()) ? MF_CHECKED : MF_UNCHECKED);
 	Sys_UpdateWindows(W_ALL);
 }
 
-void CMainFrame::OnViewMaterialanimation() 
+void CMainFrame::OnViewMaterialanimation()
 {
 	m_pCamWnd->ToggleAnimationMode();
 	CheckMenuItem(::GetMenu(GetSafeHwnd()), ID_VIEW_MATERIALANIMATION, MF_BYCOMMAND | (m_pCamWnd->GetAnimationMode()) ? MF_CHECKED : MF_UNCHECKED);
@@ -6663,7 +6663,7 @@ void CMainFrame::OnAxialTextureArbitrary() {
 }
 
 extern void Select_ToOBJ();
-void CMainFrame::OnSelectionExportToobj() 
+void CMainFrame::OnSelectionExportToobj()
 {
 	Select_ToOBJ();
 }
@@ -6691,20 +6691,20 @@ void CMainFrame::OnSelectionVisibleOff() {
 }
 
 
-void CMainFrame::OnViewRenderselection() 
+void CMainFrame::OnViewRenderselection()
 {
 	m_pCamWnd->ToggleSelectMode();
 	CheckMenuItem(::GetMenu(GetSafeHwnd()), ID_VIEW_RENDERSELECTION, MF_BYCOMMAND | (m_pCamWnd->GetSelectMode()) ? MF_CHECKED : MF_UNCHECKED);
 	Sys_UpdateWindows(W_CAMERA);
 }
 
-void CMainFrame::OnSelectNomodels() 
+void CMainFrame::OnSelectNomodels()
 {
 	g_PrefsDlg.m_selectNoModels ^= 1;
 	m_wndToolBar.GetToolBarCtrl().CheckButton(ID_SELECT_NOMODELS, (g_PrefsDlg.m_selectNoModels) ? TRUE : FALSE);
 }
 
-void CMainFrame::OnViewShowShowvisportals() 
+void CMainFrame::OnViewShowShowvisportals()
 {
 	if ((g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_VISPORTALS) & EXCLUDE_VISPORTALS) {
 		CheckMenuItem(::GetMenu(GetSafeHwnd()), ID_VIEW_SHOW_SHOWVISPORTALS, MF_BYCOMMAND | MF_UNCHECKED);
@@ -6716,7 +6716,7 @@ void CMainFrame::OnViewShowShowvisportals()
 	Sys_UpdateWindows(W_XY | W_CAMERA);
 }
 
-void CMainFrame::OnViewShowNoDraw() 
+void CMainFrame::OnViewShowNoDraw()
 {
 	if ((g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_NODRAW) & EXCLUDE_NODRAW) {
 		CheckMenuItem(::GetMenu(GetSafeHwnd()), ID_VIEW_SHOW_NODRAW, MF_BYCOMMAND | MF_UNCHECKED);
@@ -6730,7 +6730,7 @@ void CMainFrame::OnViewShowNoDraw()
 
 
 
-void CMainFrame::OnViewRendersound() 
+void CMainFrame::OnViewRendersound()
 {
 	m_pCamWnd->ToggleSoundMode();
 	CheckMenuItem(::GetMenu(GetSafeHwnd()), ID_VIEW_RENDERSOUND, MF_BYCOMMAND | (m_pCamWnd->GetSoundMode()) ? MF_CHECKED : MF_UNCHECKED);
@@ -6738,7 +6738,7 @@ void CMainFrame::OnViewRendersound()
 }
 
 
-void CMainFrame::OnSoundShowsoundvolumes() 
+void CMainFrame::OnSoundShowsoundvolumes()
 {
 	g_qeglobals.d_savedinfo.showSoundAlways ^= 1;
 	if (g_qeglobals.d_savedinfo.showSoundAlways) {
@@ -6774,7 +6774,7 @@ void CMainFrame::OnNurbEditor() {
 }
 
 
-void CMainFrame::OnSoundShowselectedsoundvolumes() 
+void CMainFrame::OnSoundShowselectedsoundvolumes()
 {
 	g_qeglobals.d_savedinfo.showSoundWhenSelected ^= 1;
 	if (g_qeglobals.d_savedinfo.showSoundWhenSelected) {
@@ -6801,14 +6801,14 @@ void CMainFrame::OnSelectCompleteEntity()
     {
         return; //no brushes selected
     }
-    
+
     e = b->owner;
     if ( b->owner == world_entity )
     {
         return; //don't select the world entity
     }
 
-    for (b = e->brushes.onext; b != &e->brushes; b = b->onext) 
+    for (b = e->brushes.onext; b != &e->brushes; b = b->onext)
     {
         Select_Brush ( b , false );
     }
@@ -6820,7 +6820,7 @@ void CMainFrame::OnSelectCompleteEntity()
 
 //---------------------------------------------------------------------------
 // OnPrecisionCursorCycle
-// 
+//
 // Called when the user presses the "cycle precision cursor mode" key.
 // Cycles the precision cursor among the following three modes:
 //		PRECISION_CURSOR_NONE

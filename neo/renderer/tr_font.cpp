@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ If you have questions concerning this license or the applicable additional terms
 #define _CEIL(x)   (((x)+63) & -64)
 #define _TRUNC(x)  ((x) >> 6)
 
-FT_Library ftLibrary = NULL;  
+FT_Library ftLibrary = NULL;
 #endif
 
 
@@ -79,7 +79,7 @@ FT_Bitmap *R_RenderGlyph(FT_GlyphSlot glyph, glyphInfo_t* glyphOut) {
 	R_GetGlyphInfo(glyph, &left, &right, &width, &top, &bottom, &height, &pitch);
 
 	if ( glyph->format == ft_glyph_format_outline ) {
-		size   = pitch*height; 
+		size   = pitch*height;
 
 		bit2 = Mem_Alloc(sizeof(FT_Bitmap));
 
@@ -144,7 +144,7 @@ glyphInfo_t *RE_ConstructGlyphInfo( unsigned char *imageOut, int *xOut, int *yOu
 		}
 
 /*
-		// need to convert to power of 2 sizes so we do not get 
+		// need to convert to power of 2 sizes so we do not get
 		// any scaling from the gl upload
 		for (scaled_width = 1 ; scaled_width < glyph.pitch ; scaled_width<<=1)
 			;
@@ -193,7 +193,7 @@ glyphInfo_t *RE_ConstructGlyphInfo( unsigned char *imageOut, int *xOut, int *yOu
 						*_dst = 0xff;
 					}
 					mask >>= 1;
-        
+
 					if ( mask == 0 ) {
 						mask = 0x80;
 					}
@@ -212,7 +212,7 @@ glyphInfo_t *RE_ConstructGlyphInfo( unsigned char *imageOut, int *xOut, int *yOu
 			}
 		}
 
-		// we now have an 8 bit per pixel grey scale bitmap 
+		// we now have an 8 bit per pixel grey scale bitmap
 		// that is width wide and pf->ftSize->metrics.y_ppem tall
 
 		glyph.imageHeight = scaled_height;
@@ -366,7 +366,7 @@ bool idRenderSystemLocal::RegisterFont( const char *fontName, fontInfoEx_t &font
 			outFont->glyphs[i].s2			= readFloat();
 			outFont->glyphs[i].t2			= readFloat();
 			int junk /* font.glyphs[i].glyph */		= readInt();
-			//FIXME: the +6, -6 skips the embedded fonts/ 
+			//FIXME: the +6, -6 skips the embedded fonts/
 			memcpy( outFont->glyphs[i].shaderName, &fdFile[fdOffset + 6], 32 - 6 );
 			fdOffset += 32;
 		}
@@ -431,7 +431,7 @@ bool idRenderSystemLocal::RegisterFont( const char *fontName, fontInfoEx_t &font
 
 	// font = registeredFonts[registeredFontCount++];
 
-	// make a 256x256 image buffer, once it is full, register it, clean it and keep going 
+	// make a 256x256 image buffer, once it is full, register it, clean it and keep going
 	// until all glyphs are rendered
 
 	out = Mem_Alloc( 1024*1024 );
@@ -460,7 +460,7 @@ bool idRenderSystemLocal::RegisterFont( const char *fontName, fontInfoEx_t &font
 		if (xOut == -1 || yOut == -1 || i == GLYPH_END)  {
 			// ran out of room
 			// we need to create an image from the bitmap, set all the handles in the glyphs to this point
-			// 
+			//
 
 			scaledSize = 256*256;
 			newSize = scaledSize * 4;
@@ -486,7 +486,7 @@ bool idRenderSystemLocal::RegisterFont( const char *fontName, fontInfoEx_t &font
 			}
 
 			idStr::snprintf( name, sizeof(name), "fonts/fontImage_%i_%i.tga", imageNumber++, pointSize );
-			if (r_saveFontData->integer) { 
+			if (r_saveFontData->integer) {
 				R_WriteTGA(name, imageBuff, 256, 256);
 			}
 
@@ -513,7 +513,7 @@ bool idRenderSystemLocal::RegisterFont( const char *fontName, fontInfoEx_t &font
 	font.glyphScale = glyphScale;
 	memcpy( &registeredFont[registeredFontCount++], &font, sizeof( fontInfo_t ) );
 
-	if ( r_saveFontData->integer ) { 
+	if ( r_saveFontData->integer ) {
 		common->Warning( "FIXME: font saving doesnt respect alignment!" );
 		fileSystem->WriteFile( va( "fonts/fontImage_%i.dat", pointSize), &font, sizeof( fontInfo_t ) );
 	}

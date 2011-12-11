@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,14 +33,14 @@ If you have questions concerning this license or the applicable additional terms
 #if defined(STRICTUNZIP) || defined(STRICTZIPUNZIP)
 /* like the STRICT of WIN32, we define a pointer that cannot be converted
     from (void*) without cast */
-typedef struct TagunzFile__ { int unused; } unzFile__; 
+typedef struct TagunzFile__ { int unused; } unzFile__;
 typedef unzFile__ *unzFile;
 #else
 typedef void* unzFile;
 #endif
 
 /* tm_unz contain date/time info */
-typedef struct tm_unz_s 
+typedef struct tm_unz_s
 {
 	unsigned int tm_sec;            /* seconds after the minute - [0,59] */
 	unsigned int tm_min;            /* minutes after the hour - [0,59] */
@@ -68,8 +68,8 @@ typedef struct unz_file_info_s
     unsigned long compression_method;   /* compression method              2 unsigned chars */
     unsigned long dosDate;              /* last mod file date in Dos fmt   4 unsigned chars */
     unsigned long crc;                  /* crc-32                          4 unsigned chars */
-    unsigned long compressed_size;      /* compressed size                 4 unsigned chars */ 
-    unsigned long uncompressed_size;    /* uncompressed size               4 unsigned chars */ 
+    unsigned long compressed_size;      /* compressed size                 4 unsigned chars */
+    unsigned long uncompressed_size;    /* uncompressed size               4 unsigned chars */
     unsigned long size_filename;        /* filename length                 2 unsigned chars */
     unsigned long size_file_extra;      /* extra field length              2 unsigned chars */
     unsigned long size_file_comment;    /* file comment length             2 unsigned chars */
@@ -325,7 +325,7 @@ extern long unztell(unzFile file);
 extern int unzeof (unzFile file);
 
 /*
-  return 1 if the end of file was reached, 0 elsewhere 
+  return 1 if the end of file was reached, 0 elsewhere
 */
 
 extern int unzGetLocalExtrafield (unzFile file, void* buf, unsigned len);
@@ -339,7 +339,7 @@ extern int unzGetLocalExtrafield (unzFile file, void* buf, unsigned len);
 
   if buf!=NULL, len is the size of the buffer, the extra header is copied in
 	buf.
-  the return value is the number of unsigned chars copied in buf, or (if <0) 
+  the return value is the number of unsigned chars copied in buf, or (if <0)
 	the error code
 */
 

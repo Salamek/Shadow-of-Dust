@@ -32,7 +32,7 @@ static long _vq_lengthlist__16u0__p1_0[] = {
 };
 
 static float _vq_quantthresh__16u0__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__16u0__p1_0[] = {
@@ -73,7 +73,7 @@ static long _vq_lengthlist__16u0__p2_0[] = {
 };
 
 static float _vq_quantthresh__16u0__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__16u0__p2_0[] = {
@@ -150,7 +150,7 @@ static long _vq_lengthlist__16u0__p3_0[] = {
 };
 
 static float _vq_quantthresh__16u0__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__16u0__p3_0[] = {
@@ -227,7 +227,7 @@ static long _vq_lengthlist__16u0__p4_0[] = {
 };
 
 static float _vq_quantthresh__16u0__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__16u0__p4_0[] = {
@@ -274,7 +274,7 @@ static long _vq_lengthlist__16u0__p5_0[] = {
 };
 
 static float _vq_quantthresh__16u0__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__16u0__p5_0[] = {
@@ -331,8 +331,8 @@ static long _vq_lengthlist__16u0__p6_0[] = {
 };
 
 static float _vq_quantthresh__16u0__p6_0[] = {
-	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5, 
-	12.5, 17.5, 22.5, 27.5, 
+	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5,
+	12.5, 17.5, 22.5, 27.5,
 };
 
 static long _vq_quantmap__16u0__p6_0[] = {
@@ -372,7 +372,7 @@ static long _vq_lengthlist__16u0__p6_1[] = {
 };
 
 static float _vq_quantthresh__16u0__p6_1[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__16u0__p6_1[] = {
@@ -413,7 +413,7 @@ static long _vq_lengthlist__16u0__p7_0[] = {
 };
 
 static float _vq_quantthresh__16u0__p7_0[] = {
-	-157.5, 157.5, 
+	-157.5, 157.5,
 };
 
 static long _vq_quantmap__16u0__p7_0[] = {
@@ -475,8 +475,8 @@ static long _vq_lengthlist__16u0__p7_1[] = {
 };
 
 static float _vq_quantthresh__16u0__p7_1[] = {
-	-136.5, -115.5, -94.5, -73.5, -52.5, -31.5, -10.5, 10.5, 
-	31.5, 52.5, 73.5, 94.5, 115.5, 136.5, 
+	-136.5, -115.5, -94.5, -73.5, -52.5, -31.5, -10.5, 10.5,
+	31.5, 52.5, 73.5, 94.5, 115.5, 136.5,
 };
 
 static long _vq_quantmap__16u0__p7_1[] = {
@@ -558,9 +558,9 @@ static long _vq_lengthlist__16u0__p7_2[] = {
 };
 
 static float _vq_quantthresh__16u0__p7_2[] = {
-	-9.5, -8.5, -7.5, -6.5, -5.5, -4.5, -3.5, -2.5, 
-	-1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 
-	6.5, 7.5, 8.5, 9.5, 
+	-9.5, -8.5, -7.5, -6.5, -5.5, -4.5, -3.5, -2.5,
+	-1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5,
+	6.5, 7.5, 8.5, 9.5,
 };
 
 static long _vq_quantmap__16u0__p7_2[] = {
@@ -642,7 +642,7 @@ static long _vq_lengthlist__16u1__p1_0[] = {
 };
 
 static float _vq_quantthresh__16u1__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__16u1__p1_0[] = {
@@ -683,7 +683,7 @@ static long _vq_lengthlist__16u1__p2_0[] = {
 };
 
 static float _vq_quantthresh__16u1__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__16u1__p2_0[] = {
@@ -760,7 +760,7 @@ static long _vq_lengthlist__16u1__p3_0[] = {
 };
 
 static float _vq_quantthresh__16u1__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__16u1__p3_0[] = {
@@ -837,7 +837,7 @@ static long _vq_lengthlist__16u1__p4_0[] = {
 };
 
 static float _vq_quantthresh__16u1__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__16u1__p4_0[] = {
@@ -884,7 +884,7 @@ static long _vq_lengthlist__16u1__p5_0[] = {
 };
 
 static float _vq_quantthresh__16u1__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__16u1__p5_0[] = {
@@ -932,7 +932,7 @@ static long _vq_lengthlist__16u1__p6_0[] = {
 };
 
 static float _vq_quantthresh__16u1__p6_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__16u1__p6_0[] = {
@@ -974,7 +974,7 @@ static long _vq_lengthlist__16u1__p7_0[] = {
 };
 
 static float _vq_quantthresh__16u1__p7_0[] = {
-	-5.5, 5.5, 
+	-5.5, 5.5,
 };
 
 static long _vq_quantmap__16u1__p7_0[] = {
@@ -1025,8 +1025,8 @@ static long _vq_lengthlist__16u1__p7_1[] = {
 };
 
 static float _vq_quantthresh__16u1__p7_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__16u1__p7_1[] = {
@@ -1078,8 +1078,8 @@ static long _vq_lengthlist__16u1__p8_0[] = {
 };
 
 static float _vq_quantthresh__16u1__p8_0[] = {
-	-49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 27.5, 
-	38.5, 49.5, 
+	-49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 27.5,
+	38.5, 49.5,
 };
 
 static long _vq_quantmap__16u1__p8_0[] = {
@@ -1131,8 +1131,8 @@ static long _vq_lengthlist__16u1__p8_1[] = {
 };
 
 static float _vq_quantthresh__16u1__p8_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__16u1__p8_1[] = {
@@ -1195,8 +1195,8 @@ static long _vq_lengthlist__16u1__p9_0[] = {
 };
 
 static float _vq_quantthresh__16u1__p9_0[] = {
-	-1657.5, -1402.5, -1147.5, -892.5, -637.5, -382.5, -127.5, 127.5, 
-	382.5, 637.5, 892.5, 1147.5, 1402.5, 1657.5, 
+	-1657.5, -1402.5, -1147.5, -892.5, -637.5, -382.5, -127.5, 127.5,
+	382.5, 637.5, 892.5, 1147.5, 1402.5, 1657.5,
 };
 
 static long _vq_quantmap__16u1__p9_0[] = {
@@ -1259,8 +1259,8 @@ static long _vq_lengthlist__16u1__p9_1[] = {
 };
 
 static float _vq_quantthresh__16u1__p9_1[] = {
-	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5, 
-	25.5, 42.5, 59.5, 76.5, 93.5, 110.5, 
+	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5,
+	25.5, 42.5, 59.5, 76.5, 93.5, 110.5,
 };
 
 static long _vq_quantmap__16u1__p9_1[] = {
@@ -1329,8 +1329,8 @@ static long _vq_lengthlist__16u1__p9_2[] = {
 };
 
 static float _vq_quantthresh__16u1__p9_2[] = {
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
 };
 
 static long _vq_quantmap__16u1__p9_2[] = {
@@ -1436,7 +1436,7 @@ static long _vq_lengthlist__16u2_p1_0[] = {
 };
 
 static float _vq_quantthresh__16u2_p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__16u2_p1_0[] = {
@@ -1513,7 +1513,7 @@ static long _vq_lengthlist__16u2_p2_0[] = {
 };
 
 static float _vq_quantthresh__16u2_p2_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__16u2_p2_0[] = {
@@ -1560,7 +1560,7 @@ static long _vq_lengthlist__16u2_p3_0[] = {
 };
 
 static float _vq_quantthresh__16u2_p3_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__16u2_p3_0[] = {
@@ -1629,8 +1629,8 @@ static long _vq_lengthlist__16u2_p4_0[] = {
 };
 
 static float _vq_quantthresh__16u2_p4_0[] = {
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
 };
 
 static long _vq_quantmap__16u2_p4_0[] = {
@@ -1673,7 +1673,7 @@ static long _vq_lengthlist__16u2_p5_0[] = {
 };
 
 static float _vq_quantthresh__16u2_p5_0[] = {
-	-5.5, 5.5, 
+	-5.5, 5.5,
 };
 
 static long _vq_quantmap__16u2_p5_0[] = {
@@ -1724,8 +1724,8 @@ static long _vq_lengthlist__16u2_p5_1[] = {
 };
 
 static float _vq_quantthresh__16u2_p5_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__16u2_p5_1[] = {
@@ -1782,8 +1782,8 @@ static long _vq_lengthlist__16u2_p6_0[] = {
 };
 
 static float _vq_quantthresh__16u2_p6_0[] = {
-	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5, 
-	12.5, 17.5, 22.5, 27.5, 
+	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5,
+	12.5, 17.5, 22.5, 27.5,
 };
 
 static long _vq_quantmap__16u2_p6_0[] = {
@@ -1823,7 +1823,7 @@ static long _vq_lengthlist__16u2_p6_1[] = {
 };
 
 static float _vq_quantthresh__16u2_p6_1[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__16u2_p6_1[] = {
@@ -1879,8 +1879,8 @@ static long _vq_lengthlist__16u2_p7_0[] = {
 };
 
 static float _vq_quantthresh__16u2_p7_0[] = {
-	-60.5, -49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 
-	27.5, 38.5, 49.5, 60.5, 
+	-60.5, -49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5,
+	27.5, 38.5, 49.5, 60.5,
 };
 
 static long _vq_quantmap__16u2_p7_0[] = {
@@ -1932,8 +1932,8 @@ static long _vq_lengthlist__16u2_p7_1[] = {
 };
 
 static float _vq_quantthresh__16u2_p7_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__16u2_p7_1[] = {
@@ -1996,8 +1996,8 @@ static long _vq_lengthlist__16u2_p8_0[] = {
 };
 
 static float _vq_quantthresh__16u2_p8_0[] = {
-	-136.5, -115.5, -94.5, -73.5, -52.5, -31.5, -10.5, 10.5, 
-	31.5, 52.5, 73.5, 94.5, 115.5, 136.5, 
+	-136.5, -115.5, -94.5, -73.5, -52.5, -31.5, -10.5, 10.5,
+	31.5, 52.5, 73.5, 94.5, 115.5, 136.5,
 };
 
 static long _vq_quantmap__16u2_p8_0[] = {
@@ -2079,9 +2079,9 @@ static long _vq_lengthlist__16u2_p8_1[] = {
 };
 
 static float _vq_quantthresh__16u2_p8_1[] = {
-	-9.5, -8.5, -7.5, -6.5, -5.5, -4.5, -3.5, -2.5, 
-	-1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 
-	6.5, 7.5, 8.5, 9.5, 
+	-9.5, -8.5, -7.5, -6.5, -5.5, -4.5, -3.5, -2.5,
+	-1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5,
+	6.5, 7.5, 8.5, 9.5,
 };
 
 static long _vq_quantmap__16u2_p8_1[] = {
@@ -2145,8 +2145,8 @@ static long _vq_lengthlist__16u2_p9_0[] = {
 };
 
 static float _vq_quantthresh__16u2_p9_0[] = {
-	-5120.5, -4189.5, -3258.5, -2327.5, -1396.5, -498, -32.5, 32.5, 
-	498, 1396.5, 2327.5, 3258.5, 4189.5, 5120.5, 
+	-5120.5, -4189.5, -3258.5, -2327.5, -1396.5, -498, -32.5, 32.5,
+	498, 1396.5, 2327.5, 3258.5, 4189.5, 5120.5,
 };
 
 static long _vq_quantmap__16u2_p9_0[] = {
@@ -2221,9 +2221,9 @@ static long _vq_lengthlist__16u2_p9_1[] = {
 };
 
 static float _vq_quantthresh__16u2_p9_1[] = {
-	-367.5, -318.5, -269.5, -220.5, -171.5, -122.5, -73.5, -26.5, 
-	-2, 2, 26.5, 73.5, 122.5, 171.5, 220.5, 269.5, 
-	318.5, 367.5, 
+	-367.5, -318.5, -269.5, -220.5, -171.5, -122.5, -73.5, -26.5,
+	-2, 2, 26.5, 73.5, 122.5, 171.5, 220.5, 269.5,
+	318.5, 367.5,
 };
 
 static long _vq_quantmap__16u2_p9_1[] = {
@@ -2310,12 +2310,12 @@ static long _vq_lengthlist__16u2_p9_2[] = {
 };
 
 static float _vq_quantthresh__16u2_p9_2[] = {
-	-23.5, -22.5, -21.5, -20.5, -19.5, -18.5, -17.5, -16.5, 
-	-15.5, -14.5, -13.5, -12.5, -11.5, -10.5, -9.5, -8.5, 
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
-	8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5, 
-	16.5, 17.5, 18.5, 19.5, 20.5, 21.5, 22.5, 23.5, 
+	-23.5, -22.5, -21.5, -20.5, -19.5, -18.5, -17.5, -16.5,
+	-15.5, -14.5, -13.5, -12.5, -11.5, -10.5, -9.5, -8.5,
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
+	8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5,
+	16.5, 17.5, 18.5, 19.5, 20.5, 21.5, 22.5, 23.5,
 };
 
 static long _vq_quantmap__16u2_p9_2[] = {
@@ -2380,7 +2380,7 @@ static long _vq_lengthlist__44u0__p1_0[] = {
 };
 
 static float _vq_quantthresh__44u0__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u0__p1_0[] = {
@@ -2421,7 +2421,7 @@ static long _vq_lengthlist__44u0__p2_0[] = {
 };
 
 static float _vq_quantthresh__44u0__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u0__p2_0[] = {
@@ -2498,7 +2498,7 @@ static long _vq_lengthlist__44u0__p3_0[] = {
 };
 
 static float _vq_quantthresh__44u0__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u0__p3_0[] = {
@@ -2575,7 +2575,7 @@ static long _vq_lengthlist__44u0__p4_0[] = {
 };
 
 static float _vq_quantthresh__44u0__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u0__p4_0[] = {
@@ -2622,7 +2622,7 @@ static long _vq_lengthlist__44u0__p5_0[] = {
 };
 
 static float _vq_quantthresh__44u0__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u0__p5_0[] = {
@@ -2679,8 +2679,8 @@ static long _vq_lengthlist__44u0__p6_0[] = {
 };
 
 static float _vq_quantthresh__44u0__p6_0[] = {
-	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5, 
-	12.5, 17.5, 22.5, 27.5, 
+	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5,
+	12.5, 17.5, 22.5, 27.5,
 };
 
 static long _vq_quantmap__44u0__p6_0[] = {
@@ -2720,7 +2720,7 @@ static long _vq_lengthlist__44u0__p6_1[] = {
 };
 
 static float _vq_quantthresh__44u0__p6_1[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u0__p6_1[] = {
@@ -2797,7 +2797,7 @@ static long _vq_lengthlist__44u0__p7_0[] = {
 };
 
 static float _vq_quantthresh__44u0__p7_0[] = {
-	-253.5, -84.5, 84.5, 253.5, 
+	-253.5, -84.5, 84.5, 253.5,
 };
 
 static long _vq_quantmap__44u0__p7_0[] = {
@@ -2853,8 +2853,8 @@ static long _vq_lengthlist__44u0__p7_1[] = {
 };
 
 static float _vq_quantthresh__44u0__p7_1[] = {
-	-71.5, -58.5, -45.5, -32.5, -19.5, -6.5, 6.5, 19.5, 
-	32.5, 45.5, 58.5, 71.5, 
+	-71.5, -58.5, -45.5, -32.5, -19.5, -6.5, 6.5, 19.5,
+	32.5, 45.5, 58.5, 71.5,
 };
 
 static long _vq_quantmap__44u0__p7_1[] = {
@@ -2911,8 +2911,8 @@ static long _vq_lengthlist__44u0__p7_2[] = {
 };
 
 static float _vq_quantthresh__44u0__p7_2[] = {
-	-5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 
-	2.5, 3.5, 4.5, 5.5, 
+	-5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5,
+	2.5, 3.5, 4.5, 5.5,
 };
 
 static long _vq_quantmap__44u0__p7_2[] = {
@@ -2990,7 +2990,7 @@ static long _vq_lengthlist__44u1__p1_0[] = {
 };
 
 static float _vq_quantthresh__44u1__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u1__p1_0[] = {
@@ -3031,7 +3031,7 @@ static long _vq_lengthlist__44u1__p2_0[] = {
 };
 
 static float _vq_quantthresh__44u1__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u1__p2_0[] = {
@@ -3108,7 +3108,7 @@ static long _vq_lengthlist__44u1__p3_0[] = {
 };
 
 static float _vq_quantthresh__44u1__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u1__p3_0[] = {
@@ -3185,7 +3185,7 @@ static long _vq_lengthlist__44u1__p4_0[] = {
 };
 
 static float _vq_quantthresh__44u1__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u1__p4_0[] = {
@@ -3232,7 +3232,7 @@ static long _vq_lengthlist__44u1__p5_0[] = {
 };
 
 static float _vq_quantthresh__44u1__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u1__p5_0[] = {
@@ -3289,8 +3289,8 @@ static long _vq_lengthlist__44u1__p6_0[] = {
 };
 
 static float _vq_quantthresh__44u1__p6_0[] = {
-	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5, 
-	12.5, 17.5, 22.5, 27.5, 
+	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5,
+	12.5, 17.5, 22.5, 27.5,
 };
 
 static long _vq_quantmap__44u1__p6_0[] = {
@@ -3330,7 +3330,7 @@ static long _vq_lengthlist__44u1__p6_1[] = {
 };
 
 static float _vq_quantthresh__44u1__p6_1[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u1__p6_1[] = {
@@ -3373,7 +3373,7 @@ static long _vq_lengthlist__44u1__p7_0[] = {
 };
 
 static float _vq_quantthresh__44u1__p7_0[] = {
-	-422.5, -253.5, -84.5, 84.5, 253.5, 422.5, 
+	-422.5, -253.5, -84.5, 84.5, 253.5, 422.5,
 };
 
 static long _vq_quantmap__44u1__p7_0[] = {
@@ -3429,8 +3429,8 @@ static long _vq_lengthlist__44u1__p7_1[] = {
 };
 
 static float _vq_quantthresh__44u1__p7_1[] = {
-	-71.5, -58.5, -45.5, -32.5, -19.5, -6.5, 6.5, 19.5, 
-	32.5, 45.5, 58.5, 71.5, 
+	-71.5, -58.5, -45.5, -32.5, -19.5, -6.5, 6.5, 19.5,
+	32.5, 45.5, 58.5, 71.5,
 };
 
 static long _vq_quantmap__44u1__p7_1[] = {
@@ -3487,8 +3487,8 @@ static long _vq_lengthlist__44u1__p7_2[] = {
 };
 
 static float _vq_quantthresh__44u1__p7_2[] = {
-	-5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 
-	2.5, 3.5, 4.5, 5.5, 
+	-5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5,
+	2.5, 3.5, 4.5, 5.5,
 };
 
 static long _vq_quantmap__44u1__p7_2[] = {
@@ -3566,7 +3566,7 @@ static long _vq_lengthlist__44u2__p1_0[] = {
 };
 
 static float _vq_quantthresh__44u2__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u2__p1_0[] = {
@@ -3607,7 +3607,7 @@ static long _vq_lengthlist__44u2__p2_0[] = {
 };
 
 static float _vq_quantthresh__44u2__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u2__p2_0[] = {
@@ -3684,7 +3684,7 @@ static long _vq_lengthlist__44u2__p3_0[] = {
 };
 
 static float _vq_quantthresh__44u2__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u2__p3_0[] = {
@@ -3761,7 +3761,7 @@ static long _vq_lengthlist__44u2__p4_0[] = {
 };
 
 static float _vq_quantthresh__44u2__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u2__p4_0[] = {
@@ -3808,7 +3808,7 @@ static long _vq_lengthlist__44u2__p5_0[] = {
 };
 
 static float _vq_quantthresh__44u2__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u2__p5_0[] = {
@@ -3865,8 +3865,8 @@ static long _vq_lengthlist__44u2__p6_0[] = {
 };
 
 static float _vq_quantthresh__44u2__p6_0[] = {
-	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5, 
-	12.5, 17.5, 22.5, 27.5, 
+	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5,
+	12.5, 17.5, 22.5, 27.5,
 };
 
 static long _vq_quantmap__44u2__p6_0[] = {
@@ -3906,7 +3906,7 @@ static long _vq_lengthlist__44u2__p6_1[] = {
 };
 
 static float _vq_quantthresh__44u2__p6_1[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u2__p6_1[] = {
@@ -3953,7 +3953,7 @@ static long _vq_lengthlist__44u2__p7_0[] = {
 };
 
 static float _vq_quantthresh__44u2__p7_0[] = {
-	-591.5, -422.5, -253.5, -84.5, 84.5, 253.5, 422.5, 591.5, 
+	-591.5, -422.5, -253.5, -84.5, 84.5, 253.5, 422.5, 591.5,
 };
 
 static long _vq_quantmap__44u2__p7_0[] = {
@@ -4010,8 +4010,8 @@ static long _vq_lengthlist__44u2__p7_1[] = {
 };
 
 static float _vq_quantthresh__44u2__p7_1[] = {
-	-71.5, -58.5, -45.5, -32.5, -19.5, -6.5, 6.5, 19.5, 
-	32.5, 45.5, 58.5, 71.5, 
+	-71.5, -58.5, -45.5, -32.5, -19.5, -6.5, 6.5, 19.5,
+	32.5, 45.5, 58.5, 71.5,
 };
 
 static long _vq_quantmap__44u2__p7_1[] = {
@@ -4068,8 +4068,8 @@ static long _vq_lengthlist__44u2__p7_2[] = {
 };
 
 static float _vq_quantthresh__44u2__p7_2[] = {
-	-5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 
-	2.5, 3.5, 4.5, 5.5, 
+	-5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5,
+	2.5, 3.5, 4.5, 5.5,
 };
 
 static long _vq_quantmap__44u2__p7_2[] = {
@@ -4147,7 +4147,7 @@ static long _vq_lengthlist__44u3__p1_0[] = {
 };
 
 static float _vq_quantthresh__44u3__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u3__p1_0[] = {
@@ -4188,7 +4188,7 @@ static long _vq_lengthlist__44u3__p2_0[] = {
 };
 
 static float _vq_quantthresh__44u3__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u3__p2_0[] = {
@@ -4265,7 +4265,7 @@ static long _vq_lengthlist__44u3__p3_0[] = {
 };
 
 static float _vq_quantthresh__44u3__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u3__p3_0[] = {
@@ -4342,7 +4342,7 @@ static long _vq_lengthlist__44u3__p4_0[] = {
 };
 
 static float _vq_quantthresh__44u3__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u3__p4_0[] = {
@@ -4389,7 +4389,7 @@ static long _vq_lengthlist__44u3__p5_0[] = {
 };
 
 static float _vq_quantthresh__44u3__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u3__p5_0[] = {
@@ -4446,8 +4446,8 @@ static long _vq_lengthlist__44u3__p6_0[] = {
 };
 
 static float _vq_quantthresh__44u3__p6_0[] = {
-	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5, 
-	12.5, 17.5, 22.5, 27.5, 
+	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5,
+	12.5, 17.5, 22.5, 27.5,
 };
 
 static long _vq_quantmap__44u3__p6_0[] = {
@@ -4487,7 +4487,7 @@ static long _vq_lengthlist__44u3__p6_1[] = {
 };
 
 static float _vq_quantthresh__44u3__p6_1[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u3__p6_1[] = {
@@ -4534,7 +4534,7 @@ static long _vq_lengthlist__44u3__p7_0[] = {
 };
 
 static float _vq_quantthresh__44u3__p7_0[] = {
-	-892.5, -637.5, -382.5, -127.5, 127.5, 382.5, 637.5, 892.5, 
+	-892.5, -637.5, -382.5, -127.5, 127.5, 382.5, 637.5, 892.5,
 };
 
 static long _vq_quantmap__44u3__p7_0[] = {
@@ -4597,8 +4597,8 @@ static long _vq_lengthlist__44u3__p7_1[] = {
 };
 
 static float _vq_quantthresh__44u3__p7_1[] = {
-	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5, 
-	25.5, 42.5, 59.5, 76.5, 93.5, 110.5, 
+	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5,
+	25.5, 42.5, 59.5, 76.5, 93.5, 110.5,
 };
 
 static long _vq_quantmap__44u3__p7_1[] = {
@@ -4667,8 +4667,8 @@ static long _vq_lengthlist__44u3__p7_2[] = {
 };
 
 static float _vq_quantthresh__44u3__p7_2[] = {
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
 };
 
 static long _vq_quantmap__44u3__p7_2[] = {
@@ -4747,7 +4747,7 @@ static long _vq_lengthlist__44u4__p1_0[] = {
 };
 
 static float _vq_quantthresh__44u4__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u4__p1_0[] = {
@@ -4788,7 +4788,7 @@ static long _vq_lengthlist__44u4__p2_0[] = {
 };
 
 static float _vq_quantthresh__44u4__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u4__p2_0[] = {
@@ -4865,7 +4865,7 @@ static long _vq_lengthlist__44u4__p3_0[] = {
 };
 
 static float _vq_quantthresh__44u4__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u4__p3_0[] = {
@@ -4942,7 +4942,7 @@ static long _vq_lengthlist__44u4__p4_0[] = {
 };
 
 static float _vq_quantthresh__44u4__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u4__p4_0[] = {
@@ -4989,7 +4989,7 @@ static long _vq_lengthlist__44u4__p5_0[] = {
 };
 
 static float _vq_quantthresh__44u4__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u4__p5_0[] = {
@@ -5046,8 +5046,8 @@ static long _vq_lengthlist__44u4__p6_0[] = {
 };
 
 static float _vq_quantthresh__44u4__p6_0[] = {
-	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5, 
-	12.5, 17.5, 22.5, 27.5, 
+	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5,
+	12.5, 17.5, 22.5, 27.5,
 };
 
 static long _vq_quantmap__44u4__p6_0[] = {
@@ -5087,7 +5087,7 @@ static long _vq_lengthlist__44u4__p6_1[] = {
 };
 
 static float _vq_quantthresh__44u4__p6_1[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u4__p6_1[] = {
@@ -5143,8 +5143,8 @@ static long _vq_lengthlist__44u4__p7_0[] = {
 };
 
 static float _vq_quantthresh__44u4__p7_0[] = {
-	-1402.5, -1147.5, -892.5, -637.5, -382.5, -127.5, 127.5, 382.5, 
-	637.5, 892.5, 1147.5, 1402.5, 
+	-1402.5, -1147.5, -892.5, -637.5, -382.5, -127.5, 127.5, 382.5,
+	637.5, 892.5, 1147.5, 1402.5,
 };
 
 static long _vq_quantmap__44u4__p7_0[] = {
@@ -5207,8 +5207,8 @@ static long _vq_lengthlist__44u4__p7_1[] = {
 };
 
 static float _vq_quantthresh__44u4__p7_1[] = {
-	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5, 
-	25.5, 42.5, 59.5, 76.5, 93.5, 110.5, 
+	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5,
+	25.5, 42.5, 59.5, 76.5, 93.5, 110.5,
 };
 
 static long _vq_quantmap__44u4__p7_1[] = {
@@ -5277,8 +5277,8 @@ static long _vq_lengthlist__44u4__p7_2[] = {
 };
 
 static float _vq_quantthresh__44u4__p7_2[] = {
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
 };
 
 static long _vq_quantmap__44u4__p7_2[] = {
@@ -5360,7 +5360,7 @@ static long _vq_lengthlist__44u5__p1_0[] = {
 };
 
 static float _vq_quantthresh__44u5__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u5__p1_0[] = {
@@ -5401,7 +5401,7 @@ static long _vq_lengthlist__44u5__p2_0[] = {
 };
 
 static float _vq_quantthresh__44u5__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u5__p2_0[] = {
@@ -5478,7 +5478,7 @@ static long _vq_lengthlist__44u5__p3_0[] = {
 };
 
 static float _vq_quantthresh__44u5__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u5__p3_0[] = {
@@ -5555,7 +5555,7 @@ static long _vq_lengthlist__44u5__p4_0[] = {
 };
 
 static float _vq_quantthresh__44u5__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u5__p4_0[] = {
@@ -5602,7 +5602,7 @@ static long _vq_lengthlist__44u5__p5_0[] = {
 };
 
 static float _vq_quantthresh__44u5__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u5__p5_0[] = {
@@ -5650,7 +5650,7 @@ static long _vq_lengthlist__44u5__p6_0[] = {
 };
 
 static float _vq_quantthresh__44u5__p6_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u5__p6_0[] = {
@@ -5692,7 +5692,7 @@ static long _vq_lengthlist__44u5__p7_0[] = {
 };
 
 static float _vq_quantthresh__44u5__p7_0[] = {
-	-5.5, 5.5, 
+	-5.5, 5.5,
 };
 
 static long _vq_quantmap__44u5__p7_0[] = {
@@ -5743,8 +5743,8 @@ static long _vq_lengthlist__44u5__p7_1[] = {
 };
 
 static float _vq_quantthresh__44u5__p7_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__44u5__p7_1[] = {
@@ -5796,8 +5796,8 @@ static long _vq_lengthlist__44u5__p8_0[] = {
 };
 
 static float _vq_quantthresh__44u5__p8_0[] = {
-	-49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 27.5, 
-	38.5, 49.5, 
+	-49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 27.5,
+	38.5, 49.5,
 };
 
 static long _vq_quantmap__44u5__p8_0[] = {
@@ -5849,8 +5849,8 @@ static long _vq_lengthlist__44u5__p8_1[] = {
 };
 
 static float _vq_quantthresh__44u5__p8_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__44u5__p8_1[] = {
@@ -5907,8 +5907,8 @@ static long _vq_lengthlist__44u5__p9_0[] = {
 };
 
 static float _vq_quantthresh__44u5__p9_0[] = {
-	-1402.5, -1147.5, -892.5, -637.5, -382.5, -127.5, 127.5, 382.5, 
-	637.5, 892.5, 1147.5, 1402.5, 
+	-1402.5, -1147.5, -892.5, -637.5, -382.5, -127.5, 127.5, 382.5,
+	637.5, 892.5, 1147.5, 1402.5,
 };
 
 static long _vq_quantmap__44u5__p9_0[] = {
@@ -5971,8 +5971,8 @@ static long _vq_lengthlist__44u5__p9_1[] = {
 };
 
 static float _vq_quantthresh__44u5__p9_1[] = {
-	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5, 
-	25.5, 42.5, 59.5, 76.5, 93.5, 110.5, 
+	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5,
+	25.5, 42.5, 59.5, 76.5, 93.5, 110.5,
 };
 
 static long _vq_quantmap__44u5__p9_1[] = {
@@ -6041,8 +6041,8 @@ static long _vq_lengthlist__44u5__p9_2[] = {
 };
 
 static float _vq_quantthresh__44u5__p9_2[] = {
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
 };
 
 static long _vq_quantmap__44u5__p9_2[] = {
@@ -6127,7 +6127,7 @@ static long _vq_lengthlist__44u6__p1_0[] = {
 };
 
 static float _vq_quantthresh__44u6__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u6__p1_0[] = {
@@ -6168,7 +6168,7 @@ static long _vq_lengthlist__44u6__p2_0[] = {
 };
 
 static float _vq_quantthresh__44u6__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u6__p2_0[] = {
@@ -6245,7 +6245,7 @@ static long _vq_lengthlist__44u6__p3_0[] = {
 };
 
 static float _vq_quantthresh__44u6__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u6__p3_0[] = {
@@ -6322,7 +6322,7 @@ static long _vq_lengthlist__44u6__p4_0[] = {
 };
 
 static float _vq_quantthresh__44u6__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u6__p4_0[] = {
@@ -6369,7 +6369,7 @@ static long _vq_lengthlist__44u6__p5_0[] = {
 };
 
 static float _vq_quantthresh__44u6__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u6__p5_0[] = {
@@ -6417,7 +6417,7 @@ static long _vq_lengthlist__44u6__p6_0[] = {
 };
 
 static float _vq_quantthresh__44u6__p6_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u6__p6_0[] = {
@@ -6459,7 +6459,7 @@ static long _vq_lengthlist__44u6__p7_0[] = {
 };
 
 static float _vq_quantthresh__44u6__p7_0[] = {
-	-5.5, 5.5, 
+	-5.5, 5.5,
 };
 
 static long _vq_quantmap__44u6__p7_0[] = {
@@ -6510,8 +6510,8 @@ static long _vq_lengthlist__44u6__p7_1[] = {
 };
 
 static float _vq_quantthresh__44u6__p7_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__44u6__p7_1[] = {
@@ -6563,8 +6563,8 @@ static long _vq_lengthlist__44u6__p8_0[] = {
 };
 
 static float _vq_quantthresh__44u6__p8_0[] = {
-	-49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 27.5, 
-	38.5, 49.5, 
+	-49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 27.5,
+	38.5, 49.5,
 };
 
 static long _vq_quantmap__44u6__p8_0[] = {
@@ -6616,8 +6616,8 @@ static long _vq_lengthlist__44u6__p8_1[] = {
 };
 
 static float _vq_quantthresh__44u6__p8_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__44u6__p8_1[] = {
@@ -6680,8 +6680,8 @@ static long _vq_lengthlist__44u6__p9_0[] = {
 };
 
 static float _vq_quantthresh__44u6__p9_0[] = {
-	-1657.5, -1402.5, -1147.5, -892.5, -637.5, -382.5, -127.5, 127.5, 
-	382.5, 637.5, 892.5, 1147.5, 1402.5, 1657.5, 
+	-1657.5, -1402.5, -1147.5, -892.5, -637.5, -382.5, -127.5, 127.5,
+	382.5, 637.5, 892.5, 1147.5, 1402.5, 1657.5,
 };
 
 static long _vq_quantmap__44u6__p9_0[] = {
@@ -6744,8 +6744,8 @@ static long _vq_lengthlist__44u6__p9_1[] = {
 };
 
 static float _vq_quantthresh__44u6__p9_1[] = {
-	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5, 
-	25.5, 42.5, 59.5, 76.5, 93.5, 110.5, 
+	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5,
+	25.5, 42.5, 59.5, 76.5, 93.5, 110.5,
 };
 
 static long _vq_quantmap__44u6__p9_1[] = {
@@ -6814,8 +6814,8 @@ static long _vq_lengthlist__44u6__p9_2[] = {
 };
 
 static float _vq_quantthresh__44u6__p9_2[] = {
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
 };
 
 static long _vq_quantmap__44u6__p9_2[] = {
@@ -6900,7 +6900,7 @@ static long _vq_lengthlist__44u7__p1_0[] = {
 };
 
 static float _vq_quantthresh__44u7__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u7__p1_0[] = {
@@ -6941,7 +6941,7 @@ static long _vq_lengthlist__44u7__p2_0[] = {
 };
 
 static float _vq_quantthresh__44u7__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u7__p2_0[] = {
@@ -7018,7 +7018,7 @@ static long _vq_lengthlist__44u7__p3_0[] = {
 };
 
 static float _vq_quantthresh__44u7__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u7__p3_0[] = {
@@ -7095,7 +7095,7 @@ static long _vq_lengthlist__44u7__p4_0[] = {
 };
 
 static float _vq_quantthresh__44u7__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u7__p4_0[] = {
@@ -7142,7 +7142,7 @@ static long _vq_lengthlist__44u7__p5_0[] = {
 };
 
 static float _vq_quantthresh__44u7__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u7__p5_0[] = {
@@ -7190,7 +7190,7 @@ static long _vq_lengthlist__44u7__p6_0[] = {
 };
 
 static float _vq_quantthresh__44u7__p6_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u7__p6_0[] = {
@@ -7232,7 +7232,7 @@ static long _vq_lengthlist__44u7__p7_0[] = {
 };
 
 static float _vq_quantthresh__44u7__p7_0[] = {
-	-5.5, 5.5, 
+	-5.5, 5.5,
 };
 
 static long _vq_quantmap__44u7__p7_0[] = {
@@ -7283,8 +7283,8 @@ static long _vq_lengthlist__44u7__p7_1[] = {
 };
 
 static float _vq_quantthresh__44u7__p7_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__44u7__p7_1[] = {
@@ -7336,8 +7336,8 @@ static long _vq_lengthlist__44u7__p8_0[] = {
 };
 
 static float _vq_quantthresh__44u7__p8_0[] = {
-	-49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 27.5, 
-	38.5, 49.5, 
+	-49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 27.5,
+	38.5, 49.5,
 };
 
 static long _vq_quantmap__44u7__p8_0[] = {
@@ -7389,8 +7389,8 @@ static long _vq_lengthlist__44u7__p8_1[] = {
 };
 
 static float _vq_quantthresh__44u7__p8_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__44u7__p8_1[] = {
@@ -7442,8 +7442,8 @@ static long _vq_lengthlist__44u7__p9_0[] = {
 };
 
 static float _vq_quantthresh__44u7__p9_0[] = {
-	-2866.5, -2229.5, -1592.5, -955.5, -318.5, 318.5, 955.5, 1592.5, 
-	2229.5, 2866.5, 
+	-2866.5, -2229.5, -1592.5, -955.5, -318.5, 318.5, 955.5, 1592.5,
+	2229.5, 2866.5,
 };
 
 static long _vq_quantmap__44u7__p9_0[] = {
@@ -7500,8 +7500,8 @@ static long _vq_lengthlist__44u7__p9_1[] = {
 };
 
 static float _vq_quantthresh__44u7__p9_1[] = {
-	-269.5, -220.5, -171.5, -122.5, -73.5, -24.5, 24.5, 73.5, 
-	122.5, 171.5, 220.5, 269.5, 
+	-269.5, -220.5, -171.5, -122.5, -73.5, -24.5, 24.5, 73.5,
+	122.5, 171.5, 220.5, 269.5,
 };
 
 static long _vq_quantmap__44u7__p9_1[] = {
@@ -7587,12 +7587,12 @@ static long _vq_lengthlist__44u7__p9_2[] = {
 };
 
 static float _vq_quantthresh__44u7__p9_2[] = {
-	-23.5, -22.5, -21.5, -20.5, -19.5, -18.5, -17.5, -16.5, 
-	-15.5, -14.5, -13.5, -12.5, -11.5, -10.5, -9.5, -8.5, 
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
-	8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5, 
-	16.5, 17.5, 18.5, 19.5, 20.5, 21.5, 22.5, 23.5, 
+	-23.5, -22.5, -21.5, -20.5, -19.5, -18.5, -17.5, -16.5,
+	-15.5, -14.5, -13.5, -12.5, -11.5, -10.5, -9.5, -8.5,
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
+	8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5,
+	16.5, 17.5, 18.5, 19.5, 20.5, 21.5, 22.5, 23.5,
 };
 
 static long _vq_quantmap__44u7__p9_2[] = {
@@ -7702,7 +7702,7 @@ static long _vq_lengthlist__44u8_p1_0[] = {
 };
 
 static float _vq_quantthresh__44u8_p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u8_p1_0[] = {
@@ -7779,7 +7779,7 @@ static long _vq_lengthlist__44u8_p2_0[] = {
 };
 
 static float _vq_quantthresh__44u8_p2_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u8_p2_0[] = {
@@ -7826,7 +7826,7 @@ static long _vq_lengthlist__44u8_p3_0[] = {
 };
 
 static float _vq_quantthresh__44u8_p3_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u8_p3_0[] = {
@@ -7895,8 +7895,8 @@ static long _vq_lengthlist__44u8_p4_0[] = {
 };
 
 static float _vq_quantthresh__44u8_p4_0[] = {
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
 };
 
 static long _vq_quantmap__44u8_p4_0[] = {
@@ -7939,7 +7939,7 @@ static long _vq_lengthlist__44u8_p5_0[] = {
 };
 
 static float _vq_quantthresh__44u8_p5_0[] = {
-	-5.5, 5.5, 
+	-5.5, 5.5,
 };
 
 static long _vq_quantmap__44u8_p5_0[] = {
@@ -7990,8 +7990,8 @@ static long _vq_lengthlist__44u8_p5_1[] = {
 };
 
 static float _vq_quantthresh__44u8_p5_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__44u8_p5_1[] = {
@@ -8048,8 +8048,8 @@ static long _vq_lengthlist__44u8_p6_0[] = {
 };
 
 static float _vq_quantthresh__44u8_p6_0[] = {
-	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5, 
-	12.5, 17.5, 22.5, 27.5, 
+	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5,
+	12.5, 17.5, 22.5, 27.5,
 };
 
 static long _vq_quantmap__44u8_p6_0[] = {
@@ -8089,7 +8089,7 @@ static long _vq_lengthlist__44u8_p6_1[] = {
 };
 
 static float _vq_quantthresh__44u8_p6_1[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u8_p6_1[] = {
@@ -8145,8 +8145,8 @@ static long _vq_lengthlist__44u8_p7_0[] = {
 };
 
 static float _vq_quantthresh__44u8_p7_0[] = {
-	-60.5, -49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 
-	27.5, 38.5, 49.5, 60.5, 
+	-60.5, -49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5,
+	27.5, 38.5, 49.5, 60.5,
 };
 
 static long _vq_quantmap__44u8_p7_0[] = {
@@ -8198,8 +8198,8 @@ static long _vq_lengthlist__44u8_p7_1[] = {
 };
 
 static float _vq_quantthresh__44u8_p7_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__44u8_p7_1[] = {
@@ -8262,8 +8262,8 @@ static long _vq_lengthlist__44u8_p8_0[] = {
 };
 
 static float _vq_quantthresh__44u8_p8_0[] = {
-	-136.5, -115.5, -94.5, -73.5, -52.5, -31.5, -10.5, 10.5, 
-	31.5, 52.5, 73.5, 94.5, 115.5, 136.5, 
+	-136.5, -115.5, -94.5, -73.5, -52.5, -31.5, -10.5, 10.5,
+	31.5, 52.5, 73.5, 94.5, 115.5, 136.5,
 };
 
 static long _vq_quantmap__44u8_p8_0[] = {
@@ -8345,9 +8345,9 @@ static long _vq_lengthlist__44u8_p8_1[] = {
 };
 
 static float _vq_quantthresh__44u8_p8_1[] = {
-	-9.5, -8.5, -7.5, -6.5, -5.5, -4.5, -3.5, -2.5, 
-	-1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 
-	6.5, 7.5, 8.5, 9.5, 
+	-9.5, -8.5, -7.5, -6.5, -5.5, -4.5, -3.5, -2.5,
+	-1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5,
+	6.5, 7.5, 8.5, 9.5,
 };
 
 static long _vq_quantmap__44u8_p8_1[] = {
@@ -8396,7 +8396,7 @@ static long _vq_lengthlist__44u8_p9_0[] = {
 };
 
 static float _vq_quantthresh__44u8_p9_0[] = {
-	-3258.5, -2327.5, -1396.5, -465.5, 465.5, 1396.5, 2327.5, 3258.5, 
+	-3258.5, -2327.5, -1396.5, -465.5, 465.5, 1396.5, 2327.5, 3258.5,
 };
 
 static long _vq_quantmap__44u8_p9_0[] = {
@@ -8471,9 +8471,9 @@ static long _vq_lengthlist__44u8_p9_1[] = {
 };
 
 static float _vq_quantthresh__44u8_p9_1[] = {
-	-416.5, -367.5, -318.5, -269.5, -220.5, -171.5, -122.5, -73.5, 
-	-24.5, 24.5, 73.5, 122.5, 171.5, 220.5, 269.5, 318.5, 
-	367.5, 416.5, 
+	-416.5, -367.5, -318.5, -269.5, -220.5, -171.5, -122.5, -73.5,
+	-24.5, 24.5, 73.5, 122.5, 171.5, 220.5, 269.5, 318.5,
+	367.5, 416.5,
 };
 
 static long _vq_quantmap__44u8_p9_1[] = {
@@ -8560,12 +8560,12 @@ static long _vq_lengthlist__44u8_p9_2[] = {
 };
 
 static float _vq_quantthresh__44u8_p9_2[] = {
-	-23.5, -22.5, -21.5, -20.5, -19.5, -18.5, -17.5, -16.5, 
-	-15.5, -14.5, -13.5, -12.5, -11.5, -10.5, -9.5, -8.5, 
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
-	8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5, 
-	16.5, 17.5, 18.5, 19.5, 20.5, 21.5, 22.5, 23.5, 
+	-23.5, -22.5, -21.5, -20.5, -19.5, -18.5, -17.5, -16.5,
+	-15.5, -14.5, -13.5, -12.5, -11.5, -10.5, -9.5, -8.5,
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
+	8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5,
+	16.5, 17.5, 18.5, 19.5, 20.5, 21.5, 22.5, 23.5,
 };
 
 static long _vq_quantmap__44u8_p9_2[] = {
@@ -8654,7 +8654,7 @@ static long _vq_lengthlist__44u9_p1_0[] = {
 };
 
 static float _vq_quantthresh__44u9_p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__44u9_p1_0[] = {
@@ -8731,7 +8731,7 @@ static long _vq_lengthlist__44u9_p2_0[] = {
 };
 
 static float _vq_quantthresh__44u9_p2_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u9_p2_0[] = {
@@ -8778,7 +8778,7 @@ static long _vq_lengthlist__44u9_p3_0[] = {
 };
 
 static float _vq_quantthresh__44u9_p3_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__44u9_p3_0[] = {
@@ -8847,8 +8847,8 @@ static long _vq_lengthlist__44u9_p4_0[] = {
 };
 
 static float _vq_quantthresh__44u9_p4_0[] = {
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
 };
 
 static long _vq_quantmap__44u9_p4_0[] = {
@@ -8891,7 +8891,7 @@ static long _vq_lengthlist__44u9_p5_0[] = {
 };
 
 static float _vq_quantthresh__44u9_p5_0[] = {
-	-5.5, 5.5, 
+	-5.5, 5.5,
 };
 
 static long _vq_quantmap__44u9_p5_0[] = {
@@ -8942,8 +8942,8 @@ static long _vq_lengthlist__44u9_p5_1[] = {
 };
 
 static float _vq_quantthresh__44u9_p5_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__44u9_p5_1[] = {
@@ -9000,8 +9000,8 @@ static long _vq_lengthlist__44u9_p6_0[] = {
 };
 
 static float _vq_quantthresh__44u9_p6_0[] = {
-	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5, 
-	12.5, 17.5, 22.5, 27.5, 
+	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5,
+	12.5, 17.5, 22.5, 27.5,
 };
 
 static long _vq_quantmap__44u9_p6_0[] = {
@@ -9041,7 +9041,7 @@ static long _vq_lengthlist__44u9_p6_1[] = {
 };
 
 static float _vq_quantthresh__44u9_p6_1[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__44u9_p6_1[] = {
@@ -9097,8 +9097,8 @@ static long _vq_lengthlist__44u9_p7_0[] = {
 };
 
 static float _vq_quantthresh__44u9_p7_0[] = {
-	-60.5, -49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 
-	27.5, 38.5, 49.5, 60.5, 
+	-60.5, -49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5,
+	27.5, 38.5, 49.5, 60.5,
 };
 
 static long _vq_quantmap__44u9_p7_0[] = {
@@ -9150,8 +9150,8 @@ static long _vq_lengthlist__44u9_p7_1[] = {
 };
 
 static float _vq_quantthresh__44u9_p7_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__44u9_p7_1[] = {
@@ -9214,8 +9214,8 @@ static long _vq_lengthlist__44u9_p8_0[] = {
 };
 
 static float _vq_quantthresh__44u9_p8_0[] = {
-	-136.5, -115.5, -94.5, -73.5, -52.5, -31.5, -10.5, 10.5, 
-	31.5, 52.5, 73.5, 94.5, 115.5, 136.5, 
+	-136.5, -115.5, -94.5, -73.5, -52.5, -31.5, -10.5, 10.5,
+	31.5, 52.5, 73.5, 94.5, 115.5, 136.5,
 };
 
 static long _vq_quantmap__44u9_p8_0[] = {
@@ -9297,9 +9297,9 @@ static long _vq_lengthlist__44u9_p8_1[] = {
 };
 
 static float _vq_quantthresh__44u9_p8_1[] = {
-	-9.5, -8.5, -7.5, -6.5, -5.5, -4.5, -3.5, -2.5, 
-	-1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 
-	6.5, 7.5, 8.5, 9.5, 
+	-9.5, -8.5, -7.5, -6.5, -5.5, -4.5, -3.5, -2.5,
+	-1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5,
+	6.5, 7.5, 8.5, 9.5,
 };
 
 static long _vq_quantmap__44u9_p8_1[] = {
@@ -9363,8 +9363,8 @@ static long _vq_lengthlist__44u9_p9_0[] = {
 };
 
 static float _vq_quantthresh__44u9_p9_0[] = {
-	-6051.5, -5120.5, -4189.5, -3258.5, -2327.5, -1396.5, -465.5, 465.5, 
-	1396.5, 2327.5, 3258.5, 4189.5, 5120.5, 6051.5, 
+	-6051.5, -5120.5, -4189.5, -3258.5, -2327.5, -1396.5, -465.5, 465.5,
+	1396.5, 2327.5, 3258.5, 4189.5, 5120.5, 6051.5,
 };
 
 static long _vq_quantmap__44u9_p9_0[] = {
@@ -9439,9 +9439,9 @@ static long _vq_lengthlist__44u9_p9_1[] = {
 };
 
 static float _vq_quantthresh__44u9_p9_1[] = {
-	-416.5, -367.5, -318.5, -269.5, -220.5, -171.5, -122.5, -73.5, 
-	-24.5, 24.5, 73.5, 122.5, 171.5, 220.5, 269.5, 318.5, 
-	367.5, 416.5, 
+	-416.5, -367.5, -318.5, -269.5, -220.5, -171.5, -122.5, -73.5,
+	-24.5, 24.5, 73.5, 122.5, 171.5, 220.5, 269.5, 318.5,
+	367.5, 416.5,
 };
 
 static long _vq_quantmap__44u9_p9_1[] = {
@@ -9528,12 +9528,12 @@ static long _vq_lengthlist__44u9_p9_2[] = {
 };
 
 static float _vq_quantthresh__44u9_p9_2[] = {
-	-23.5, -22.5, -21.5, -20.5, -19.5, -18.5, -17.5, -16.5, 
-	-15.5, -14.5, -13.5, -12.5, -11.5, -10.5, -9.5, -8.5, 
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
-	8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5, 
-	16.5, 17.5, 18.5, 19.5, 20.5, 21.5, 22.5, 23.5, 
+	-23.5, -22.5, -21.5, -20.5, -19.5, -18.5, -17.5, -16.5,
+	-15.5, -14.5, -13.5, -12.5, -11.5, -10.5, -9.5, -8.5,
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
+	8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5,
+	16.5, 17.5, 18.5, 19.5, 20.5, 21.5, 22.5, 23.5,
 };
 
 static long _vq_quantmap__44u9_p9_2[] = {
@@ -9580,7 +9580,7 @@ static long _vq_lengthlist__8u0__p1_0[] = {
 };
 
 static float _vq_quantthresh__8u0__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__8u0__p1_0[] = {
@@ -9621,7 +9621,7 @@ static long _vq_lengthlist__8u0__p2_0[] = {
 };
 
 static float _vq_quantthresh__8u0__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__8u0__p2_0[] = {
@@ -9698,7 +9698,7 @@ static long _vq_lengthlist__8u0__p3_0[] = {
 };
 
 static float _vq_quantthresh__8u0__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__8u0__p3_0[] = {
@@ -9775,7 +9775,7 @@ static long _vq_lengthlist__8u0__p4_0[] = {
 };
 
 static float _vq_quantthresh__8u0__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__8u0__p4_0[] = {
@@ -9822,7 +9822,7 @@ static long _vq_lengthlist__8u0__p5_0[] = {
 };
 
 static float _vq_quantthresh__8u0__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__8u0__p5_0[] = {
@@ -9879,8 +9879,8 @@ static long _vq_lengthlist__8u0__p6_0[] = {
 };
 
 static float _vq_quantthresh__8u0__p6_0[] = {
-	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5, 
-	12.5, 17.5, 22.5, 27.5, 
+	-27.5, -22.5, -17.5, -12.5, -7.5, -2.5, 2.5, 7.5,
+	12.5, 17.5, 22.5, 27.5,
 };
 
 static long _vq_quantmap__8u0__p6_0[] = {
@@ -9920,7 +9920,7 @@ static long _vq_lengthlist__8u0__p6_1[] = {
 };
 
 static float _vq_quantthresh__8u0__p6_1[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__8u0__p6_1[] = {
@@ -9961,7 +9961,7 @@ static long _vq_lengthlist__8u0__p7_0[] = {
 };
 
 static float _vq_quantthresh__8u0__p7_0[] = {
-	-157.5, 157.5, 
+	-157.5, 157.5,
 };
 
 static long _vq_quantmap__8u0__p7_0[] = {
@@ -10023,8 +10023,8 @@ static long _vq_lengthlist__8u0__p7_1[] = {
 };
 
 static float _vq_quantthresh__8u0__p7_1[] = {
-	-136.5, -115.5, -94.5, -73.5, -52.5, -31.5, -10.5, 10.5, 
-	31.5, 52.5, 73.5, 94.5, 115.5, 136.5, 
+	-136.5, -115.5, -94.5, -73.5, -52.5, -31.5, -10.5, 10.5,
+	31.5, 52.5, 73.5, 94.5, 115.5, 136.5,
 };
 
 static long _vq_quantmap__8u0__p7_1[] = {
@@ -10106,9 +10106,9 @@ static long _vq_lengthlist__8u0__p7_2[] = {
 };
 
 static float _vq_quantthresh__8u0__p7_2[] = {
-	-9.5, -8.5, -7.5, -6.5, -5.5, -4.5, -3.5, -2.5, 
-	-1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 
-	6.5, 7.5, 8.5, 9.5, 
+	-9.5, -8.5, -7.5, -6.5, -5.5, -4.5, -3.5, -2.5,
+	-1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5,
+	6.5, 7.5, 8.5, 9.5,
 };
 
 static long _vq_quantmap__8u0__p7_2[] = {
@@ -10169,7 +10169,7 @@ static long _vq_lengthlist__8u1__p1_0[] = {
 };
 
 static float _vq_quantthresh__8u1__p1_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__8u1__p1_0[] = {
@@ -10210,7 +10210,7 @@ static long _vq_lengthlist__8u1__p2_0[] = {
 };
 
 static float _vq_quantthresh__8u1__p2_0[] = {
-	-0.5, 0.5, 
+	-0.5, 0.5,
 };
 
 static long _vq_quantmap__8u1__p2_0[] = {
@@ -10287,7 +10287,7 @@ static long _vq_lengthlist__8u1__p3_0[] = {
 };
 
 static float _vq_quantthresh__8u1__p3_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__8u1__p3_0[] = {
@@ -10364,7 +10364,7 @@ static long _vq_lengthlist__8u1__p4_0[] = {
 };
 
 static float _vq_quantthresh__8u1__p4_0[] = {
-	-1.5, -0.5, 0.5, 1.5, 
+	-1.5, -0.5, 0.5, 1.5,
 };
 
 static long _vq_quantmap__8u1__p4_0[] = {
@@ -10411,7 +10411,7 @@ static long _vq_lengthlist__8u1__p5_0[] = {
 };
 
 static float _vq_quantthresh__8u1__p5_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__8u1__p5_0[] = {
@@ -10459,7 +10459,7 @@ static long _vq_lengthlist__8u1__p6_0[] = {
 };
 
 static float _vq_quantthresh__8u1__p6_0[] = {
-	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5, 
+	-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5,
 };
 
 static long _vq_quantmap__8u1__p6_0[] = {
@@ -10501,7 +10501,7 @@ static long _vq_lengthlist__8u1__p7_0[] = {
 };
 
 static float _vq_quantthresh__8u1__p7_0[] = {
-	-5.5, 5.5, 
+	-5.5, 5.5,
 };
 
 static long _vq_quantmap__8u1__p7_0[] = {
@@ -10552,8 +10552,8 @@ static long _vq_lengthlist__8u1__p7_1[] = {
 };
 
 static float _vq_quantthresh__8u1__p7_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__8u1__p7_1[] = {
@@ -10605,8 +10605,8 @@ static long _vq_lengthlist__8u1__p8_0[] = {
 };
 
 static float _vq_quantthresh__8u1__p8_0[] = {
-	-49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 27.5, 
-	38.5, 49.5, 
+	-49.5, -38.5, -27.5, -16.5, -5.5, 5.5, 16.5, 27.5,
+	38.5, 49.5,
 };
 
 static long _vq_quantmap__8u1__p8_0[] = {
@@ -10658,8 +10658,8 @@ static long _vq_lengthlist__8u1__p8_1[] = {
 };
 
 static float _vq_quantthresh__8u1__p8_1[] = {
-	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 
-	3.5, 4.5, 
+	-4.5, -3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5,
+	3.5, 4.5,
 };
 
 static long _vq_quantmap__8u1__p8_1[] = {
@@ -10722,8 +10722,8 @@ static long _vq_lengthlist__8u1__p9_0[] = {
 };
 
 static float _vq_quantthresh__8u1__p9_0[] = {
-	-1657.5, -1402.5, -1147.5, -892.5, -637.5, -382.5, -127.5, 127.5, 
-	382.5, 637.5, 892.5, 1147.5, 1402.5, 1657.5, 
+	-1657.5, -1402.5, -1147.5, -892.5, -637.5, -382.5, -127.5, 127.5,
+	382.5, 637.5, 892.5, 1147.5, 1402.5, 1657.5,
 };
 
 static long _vq_quantmap__8u1__p9_0[] = {
@@ -10786,8 +10786,8 @@ static long _vq_lengthlist__8u1__p9_1[] = {
 };
 
 static float _vq_quantthresh__8u1__p9_1[] = {
-	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5, 
-	25.5, 42.5, 59.5, 76.5, 93.5, 110.5, 
+	-110.5, -93.5, -76.5, -59.5, -42.5, -25.5, -8.5, 8.5,
+	25.5, 42.5, 59.5, 76.5, 93.5, 110.5,
 };
 
 static long _vq_quantmap__8u1__p9_1[] = {
@@ -10856,8 +10856,8 @@ static long _vq_lengthlist__8u1__p9_2[] = {
 };
 
 static float _vq_quantthresh__8u1__p9_2[] = {
-	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5, 
-	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 
+	-7.5, -6.5, -5.5, -4.5, -3.5, -2.5, -1.5, -0.5,
+	0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5,
 };
 
 static long _vq_quantmap__8u1__p9_2[] = {

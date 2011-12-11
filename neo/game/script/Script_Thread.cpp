@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -455,19 +455,19 @@ idThread::DisplayInfo
 ================
 */
 void idThread::DisplayInfo( void ) {
-	gameLocal.Printf( 
+	gameLocal.Printf(
 		"%12i: '%s'\n"
 		"        File: %s(%d)\n"
 		"     Created: %d (%d ms ago)\n"
-		"      Status: ", 
-		threadNum, threadName.c_str(), 
-		interpreter.CurrentFile(), interpreter.CurrentLine(), 
+		"      Status: ",
+		threadNum, threadName.c_str(),
+		interpreter.CurrentFile(), interpreter.CurrentLine(),
 		creationTime, gameLocal.time - creationTime );
 
 	if ( interpreter.threadDying ) {
 		gameLocal.Printf( "Dying\n" );
 	} else if ( interpreter.doneProcessing ) {
-		gameLocal.Printf( 
+		gameLocal.Printf(
 			"Paused since %d (%d ms)\n"
 			"      Reason: ",  lastExecuteTime, gameLocal.time - lastExecuteTime );
 		if ( waitingForThread ) {
@@ -913,7 +913,7 @@ void idThread::WaitFrame( void ) {
 
 /***********************************************************************
 
-  Script callable events  
+  Script callable events
 	
 ***********************************************************************/
 
@@ -1641,7 +1641,7 @@ void idThread::Event_StrLeft( const char *string, int num ) {
 
 /*
 ================
-idThread::Event_StrRight 
+idThread::Event_StrRight
 ================
 */
 void idThread::Event_StrRight( const char *string, int num ) {
@@ -1738,7 +1738,7 @@ void idThread::Event_RadiusDamage( const idVec3 &origin, idEntity *inflictor, id
 idThread::Event_IsClient
 ================
 */
-void idThread::Event_IsClient( void ) { 
+void idThread::Event_IsClient( void ) {
 	idThread::ReturnFloat( gameLocal.isClient );
 }
 
@@ -1747,7 +1747,7 @@ void idThread::Event_IsClient( void ) {
 idThread::Event_IsMultiplayer
 ================
 */
-void idThread::Event_IsMultiplayer( void ) { 
+void idThread::Event_IsMultiplayer( void ) {
 	idThread::ReturnFloat( gameLocal.isMultiplayer );
 }
 
@@ -1756,7 +1756,7 @@ void idThread::Event_IsMultiplayer( void ) {
 idThread::Event_GetFrameTime
 ================
 */
-void idThread::Event_GetFrameTime( void ) { 
+void idThread::Event_GetFrameTime( void ) {
 	idThread::ReturnFloat( MS2SEC( gameLocal.msec ) );
 }
 
@@ -1765,7 +1765,7 @@ void idThread::Event_GetFrameTime( void ) {
 idThread::Event_GetTicsPerSecond
 ================
 */
-void idThread::Event_GetTicsPerSecond( void ) { 
+void idThread::Event_GetTicsPerSecond( void ) {
 	idThread::ReturnFloat( USERCMD_HZ );
 }
 

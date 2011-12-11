@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -95,7 +95,7 @@ BEGIN_MESSAGE_MAP(CFindTextureDlg, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-void CFindTextureDlg::OnBtnApply() 
+void CFindTextureDlg::OnBtnApply()
 {
 	UpdateData(TRUE);
 	CRect rct;
@@ -104,7 +104,7 @@ void CFindTextureDlg::OnBtnApply()
 	FindReplaceTextures( m_strFind, m_strReplace, ( m_bSelectedOnly != FALSE ), ( m_bForce != FALSE ) );
 }
 
-void CFindTextureDlg::OnOK() 
+void CFindTextureDlg::OnOK()
 {
 	UpdateData(TRUE);
 	CRect rct;
@@ -158,7 +158,7 @@ void CFindTextureDlg::setReplaceStr(const char * p)
 }
 
 
-void CFindTextureDlg::OnCancel() 
+void CFindTextureDlg::OnCancel()
 {
   CRect rct;
   GetWindowRect(rct);
@@ -166,17 +166,17 @@ void CFindTextureDlg::OnCancel()
 	CDialog::OnCancel();
 }
 
-BOOL CFindTextureDlg::DestroyWindow() 
+BOOL CFindTextureDlg::DestroyWindow()
 {
 	return CDialog::DestroyWindow();
 }
 
-void CFindTextureDlg::OnSetfocusEditFind() 
+void CFindTextureDlg::OnSetfocusEditFind()
 {
   g_bFindActive = true;
 }
 
-void CFindTextureDlg::OnSetfocusEditReplace() 
+void CFindTextureDlg::OnSetfocusEditReplace()
 {
   g_bFindActive = false;
 }

@@ -11,9 +11,9 @@ cd \"$1\"
 export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:.
 exec ./$BINARY \"\$@\"
 " > "$1/$TARGET"
-  
+
   chmod a+x "$1/$TARGET"
-  
+
   # and then we must symlink to this
   # can't be done from setup.xml because it would symlink the binary
   if [ -n "$SETUP_SYMLINKSPATH" ] && [ -d "$SETUP_SYMLINKSPATH" ]

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ void idRenderModelMD3::InitFromFile( const char *fileName ) {
 		fileSystem->FreeFile( buffer );
 		return;
 	}
-    
+
 	// swap all the frames
     frame = (md3Frame_t *) ( (byte *)md3 + md3->ofsFrames );
     for ( i = 0 ; i < md3->numFrames ; i++, frame++) {
@@ -188,7 +188,7 @@ void idRenderModelMD3::InitFromFile( const char *fileName ) {
 
 		// swap all the XyzNormals
         xyz = (md3XyzNormal_t *) ( (byte *)surf + surf->ofsXyzNormals );
-        for ( j = 0 ; j < surf->numVerts * surf->numFrames ; j++, xyz++ ) 
+        for ( j = 0 ; j < surf->numVerts * surf->numFrames ; j++, xyz++ )
 		{
             xyz->xyz[0] = LittleShort( xyz->xyz[0] );
             xyz->xyz[1] = LittleShort( xyz->xyz[1] );
@@ -201,7 +201,7 @@ void idRenderModelMD3::InitFromFile( const char *fileName ) {
 		// find the next surface
 		surf = (md3Surface_t *)( (byte *)surf + surf->ofsEnd );
 	}
-    
+
 	fileSystem->FreeFile( buffer );
 }
 

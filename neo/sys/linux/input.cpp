@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -117,7 +117,7 @@ void Sys_InitInput(void) {
 //#define XEVT_DBG2
 
 static Cursor Sys_XCreateNullCursor( Display *display, Window root ) {
-	Pixmap cursormask; 
+	Pixmap cursormask;
 	XGCValues xgc;
 	GC gc;
 	XColor dummycolour;
@@ -201,7 +201,7 @@ void Sys_XUninstallGrabs(void) {
 	}
 #endif
 	
-	XChangePointerControl( dpy, true, true, mouse_accel_numerator, 
+	XChangePointerControl( dpy, true, true, mouse_accel_numerator,
 						  mouse_accel_denominator, mouse_threshold );
 	
 	XUngrabPointer( dpy, CurrentTime );
@@ -260,7 +260,7 @@ void Sys_GrabMouseCursor( bool grabIt ) {
 }
 
 /**
- * XPending() actually performs a blocking read 
+ * XPending() actually performs a blocking read
  *  if no events available. From Fakk2, by way of
  *  Heretic2, by way of SDL, original idea GGI project.
  * The benefit of this approach over the quite
@@ -268,8 +268,8 @@ void Sys_GrabMouseCursor( bool grabIt ) {
  *  focus handling for free, which is a major win
  *  with debug and windowed mode. It rests on the
  *  assumption that the X server will use the
- *  same timestamp on press/release event pairs 
- *  for key repeats. 
+ *  same timestamp on press/release event pairs
+ *  for key repeats.
  */
 static bool Sys_XPendingInput( void ) {
 	// Flush the display connection
@@ -527,7 +527,7 @@ unsigned char Sys_MapCharForKey( int _key ) {
 	}
 
 	// query the current keyboard group, must be passed as bit 13-14 in the constructed XEvent
-	// see X Keyboard Extension library specifications 
+	// see X Keyboard Extension library specifications
 	XkbGetState( dpy, XkbUseCoreKbd, &kbd_state );
 
 	// lookup scancode from doom key code. unique hits

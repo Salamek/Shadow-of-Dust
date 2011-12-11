@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -998,7 +998,7 @@ void idAnimated::Spawn( void ) {
 	float		wait;
 	const char	*joint;
 
-	joint = spawnArgs.GetString( "sound_bone", "origin" ); 
+	joint = spawnArgs.GetString( "sound_bone", "origin" );
 	soundJoint = animator.GetJointHandle( joint );
 	if ( soundJoint == INVALID_JOINT ) {
 		gameLocal.Warning( "idAnimated '%s' at (%s): cannot find joint '%s' for sound playback", name.c_str(), GetPhysics()->GetOrigin().ToString(0), joint );
@@ -1595,7 +1595,7 @@ void idStaticEntity::Event_Activate( idEntity *activator ) {
 
 	renderEntity.shaderParms[ SHADERPARM_TIMEOFFSET ] = -MS2SEC( spawnTime );
 	renderEntity.shaderParms[5] = active;
-	// this change should be a good thing, it will automatically turn on 
+	// this change should be a good thing, it will automatically turn on
 	// lights etc.. when triggered so that does not have to be specifically done
 	// with trigger parms.. it MIGHT break things so need to keep an eye on it
 	renderEntity.shaderParms[ SHADERPARM_MODE ] = ( renderEntity.shaderParms[ SHADERPARM_MODE ] ) ?  0.0f : 1.0f;
@@ -2935,7 +2935,7 @@ void idFuncRadioChatter::Event_Activate( idEntity *activator ) {
 		player->StartSoundShader( shader, SND_CHANNEL_RADIO, SSF_GLOBAL, false, &length );
 		time = MS2SEC( length + 150 );
 	}
-	// we still put the hud up because this is used with no sound on 
+	// we still put the hud up because this is used with no sound on
 	// certain frame commands when the chatter is triggered
 	PostEventSec( &EV_ResetRadioHud, time, player );
 
@@ -3180,7 +3180,7 @@ void idPhantomObjects::Think( void ) {
 		}
 
 		if ( time < 0.0f ) {
-			idAI::PredictTrajectory( entPhys->GetOrigin(), lastTargetPos[ i ], speed, entPhys->GetGravity(), 
+			idAI::PredictTrajectory( entPhys->GetOrigin(), lastTargetPos[ i ], speed, entPhys->GetGravity(),
 				entPhys->GetClipModel(), entPhys->GetClipMask(), 256.0f, ent, targetEnt, ai_debugTrajectory.GetBool() ? 1 : 0, vel );
 			vel *= speed;
 			entPhys->SetLinearVelocity( vel );
@@ -3624,7 +3624,7 @@ void idFuncMountedWeapon::Spawn( void ) {
 	spawnArgs.GetString( "snd_fire", "", fireSound );
 	soundFireWeapon = declManager->FindSound( fireSound );
 
-	PostEventMS( &EV_PostSpawn, 0 );   
+	PostEventMS( &EV_PostSpawn, 0 );
 }
 
 void idFuncMountedWeapon::Think( void ) {

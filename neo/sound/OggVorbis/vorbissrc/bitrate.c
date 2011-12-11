@@ -63,7 +63,7 @@ static long limit_sum(bitrate_manager_state *bm,int limit){
   int i=bm->minmax_stackptr;
   long acc=bm->minmax_acctotal;
   long bins=bm->queue_bins;
-  
+
   acc-=LIMITBYTES(i,0);
   acc+=LIMITBYTES(i,limit);
 
@@ -83,28 +83,28 @@ void vorbis_bitrate_init(vorbis_info *vi,bitrate_manager_state *bm){
   long maxlatency;
 
   memset(bm,0,sizeof(*bm));
-  
+
   if(bi){
-    
+
     bm->avg_sampledesired=bi->queue_avg_time*vi->rate;
     bm->avg_centerdesired=bi->queue_avg_time*vi->rate*bi->queue_avg_center;
     bm->minmax_sampledesired=bi->queue_minmax_time*vi->rate;
-    
+
     /* first find the max possible needed queue size */
     maxlatency=max(bm->avg_sampledesired-bm->avg_centerdesired,
 		   bm->minmax_sampledesired)+bm->avg_centerdesired;
-    
+
     if(maxlatency>0 &&
        (bi->queue_avgmin>0 || bi->queue_avgmax>0 || bi->queue_hardmax>0 ||
 	bi->queue_hardmin>0)){
       long maxpackets=maxlatency/(ci->blocksizes[0]>>1)+3;
       long bins=PACKETBLOBS;
-      
+
       bm->queue_size=maxpackets;
       bm->queue_bins=bins;
       bm->queue_binned=_ogg_calloc(maxpackets,bins*sizeof(*bm->queue_binned));
       bm->queue_actual=_ogg_calloc(maxpackets,sizeof(*bm->queue_actual));
-      
+
       if((bi->queue_avgmin>0 || bi->queue_avgmax>0) &&
 	 bi->queue_avg_time>0){
 	
@@ -114,7 +114,7 @@ void vorbis_bitrate_init(vorbis_info *vi,bitrate_manager_state *bm){
       }else{
 	bm->avg_tail= -1;
       }
-      
+
       if((bi->queue_hardmin>0 || bi->queue_hardmax>0) &&
 	 bi->queue_minmax_time>0){
 	
@@ -127,19 +127,19 @@ void vorbis_bitrate_init(vorbis_info *vi,bitrate_manager_state *bm){
       }else{
 	bm->minmax_tail= -1;
       }
-      
+
       /* space for the packet queueing */
       bm->packetbuffers=_ogg_calloc(maxpackets,sizeof(*bm->packetbuffers));
       bm->packets=_ogg_calloc(maxpackets,sizeof(*bm->packets));
       for(i=0;i<maxpackets;i++)
 	oggpack_writeinit(bm->packetbuffers+i);
-      
+
     }else{
       bm->packetbuffers=_ogg_calloc(1,sizeof(*bm->packetbuffers));
       bm->packets=_ogg_calloc(1,sizeof(*bm->packets));
       oggpack_writeinit(bm->packetbuffers);
 
-    }      
+    }
   }
 }
 
@@ -163,14 +163,14 @@ void vorbis_bitrate_clear(bitrate_manager_state *bm){
       _ogg_free(bm->packetbuffers);
     }
     if(bm->packets)_ogg_free(bm->packets);
-    
+
     memset(bm,0,sizeof(*bm));
   }
 }
 
 int vorbis_bitrate_managed(vorbis_block *vb){
   vorbis_dsp_state      *vd=vb->vd;
-  private_state         *b=vd->backend_state; 
+  private_state         *b=vd->backend_state;
   bitrate_manager_state *bm=&b->bms;
 
   if(bm->queue_binned)return(1);
@@ -179,10 +179,10 @@ int vorbis_bitrate_managed(vorbis_block *vb){
 
 /* finish taking in the block we just processed */
 int vorbis_bitrate_addblock(vorbis_block *vb){
-  int i; 
+  int i;
   vorbis_block_internal *vbi=vb->internal;
   vorbis_dsp_state      *vd=vb->vd;
-  private_state         *b=vd->backend_state; 
+  private_state         *b=vd->backend_state;
   bitrate_manager_state *bm=&b->bms;
   vorbis_info           *vi=vd->vi;
   codec_setup_info      *ci=vi->codec_setup;
@@ -192,7 +192,7 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
   int                    next_head=head+1;
   int                    bins=bm->queue_bins;
   int                    minmax_head,new_minmax_head;
-  
+
   ogg_uint32_t           *head_ptr;
   oggpack_buffer          temp;
 
@@ -200,7 +200,7 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
     oggpack_buffer temp;
     /* not a bitrate managed stream, but for API simplicity, we'll
        buffer one packet to keep the code path clean */
-    
+
     if(bm->queue_head)return(-1); /* one has been submitted without
                                      being claimed */
     bm->queue_head++;
@@ -298,9 +298,9 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	while(bm->avg_centeracc>desired_center){
 	  samples=ci->blocksizes[bm->queue_actual[bm->avg_center]&
 				0x80000000UL?1:0]>>1;
-	  
+	
 	  bm->queue_actual[bm->avg_center]|=bin;
-	  
+	
 	  bm->avg_centeracc-=samples;
 	  bm->avg_center++;
 	  if(bm->avg_center>=bm->queue_size)bm->avg_center=0;
@@ -308,7 +308,7 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	new_minmax_head=bm->avg_center;
 	
       }
-      
+
       /* update the avg tail if needed */
       while(bm->avg_sampleacc>bm->avg_sampledesired){
 	int samples=
@@ -319,8 +319,8 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	bm->avg_tail++;
 	if(bm->avg_tail>=bm->queue_size)bm->avg_tail=0;
       }
-      
-      
+
+
     }
   }else{
     /* if we're not using an average tracker, the 'float' is nailed to
@@ -330,11 +330,11 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
     bm->queue_actual[head]|=bin;
     new_minmax_head=next_head;
   }	
-  
+
   /* update the min/max queues and enforce limits */
   if(bm->minmax_binstack){
     unsigned long sampledesired=eofflag?0:bm->minmax_sampledesired;
-    
+
     /* add to stack recent */
     while(minmax_head!=new_minmax_head){
       unsigned int i;
@@ -351,7 +351,7 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	  LACING_ADJUST(BINBYTES(bm,minmax_head,
 				actual<i?actual:i));
       }
-      
+
       bm->minmax_posstack[bm->minmax_stackptr]=minmax_head; /* not one
 							       past
 							       like
@@ -360,20 +360,20 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
       bm->minmax_sampleacc+=samples;
       bm->minmax_acctotal+=
 	LACING_ADJUST(BINBYTES(bm,minmax_head,actual));
-      
+
       minmax_head++;
       if(minmax_head>=bm->queue_size)minmax_head=0;
 
 
     }
-    
+
     /* check limits, enforce changes */
     if(bm->minmax_sampleacc>sampledesired){
       double bitrate=(double)(bm->minmax_acctotal*8)/
 	bm->minmax_sampleacc*vi->rate;
       int limit=0;
-      
-      if((bi->queue_hardmax>0 && bitrate>bi->queue_hardmax) || 
+
+      if((bi->queue_hardmax>0 && bitrate>bi->queue_hardmax) ||
 	 (bi->queue_hardmin>0 && bitrate<bi->queue_hardmin)){
 	int newstack;
 	int stackctr;
@@ -413,7 +413,7 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	  bm->minmax_acctotal-=
 	    LIMITBYTES(stackctr,bm->minmax_limitstack[stackctr]);
 	  bm->minmax_acctotal+=LIMITBYTES(stackctr,limit);
-	  
+	
 	  if(stackctr<bm->minmax_stackptr)
 	    for(i=0;i<bins*2;i++)
 	      bm->minmax_binstack[stackctr*bins*2+i]+=
@@ -436,7 +436,7 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	
       }
     }
-    
+
     /* remove from tail */
     while(bm->minmax_sampleacc>sampledesired){
       int samples=
@@ -448,7 +448,7 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	  LACING_ADJUST(BINBYTES(bm,bm->minmax_tail,
 				actual>i?
 				actual:i));
-	bm->minmax_binstack[i]-= 
+	bm->minmax_binstack[i]-=
 	  LACING_ADJUST(BINBYTES(bm,bm->minmax_tail,
 				actual<i?
 				actual:i));
@@ -458,14 +458,14 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	actual=bm->minmax_limitstack[0];
       if(bins+bm->minmax_limitstack[0]<actual)
 	actual=bins+bm->minmax_limitstack[0];
-      
+
       bm->minmax_acctotal-=LACING_ADJUST(BINBYTES(bm,bm->minmax_tail,actual));
       bm->minmax_sampleacc-=samples;
 
       /* revise queue_actual to reflect the limit */
       bm->queue_actual[bm->minmax_tail]&=0x80000000UL;
       bm->queue_actual[bm->minmax_tail]|=actual;
-      
+
       if(bm->minmax_tail==bm->minmax_posstack[0]){
 	/* the stack becomes a FIFO; the first data has fallen off */
 	memmove(bm->minmax_binstack,bm->minmax_binstack+bins*2,
@@ -476,13 +476,13 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 		sizeof(*bm->minmax_limitstack)*bm->minmax_stackptr);
 	bm->minmax_stackptr--;
       }
-      
+
       bm->minmax_tail++;
       if(bm->minmax_tail>=bm->queue_size)bm->minmax_tail=0;
 
     }
-    
-    
+
+
     bm->last_to_flush=bm->minmax_tail;
   }else{
     bm->last_to_flush=bm->avg_center;

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ const int	FOCUS_GUI_TIME = 500;
 const int MAX_WEAPONS = 16;
 
 const int DEAD_HEARTRATE = 0;			// fall to as you die
-const int LOWHEALTH_HEARTRATE_ADJ = 20; // 
+const int LOWHEALTH_HEARTRATE_ADJ = 20; //
 const int DYING_HEARTRATE = 30;			// used for volumen calc when dying/dead
 const int BASE_HEARTRATE = 70;			// default
 const int ZEROSTAMINA_HEARTRATE = 115;  // no stamina
@@ -87,7 +87,7 @@ struct idLevelTriggerInfo {
 
 // powerups - the "type" in item .def must match
 enum {
-	BERSERK = 0, 
+	BERSERK = 0,
 	INVISIBILITY,
 	MEGAHEALTH,
 	ADRENALINE,

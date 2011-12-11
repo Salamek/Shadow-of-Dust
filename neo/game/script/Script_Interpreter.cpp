@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -178,7 +178,7 @@ void idInterpreter::Reset( void ) {
 ================
 idInterpreter::GetRegisterValue
 
-Returns a string representation of the value of the register.  This is 
+Returns a string representation of the value of the register.  This is
 used primarily for the debugger and debugging
 
 //FIXME:  This is pretty much wrong.  won't access data in most situations.
@@ -584,7 +584,7 @@ void idInterpreter::EnterFunction( const function_t *func, bool clearStack ) {
 
 	if ( debug ) {
 		if ( currentFunction ) {
-			gameLocal.Printf( "%d: call '%s' from '%s'(line %d)%s\n", gameLocal.time, func->Name(), currentFunction->Name(), 
+			gameLocal.Printf( "%d: call '%s' from '%s'(line %d)%s\n", gameLocal.time, func->Name(), currentFunction->Name(),
 				gameLocal.program.GetStatement( instructionPointer ).linenumber, clearStack ? " clear stack" : "" );
 		} else {
             gameLocal.Printf( "%d: call '%s'%s\n", gameLocal.time, func->Name(), clearStack ? " clear stack" : "" );
@@ -662,7 +662,7 @@ void idInterpreter::LeaveFunction( idVarDef *returnDef ) {
 
 	// up stack
 	callStackDepth--;
-	stack = &callStack[ callStackDepth ]; 
+	stack = &callStack[ callStackDepth ];
 	currentFunction = stack->f;
 	localstackBase = stack->stackbase;
 	NextInstruction( stack->s );
@@ -810,7 +810,7 @@ void idInterpreter::CallEvent( const function_t *func, int argsize ) {
 idInterpreter::BeginMultiFrameEvent
 ================
 */
-bool idInterpreter::BeginMultiFrameEvent( idEntity *ent, const idEventDef *event ) { 
+bool idInterpreter::BeginMultiFrameEvent( idEntity *ent, const idEventDef *event ) {
 	if ( eventEntity != ent ) {
 		Error( "idInterpreter::BeginMultiFrameEvent called with wrong entity" );
 	}

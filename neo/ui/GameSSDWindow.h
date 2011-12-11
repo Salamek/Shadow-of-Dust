@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -336,7 +336,7 @@ protected:
 
 #define MAX_POWERUPS 64
 
-/** 
+/**
 * Powerups work in two phases:
 *	1.) Closed container hurls at you
 *		If you shoot the container it open
@@ -436,7 +436,7 @@ typedef struct {
 	int		size;
 } SSDWeaponData_t;
 
-/** 
+/**
 * SSDLevelStats_t
 *	Data that is used for each level. This data is reset
 *	each new level.
@@ -459,7 +459,7 @@ typedef struct {
 	SSDEntity*			targetEnt;
 } SSDLevelStats_t;
 
-/** 
+/**
 * SSDGameStats_t
 *	Data that is used for the game that is currently running. Memset this
 *	to completely reset the game

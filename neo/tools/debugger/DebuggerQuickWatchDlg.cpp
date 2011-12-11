@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -179,7 +179,7 @@ INT_PTR CALLBACK rvDebuggerQuickWatchDlg::DlgProc ( HWND wnd, UINT msg, WPARAM w
 					break;
 					
 				case IDC_DBG_VARIABLE:
-					// When the variable text changes to something other than empty 
+					// When the variable text changes to something other than empty
 					// we can enable the addwatch and recalc buttons
 					if ( HIWORD(wparam) == EN_CHANGE )
 					{
@@ -192,7 +192,7 @@ INT_PTR CALLBACK rvDebuggerQuickWatchDlg::DlgProc ( HWND wnd, UINT msg, WPARAM w
 				case IDC_DBG_ADDWATCH:
 				{
 					char varname[1024];
-					GetWindowText ( GetDlgItem ( wnd, IDC_DBG_VARIABLE ), varname, 1023 ); 
+					GetWindowText ( GetDlgItem ( wnd, IDC_DBG_VARIABLE ), varname, 1023 );
 					dlg->mDebuggerWindow->AddWatch ( varname );
 					break;
 				}
@@ -200,7 +200,7 @@ INT_PTR CALLBACK rvDebuggerQuickWatchDlg::DlgProc ( HWND wnd, UINT msg, WPARAM w
 				case IDC_DBG_RECALC:
 				{
 					char varname[1024];
-					GetWindowText ( GetDlgItem ( wnd, IDC_DBG_VARIABLE ), varname, 1023 ); 
+					GetWindowText ( GetDlgItem ( wnd, IDC_DBG_VARIABLE ), varname, 1023 );
 					dlg->SetVariable ( varname );
 					break;
 				}

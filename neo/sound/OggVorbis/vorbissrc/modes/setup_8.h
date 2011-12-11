@@ -10,7 +10,7 @@
  *                                                                  *
  ********************************************************************
 
- function: 8kHz settings 
+ function: 8kHz settings
  last mod: $Id: setup_8.h,v 1.2 2002/07/11 06:41:05 xiphmont Exp $
 
  ********************************************************************/
@@ -49,7 +49,7 @@ ve_setup_data_template ve_setup_8_stereo={
   2,
   8000,
   9000,
-  
+
   blocksize_8,
   blocksize_8,
 
@@ -67,7 +67,7 @@ ve_setup_data_template ve_setup_8_stereo={
   NULL,
   NULL,
   _psy_noise_suppress,
-  
+
   _psy_compand_8,
   _psy_compand_8_mapping,
   NULL,
@@ -78,7 +78,7 @@ ve_setup_data_template ve_setup_8_stereo={
 
   _psy_ath_floater_8,
   _psy_ath_abs_8,
-  
+
   _psy_lowpass_8,
 
   _psy_global_44,
@@ -100,7 +100,7 @@ ve_setup_data_template ve_setup_8_uncoupled={
   -1,
   8000,
   9000,
-  
+
   blocksize_8,
   blocksize_8,
 
@@ -118,7 +118,7 @@ ve_setup_data_template ve_setup_8_uncoupled={
   NULL,
   NULL,
   _psy_noise_suppress,
-  
+
   _psy_compand_8,
   _psy_compand_8_mapping,
   NULL,
@@ -129,7 +129,7 @@ ve_setup_data_template ve_setup_8_uncoupled={
 
   _psy_ath_floater_8,
   _psy_ath_abs_8,
-  
+
   _psy_lowpass_8,
 
   _psy_global_44,

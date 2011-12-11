@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -147,7 +147,7 @@ public:
 	// checks rules and updates state of the mp game
 	void			Run( void );
 
-	// draws mp hud, scoredboard, etc.. 
+	// draws mp hud, scoredboard, etc..
 	bool			Draw( int clientNum );
 
 	// updates a player vote
@@ -285,17 +285,17 @@ public:
 	void			ClientReadWarmupTime( const idBitMsg &msg );
 
 	void			ServerClientConnect( int clientNum );
-#ifdef CTF    
+#ifdef CTF
     void            ClearHUDStatus( void );
     int             GetFlagPoints( int team );	// Team points in CTF
 	void			SetFlagMsg( bool b );		// allow flag event messages to be sent
 	bool			IsFlagMsgOn( void );		// should flag event messages go through?
     void			ClearGuis( void );
 
-    int             player_red_flag;            // Ent num of red flag carrier for HUD    
+    int             player_red_flag;            // Ent num of red flag carrier for HUD
     int             player_blue_flag;           // Ent num of blue flag carrier for HUD
 
-#endif     
+#endif
 	void			PlayerStats( int clientNum, char *data, const int len );
 
 private:
@@ -383,15 +383,15 @@ private:
 	// updates the passed gui with current score information
 	void			UpdateRankColor( idUserInterface *gui, const char *mask, int i, const idVec3 &vec );
 	void			UpdateScoreboard( idUserInterface *scoreBoard, idPlayer *player );
-#ifdef CTF    
-	void			UpdateCTFScoreboard( idUserInterface *scoreBoard, idPlayer *player );    
+#ifdef CTF
+	void			UpdateCTFScoreboard( idUserInterface *scoreBoard, idPlayer *player );
 #endif
 
 #ifndef CTF
     // We declare this publically above so we can call it during a map restart.
 	void			ClearGuis( void );
-#endif    
-    
+#endif
+
 	void			DrawScoreBoard( idPlayer *player );
 	void			UpdateHud( idPlayer *player, idUserInterface *hud );
 	bool			Warmup( void );
@@ -436,10 +436,10 @@ private:
 #ifdef CTF
 	void			FindTeamFlags( void );
 #endif
-   
+
 public:
 
-#ifdef CTF    
+#ifdef CTF
 	idItemTeam *	GetTeamFlag( int team );
     flagStatus_t    GetFlagStatus( int team );
 	void			TeamScoreCTF( int team, int delta );
@@ -460,7 +460,7 @@ public:
 bool            IsGametypeFlagBased( void );
 bool            IsGametypeTeamBased( void );
 /* #endif CTF */
-    
+
 };
 
 ID_INLINE idMultiplayerGame::gameState_t idMultiplayerGame::GetGameState( void ) const {

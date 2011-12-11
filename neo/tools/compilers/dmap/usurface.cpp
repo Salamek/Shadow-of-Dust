@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -701,7 +701,7 @@ If clipping was required, the outside fragments will be planar clips, which
 will benefit from re-optimization.
 =================
 */
-static void ClipTriByLight( const mapLight_t *light, const mapTri_t *tri, 
+static void ClipTriByLight( const mapLight_t *light, const mapTri_t *tri,
 						   mapTri_t **in, mapTri_t **out ) {
 	idWinding	*inside, *oldInside;
 	idWinding	*outside[6];
@@ -889,7 +889,7 @@ static void BuildLightShadows( uEntity_t *e, mapLight_t *light ) {
 
 	if ( light->shadowTris && hasPerforatedSurface ) {
 		// can't ever remove front faces, because we can see through some of them
-		light->shadowTris->numShadowIndexesNoCaps = light->shadowTris->numShadowIndexesNoFrontCaps = 
+		light->shadowTris->numShadowIndexesNoCaps = light->shadowTris->numShadowIndexesNoFrontCaps =
 			light->shadowTris->numIndexes;
 	}
 
@@ -921,7 +921,7 @@ static void CarveGroupsByLight( uEntity_t *e, mapLight_t *light ) {
 			nextGroup = group->nextGroup;
 			// if the surface doesn't get lit, don't carve it up
 			if ( ( light->def.lightShader->IsFogLight() && !group->material->ReceivesFog() )
-				|| ( !light->def.lightShader->IsFogLight() && !group->material->ReceivesLighting() ) 
+				|| ( !light->def.lightShader->IsFogLight() && !group->material->ReceivesLighting() )
 				|| !group->bounds.IntersectsBounds( light->def.frustumTris->bounds ) ) {
 
 				group->nextGroup = carvedGroups;

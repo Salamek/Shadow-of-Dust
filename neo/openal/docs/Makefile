@@ -47,7 +47,7 @@ texi:   $(TEXI_OBJS)
 
 ## --------------
 ## Cronjob target
-update: specs annotated full 
+update: specs annotated full
 
 
 ## ----------------------------------------------------------

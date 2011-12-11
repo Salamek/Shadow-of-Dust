@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ enum
 	RVITEMPROPS_MAX
 };	
 
-class rvGEItemPropsImagePage : public rvGEPropertyPage 
+class rvGEItemPropsImagePage : public rvGEPropertyPage
 {
 public:
 
@@ -322,14 +322,14 @@ bool rvGEItemPropsImagePage::KillActive ( void )
 	GetWindowText ( GetDlgItem ( mPage, IDC_GUIED_ITEMBORDERSIZE ), temp, 1024 );
 	if ( atoi ( temp ) )
 	{
-		if ( IsWindowEnabled ( GetDlgItem ( mPage, IDC_GUIED_ITEMBORDERSIZE) ) ) 
+		if ( IsWindowEnabled ( GetDlgItem ( mPage, IDC_GUIED_ITEMBORDERSIZE) ) )
 		{
 			mDict->Set ( "bordersize", va("%d", atoi(temp) ) );
 		}
 
 		if ( IsDlgButtonChecked ( mPage, IDC_GUIED_USEBORDERCOLOR ) )
 		{
-			if ( IsWindowEnabled ( GetDlgItem ( mPage, IDC_GUIED_ITEMBORDERCOLOR ) ) ) 
+			if ( IsWindowEnabled ( GetDlgItem ( mPage, IDC_GUIED_ITEMBORDERCOLOR ) ) )
 			{
 				COLORREF color = ColorButton_GetColor ( GetDlgItem ( mPage, IDC_GUIED_ITEMBORDERCOLOR ) );
 				COLORREF alpha = ColorButton_GetColor ( GetDlgItem ( mPage, IDC_GUIED_ITEMBORDERCOLORALPHA ) );
@@ -372,7 +372,7 @@ bool rvGEItemPropsImagePage::KillActive ( void )
 	return true;
 }
 
-class rvGEItemPropsTextPage : public rvGEPropertyPage 
+class rvGEItemPropsTextPage : public rvGEPropertyPage
 {
 public:
 
@@ -660,7 +660,7 @@ bool rvGEItemPropsTextPage::KillActive ( void )
 	return true;
 }
 
-class rvGEItemPropsKeysPage : public rvGEPropertyPage 
+class rvGEItemPropsKeysPage : public rvGEPropertyPage
 {
 public:
 
@@ -695,13 +695,13 @@ INT_PTR CALLBACK ModifyItemKeyDlg_WndProc ( HWND hwnd, UINT msg, WPARAM wParam, 
 			{
 				if ( !idStr::Icmp ( keyValue->GetKey(), "name" ) || !idStr::Icmp ( keyValue->GetKey(), "rect" ) )
 				{
-					// Dont allow editing the name keyname 
+					// Dont allow editing the name keyname
 					EnableWindow ( GetDlgItem ( hwnd, IDC_GUIED_ITEMKEY ), FALSE );
 				}
 
 				SetWindowText ( GetDlgItem ( hwnd, IDC_GUIED_ITEMKEY ), keyValue->GetKey() );
 				SetFocus ( GetDlgItem ( hwnd, IDC_GUIED_ITEMVALUE ) );
-				SendMessage( GetDlgItem ( hwnd, IDC_GUIED_ITEMVALUE ), EM_SETSEL, 0, -1 ); 
+				SendMessage( GetDlgItem ( hwnd, IDC_GUIED_ITEMVALUE ), EM_SETSEL, 0, -1 );
 				
 				SetWindowText ( hwnd, "New Item Key" );
 			}
@@ -756,7 +756,7 @@ int rvGEItemPropsKeysPage::HandleMessage ( UINT msg, WPARAM wParam, LPARAM lPara
 		{
 			NMHDR* nm = (NMHDR*) lParam;
 			
-			// There are a few protected keys that need to dissallow deleting so 
+			// There are a few protected keys that need to dissallow deleting so
 			// check to see if the newly selected key is one of them and if so then
 			// disable the delete button
 			if ( nm->code == LVN_ITEMCHANGED )
@@ -1239,8 +1239,8 @@ bool GEItemPropsDlg_DoModal ( HWND parent, idWindow* window, idDict& dict )
 
 	propsh.dwSize			= sizeof(PROPSHEETHEADER);
 	propsh.nStartPage		= gApp.GetOptions().GetLastOptionsPage ( );
-	propsh.dwFlags			= PSH_PROPSHEETPAGE|PSH_NOAPPLYNOW|PSH_NOCONTEXTHELP; 
-	propsh.hwndParent		= parent; 
+	propsh.dwFlags			= PSH_PROPSHEETPAGE|PSH_NOAPPLYNOW|PSH_NOCONTEXTHELP;
+	propsh.hwndParent		= parent;
 	propsh.pszCaption		= "Item Properties";
 	propsh.nPages			= RVITEMPROPS_MAX;
 	propsh.ppsp				= (LPCPROPSHEETPAGE)&propsp;

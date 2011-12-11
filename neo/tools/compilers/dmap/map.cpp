@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,13 +35,13 @@ If you have questions concerning this license or the applicable additional terms
 
   After parsing, there will be a list of entities that each has
   a list of primitives.
-  
+
   Primitives are either brushes, triangle soups, or model references.
 
   Curves are tesselated to triangle soups at load time, but model
-  references are 
-  Brushes will have 
-  
+  references are
+  Brushes will have
+
 	brushes, each of which has a side definition.
 
 */
@@ -518,7 +518,7 @@ bool LoadDMapFile( const char *filename ) {
 	int			size;
 
 	common->Printf( "--- LoadDMapFile ---\n" );
-	common->Printf( "loading %s\n", filename ); 
+	common->Printf( "loading %s\n", filename );
 
 	// load and parse the map file into canonical form
 	dmapGlobals.dmapFile = new idMapFile();

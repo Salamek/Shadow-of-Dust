@@ -10,7 +10,7 @@
  *                                                                  *
  ********************************************************************
 
- function: libvorbis backend and mapping structures; needed for 
+ function: libvorbis backend and mapping structures; needed for
            static mode headers
  last mod: $Id: backends.h,v 1.14 2002/07/11 06:40:48 xiphmont Exp $
 
@@ -68,16 +68,16 @@ typedef struct{
   int   class_subbook[VIF_CLASS][8]; /* [VIF_CLASS][subs] */
 
 
-  int   mult;                      /* 1 2 3 or 4 */ 
-  int   postlist[VIF_POSIT+2];    /* first two implicit */ 
+  int   mult;                      /* 1 2 3 or 4 */
+  int   postlist[VIF_POSIT+2];    /* first two implicit */
 
 
   /* encode side analysis parameters */
-  float maxover;     
-  float maxunder;  
-  float maxerr;    
+  float maxover;
+  float maxunder;
+  float maxerr;
 
-  float twofitweight;  
+  float twofitweight;
   float twofitatten;
 
   int   n;
@@ -112,8 +112,8 @@ typedef struct vorbis_info_residue0{
   int    secondstages[64]; /* expanded out to pointers in lookup */
   int    booklist[256];    /* list of second stage books */
 
-  float  classmetric1[64];  
-  float  classmetric2[64];  
+  float  classmetric1[64];
+  float  classmetric2[64];
 
 } vorbis_info_residue0;
 
@@ -130,7 +130,7 @@ typedef struct{
 typedef struct vorbis_info_mapping0{
   int   submaps;  /* <= 16 */
   int   chmuxlist[256];   /* up to 256 channels in a Vorbis stream */
-  
+
   int   floorsubmap[16];   /* [mux] submap to floors */
   int   residuesubmap[16]; /* [mux] submap to residue */
 

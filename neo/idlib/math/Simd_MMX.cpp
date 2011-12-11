@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -68,22 +68,22 @@ MMX_Memcpy8B
 ================
 */
 void MMX_Memcpy8B( void *dest, const void *src, const int count ) {
-	_asm { 
-        mov		esi, src 
-        mov		edi, dest 
-        mov		ecx, count 
-        shr		ecx, 3			// 8 bytes per iteration 
+	_asm {
+        mov		esi, src
+        mov		edi, dest
+        mov		ecx, count
+        shr		ecx, 3			// 8 bytes per iteration
 
-loop1: 
-        movq	mm1,  0[ESI]	// Read in source data 
-        movntq	0[EDI], mm1		// Non-temporal stores 
+loop1:
+        movq	mm1,  0[ESI]	// Read in source data
+        movntq	0[EDI], mm1		// Non-temporal stores
 
         add		esi, 8
         add		edi, 8
-        dec		ecx 
-        jnz		loop1 
+        dec		ecx
+        jnz		loop1
 
-	} 
+	}
 	EMMS_INSTRUCTION
 }
 
@@ -95,39 +95,39 @@ MMX_Memcpy64B
 ================
 */
 void MMX_Memcpy64B( void *dest, const void *src, const int count ) {
-	_asm { 
-        mov		esi, src 
-        mov		edi, dest 
-        mov		ecx, count 
+	_asm {
+        mov		esi, src
+        mov		edi, dest
+        mov		ecx, count
         shr		ecx, 6		// 64 bytes per iteration
 
-loop1: 
-        prefetchnta 64[ESI]	// Prefetch next loop, non-temporal 
-        prefetchnta 96[ESI] 
+loop1:
+        prefetchnta 64[ESI]	// Prefetch next loop, non-temporal
+        prefetchnta 96[ESI]
 
-        movq mm1,  0[ESI]	// Read in source data 
-        movq mm2,  8[ESI] 
-        movq mm3, 16[ESI] 
-        movq mm4, 24[ESI] 
-        movq mm5, 32[ESI] 
-        movq mm6, 40[ESI] 
-        movq mm7, 48[ESI] 
-        movq mm0, 56[ESI] 
+        movq mm1,  0[ESI]	// Read in source data
+        movq mm2,  8[ESI]
+        movq mm3, 16[ESI]
+        movq mm4, 24[ESI]
+        movq mm5, 32[ESI]
+        movq mm6, 40[ESI]
+        movq mm7, 48[ESI]
+        movq mm0, 56[ESI]
 
-        movntq  0[EDI], mm1	// Non-temporal stores 
-        movntq  8[EDI], mm2 
-        movntq 16[EDI], mm3 
-        movntq 24[EDI], mm4 
-        movntq 32[EDI], mm5 
-        movntq 40[EDI], mm6 
-        movntq 48[EDI], mm7 
-        movntq 56[EDI], mm0 
+        movntq  0[EDI], mm1	// Non-temporal stores
+        movntq  8[EDI], mm2
+        movntq 16[EDI], mm3
+        movntq 24[EDI], mm4
+        movntq 32[EDI], mm5
+        movntq 40[EDI], mm6
+        movntq 48[EDI], mm7
+        movntq 56[EDI], mm0
 
-        add		esi, 64 
-        add		edi, 64 
-        dec		ecx 
-        jnz		loop1 
-	} 
+        add		esi, 64
+        add		edi, 64
+        dec		ecx
+        jnz		loop1
+	}
 	EMMS_INSTRUCTION
 }
 
@@ -140,11 +140,11 @@ MMX_Memcpy2kB
 */
 void MMX_Memcpy2kB( void *dest, const void *src, const int count ) {
 	byte *tbuf = (byte *)_alloca16(2048);
-	__asm { 
+	__asm {
 		push	ebx
         mov		esi, src
         mov		ebx, count
-        shr		ebx, 11		// 2048 bytes at a time 
+        shr		ebx, 11		// 2048 bytes at a time
         mov		edi, dest
 
 loop2k:
@@ -152,7 +152,7 @@ loop2k:
         mov		edi, tbuf
         mov		ecx, 32
 
-loopMemToL1: 
+loopMemToL1:
         prefetchnta 64[ESI] // Prefetch next loop, non-temporal
         prefetchnta 96[ESI]
 
@@ -304,10 +304,10 @@ void VPCALL idSIMD_MMX::Memset( void* dest0, const int val, const int count0 ) {
 
 	if ( count >= 64 ) {
 		__asm {
-			mov edi, dest 
-			mov ecx, count 
-			shr ecx, 6				// 64 bytes per iteration 
-			movq mm1, dat			// Read in source data 
+			mov edi, dest
+			mov ecx, count
+			shr ecx, 6				// 64 bytes per iteration
+			movq mm1, dat			// Read in source data
 			movq mm2, mm1
 			movq mm3, mm1
 			movq mm4, mm1
@@ -315,19 +315,19 @@ void VPCALL idSIMD_MMX::Memset( void* dest0, const int val, const int count0 ) {
 			movq mm6, mm1
 			movq mm7, mm1
 			movq mm0, mm1
-loop1: 
-			movntq  0[EDI], mm1		// Non-temporal stores 
-			movntq  8[EDI], mm2 
-			movntq 16[EDI], mm3 
-			movntq 24[EDI], mm4 
-			movntq 32[EDI], mm5 
-			movntq 40[EDI], mm6 
-			movntq 48[EDI], mm7 
-			movntq 56[EDI], mm0 
+loop1:
+			movntq  0[EDI], mm1		// Non-temporal stores
+			movntq  8[EDI], mm2
+			movntq 16[EDI], mm3
+			movntq 24[EDI], mm4
+			movntq 32[EDI], mm5
+			movntq 40[EDI], mm6
+			movntq 48[EDI], mm7
+			movntq 56[EDI], mm0
 
-			add edi, 64 
-			dec ecx 
-			jnz loop1 
+			add edi, 64
+			dec ecx
+			jnz loop1
 		}
 		dest += ( count & ~63 );
 		count &= 63;
@@ -335,15 +335,15 @@ loop1:
 
 	if ( count >= 8 ) {
 		__asm {
-			mov edi, dest 
-			mov ecx, count 
-			shr ecx, 3				// 8 bytes per iteration 
-			movq mm1, dat			// Read in source data 
-loop2: 
-			movntq  0[EDI], mm1		// Non-temporal stores 
+			mov edi, dest
+			mov ecx, count
+			shr ecx, 3				// 8 bytes per iteration
+			movq mm1, dat			// Read in source data
+loop2:
+			movntq  0[EDI], mm1		// Non-temporal stores
 
 			add edi, 8
-			dec ecx 
+			dec ecx
 			jnz loop2
 		}
 		dest += (count & ~7);
@@ -356,7 +356,7 @@ loop2:
 		count--;
 	}
 
-	EMMS_INSTRUCTION 
+	EMMS_INSTRUCTION
 
 	// the MMX_Memcpy* functions use MOVNTQ, issue a fence operation
 	__asm {

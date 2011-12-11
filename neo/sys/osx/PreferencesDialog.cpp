@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -119,10 +119,10 @@ static CGDirectDisplayID GetDisplayIDForScreenIndex( int inScreenIndex ) {
 	return (CGDirectDisplayID)r_screen;
 }
 
-    
+
 
 void Sys_DoPreferences( void ) {
-	   
+	
 	// An NSKeyDown event is not fired if the user holds down Cmd during startup.
 	// Cmd is treated purely as a modifier. To capture the user
 	// holding down Cmd, you would need to override NSApplication's
@@ -549,7 +549,7 @@ static void AdjustDisplayControls(PrefInfo *prefInfo)
 			EnableControl(prefInfo->chooseMonitorsBtn);
 	}
 	AdjustResolutionPopupMenu(prefInfo->resolutionPopup, prefInfo->prefDisplayID,
-		prefInfo->prefGameDisplayMode == kFullScreen, 
+		prefInfo->prefGameDisplayMode == kFullScreen,
 		prefInfo->prefWidth, prefInfo->prefHeight, prefInfo->prefDepth, prefInfo->prefResFlags);
 	
 	// Build new refresh popup and select appropriate rate
@@ -601,11 +601,11 @@ static pascal OSStatus PrefHandler( EventHandlerCallRef inHandler, EventRef inEv
 			prefInfo->prefAlways = GetControlValue (prefInfo->alwaysBtn);
 			prefInfo->prefOpenAL = GetControlValue (prefInfo->openALBtn);
 			
-			CFPreferencesSetAppValue (kPref_PrefsDialogAlways, 
+			CFPreferencesSetAppValue (kPref_PrefsDialogAlways,
 									  prefInfo->prefAlways ? kCFBooleanTrue : kCFBooleanFalse,
 									  kCFPreferencesCurrentApplication);
 
-			CFPreferencesSetAppValue (kPref_PrefsDialogOpenAL, 
+			CFPreferencesSetAppValue (kPref_PrefsDialogOpenAL,
 									  prefInfo->prefOpenAL ? kCFBooleanTrue : kCFBooleanFalse,
 									  kCFPreferencesCurrentApplication);
 			
@@ -633,7 +633,7 @@ static pascal OSStatus PrefHandler( EventHandlerCallRef inHandler, EventRef inEv
 			SetControlValue (prefInfo->inAWindowBtn, 1 - (prefInfo->prefGameDisplayMode == kFullScreen));
 			if (prefInfo->prefGameDisplayMode == kFullScreen)
 				EnableControl (prefInfo->refreshRatePopup);
-			else 
+			else
 				DisableControl (prefInfo->refreshRatePopup);
 			if (prefInfo->multiMonitor)
 				EnableControl (prefInfo->chooseMonitorsBtn);

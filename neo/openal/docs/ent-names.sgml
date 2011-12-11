@@ -3,9 +3,9 @@
         <!ENTITY   coCreat      "Creative Labs"         >
         <!ENTITY   OAL          "OpenAL"                >
         <!ENTITY   AL           "AL"                    >
- 
+
         <!ENTITY   OGL          "OpenGL"                >
-      
+
         <!ENTITY   NONE         "NONE"                  >
         <!ENTITY   TRUE         "TRUE"                  >
         <!ENTITY   FALSE        "FALSE"                 >
@@ -40,4 +40,4 @@
         <!ENTITY   Sig          "Signature"             > <!-- legal types -->
         <!ENTITY   Val          "Values"                > <!-- legal values/ranges -->
         <!ENTITY   Def          "Default"               > <!-- default value -->
-  
+

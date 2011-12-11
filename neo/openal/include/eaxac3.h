@@ -140,7 +140,7 @@ typedef char *	(*LPEAXAC3GETERRORSTRING)			(HRESULT, char *, int);
 typedef HRESULT (*LPEAXAC3GETLASTERROR)				(HRESULT *);
 
 // Function table declaration
-typedef struct 
+typedef struct
 {
 	LPEAXAC3QUERYNUMBEROFDEVICES					EAXAC3QueryNumberOfDevices;
 	LPEAXAC3QUERYFILE								EAXAC3QueryFile;

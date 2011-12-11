@@ -5,7 +5,7 @@ dnl =====================================================
 dnl utils
 dnl =====================================================
 
-define(`forloop', 
+define(`forloop',
 	`pushdef(`$1', `$2')_forloop(`$1', `$2', `$3', `$4')popdef(`$1')')
 define(`_forloop',
 	`$4`'ifelse($1, `$3', ,
@@ -46,7 +46,7 @@ GLExtension_t GLimp_ExtensionPointer( const char *name ) {
 	}
 	#endif
 	GLExtension_t ret;
-	#if defined(__linux__)    
+	#if defined(__linux__)
 	// for some reason glXGetProcAddressARB doesn't work on RH9?
 	ret = qglXGetProcAddressARB((const GLubyte *) name);
 	if ( !ret ) {

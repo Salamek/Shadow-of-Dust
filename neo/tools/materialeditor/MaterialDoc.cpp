@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -48,8 +48,8 @@ MaterialDoc::~MaterialDoc(void) {
 }
 
 /**
-* Initializes the MaterialDoc instance with a specific idMaterial. This method will 
-* parse the material into the internal dictionary representation and optionally 
+* Initializes the MaterialDoc instance with a specific idMaterial. This method will
+* parse the material into the internal dictionary representation and optionally
 * allow the idMaterial object to reparse the source.
 * @param material The idMaterial instance to use.
 * @param parseMaterial Flag to determine if the material should be parsed into the editor representation.
@@ -347,7 +347,7 @@ void MaterialDoc::SetAttributeBool(int stage, const char* attribName, bool value
 void MaterialDoc::SetMaterialName(const char* materialName, bool addUndo) {
 	idStr oldName = name;
 
-	declManager->RenameDecl(DECL_MATERIAL, oldName, materialName); 
+	declManager->RenameDecl(DECL_MATERIAL, oldName, materialName);
 	name = renderMaterial->GetName();
 	
 	if(addUndo) {
@@ -414,7 +414,7 @@ void MaterialDoc::ApplySourceModify(idStr& text) {
 		idLexer		src;
 		src.LoadMemory(text, text.Length(), "Material");
 
-		src.SetFlags( 
+		src.SetFlags(
 			LEXFL_NOSTRINGCONCAT |			// multiple strings seperated by whitespaces are not concatenated
 			LEXFL_NOSTRINGESCAPECHARS |		// no escape characters inside strings
 			LEXFL_ALLOWPATHNAMES |			// allow path seperators in names
@@ -649,7 +649,7 @@ void MaterialDoc::ParseMaterialText(const char* source) {
 
 	/*idLexer src;
 	src.LoadMemory(source, strlen(source), "material");
-	src.SetFlags( 
+	src.SetFlags(
 		LEXFL_NOSTRINGCONCAT |			// multiple strings seperated by whitespaces are not concatenated
 		LEXFL_NOSTRINGESCAPECHARS |		// no escape characters inside strings
 		LEXFL_ALLOWPATHNAMES |			// allow path seperators in names
@@ -714,7 +714,7 @@ void MaterialDoc::ParseMaterial(idLexer* src) {
 }
 
 /**
-* Parses a single stage from the source text from an idMaterial and initializes the editor dictionary 
+* Parses a single stage from the source text from an idMaterial and initializes the editor dictionary
 * representation of the material.
 * @param src The idLexer object that contains the material text.
 */
@@ -870,7 +870,7 @@ const char*	MaterialDoc::GenerateSourceText() {
 }
 
 /**
-* Writes the internal dictionary data to the standard format and replaces the 
+* Writes the internal dictionary data to the standard format and replaces the
 * idMaterial source text with the newly generated text.
 */
 void MaterialDoc::ReplaceSourceText() {

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -163,7 +163,7 @@ index 0 will never be NULL.  Any anim >= NumAnims will return NULL.
 =====================
 */
 const idMD5Anim *idAnim::MD5Anim( int num ) const {
-	if ( anims == NULL || anims[0] == NULL ) { 
+	if ( anims == NULL || anims[0] == NULL ) {
 		return NULL;
 	}
 	return anims[ num ];
@@ -196,7 +196,7 @@ int idAnim::Length( void ) const {
 idAnim::NumFrames
 =====================
 */
-int	idAnim::NumFrames( void ) const { 
+int	idAnim::NumFrames( void ) const {
 	if ( !anims[ 0 ] ) {
 		return 0;
 	}
@@ -209,7 +209,7 @@ int	idAnim::NumFrames( void ) const {
 idAnim::NumAnims
 =====================
 */
-int	idAnim::NumAnims( void ) const { 
+int	idAnim::NumAnims( void ) const {
 	return numAnims;
 }
 
@@ -703,7 +703,7 @@ const char *idAnim::AddFrameCommand( const idDeclModelDef *modelDef, int framenu
 		frameLookup[ i ].firstCommand++;
 	}
 
-	// store the new command 
+	// store the new command
 	frameCommands[ index ] = fc;
 
 	// increase the number of commands on this frame

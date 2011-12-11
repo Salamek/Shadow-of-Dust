@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -196,8 +196,8 @@ void CEntityDlg::OnSize(UINT nType, int cx, int cy)
 	btnSound.SetWindowPos(NULL, rect.right - 4 - crect.Width(), top + 12 + crect.Height(), crect.Width(), crect.Height(), SWP_SHOWWINDOW);
 	btnGui.SetWindowPos(NULL, rect.right - 4 - crect.Width(), top + 16 + crect.Height() * 2, crect.Width(), crect.Height(), SWP_SHOWWINDOW);
 	btnParticle.SetWindowPos(NULL, rect.right - 8 - (crect.Width() * 2), top + 16 + crect.Height() * 2, crect.Width(), crect.Height(), SWP_SHOWWINDOW);
-	btnSkin.SetWindowPos( NULL, rect.right - 8 - ( crect.Width() * 2 ), top + 12 + crect.Height(), crect.Width(), crect.Height(), SWP_SHOWWINDOW ); 
-	btnCurve.SetWindowPos( NULL, rect.right - 8 - ( crect.Width() * 2 ), top + 8, crect.Width(), crect.Height(), SWP_SHOWWINDOW ); 
+	btnSkin.SetWindowPos( NULL, rect.right - 8 - ( crect.Width() * 2 ), top + 12 + crect.Height(), crect.Width(), crect.Height(), SWP_SHOWWINDOW );
+	btnCurve.SetWindowPos( NULL, rect.right - 8 - ( crect.Width() * 2 ), top + 8, crect.Width(), crect.Height(), SWP_SHOWWINDOW );
 
 	//*************************************
 	//animation controls
@@ -526,7 +526,7 @@ BOOL CEntityDlg::PreTranslateMessage(MSG* pMsg)
 		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_DELETE && editEntity) {
 			DelProp();
 			return TRUE;
-		} 
+		}
 	}
 
 	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_ESCAPE) {
@@ -613,7 +613,7 @@ void CEntityDlg::AddProp() {
 			if (isName) {
 				Entity_SetName(b->owner, Value);
 			} else {
-				if ( ! ( ( isModel || isOrigin ) && ( b->owner->eclass->nShowFlags & ECLASS_WORLDSPAWN ) ) ) { 
+				if ( ! ( ( isModel || isOrigin ) && ( b->owner->eclass->nShowFlags & ECLASS_WORLDSPAWN ) ) ) {
 					SetKeyValue(b->owner, Key, Value);
 				}
 			}
@@ -623,7 +623,7 @@ void CEntityDlg::AddProp() {
 		if (isName) {
 			Entity_SetName(editEntity, Value);
 		} else {
-			if ( ! ( ( isModel || isOrigin ) && ( editEntity->eclass->nShowFlags & ECLASS_WORLDSPAWN ) ) ) { 
+			if ( ! ( ( isModel || isOrigin ) && ( editEntity->eclass->nShowFlags & ECLASS_WORLDSPAWN ) ) ) {
 				SetKeyValue(editEntity, Key, Value);
 			}
 		}
@@ -1183,7 +1183,7 @@ void CEntityDlg::AddCurvePoints() {
 	} else  if ( c > 0 ) {
 		start = editEntity->curve->GetValue( 0 );
 		start.x += 64;
-		start.y += 64; 
+		start.y += 64;
 	} else {
 		start = editEntity->origin;
 	}
@@ -1273,7 +1273,7 @@ void CEntityDlg::InsertCurvePoint() {
 							}
 						}
 						newCurve->AddValue( newCurve->GetNumValues() * 100, start );
-					} 
+					}
 					newCurve->AddValue( newCurve->GetNumValues() * 100, editEntity->curve->GetValue( j ) );
 				}
 				delete editEntity->curve;

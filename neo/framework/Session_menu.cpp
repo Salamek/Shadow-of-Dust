@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -292,7 +292,7 @@ idSessionLocal::SetMainMenuGuiVars
 void idSessionLocal::SetMainMenuGuiVars( void ) {
 
 	guiMainMenu->SetStateString( "serverlist_sel_0", "-1" );
-	guiMainMenu->SetStateString( "serverlist_selid_0", "-1" ); 
+	guiMainMenu->SetStateString( "serverlist_selid_0", "-1" );
 
 	guiMainMenu->SetStateInt( "com_machineSpec", com_machineSpec.GetInteger() );
 
@@ -590,7 +590,7 @@ void idSessionLocal::HandleMainMenuCommands( const char *menuCommand ) {
 				StartNewGame( "game/demo_mars_city1" );
 #endif
 			}
-			// need to do this here to make sure com_frameTime is correct or the gui activates with a time that 
+			// need to do this here to make sure com_frameTime is correct or the gui activates with a time that
 			// is "however long map load took" time in the past
 			common->GUIFrame( false, false );
 			SetGUI( guiIntro, NULL );
@@ -674,7 +674,7 @@ void idSessionLocal::HandleMainMenuCommands( const char *menuCommand ) {
 		}
 
 		if ( !idStr::Icmp( cmd, "LANConnect" ) ) {
-			int sel = guiActive->State().GetInt( "serverList_selid_0" ); 
+			int sel = guiActive->State().GetInt( "serverList_selid_0" );
 			cmdSystem->BufferCommandText( CMD_EXEC_NOW, va( "Connect %d\n", sel ) );
 			return;
 		}
@@ -1368,7 +1368,7 @@ const char* idSessionLocal::MessageBox( msgBoxType_t type, const char *message, 
 						 guiMsg->State().GetString( "visible_cdchk" ),
 						 guiMsg->State().GetString( "str_cdkey" ),
 						 guiMsg->State().GetString( "str_cdchk" ),
-						 guiMsg->State().GetString( "visible_xpchk" ),						 
+						 guiMsg->State().GetString( "visible_xpchk" ),						
 						 guiMsg->State().GetString( "str_xpkey" ),
 						 guiMsg->State().GetString( "str_xpchk" ) );
 				return msgFireBack[ 0 ].c_str();

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -235,7 +235,7 @@ idDict::Checksum
 ================
 */
 int	idDict::Checksum( void ) const {
-	unsigned long ret;
+	unsigned int ret;
 	int i, n;
 
 	idList<idKeyValue> sorted = args;
@@ -343,13 +343,13 @@ idDict::GetAngles
 bool idDict::GetAngles( const char *key, const char *defaultString, idAngles &out ) const {
 	bool		found;
 	const char	*s;
-	
+
 	if ( !defaultString ) {
 		defaultString = "0 0 0";
 	}
 
 	found = GetString( key, defaultString, &s );
-	out.Zero();	
+	out.Zero();
 	sscanf( s, "%f %f %f", &out.pitch, &out.yaw, &out.roll );
 	return found;
 }
@@ -362,7 +362,7 @@ idDict::GetVector
 bool idDict::GetVector( const char *key, const char *defaultString, idVec3 &out ) const {
 	bool		found;
 	const char	*s;
-	
+
 	if ( !defaultString ) {
 		defaultString = "0 0 0";
 	}
@@ -381,7 +381,7 @@ idDict::GetVec2
 bool idDict::GetVec2( const char *key, const char *defaultString, idVec2 &out ) const {
 	bool		found;
 	const char	*s;
-	
+
 	if ( !defaultString ) {
 		defaultString = "0 0";
 	}
@@ -400,7 +400,7 @@ idDict::GetVec4
 bool idDict::GetVec4( const char *key, const char *defaultString, idVec4 &out ) const {
 	bool		found;
 	const char	*s;
-	
+
 	if ( !defaultString ) {
 		defaultString = "0 0 0 0";
 	}
@@ -419,7 +419,7 @@ idDict::GetMatrix
 bool idDict::GetMatrix( const char *key, const char *defaultString, idMat3 &out ) const {
 	const char	*s;
 	bool		found;
-		
+
 	if ( !defaultString ) {
 		defaultString = "1 0 0 0 1 0 0 0 1";
 	}

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -59,10 +59,10 @@ bool rvGENavigator::Create ( HWND parent, bool visible )
 	wndClass.cbSize = sizeof(WNDCLASSEX);
 	wndClass.lpszClassName = "GUIEDITOR_NAVIGATOR_CLASS";		
 	wndClass.lpfnWndProc = rvGENavigator::WndProc;
-	wndClass.hbrBackground = (HBRUSH)GetStockObject( LTGRAY_BRUSH );; 
-	wndClass.hCursor       = LoadCursor((HINSTANCE) NULL, IDC_ARROW); 
+	wndClass.hbrBackground = (HBRUSH)GetStockObject( LTGRAY_BRUSH );;
+	wndClass.hCursor       = LoadCursor((HINSTANCE) NULL, IDC_ARROW);
 	wndClass.lpszMenuName  = NULL;
-	wndClass.hInstance     = win32.hInstance; 
+	wndClass.hInstance     = win32.hInstance;
 	RegisterClassEx ( &wndClass );
 
 	mVisibleIcon = (HICON)LoadImage ( win32.hInstance, MAKEINTRESOURCE(IDI_GUIED_NAV_VISIBLE), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR|LR_LOADMAP3DCOLORS );
@@ -72,14 +72,14 @@ bool rvGENavigator::Create ( HWND parent, bool visible )
 	mExpandIcon = (HICON)LoadImage ( win32.hInstance, MAKEINTRESOURCE(IDI_GUIED_NAV_EXPAND), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR|LR_LOADMAP3DCOLORS );
 	mCollapseIcon = (HICON)LoadImage ( win32.hInstance, MAKEINTRESOURCE(IDI_GUIED_NAV_COLLAPSE), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR|LR_LOADMAP3DCOLORS );
 
-	mWnd = CreateWindowEx ( WS_EX_TOOLWINDOW, 
-							"GUIEDITOR_NAVIGATOR_CLASS", 
-							"Navigator", 
-							WS_SYSMENU|WS_THICKFRAME|WS_CAPTION|WS_POPUP|WS_OVERLAPPED|WS_BORDER|WS_CLIPSIBLINGS|WS_CHILD, 
+	mWnd = CreateWindowEx ( WS_EX_TOOLWINDOW,
+							"GUIEDITOR_NAVIGATOR_CLASS",
+							"Navigator",
+							WS_SYSMENU|WS_THICKFRAME|WS_CAPTION|WS_POPUP|WS_OVERLAPPED|WS_BORDER|WS_CLIPSIBLINGS|WS_CHILD,
 							0, 0, 200,300,
-							parent, 
-							NULL, 
-							win32.hInstance, 
+							parent,
+							NULL,
+							win32.hInstance,
 							this );
 							
 	if ( !mWnd )
@@ -118,23 +118,23 @@ void Draw3dRect ( HDC hDC, RECT* rect, HBRUSH topLeft, HBRUSH bottomRight )
 	RECT rOut;
 	
 	SetRect ( &rOut, rect->left, rect->top, rect->right - 1, rect->top + 1 );
-	FillRect ( hDC,&rOut, topLeft ); 
+	FillRect ( hDC,&rOut, topLeft );
 	
 	SetRect ( &rOut, rect->left, rect->top, rect->left + 1, rect->bottom );
-	FillRect( hDC,&rOut, topLeft ); 
+	FillRect( hDC,&rOut, topLeft );
 
 	SetRect ( &rOut, rect->right, rect->top, rect->right -1, rect->bottom  );
-	FillRect( hDC,&rOut, bottomRight ); 
+	FillRect( hDC,&rOut, bottomRight );
 
 	SetRect ( &rOut, rect->left, rect->bottom, rect->right, rect->bottom - 1 );
-	FillRect( hDC,&rOut, bottomRight ); 
+	FillRect( hDC,&rOut, bottomRight );
 }
 
 /*
 ================
 rvGENavigator::WndProc
 
-Window Procedure 
+Window Procedure
 ================
 */
 LRESULT CALLBACK rvGENavigator::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
@@ -314,11 +314,11 @@ LRESULT CALLBACK rvGENavigator::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, LP
 				case NM_CLICK:
 				case NM_DBLCLK:
 				{
-					DWORD dwpos = GetMessagePos(); 
+					DWORD dwpos = GetMessagePos();
 					LVHITTESTINFO info;
 					info.pt.x = LOWORD(dwpos);
 					info.pt.y = HIWORD(dwpos);		
-					MapWindowPoints(HWND_DESKTOP, nh->hwndFrom, &info.pt, 1);      
+					MapWindowPoints(HWND_DESKTOP, nh->hwndFrom, &info.pt, 1);
 					int index = ListView_HitTest ( nav->mTree, &info );
 					if ( index != -1 )
 					{
@@ -372,11 +372,11 @@ LRESULT CALLBACK rvGENavigator::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, LP
 				
 				case NM_RCLICK:
 				{
-					DWORD dwpos = GetMessagePos(); 
+					DWORD dwpos = GetMessagePos();
 					LVHITTESTINFO info;
 					info.pt.x = LOWORD(dwpos);
 					info.pt.y = HIWORD(dwpos);		
-					MapWindowPoints(HWND_DESKTOP, nh->hwndFrom, &info.pt, 1);      
+					MapWindowPoints(HWND_DESKTOP, nh->hwndFrom, &info.pt, 1);
 					int index = ListView_HitTest ( nav->mTree, &info );
 					
 					if ( index != -1 )
@@ -424,7 +424,7 @@ LRESULT CALLBACK rvGENavigator::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, LP
 ================
 rvGENavigator::ListWndProc
 
-Window Procedure for the embedded list control 
+Window Procedure for the embedded list control
 ================
 */
 LRESULT CALLBACK rvGENavigator::ListWndProc ( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )

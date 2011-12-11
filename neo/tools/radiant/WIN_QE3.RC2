@@ -26,7 +26,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Menu
 //
 
-IDR_MENU1 MENU DISCARDABLE 
+IDR_MENU1 MENU DISCARDABLE
 BEGIN
     POPUP "&File"
     BEGIN
@@ -179,18 +179,18 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE DISCARDABLE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE DISCARDABLE
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE DISCARDABLE
 BEGIN
     "\r\n"
     "\0"
@@ -215,16 +215,16 @@ BEGIN
 END
 
 IDD_ENTITY DIALOGEX 0, 0, 234, 389
-STYLE DS_3DLOOK | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_CLIPSIBLINGS | 
+STYLE DS_3DLOOK | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_CLIPSIBLINGS |
     WS_CAPTION | WS_THICKFRAME
 EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CLIENTEDGE
 CAPTION "Entity"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LISTBOX         IDC_E_LIST,5,5,180,99,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+    LISTBOX         IDC_E_LIST,5,5,180,99,LBS_SORT | LBS_NOINTEGRALHEIGHT |
                     LBS_WANTKEYBOARDINPUT | WS_VSCROLL | WS_TABSTOP,
                     WS_EX_CLIENTEDGE
-    EDITTEXT        IDC_E_COMMENT,5,106,180,50,ES_MULTILINE | ES_READONLY | 
+    EDITTEXT        IDC_E_COMMENT,5,106,180,50,ES_MULTILINE | ES_READONLY |
                     WS_VSCROLL,WS_EX_CLIENTEDGE
     PUSHBUTTON      "135",IDC_E_135,5,290,15,15
     PUSHBUTTON      "180",IDC_E_180,5,305,15,15
@@ -236,35 +236,35 @@ BEGIN
     PUSHBUTTON      "315",IDC_E_315,35,320,15,15
     PUSHBUTTON      "Up",IDC_E_UP,60,295,15,15
     PUSHBUTTON      "Dn",IDC_E_DOWN,60,310,15,15
-    CONTROL         "",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+    CONTROL         "",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_DISABLED |
                     WS_TABSTOP,5,160,50,8
-    CONTROL         "",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+    CONTROL         "",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_DISABLED |
                     WS_TABSTOP,5,170,50,8
-    CONTROL         "",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+    CONTROL         "",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_DISABLED |
                     WS_TABSTOP,5,180,50,8
-    CONTROL         "",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+    CONTROL         "",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_DISABLED |
                     WS_TABSTOP,5,190,50,8
-    CONTROL         "",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+    CONTROL         "",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_DISABLED |
                     WS_TABSTOP,65,160,50,8
-    CONTROL         "",IDC_CHECK6,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+    CONTROL         "",IDC_CHECK6,"Button",BS_AUTOCHECKBOX | WS_DISABLED |
                     WS_TABSTOP,65,170,50,8
-    CONTROL         "",IDC_CHECK7,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+    CONTROL         "",IDC_CHECK7,"Button",BS_AUTOCHECKBOX | WS_DISABLED |
                     WS_TABSTOP,65,180,50,8
-    CONTROL         "",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+    CONTROL         "",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_DISABLED |
                     WS_TABSTOP,65,190,50,8
     CONTROL         "!Easy",IDC_CHECK9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
                     125,160,50,8
-    CONTROL         "!Medium",IDC_CHECK10,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "!Medium",IDC_CHECK10,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,125,170,50,8
-    CONTROL         "!Hard",IDC_CHECK11,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "!Hard",IDC_CHECK11,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,125,180,50,10
-    CONTROL         "!DeathMatch",IDC_CHECK12,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "!DeathMatch",IDC_CHECK12,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,125,190,55,10
-    LISTBOX         IDC_E_PROPS,5,205,180,50,LBS_SORT | LBS_USETABSTOPS | 
-                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+    LISTBOX         IDC_E_PROPS,5,205,180,50,LBS_SORT | LBS_USETABSTOPS |
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT |
                     WS_VSCROLL | WS_TABSTOP,WS_EX_CLIENTEDGE
     PUSHBUTTON      "Del Key/Pair",IDC_E_DELPROP,105,295,45,15
-    EDITTEXT        IDC_E_STATUS,83,312,95,30,ES_MULTILINE | ES_AUTOVSCROLL | 
+    EDITTEXT        IDC_E_STATUS,83,312,95,30,ES_MULTILINE | ES_AUTOVSCROLL |
                     ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
     LTEXT           "Key",IDC_STATIC_KEY,5,260,25,10
     LTEXT           "Value",IDC_STATIC_VALUE,5,275,25,10
@@ -374,13 +374,13 @@ BEGIN
                     160,30,41,8
     CONTROL         "warp",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
                     160,40,41,8
-    CONTROL         "trans33",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "trans33",IDC_CHECK5,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,160,50,41,8
-    CONTROL         "trans66",IDC_CHECK6,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "trans66",IDC_CHECK6,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,160,60,41,8
-    CONTROL         "flowing",IDC_CHECK7,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "flowing",IDC_CHECK7,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,160,70,41,8
-    CONTROL         "nodraw",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "nodraw",IDC_CHECK8,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,160,80,41,8
     CONTROL         "100",IDC_CHECK9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
                     160,90,41,8
@@ -400,49 +400,49 @@ BEGIN
                     160,160,41,8
     LTEXT           "Texture",IDC_STATIC,10,18,30,8
     PUSHBUTTON      "Apply",IDAPPLY,55,155,40,14
-    CONTROL         "10000",IDC_CHECK17,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "10000",IDC_CHECK17,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,10,41,8
-    CONTROL         "20000",IDC_CHECK18,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "20000",IDC_CHECK18,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,20,41,8
-    CONTROL         "40000",IDC_CHECK19,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "40000",IDC_CHECK19,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,30,41,8
-    CONTROL         "80000",IDC_CHECK20,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "80000",IDC_CHECK20,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,40,41,8
-    CONTROL         "100000",IDC_CHECK21,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "100000",IDC_CHECK21,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,50,41,8
-    CONTROL         "200000",IDC_CHECK22,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "200000",IDC_CHECK22,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,60,41,8
-    CONTROL         "400000",IDC_CHECK23,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "400000",IDC_CHECK23,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,70,41,8
-    CONTROL         "800000",IDC_CHECK24,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "800000",IDC_CHECK24,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,80,41,8
-    CONTROL         "1000000",IDC_CHECK25,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "1000000",IDC_CHECK25,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,90,41,8
-    CONTROL         "2000000",IDC_CHECK26,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "2000000",IDC_CHECK26,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,100,41,8
-    CONTROL         "4000000",IDC_CHECK27,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "4000000",IDC_CHECK27,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,110,41,8
-    CONTROL         "8000000",IDC_CHECK28,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "8000000",IDC_CHECK28,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,120,41,8
-    CONTROL         "10000000",IDC_CHECK29,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "10000000",IDC_CHECK29,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,130,40,8
-    CONTROL         "20000000",IDC_CHECK30,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "20000000",IDC_CHECK30,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,140,45,8
-    CONTROL         "40000000",IDC_CHECK31,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "40000000",IDC_CHECK31,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,150,45,8
-    CONTROL         "80000000",IDC_CHECK32,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "80000000",IDC_CHECK32,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,210,160,45,8
-    CONTROL         "solid",IDC_CHECK33,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "solid",IDC_CHECK33,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,280,10,41,8
-    CONTROL         "window",IDC_CHECK34,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "window",IDC_CHECK34,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,280,20,41,8
     CONTROL         "aux",IDC_CHECK35,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
                     280,31,41,8
     CONTROL         "lava",IDC_CHECK36,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
                     280,41,41,8
-    CONTROL         "slime",IDC_CHECK37,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "slime",IDC_CHECK37,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,280,50,41,8
-    CONTROL         "water",IDC_CHECK38,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "water",IDC_CHECK38,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,280,60,41,8
     CONTROL         "mist",IDC_CHECK39,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
                     280,71,41,8
@@ -464,37 +464,37 @@ BEGIN
                     280,151,41,8
     CONTROL         "8000",IDC_CHECK48,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
                     280,161,41,8
-    CONTROL         "playerclip",IDC_CHECK49,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "playerclip",IDC_CHECK49,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,10,41,8
-    CONTROL         "monsterclip",IDC_CHECK50,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "monsterclip",IDC_CHECK50,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,20,50,8
-    CONTROL         "current_0",IDC_CHECK51,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "current_0",IDC_CHECK51,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,31,50,8
-    CONTROL         "current_90",IDC_CHECK52,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "current_90",IDC_CHECK52,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,41,50,8
-    CONTROL         "current_180",IDC_CHECK53,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "current_180",IDC_CHECK53,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,50,50,8
-    CONTROL         "current_270",IDC_CHECK54,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "current_270",IDC_CHECK54,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,60,50,8
-    CONTROL         "current_up",IDC_CHECK55,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "current_up",IDC_CHECK55,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,71,50,8
-    CONTROL         "current_dn",IDC_CHECK56,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "current_dn",IDC_CHECK56,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,81,50,8
-    CONTROL         "origin",IDC_CHECK57,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "origin",IDC_CHECK57,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,90,41,8
-    CONTROL         "monster",IDC_CHECK58,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "monster",IDC_CHECK58,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,100,41,8
-    CONTROL         "corpse",IDC_CHECK59,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "corpse",IDC_CHECK59,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,111,41,8
-    CONTROL         "detail",IDC_CHECK60,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "detail",IDC_CHECK60,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,121,41,8
-    CONTROL         "translucent",IDC_CHECK61,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "translucent",IDC_CHECK61,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,130,50,8
-    CONTROL         "ladder",IDC_CHECK62,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "ladder",IDC_CHECK62,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,140,45,8
-    CONTROL         "40000000",IDC_CHECK63,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "40000000",IDC_CHECK63,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,151,45,8
-    CONTROL         "80000000",IDC_CHECK64,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "80000000",IDC_CHECK64,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,330,161,45,8
     GROUPBOX        "Surf flags",IDC_STATIC,150,0,115,175
     GROUPBOX        "Content flags",IDC_STATIC,270,0,115,175
@@ -548,7 +548,7 @@ END
 // Accelerator
 //
 
-IDR_ACCELERATOR1 ACCELERATORS DISCARDABLE 
+IDR_ACCELERATOR1 ACCELERATORS DISCARDABLE
 BEGIN
     "3",            ID_BRUSH_3SIDED,        VIRTKEY, CONTROL, NOINVERT
     "4",            ID_BRUSH_4SIDED,        VIRTKEY, CONTROL, NOINVERT
@@ -609,7 +609,7 @@ IDB_BITMAP1             BITMAP  DISCARDABLE     "q.bmp"
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO DISCARDABLE
 BEGIN
     IDD_ENTITY, DIALOG
     BEGIN

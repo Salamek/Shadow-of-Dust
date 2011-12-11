@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ typedef enum {
 
 	MOVE_TO_ENEMY = NUM_NONMOVING_COMMANDS,
 	MOVE_TO_ENEMYHEIGHT,
-	MOVE_TO_ENTITY, 
+	MOVE_TO_ENTITY,
 	MOVE_OUT_OF_RANGE,
 	MOVE_TO_ATTACK_POSITION,
 	MOVE_TO_COVER,
@@ -112,9 +112,9 @@ typedef struct obstaclePath_s {
 	idVec3				seekPos;					// seek position avoiding obstacles
 	idEntity *			firstObstacle;				// if != NULL the first obstacle along the path
 	idVec3				startPosOutsideObstacles;	// start position outside obstacles
-	idEntity *			startPosObstacle;			// if != NULL the obstacle containing the start position 
+	idEntity *			startPosObstacle;			// if != NULL the obstacle containing the start position
 	idVec3				seekPosOutsideObstacles;	// seek position outside obstacles
-	idEntity *			seekPosObstacle;			// if != NULL the obstacle containing the seek position 
+	idEntity *			seekPosObstacle;			// if != NULL the obstacle containing the seek position
 } obstaclePath_t;
 
 // path prediction

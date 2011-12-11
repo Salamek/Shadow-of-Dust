@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -215,9 +215,9 @@ void MaterialDocManager::AddMaterial(const char* name, const char* filename, con
 }
 
 /**
-* Used to redo an add material and undo a delete material. 
+* Used to redo an add material and undo a delete material.
 * The undo for adding a material deletes the material. Instead of adding a completely
-* new material RedoAddMaterial finds the one that was just deleted and uses that. 
+* new material RedoAddMaterial finds the one that was just deleted and uses that.
 * @param name The name of the material that was added/deleted.
 * @param clearData Should the material definition be reset to the default definition.
 */
@@ -360,7 +360,7 @@ void MaterialDocManager::ReloadFile(const char *filename) {
 }
 
 /**
-* Creates a MaterialDoc object for the specified material name. If a MaterialDoc 
+* Creates a MaterialDoc object for the specified material name. If a MaterialDoc
 * object already exists then it is used.
 * @param materialName The name of the material for which to create a MaterialDoc object.
 */
@@ -371,7 +371,7 @@ MaterialDoc* MaterialDocManager::CreateMaterialDoc(const char* materialName) {
 }
 
 /**
-* Creates a MaterialDoc object for the specified material. If a MaterialDoc 
+* Creates a MaterialDoc object for the specified material. If a MaterialDoc
 * object already exists then it is used.
 * @param material The material for which to create a MaterialDoc object.
 */
@@ -592,7 +592,7 @@ void MaterialDocManager::Redo() {
 
 		mod->Redo();
 
-		//Done with the mod because the redo process will set 
+		//Done with the mod because the redo process will set
 		//attributes and create the appropriate redo modifier
 		AddMaterialUndoModifier(mod, false);		
 	}

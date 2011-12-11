@@ -69,7 +69,7 @@ static vorbis_residue_template _res_16s_1[]={
   {2,0,  &_residue_44_mid,
    &_huff_book__16c1_s_short,&_huff_book__16c1_s_short,
    &_resbook_16s_1,&_resbook_16s_1},
-  
+
   {2,0,  &_residue_44_mid,
    &_huff_book__16c1_s_long,&_huff_book__16c1_s_long,
    &_resbook_16s_1,&_resbook_16s_1}
@@ -78,7 +78,7 @@ static vorbis_residue_template _res_16s_2[]={
   {2,0,  &_residue_44_high,
    &_huff_book__16c2_s_short,&_huff_book__16c2_s_short,
    &_resbook_16s_2,&_resbook_16s_2},
-  
+
   {2,0,  &_residue_44_high,
    &_huff_book__16c2_s_long,&_huff_book__16c2_s_long,
    &_resbook_16s_2,&_resbook_16s_2}
@@ -140,7 +140,7 @@ static vorbis_residue_template _res_16u_1[]={
   {1,0,  &_residue_44_mid_un,
    &_huff_book__16u1__short,&_huff_book__16u1__short,
    &_resbook_16u_1,&_resbook_16u_1},
-  
+
   {1,0,  &_residue_44_mid_un,
    &_huff_book__16u1__long,&_huff_book__16u1__long,
    &_resbook_16u_1,&_resbook_16u_1}
@@ -149,7 +149,7 @@ static vorbis_residue_template _res_16u_2[]={
   {1,0,  &_residue_44_hi_un,
    &_huff_book__16u2__short,&_huff_book__16u2__short,
    &_resbook_16u_2,&_resbook_16u_2},
-  
+
   {1,0,  &_residue_44_hi_un,
    &_huff_book__16u2__long,&_huff_book__16u2__long,
    &_resbook_16u_2,&_resbook_16u_2}

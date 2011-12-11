@@ -11,11 +11,11 @@ diff -u -r1.32 Makefile.in
 @@ -65,7 +65,8 @@
  CARBON_LIBS = $(COMMON_LIBS) @LIBS@ @CARBON_LIBS@
  CONSOLE_LIBS = $(LIBS) @CONSOLE_LIBS@
- 
+
 -all: do-plugins @DO_DIALOG@ setup setup.gtk uninstall xsu
 +#all: do-plugins @DO_DIALOG@ setup setup.gtk uninstall xsu
 +all: do-plugins @DO_DIALOG@ setup
- 
+
  testxml: testxml.o
  	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
 @@ -139,6 +140,7 @@
@@ -31,6 +31,6 @@ diff -u -r1.32 Makefile.in
  		echo No directory to copy the binary files to.; \
  	fi
 +	echo installed to image/setup.data/bin/$(os)/$(arch)/$(libc)
- 
+
  install-image: all
  ifeq ($(DYN_PLUGINS),true)

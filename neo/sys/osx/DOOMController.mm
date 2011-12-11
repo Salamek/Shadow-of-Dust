@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -172,23 +172,23 @@ extern void CL_Quit_f(void);
             NSImage *bannerImage;
             NSRect bannerRect;
             NSImageView *bannerImageView;
-            
+
             bannerImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForImageResource:@"banner.jpg"]];
             bannerRect = NSMakeRect(0.0, 0.0, [bannerImage size].width, [bannerImage size].height);
-            
+
             splashPanel = [[NSPanel alloc] initWithContentRect:bannerRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
-            
+
             bannerImageView = [[NSImageView alloc] initWithFrame:bannerRect];
             [bannerImageView setImage:bannerImage];
             [splashPanel setContentView:bannerImageView];
             [bannerImageView release];
-            
+
             [splashPanel center];
             [splashPanel setHasShadow:YES];
             [splashPanel orderFront: nil];
             [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:2.5]];
             [splashPanel close];
-            
+
             [bannerImage release];
         }
     }
@@ -501,7 +501,7 @@ http://developer.apple.com/documentation/Performance/Conceptual/Mac_OSX_Numerics
 */
 
 #define fegetenvd(x) asm volatile( "mffs %0" : "=f" (x) );
-#define fesetenvd(x) asm volatile( "mtfsf 255,%0" : : "f" (x) ); 
+#define fesetenvd(x) asm volatile( "mtfsf 255,%0" : : "f" (x) );
 enum {
 	FE_ENABLE_INEXACT		= 0x8,
 	FE_ENABLE_DIVBYZERO		= 0x10,
@@ -687,7 +687,7 @@ double Sys_ClockTicksPerSecond(void) {
 	matchDict = IOServiceNameMatching("cpus");	
 	if (IOServiceGetMatchingServices(masterPort, matchDict, &itThis))
 		goto bail;
-    
+
 	service = IOIteratorNext(itThis);
     while(service)
     {
@@ -785,7 +785,7 @@ void OSX_GetVideoCard( int& outVendorId, int& outDeviceId )
     err = IOServiceGetMatchingServices(masterPort, IOServiceMatching("IOPCIDevice"), &itThis);
     if(err)
 		return;
-    
+
     // Yank everything out of the iterator
 	// We could walk through all devices and try to determine the best card. But for now,
 	// we'll just look at the first card.
@@ -799,7 +799,7 @@ void OSX_GetVideoCard( int& outVendorId, int& outDeviceId )
 		{
 			// Get the classcode so we know what we're looking at
 			CFDataRef classCode =  (CFDataRef)IORegistryEntryCreateCFProperty(service,CFSTR("class-code"),kCFAllocatorDefault,0);
-			// Only accept devices that are 
+			// Only accept devices that are
 			// PCI Spec - 0x00030000 is a display device
 			if((*(UInt32*)CFDataGetBytePtr(classCode) & 0x00ff0000) == 0x00030000)
 			{
@@ -807,11 +807,11 @@ void OSX_GetVideoCard( int& outVendorId, int& outDeviceId )
 				IORegistryEntryGetName(service, dName);
 				
 			    CFDataRef vendorID, deviceID;
-			    
+			
 				// Get the information for the device we've selected from the list
 			    vendorID = (CFDataRef)IORegistryEntryCreateCFProperty(service, CFSTR("vendor-id"),kCFAllocatorDefault,0);
 			    deviceID = (CFDataRef)IORegistryEntryCreateCFProperty(service, CFSTR("device-id"),kCFAllocatorDefault,0);
-			    
+			
 			    outVendorId = *((long*)CFDataGetBytePtr(vendorID));
 			    outDeviceId = *((long*)CFDataGetBytePtr(deviceID));
 				
@@ -902,7 +902,7 @@ static pascal OSStatus RegCodeHandler( EventHandlerCallRef inHandler, EventRef i
 				session->SetCDKey( doomKey );
 			}
 			else {
-				unsigned char theError[512]; 
+				unsigned char theError[512];
 				unsigned char theExplanation[512];
 				CFStringRef theErrorStr = CFCopyLocalizedString( CFSTR("DVD_KEY_ERROR"), "" );
 				CFStringRef theExplanationStr = CFCopyLocalizedString( CFSTR("DVD_KEY_EXPLANATION"), "" );

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -236,7 +236,7 @@ void CPropertyList::OnSelchange() {
 		} else {
 			m_cmbBox.SetCurSel(0);
 		}
-		//m_cmbBox.ShowDropDown();  
+		//m_cmbBox.ShowDropDown();
 	}
 	else if (pItem->m_nItemType==PIT_EDIT) {
 		//display edit box
@@ -362,7 +362,7 @@ void CPropertyList::OnButton() {
 		m_btnCtrl.ShowWindow(SW_HIDE);
 		Invalidate();
 	} else if (pItem->m_nItemType == PIT_FILE) {
-		CString SelectedFile; 
+		CString SelectedFile;
 		CString Filter("Gif Files (*.gif)|*.gif||");
 	
 		CFileDialog FileDlg(TRUE, NULL, NULL, NULL,	Filter);
@@ -525,16 +525,16 @@ void CPropertyList::PreSubclassWindow() {
 
 void CPropertyList::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
 	if (m_cmbBox) {
-		m_cmbBox.ShowWindow(SW_HIDE); 
-	} 
-	if (m_editBox) { 
-		m_editBox.ShowWindow(SW_HIDE); 
-	} 
-	if (m_btnCtrl) { 
-		m_btnCtrl.ShowWindow(SW_HIDE); 
-	} 
-	Invalidate(); 
+		m_cmbBox.ShowWindow(SW_HIDE);
+	}
+	if (m_editBox) {
+		m_editBox.ShowWindow(SW_HIDE);
+	}
+	if (m_btnCtrl) {
+		m_btnCtrl.ShowWindow(SW_HIDE);
+	}
+	Invalidate();
 
-	CListBox::OnVScroll(nSBCode, nPos, pScrollBar); 
-} 
+	CListBox::OnVScroll(nSBCode, nPos, pScrollBar);
+}
 

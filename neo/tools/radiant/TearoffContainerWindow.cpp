@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ void CTearoffContainerWindow::SetDockManager ( CTabsDlg* dlg )
 }
 void CTearoffContainerWindow::OnClose()
 {
-	if ( m_DockManager ) 
+	if ( m_DockManager )
 	{
 		//send it back to the docking window (for now at least)
 		m_DockManager->DockWindow ( m_DialogID , true );
@@ -105,7 +105,7 @@ void CTearoffContainerWindow::OnClose()
 }
 
 
-BOOL CTearoffContainerWindow:: PreTranslateMessage( MSG* pMsg ) 
+BOOL CTearoffContainerWindow:: PreTranslateMessage( MSG* pMsg )
 {
 	if ( pMsg->message == WM_NCLBUTTONUP )
 	{
@@ -124,7 +124,7 @@ BOOL CTearoffContainerWindow:: PreTranslateMessage( MSG* pMsg )
 }
 void CTearoffContainerWindow::OnSize(UINT nType, int cx, int cy)
 {
-	if ( m_ContainedDialog ) 
+	if ( m_ContainedDialog )
 	{
 		m_ContainedDialog->MoveWindow ( 0,0,cx,cy);		
 	}
@@ -142,7 +142,7 @@ void CTearoffContainerWindow::OnDestroy()
 void CTearoffContainerWindow::OnSetFocus(CWnd* pOldWnd)
 {
 	CWnd::OnSetFocus(pOldWnd);
-	if ( m_ContainedDialog ) 
+	if ( m_ContainedDialog )
 	{
 		m_ContainedDialog->SetFocus();
 	}

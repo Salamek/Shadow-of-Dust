@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -52,8 +52,8 @@ idCVar net_ip( "net_ip", "localhost", CVAR_SYSTEM, "local IP address" );
 idCVar net_port( "net_port", "", CVAR_SYSTEM | CVAR_INTEGER, "local IP port number" );
 
 typedef struct {
-	unsigned long ip;
-	unsigned long mask;
+	unsigned int ip;
+	unsigned int mask;
 } net_interface;
 
 #define 		MAX_INTERFACES	32
@@ -115,7 +115,7 @@ static bool ExtractPort( const char *src, char *buf, int bufsize, int *port ) {
 	*p = '\0';
 	*port = strtol( p+1, NULL, 10 );
 	if ( ( *port == 0 && errno == EINVAL ) ||
-		 ( ( *port == LONG_MIN || *port == LONG_MAX ) && errno == ERANGE ) ) {
+		 ( ( *port == INT_MIN || *port == INT_MAX ) && errno == ERANGE ) ) {
 		return false;
 	}
 	return true;
@@ -151,8 +151,8 @@ static bool StringToSockaddr( const char *s, struct sockaddr_in *sadr, bool doDN
 		// try to remove the port first, otherwise the DNS gets confused into multiple timeouts
 		// failed or not failed, buf is expected to contain the appropriate host to resolve
 		if ( ExtractPort( s, buf, sizeof( buf ), &port ) ) {
-			sadr->sin_port = htons( port );			
-		}		
+			sadr->sin_port = htons( port );
+		}
 		if ( !( h = gethostbyname( buf ) ) ) {
 			return false;
 		}
@@ -207,8 +207,7 @@ Sys_IsLANAddress
 */
 bool Sys_IsLANAddress( const netadr_t adr ) {
 	int i;
-	unsigned long *p_ip;
-	unsigned long ip;
+	unsigned int ip;
 
 #if ID_NOLANADDRESS
 	common->Printf( "Sys_IsLANAddress: ID_NOLANADDRESS\n" );
@@ -228,8 +227,7 @@ bool Sys_IsLANAddress( const netadr_t adr ) {
 	}
 
 	for ( i = 0; i < num_interfaces; i++ ) {
-		p_ip = (unsigned long *)&adr.ip[0];
-		ip = ntohl( *p_ip );
+		ip = ntohl( adr.ip[0] );
 		if( ( netint[i].ip & netint[i].mask ) == ( ip & netint[i].mask ) ) {
 			return true;
 		}
@@ -278,14 +276,14 @@ void Sys_InitNetworking(void)
 #if MACOS_X
 	unsigned int ip, mask;
 	struct ifaddrs *ifap, *ifp;
-	
+
 	num_interfaces = 0;
-	
+
 	if( getifaddrs( &ifap ) < 0 ) {
 		common->FatalError( "InitNetworking: SIOCGIFCONF error - %s\n", strerror( errno ) );
 		return;
 	}
-	
+
 	for( ifp = ifap; ifp; ifp = ifp->ifa_next ) {
 		if ( ifp->ifa_addr->sa_family != AF_INET )
 			continue;
@@ -298,10 +296,10 @@ void Sys_InitNetworking(void)
 
 		if ( !ifp->ifa_netmask )
 			continue;
-		
-		ip = ntohl( *( unsigned long *)&ifp->ifa_addr->sa_data[2] );
-		mask = ntohl( *( unsigned long *)&ifp->ifa_netmask->sa_data[2] );
-		
+
+		ip = ntohl( *( unsigned int *)&ifp->ifa_addr->sa_data[2] );
+		mask = ntohl( *( unsigned int *)&ifp->ifa_netmask->sa_data[2] );
+
 		if ( ip == INADDR_LOOPBACK ) {
 			common->Printf( "loopback\n" );
 		} else {
@@ -343,12 +341,12 @@ void Sys_InitNetworking(void)
 		// find the type - ignore interfaces for which we can find we can't get IP and mask ( not configured )
 		ifr = (ifreq*)( ifc.ifc_buf + ifindex );
 		if ( ioctl( s, SIOCGIFADDR, ifr ) < 0 ) {
-			common->Printf( "SIOCGIFADDR failed: %s\n", strerror( errno ) );			
+			common->Printf( "SIOCGIFADDR failed: %s\n", strerror( errno ) );
 		} else {
 			if ( ifr->ifr_addr.sa_family != AF_INET ) {
 				common->Printf( "not AF_INET\n" );
 			} else {
-				ip = ntohl( *( unsigned long *)&ifr->ifr_addr.sa_data[2] );
+				ip = ntohl( *( unsigned int *)&ifr->ifr_addr.sa_data[2] );
 				if ( ip == INADDR_LOOPBACK ) {
 					common->Printf( "loopback\n" );
 				} else {
@@ -361,7 +359,7 @@ void Sys_InitNetworking(void)
 				if ( ioctl( s, SIOCGIFNETMASK, ifr ) < 0 ) {
 					common->Printf( " SIOCGIFNETMASK failed: %s\n", strerror( errno ) );
 				} else {
-					mask = ntohl( *( unsigned long *)&ifr->ifr_addr.sa_data[2] );
+					mask = ntohl( *( unsigned int *)&ifr->ifr_addr.sa_data[2] );
 					if ( ip != INADDR_LOOPBACK ) {
 						common->Printf( "/%d.%d.%d.%d\n",
 										(unsigned char)ifr->ifr_addr.sa_data[2],
@@ -488,11 +486,11 @@ bool idPort::GetPacket( netadr_t &net_from, void *data, int &size, int maxSize )
 	int ret;
 	struct sockaddr_in from;
 	int fromlen;
-	
+
 	if ( !netSocket ) {
 		return false;
 	}
-	
+
 	fromlen = sizeof( from );
 	ret = recvfrom( netSocket, data, maxSize, 0, (struct sockaddr *) &from, (socklen_t *) &fromlen );
 
@@ -521,7 +519,7 @@ bool idPort::GetPacketBlocking( netadr_t &net_from, void *data, int &size, int m
 	fd_set				set;
 	struct timeval		tv;
 	int					ret;
-	
+
 	if ( !netSocket ) {
 		return false;
 	}
@@ -641,27 +639,27 @@ bool idTCP::Init( const char *host, short port ) {
 	if (!address.port) {
 		address.port = port;
 	}
-	common->Printf( "\"%s\" resolved to %i.%i.%i.%i:%i\n", host, 
+	common->Printf( "\"%s\" resolved to %i.%i.%i.%i:%i\n", host,
 		address.ip[0], address.ip[1], address.ip[2], address.ip[3],  address.port );
 	NetadrToSockadr(&address, &sadr);
 
 	if (fd) {
 		common->Warning("idTCP::Init: already initialized?\n");
 	}
-		
+
 	if ((fd = socket(PF_INET, SOCK_STREAM, 0)) == -1) {
 		fd = 0;
 		common->Printf("ERROR: idTCP::Init: socket: %s\n", strerror(errno));
 		return false;
 	}
-	
+
 	if ( connect( fd, (const sockaddr *)&sadr, sizeof( sadr ) ) == -1 ) {
-		common->Printf( "ERROR: idTCP::Init: connect: %s\n", strerror( errno ) );		
+		common->Printf( "ERROR: idTCP::Init: connect: %s\n", strerror( errno ) );
 		close( fd );
 		fd = 0;
 		return false;
 	}
-	
+
 	int status;
 	if ((status = fcntl(fd, F_GETFL, 0)) != -1) {
 	    status |= O_NONBLOCK; /* POSIX */
@@ -673,7 +671,7 @@ bool idTCP::Init( const char *host, short port ) {
 		fd = 0;
 		return false;
 	}
-	
+
 	common->DPrintf("Opened TCP connection\n");
 	return true;
 }
@@ -697,7 +695,7 @@ idTCP::Read
 */
 int idTCP::Read(void *data, int size) {
 	int nbytes;
-	
+
 	if (!fd) {
 		common->Printf("idTCP::Read: not initialized\n");
 		return -1;
@@ -719,13 +717,13 @@ int idTCP::Read(void *data, int size) {
 		Close();
 		return -1;
 	}
-	
+
 	// a successful read of 0 bytes indicates remote has closed the connection
 	if ( nbytes == 0 ) {
 		common->DPrintf( "idTCP::Read: read 0 bytes - assume connection closed\n" );
 		return -1;
 	}
-	
+
 	return nbytes;
 }
 
@@ -741,26 +739,26 @@ static void got_SIGPIPE( int signum ) {
 
 int	idTCP::Write(void *data, int size) {
 	int nbytes;
-	
+
 	if ( !fd ) {
 		common->Printf( "idTCP::Write: not initialized\n");
 		return -1;
 	}
-	
+
 	struct sigaction bak_action;
 	struct sigaction action;
 
 	action.sa_handler = got_SIGPIPE;
 	sigemptyset( &action.sa_mask );
 	action.sa_flags = 0;
-	
+
 	if ( sigaction( SIGPIPE, &action, &bak_action ) != 0 ) {
 		common->Printf( "ERROR: idTCP::Write: failed to set temporary SIGPIPE handler\n" );
 		Close();
 		return -1;
 	}
 
-#if defined(_GNU_SOURCE)	
+#if defined(_GNU_SOURCE)
 	// handle EINTR interrupted system call with TEMP_FAILURE_RETRY -  this is probably GNU libc specific
 	if ( ( nbytes = TEMP_FAILURE_RETRY ( write( fd, data, size ) ) ) == -1 ) {
 #else
@@ -773,12 +771,12 @@ int	idTCP::Write(void *data, int size) {
 		Close();
 		return -1;
 	}
-	
+
 	if ( sigaction( SIGPIPE, &bak_action, NULL ) != 0 ) {
 		common->Printf( "ERROR: idTCP::Write: failed to reset SIGPIPE handler\n" );
 		Close();
 		return -1;
 	}
-	
-	return nbytes;	
+
+	return nbytes;
 }

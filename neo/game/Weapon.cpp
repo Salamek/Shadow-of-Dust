@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ If you have questions concerning this license or the applicable additional terms
 
 /***********************************************************************
 
-  idWeapon  
+  idWeapon
 	
 ***********************************************************************/
 
@@ -2821,13 +2821,13 @@ void idWeapon::Event_LaunchProjectiles( int num_projectiles, float spread, float
 			return;
 		}
 
-		// if this is a power ammo weapon ( currently only the bfg ) then make sure 
+		// if this is a power ammo weapon ( currently only the bfg ) then make sure
 		// we only fire as much power as available in each clip
 		if ( powerAmmo ) {
 			// power comes in as a float from zero to max
 			// if we use this on more than the bfg will need to define the max
 			// in the .def as opposed to just in the script so proper calcs
-			// can be done here. 
+			// can be done here.
 			dmgPower = ( int )dmgPower + 1;
 			if ( dmgPower > ammoClip ) {
 				dmgPower = ammoClip;

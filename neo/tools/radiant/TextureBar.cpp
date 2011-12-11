@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTextureBar message handlers
 
-void CTextureBar::OnDeltaposSpinHshift(NMHDR* pNMHDR, LRESULT* pResult) 
+void CTextureBar::OnDeltaposSpinHshift(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
 	*pResult = 0;
@@ -106,7 +106,7 @@ void CTextureBar::OnDeltaposSpinHshift(NMHDR* pNMHDR, LRESULT* pResult)
   GetSurfaceAttributes();
 }
 
-void CTextureBar::OnDeltaposSpinVshift(NMHDR* pNMHDR, LRESULT* pResult) 
+void CTextureBar::OnDeltaposSpinVshift(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
 	// TODO: Add your control notification handler code here
@@ -119,7 +119,7 @@ void CTextureBar::OnDeltaposSpinVshift(NMHDR* pNMHDR, LRESULT* pResult)
   GetSurfaceAttributes();
 }
 
-void CTextureBar::OnDeltaposSpinHScale(NMHDR* pNMHDR, LRESULT* pResult) 
+void CTextureBar::OnDeltaposSpinHScale(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
 	// TODO: Add your control notification handler code here
@@ -132,7 +132,7 @@ void CTextureBar::OnDeltaposSpinHScale(NMHDR* pNMHDR, LRESULT* pResult)
   GetSurfaceAttributes();
 }
 
-void CTextureBar::OnDeltaposSpinVScale(NMHDR* pNMHDR, LRESULT* pResult) 
+void CTextureBar::OnDeltaposSpinVScale(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
 	// TODO: Add your control notification handler code here
@@ -145,7 +145,7 @@ void CTextureBar::OnDeltaposSpinVScale(NMHDR* pNMHDR, LRESULT* pResult)
   GetSurfaceAttributes();
 }
 
-void CTextureBar::OnDeltaposSpinRotate(NMHDR* pNMHDR, LRESULT* pResult) 
+void CTextureBar::OnDeltaposSpinRotate(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
 	*pResult = 0;
@@ -158,13 +158,13 @@ void CTextureBar::OnDeltaposSpinRotate(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void CTextureBar::OnSelectionPrint() 
+void CTextureBar::OnSelectionPrint()
 {
 	// TODO: Add your command handler code here
 	
 }
 
-int CTextureBar::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CTextureBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDialogBar::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -172,7 +172,7 @@ int CTextureBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 }
 
 
-void CTextureBar::OnBtnApplytexturestuff() 
+void CTextureBar::OnBtnApplytexturestuff()
 {
   SetSurfaceAttributes();
 }
@@ -207,9 +207,9 @@ void CTextureBar::SetSurfaceAttributes()
     UpdateData(TRUE);
     pt->shift[0] = m_nHShift;
     pt->shift[1] = m_nVShift;
-    pt->scale[0] = m_nHScale; 
-    pt->scale[1] = m_nVScale; 
-    pt->rotate = m_nRotate; 
+    pt->scale[0] = m_nHScale;
+    pt->scale[1] = m_nVScale;
+    pt->rotate = m_nRotate;
     Sys_UpdateWindows(W_CAMERA);
   }
 }

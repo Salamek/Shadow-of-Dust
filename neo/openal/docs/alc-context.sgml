@@ -4,10 +4,10 @@
    <title>AL Contexts and the ALC API</title>
    <para>
      This section of the AL specification describes ALC, the AL Context API.
-     ALC is a portable API for managing &AL; contexts, including 
-     resource sharing, locking, and unlocking. Within the core AL API the 
-     existence of a Context is implied, but the Context is not exposed. The 
-     Context encapsulates the state of a given intance of the AL state machine. 
+     ALC is a portable API for managing &AL; contexts, including
+     resource sharing, locking, and unlocking. Within the core AL API the
+     existence of a Context is implied, but the Context is not exposed. The
+     Context encapsulates the state of a given intance of the AL state machine.
    </para>
    <para>
      To avoid confusion with the AL related prefixes implied throughout
@@ -17,7 +17,7 @@
    <para>
      ALC defines the following objects: Contexts.
    </para>
-   
+
 
     <![ %Annote [
       <note><title>Annotation (ALC entry points)</title><para>
@@ -42,7 +42,7 @@
 
 
     <![ %RFC [
-       <note id="rfc-bk001024-02"><title>RFC/ Issues </title><para>  
+       <note id="rfc-bk001024-02"><title>RFC/ Issues </title><para>
           Hardware init/deinit, mapping many processes with
           multiple contexts to many devices, sharing resources
           among processes.
@@ -58,19 +58,19 @@
       a daemon/OS service/actual server. This mechanism also
       permits different drivers (and hardware) to coexist
       within the same system, as well as allowing several
-      applications to share system resources for audio, including 
+      applications to share system resources for audio, including
       a single hardware output device. The details are left
       to the implementation, which has to map the available
       backends to uniq7ue device specifiers (represented as
       strings).
    </para>
-    
+
 
     <![ %Annote [
       <note><title>Annotation (Network transparency)</title><para>
       &AL; is meant for interoperability with &OGL;. Some
-      implementations of &OGL; bindings (e.g. GLX) are network 
-      transparent. The Device API theoretically allows for 
+      implementations of &OGL; bindings (e.g. GLX) are network
+      transparent. The Device API theoretically allows for
       a network transparent AL implementation. No wire protocol
       is specified, no specification or implementation is planned.
        </para></note>
@@ -81,7 +81,7 @@
          At this time, ALC does not provide mechanism to query
          for available devices, and request device enumerations.
          This might be added at a later time, depending on demand
-         and the ability to abstract OS and configuration specifics. 
+         and the ability to abstract OS and configuration specifics.
        </para></note>
     ]]>
 
@@ -100,18 +100,18 @@
    <para>
       The alcOpenDevice function allows the application (i.e. the
       client program) to connect to a device (i.e. the server).
-       <funcsynopsis><funcprototype> 
+       <funcsynopsis><funcprototype>
       <funcdef> &device; * <function>alcOpenDevice</function></funcdef>
-      <paramdef> const &ubyte;* <parameter>deviceSpecifier</parameter></paramdef>      
+      <paramdef> const &ubyte;* <parameter>deviceSpecifier</parameter></paramdef>
       </funcprototype></funcsynopsis>
       If the function returns NULL, then no sound driver/device has
-      been found. The argument is a null terminated string that requests 
+      been found. The argument is a null terminated string that requests
       a certain device or device configuration. If NULL is specified,
-      the implementation will provide an implementation specific default. 
+      the implementation will provide an implementation specific default.
     </para>
     <![ %Annote [
       <note><title>Annotation (Operating system dependencies)</title><para>
-         At this point, system specific configuration, and operating system 
+         At this point, system specific configuration, and operating system
          specific details, are handled by leaving the details of the
          string specifier to the implementation. The application coder
          has to determine how he wants to obtain this information from the
@@ -120,23 +120,23 @@
          string might still be operating system and implementation specific.
       </para></note>
     ]]>
-   </sect2>  
+   </sect2>
 
    <sect2>
    <title>Disconnecting from a Device</title>
    <para>
       The alcCloseDevice function allows the application (i.e. the
       client program) to disconnect from a device (i.e. the server).
-       <funcsynopsis><funcprototype> 
+       <funcsynopsis><funcprototype>
       <funcdef> &void; <function>alcCloseDevice</function></funcdef>
-      <paramdef> &device; * <parameter>deviceHandle</parameter></paramdef>      
+      <paramdef> &device; * <parameter>deviceHandle</parameter></paramdef>
       </funcprototype></funcsynopsis>
       If deviceHandle is NULL or invalid, an ALC_INVALID_DEVICE error
       will be generated. Once closed, a deviceHandle is invalid.
    </para>
    </sect2>
    </sect1>
- 
+
 
 
 
@@ -145,13 +145,13 @@
    <para>
       All operations of the AL core API affect a current AL context.
       Within the scope of AL, the ALC is implied - it is not visible as
-      a handle or function parameter. Only one AL Context per INprocess 
+      a handle or function parameter. Only one AL Context per INprocess
       can be current at a time. Applications maintaining multiple
       AL Contexts, whether threaded or not, have to set the current
       context accordingly. Applications can have multiple threads
       that share one more or contexts. In other words, AL and ALC are
       threadsafe.
-   </para>  
+   </para>
    <para>
       The default AL Context interoperates with a hardware device driver.
       The application manages hardware and driver resources by
@@ -172,7 +172,7 @@
       clarity. Throughout this document, "rendering" is used
       to describe spatialized audio synthesis (avoiding ambiguous
       words like "processing", as well as proprietary and restrictive
-      terms like "wavetracing"). 
+      terms like "wavetracing").
    </para>
 
 
@@ -181,7 +181,7 @@
     <para>
        The application can choose to specify certain attributes for
        a context. Attributes not specified explicitely are set to
-       implementation dependend defaults. 
+       implementation dependend defaults.
     </para>
   <para>
     <table>
@@ -192,21 +192,21 @@
     <thead>
     <row>
        <entry>Name</>
-       <entry>Description</>        
+       <entry>Description</>
     </row>
     </thead>
     <tbody>
     <row>
        <entry>ALC_FREQUENCY</>
-       <entry>Frequency for mixing output buffer, in units of Hz.</>  
+       <entry>Frequency for mixing output buffer, in units of Hz.</>
     </row>
     <row>
        <entry>ALC_REFRESH</>
-       <entry>Refresh intervalls, in units of Hz.</>  
+       <entry>Refresh intervalls, in units of Hz.</>
     </row>
     <row>
        <entry>ALC_SYNC</>
-       <entry>Flag, indicating a synchronous context.</>  
+       <entry>Flag, indicating a synchronous context.</>
     </row>
     </tbody>
     </tgroup>
@@ -218,35 +218,35 @@
          Applications might have a fixed, or bounded, schedule for
          state changes (e.g. synchronously with the GL framerate).
          In this case it is desirable to specify the mixahead
-         interval (milliseconds), or refresh rate (Hz), for the 
+         interval (milliseconds), or refresh rate (Hz), for the
          mixing thread. This is especially important for a synchronous
          context, where the application has to specify the refresh
-         interval it intends to keep.  
+         interval it intends to keep.
       </para></note>
     ]]>
 
 
     <![ %RFC [
-       <note id="rfc-bk001026-05"><title>RFC / Mixing Buffer Configuration </title><para>  
+       <note id="rfc-bk001026-05"><title>RFC / Mixing Buffer Configuration </title><para>
          ALC_RESOLUTION was originally used to specify the accuracy of the
          mixing output buffer. For the time being this is not supported, but
          could be added if mixing path and result accuracy control is desirable
          to scale resource requirements.
          A full ALC_FORMAT (including channel and other attributes) does not
          make sense for rendering contexts, but will be necessary for PBuffers
-         (mix to memory). 
+         (mix to memory).
       </para></note>
     ]]>
 
     <![ %RFC [
-       <note id="rfc-bk001026-01"><title>RFC / LOKI extensions </title><para>  
+       <note id="rfc-bk001026-01"><title>RFC / LOKI extensions </title><para>
       <programlisting>
 
        ALC_SOURCES_HINT_LOKI, /* # of sources to pre-allocate */
        ALC_BUFFERS_HINT_LOKI, /* # of buffers to pre-allocate */
 
        ALC_CD_LOKI,           /* demand CD/DVD control */
-      
+
       </programlisting>
       </para></note>
     ]]>
@@ -260,7 +260,7 @@
        has to be a valid device. The attribute list can be NULL,
        or a zero terminated list of integer pairs composed of valid
        ALC attribute tokens and requested values.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> &context; * <function> alcCreateContext </function></funcdef>
       <paramdef> const &device; * <parameter> deviceHandle </parameter></paramdef>
       <paramdef> &int; * <parameter> attrList </parameter></paramdef>
@@ -279,11 +279,11 @@
     <title>Selecting a Context for Operation</title>
     <para>
       To make a Context current with respect to AL Operation (state
-      changes by issueing commands), alcMakeContextCurrent is used. 
+      changes by issueing commands), alcMakeContextCurrent is used.
       The context parameter can be NULL or a valid context pointer.
       The operation will apply to the device that the context was
-      created for. 
-      <funcsynopsis><funcprototype> 
+      created for.
+      <funcsynopsis><funcprototype>
       <funcdef> &bool; <function> alcMakeContextCurrent </function></funcdef>
       <paramdef> &context; * <parameter> context </parameter></paramdef>
       </funcprototype></funcsynopsis>
@@ -298,7 +298,7 @@
          The context carries this information, thus removing the
          need to specify the device explicitely. Contexts can not
          be made current for any other device aside from the one
-         they were created for. 
+         they were created for.
        </para></note>
     ]]>
 
@@ -306,7 +306,7 @@
       <note><title>Annotation (No Multiple Current)</title><para>
           There is only one current context per process, even
           in multithreaded applications, even if multiple
-          devices are used.   
+          devices are used.
       </para></note>
     ]]>
 
@@ -332,9 +332,9 @@
     ]]>
 
     <![ %RFC [
-       <note id="rfc-bk001026-06"><title>RFC / Buffer Deletion </title><para>  
+       <note id="rfc-bk001026-06"><title>RFC / Buffer Deletion </title><para>
          Buffers that have not yet been processed in another context
-         can not be deleted from any other context.  
+         can not be deleted from any other context.
       </para></note>
     ]]>
     </sect2>
@@ -349,26 +349,26 @@
       processed (i.e. that internal execution state like offset
       increments are supposed to be performed), the application
       has to use alcProcessContext.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> &void; <function>alcProcessContext</function></funcdef>
       <paramdef> &context; * <parameter> context </parameter></paramdef>
       </funcprototype></funcsynopsis>
       Repeated calls to alcProcessContext are legal, and do not
       affect a context that is already marked as processing. The
       default state of a context created by alcCreateContext is
-      that it is not marked as processing. 
+      that it is not marked as processing.
     </para>
 
     <![ %Annote [
       <note><title>Annotation (Sync and async implementations)</title><para>
       Unfortunately, the exact semantics of alcProcessContext is
-      not independend of the implementation. Ideally it should be completely 
-      transparent to the application whether the sound driver is threaded or 
-      synced. Unfortunately a synced context has to have its execution 
-      initiated by the application, which requires calls of 
+      not independend of the implementation. Ideally it should be completely
+      transparent to the application whether the sound driver is threaded or
+      synced. Unfortunately a synced context has to have its execution
+      initiated by the application, which requires calls of
       alcProcessContext timed in accordance to the drivers mixahead,
       or the rendering buffer will underflow. For a threaded driver,
-      the implementation is free to consider alcProcessContext 
+      the implementation is free to consider alcProcessContext
       a NOP once the context has been marked as processing.
       </para><para>
       One consequence is that an application that was developed
@@ -382,12 +382,12 @@
       of a threaded implementation. Permitting the AL implementation
       to e.g. schedule optimizations based on alcProcessContext
       calls would similarly obfuscate the exact semantincs.
-      Consequently, the application coder has to accept this 
+      Consequently, the application coder has to accept this
       implementation dependency, and has to rely on the ALC_SYNC
       attribute to explicitely request a synchronous implementation.
       The implementation can expect the application to be aware
       of the additonal constraints imposed on alcProcessContext in
-      this case.   
+      this case.
        </para></note>
     ]]>
 
@@ -399,31 +399,31 @@
        </para></note>
     ]]>
 
-     
+
     <![ %RFC [
-       <note id="rfc-bk001024-03"><title>RFC/ Implications for Networking</title><para>  
-         What does alcProcessContext imply for networking? 
+       <note id="rfc-bk001024-03"><title>RFC/ Implications for Networking</title><para>
+         What does alcProcessContext imply for networking?
          For AL, will we add alFlush/alFinish?
       </para></note>
     ]]>
    </sect2>
- 
+
    <sect2>
     <title>Suspend Context Processing</title>
     <para>
       The application can suspend any context from processing
       (including the current one). To indicate that a context should be
-      suspended from processing (i.e. that internal execution state like 
+      suspended from processing (i.e. that internal execution state like
       offset increments is not supposed to be changed), the application
       has to use alcSuspendContext.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> &void; <function>alcSuspendContext</function></funcdef>
       <paramdef> &context; * <parameter> context </parameter></paramdef>
       </funcprototype></funcsynopsis>
       Repeated calls to alcSuspendContext are legal, and do not
       affect a context that is already marked as suspended. The
       default state of a context created by alcCreateContext is
-      that it is marked as suspended. 
+      that it is marked as suspended.
     </para>
 
   <![ %Annote [
@@ -449,7 +449,7 @@
          context, whether muted or not, will incidentally suspend rendering
          as well. However, it is the application's responsibility to
          prevent artifacts (e.g. by proper GAIN control to fade in and
-         out). It is recommended to mute a context before suspending. 
+         out). It is recommended to mute a context before suspending.
        </para></note>
     ]]>
 
@@ -471,7 +471,7 @@
           guaranteed to be in sequence, and the implementation is not
           expected to optimize this operation. A typical use would
           be setting up the initial configuration while loading a
-          scene.  
+          scene.
        </para></note>
     ]]>
 
@@ -482,7 +482,7 @@
          This might well depend on the details of the hardware and driver.
          Neither a muted context nor a suspended context can be expected
          to free device resources. If all contexts for a given device
-         are suspended, and no context of this device is current, the 
+         are suspended, and no context of this device is current, the
          implementation is expected to release all hardware resources if possible.
        </para></note>
     ]]>
@@ -494,12 +494,12 @@
     <sect2>
     <title>Destroying a Context</title>
     <para>
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef> &void; <function> alcDestroyContext </function></funcdef>
       <paramdef> &context; * <parameter> context </parameter></paramdef>
       </funcprototype></funcsynopsis>
        The correct way to destroy a context is to first release it using
-       alcMakeCurrent and NULL. Applications should not attempt to destroy 
+       alcMakeCurrent and NULL. Applications should not attempt to destroy
        a current context.
     </para>
    </sect2>
@@ -509,14 +509,14 @@
 
     <sect1>
     <title>ALC Queries</title>
-   
+
     <sect2>
     <title>Query for Current Context</title>
     <para>
       The application can query for, and obtain an handle to, the current
-      context for the application. If there is no current context, NULL is 
-      returned. 
-      <funcsynopsis><funcprototype> 
+      context for the application. If there is no current context, NULL is
+      returned.
+      <funcsynopsis><funcprototype>
       <funcdef> &context; * <function>alcGetCurrentContext</function></funcdef>
       <void>
       </funcprototype></funcsynopsis>
@@ -527,8 +527,8 @@
     <title>Query for a Context's Device</title>
     <para>
       The application can query for, and obtain an handle to, the device
-      of a given context. 
-      <funcsynopsis><funcprototype> 
+      of a given context.
+      <funcsynopsis><funcprototype>
       <funcdef> &device; * <function>alcGetContextsDevice</function></funcdef>
       <paramdef> &context; * <parameter> context </parameter></paramdef>
       </funcprototype></funcsynopsis>
@@ -540,11 +540,11 @@
    <title>Query For Extensions</title>
    <para>
      To verify that a given extension is available for the current
-     context and the device it is associated with, use 
+     context and the device it is associated with, use
         <funcsynopsis>
 	  <funcprototype>
 	    <funcdef>&bool;<function>IsExtensionPresent</function></funcdef>
-            <paramdef> const &device; * <parameter>deviceHandle</parameter></paramdef>  
+            <paramdef> const &device; * <parameter>deviceHandle</parameter></paramdef>
 	    <paramdef>const &ubyte; * <parameter> extName </parameter></paramdef>
 	  </funcprototype>
 	</funcsynopsis>
@@ -568,18 +568,18 @@
        The application is expected to verify the applicability of
        an extension or core function entry point before requesting
        it by name, by use of alcIsExtensionPresent.
-       <funcsynopsis><funcprototype> 
+       <funcsynopsis><funcprototype>
        <funcdef> &void; * <function> alcGetProcAddress</function></funcdef>
-       <paramdef> const &device; * <parameter>deviceHandle</parameter></paramdef>  
-       <paramdef> const &ubyte; * <parameter> funcName </parameter></paramdef>      
-       </funcprototype></funcsynopsis> 
+       <paramdef> const &device; * <parameter>deviceHandle</parameter></paramdef>
+       <paramdef> const &ubyte; * <parameter> funcName </parameter></paramdef>
+       </funcprototype></funcsynopsis>
        Entry points can be device specific, but are not context specific.
        Using a NULL device handle does not guarantee that the entry
        point is returned, even if available for one of the available
        devices. Specifying a NULL name parameter will cause an
        ALC_INVALID_VALUE error.
     </para>
- 
+
    </sect2>
    <sect2>
     <title>Retrieving Enumeration Values</title>
@@ -589,14 +589,14 @@
        Using a NULL handle is legal, but only the tokens defined by
        the AL core are guaranteed. Availability of extension tokens
        dependends on the ALC extension.
-       <funcsynopsis><funcprototype> 
+       <funcsynopsis><funcprototype>
        <funcdef> &uint; <function> alcGetEnumValue </function></funcdef>
-       <paramdef> const &device; * <parameter>deviceHandle</parameter></paramdef>  
-       <paramdef> const &ubyte; <parameter> enumName </parameter></paramdef>      
-       </funcprototype></funcsynopsis> 
+       <paramdef> const &device; * <parameter>deviceHandle</parameter></paramdef>
+       <paramdef> const &ubyte; <parameter> enumName </parameter></paramdef>
+       </funcprototype></funcsynopsis>
        Specifying a NULL name parameter will cause an
        ALC_INVALID_VALUE error.
-    </para> 
+    </para>
    </sect2>
 
     <sect2>
@@ -606,7 +606,7 @@
       handling. In particular, ALC does not use conventions
       derived from X11 (GLX) or Windows (WGL).
       The alcGetError function can be used to query ALC errors.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef>&enum;<function>alcGetError</function></funcdef>
       <paramdef> &device; * <parameter>deviceHandle</parameter></paramdef>
       </funcprototype></funcsynopsis>
@@ -622,44 +622,44 @@
     <thead>
     <row>
        <entry>Name</>
-       <entry>Description</>        
+       <entry>Description</>
     </row>
     </thead>
     <tbody>
     <row>
        <entry>ALC_NO_ERROR</>
-       <entry>The device handle or specifier does name an accessible driver/server.</>  
+       <entry>The device handle or specifier does name an accessible driver/server.</>
     </row>
     <row>
        <entry>ALC_INVALID_DEVICE</>
-       <entry>The Context argument does not name a valid context.</>  
+       <entry>The Context argument does not name a valid context.</>
     </row>
     <row>
        <entry>ALC_INVALID_CONTEXT</>
-       <entry>The Context argument does not name a valid context.</> 
+       <entry>The Context argument does not name a valid context.</>
     </row>
     <row>
        <entry>ALC_INVALID_ENUM</>
-       <entry>A token used is not valid, or not applicable.</>  
+       <entry>A token used is not valid, or not applicable.</>
     </row>
     <row>
        <entry>ALC_INVALID_VALUE</>
-       <entry>An value (e.g. attribute) is not valid, or not applicable.</>  
+       <entry>An value (e.g. attribute) is not valid, or not applicable.</>
     </row>
     </tbody>
     </tgroup>
     </table>
     </para>
- 
+
 
     <![ %Annote [
       <note><title>Annotation (No UNDERFLOW error)</title><para>
-         Applications using synchronous (and, depending on CPU 
+         Applications using synchronous (and, depending on CPU
          load, even an asynchronous implementation itself) might
          fail to prevent underflow of the rendering output
          buffer. No ALC error is generated in these cases,
          as it this error condition can not be applied to a
-         specific command. 
+         specific command.
        </para></note>
     ]]>
   </sect2>
@@ -668,13 +668,13 @@
   <title>String Query</title>
   <para>
      The application can obtain certain strings from ALC.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef>const &ubyte; * <function>alcGetString</function></funcdef>
-      <paramdef> &device; * <parameter>deviceHandle</parameter></paramdef>      
-      <paramdef> &enum; <parameter> token </parameter></paramdef>      
+      <paramdef> &device; * <parameter>deviceHandle</parameter></paramdef>
+      <paramdef> &enum; <parameter> token </parameter></paramdef>
       </funcprototype></funcsynopsis>
      For some tokens, NULL is is a legal value for the deviceHandle.
-     In other cases, specifying a NULL device will generate an 
+     In other cases, specifying a NULL device will generate an
      ALC_INVALID_DEVICE error.
   </para>
   <para>
@@ -686,21 +686,21 @@
     <thead>
     <row>
        <entry>Name</>
-       <entry>Description</>        
+       <entry>Description</>
     </row>
     </thead>
     <tbody>
     <row>
        <entry>ALC_DEFAULT_DEVICE_SPECIFIER</>
-       <entry>The specifier string for the default device (NULL handle is legal).</>  
+       <entry>The specifier string for the default device (NULL handle is legal).</>
     </row>
     <row>
        <entry>ALC_DEVICE_SPECIFIER</>
-       <entry>The specifier string for the device (NULL handle is not legal).</>  
+       <entry>The specifier string for the device (NULL handle is not legal).</>
     </row>
     <row>
        <entry>ALC_EXTENSIONS</>
-       <entry>The extensions string for diagnostics and printing.</>  
+       <entry>The extensions string for diagnostics and printing.</>
     </row>
     </tbody>
     </tgroup>
@@ -708,26 +708,26 @@
     </para>
 
    <para>
-     In addition, printable error message strings are provided for 
+     In addition, printable error message strings are provided for
      all valid error tokens, including ALC_NO_ERROR, ALC_INVALID_DEVICE,
      ALC_INVALID_CONTEXT, ALC_INVALID_ENUM, ALC_INVALID_VALUE.
    </para>
-  </sect2> 
+  </sect2>
 
   <sect2>
   <title>Integer Query</title>
   <para>
     The application can query ALC for information using an integer
     query function.
-      <funcsynopsis><funcprototype> 
+      <funcsynopsis><funcprototype>
       <funcdef>  &void; <function>alcGetIntegerv</function></funcdef>
       <paramdef> &device; * <parameter>deviceHandle</parameter></paramdef>
-      <paramdef> &enum; <parameter> token </parameter></paramdef>     
-      <paramdef> &sizei; <parameter> size </parameter></paramdef>     
-      <paramdef> &int; <parameter> dest </parameter></paramdef>     
+      <paramdef> &enum; <parameter> token </parameter></paramdef>
+      <paramdef> &sizei; <parameter> size </parameter></paramdef>
+      <paramdef> &int; <parameter> dest </parameter></paramdef>
       </funcprototype></funcsynopsis>
     For some tokens, NULL is a legal deviceHandle. In other
-    cases, specifying a NULL device will generate an ALC_INVALID_DEVICE 
+    cases, specifying a NULL device will generate an ALC_INVALID_DEVICE
     error. The application
     has to specify the size of the destination buffer provided.
     A NULL destination or a zero size parameter will cause ALC to ignore
@@ -743,24 +743,24 @@
     <thead>
     <row>
        <entry>Name</>
-       <entry>Description</>        
+       <entry>Description</>
     </row>
     </thead>
     <tbody>
     <row>
        <entry>ALC_MAJOR_VERSION</>
-       <entry>Major version query.</>  
+       <entry>Major version query.</>
     </row>
     <row>
        <entry>ALC_MINOR_VERSION</>
-       <entry>Minor version query.</>  
+       <entry>Minor version query.</>
     </row>
     <row>
        <entry>ALC_ATTRIBUTES_SIZE</>
        <entry>The size required for the zero-terminated attributes
                list, for the current context. NULL is an invalid
                device. NULL (no current context for the
-               specified device) is legal.</> 
+               specified device) is legal.</>
     </row>
     <row>
        <entry>ALC_ALL_ATTRIBUTES</>
@@ -769,13 +769,13 @@
                context of the specified device. NULL is an invalid
                device. NULL (no current context for the
                specified device) will return the default attributes
-               defined by the specified device.</>  
+               defined by the specified device.</>
     </row>
     </tbody>
     </tgroup>
     </table>
     </para>
- 
+
     <![ %Annote [
       <note><title>Annotation (Backward Compatibility)</title><para>
       Backward compatibility is guaranteed only for minor revisions.
@@ -785,24 +785,24 @@
     ]]>
 
     <![ %RFC [
-       <note id="rfc-bk001026-02"><title>RFC / Version Matching </title><para>  
-        The ALC version can be different from the AL version. 
+       <note id="rfc-bk001026-02"><title>RFC / Version Matching </title><para>
+        The ALC version can be different from the AL version.
         The ALC major version has to be identical between
-        application and driver (client and server). 
-        The ALC minor version can differ between client and server, 
+        application and driver (client and server).
+        The ALC minor version can differ between client and server,
         and the minimum of the two minor version numbers is returned.
       </para></note>
     ]]>
-  
+
     <![ %RFC [
-       <note id="rfc-bk001027-03"><title>RFC / Device Enumeration </title><para>  
+       <note id="rfc-bk001027-03"><title>RFC / Device Enumeration </title><para>
          ALC_NUM_DEVICE_SPECIFIERS could be provided as an extension,
          but it requires the number of device configurations to be
          finite and small, as they are to be represented by strings.
       </para></note>
     ]]>
 
-   </sect2> 
+   </sect2>
    </sect1>
 
 
@@ -816,7 +816,7 @@
    </para>
 
     <![ %RFC [
-       <note id="rfc-bk001024-01"><title>RFC/ Sharing Sources?</title><para>  
+       <note id="rfc-bk001024-01"><title>RFC/ Sharing Sources?</title><para>
           Mike Kelly from Dynamix describes an application scenario with
           multiple camera views of the same scene (implemented using
           several viewports on a single, "split screen", context)
@@ -828,7 +828,7 @@
           share certain AL objects among contexts, at a later time.
           It is not desirable to share Sources by default, especially
           as the more common multi-listener application is expected to
-          maintain listeners with disjunct sets of sources. 
+          maintain listeners with disjunct sets of sources.
       </para></note>
     ]]>
    <sect2>
@@ -837,10 +837,10 @@
       Buffers are shared among contexts. The processing state of a buffer
       is determined by the dependencies imposed by all contexts, not just
       the current context. This includes suspended contexts as well as
-      contexts that are processing.  
+      contexts that are processing.
    </para>
    </sect2>
    </sect1>
- 
+
 
    </chapter>

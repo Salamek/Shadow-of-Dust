@@ -23,8 +23,8 @@ extern "C" {
    #pragma export on
   #endif
  #endif
- #define ALCAPI 
- #define ALCAPIENTRY 
+ #define ALCAPI
+ #define ALCAPIENTRY
  typedef ALCvoid ALCdevice;
   typedef ALCvoid ALCcontext;
 #endif

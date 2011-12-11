@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ BEGIN_MESSAGE_MAP(CVectorCtl, CButton)
 END_MESSAGE_MAP()
 
 CVectorCtl::CVectorCtl () :
-    m_bBmpCreated (FALSE), 
+    m_bBmpCreated (FALSE),
     m_bImageChange (TRUE),
     m_bBackgroundBitmapUsed (FALSE),
     m_clrDiffuse (DEFAULT_DIFFUSE),
@@ -50,7 +50,7 @@ CVectorCtl::CVectorCtl () :
     m_clrBackgroundStart (DEFAULT_START_BACKGROUND_COLOR),
     m_clrBackgroundEnd (DEFAULT_END_BACKGROUND_COLOR),
     m_dSpecularExponent (DEFAULT_SPEC_EXP),
-    m_bHasFocus (FALSE), 
+    m_bHasFocus (FALSE),
     m_bSelected (FALSE),
     m_bFrontVector (FALSE),
     m_dSensitivity (20.0),
@@ -69,9 +69,9 @@ CVectorCtl::CVectorCtl () :
 }
 
 
-CVectorCtl::~CVectorCtl () 
+CVectorCtl::~CVectorCtl ()
 {
-    if (m_bBmpCreated) 
+    if (m_bBmpCreated)
         m_dcMem.SelectObject (m_pOldBitmap);
     ClearBackgroundBitmap ();
 }
@@ -84,12 +84,12 @@ void CVectorCtl::DrawItem( LPDRAWITEMSTRUCT lpDrawItemStruct )
     if (!m_bSelected && lpDrawItemStruct->itemState & ODS_SELECTED) {
             // Just got re-selected (user starts a new mouse dragging session)
     } else if (m_bSelected && // Last state was selected
-               !(lpDrawItemStruct->itemState & ODS_SELECTED) &&     // New state is NOT selected   
+               !(lpDrawItemStruct->itemState & ODS_SELECTED) &&     // New state is NOT selected
                (lpDrawItemStruct->itemState & ODS_FOCUS) &&         // New state is still in focus
                m_procVectorChanged)     // User asked for a callback
         // User has left the track-ball and asked for a callback.
-        m_procVectorChanged ( rotationQuat ); 
-          
+        m_procVectorChanged ( rotationQuat );
+
     m_bHasFocus = lpDrawItemStruct->itemState & ODS_FOCUS;      // Update focus status
     m_bSelected = lpDrawItemStruct->itemState & ODS_SELECTED;   // Update selection status
 
@@ -104,7 +104,7 @@ void CVectorCtl::DrawItem( LPDRAWITEMSTRUCT lpDrawItemStruct )
     pDC->BitBlt (0,0,m_iWidth, m_iHeight, &m_dcMem, 0, 0, SRCCOPY); // Update screen
 }
 
-// Mouse was dragged 
+// Mouse was dragged
 void CVectorCtl::OnMouseDrag (int ixMove, int iyMove)
 {
     RotateByXandY (double(-iyMove) / m_dSensitivity,
@@ -125,7 +125,7 @@ void CVectorCtl::BuildImage (LPDRAWITEMSTRUCT lpDrawItemStruct)
                        vy = double(yf) / double(m_iRadius),
                        vz = sqrt (1.0 - vx*vx - vy*vy);     // Find ball's normal
                 m_dcMem.SetPixelV (x,y, CalcLight (vx,vy,vz));
-            } 
+            }
         }
 }
 
@@ -142,7 +142,7 @@ BOOL CVectorCtl::Normalize ()
         return TRUE;
     } else {    // Reset to defualt vector
         double DefaultVec[3] = DEFAULT_VEC;
-        for (int i=0; i<3; i++) 
+        for (int i=0; i<3; i++)
             m_dVec[i] = DefaultVec[i];
         return FALSE;
     }
@@ -151,7 +151,7 @@ BOOL CVectorCtl::Normalize ()
 // Calculate lightning effect for specific pixel on ball's surface
 COLORREF CVectorCtl::CalcLight (double dx, double dy, double dz)
 {
-    double NL = dx * m_dVec[0] + dy * m_dVec[1] + dz * m_dVec[2], 
+    double NL = dx * m_dVec[0] + dy * m_dVec[1] + dz * m_dVec[2],
            RV = 2.0 * NL,
            rx = m_dVec[0] - (dx * RV),
            ry = m_dVec[1] - (dy * RV),
@@ -169,7 +169,7 @@ COLORREF CVectorCtl::CalcLight (double dx, double dy, double dz)
 
          g = int (  double(GetGValue(m_clrDiffuse)) * NL +  // Diffuse
                     double(GetGValue(m_clrLight)) * RV +    // Specular
-                    double(GetGValue(m_clrAmbient))),       // Ambient    
+                    double(GetGValue(m_clrAmbient))),       // Ambient
 
          b = int (  double(GetBValue(m_clrDiffuse)) * NL +  // Diffuse
                     double(GetBValue(m_clrLight)) * RV +    // Specular
@@ -235,16 +235,16 @@ void CVectorCtl::RotateByXandY (double XRot, double YRot)
     Redraw ();
 }
 
- 
+
 void CVectorCtl::UpdateAxisControls ()
 {
     CString cs;
-    for (int i=0; i<3; i++) 
+    for (int i=0; i<3; i++)
         if (pCtl[i]) {
             cs.Format ("%+1.5f",m_dVec[i]);
             pCtl[i]->SetWindowText (cs);
         }
-}            
+}
 
 void CVectorCtl::SetAxisControl (int nXCtl, int nYCtl, int nZCtl)
 {
@@ -278,7 +278,7 @@ void CVectorCtl::SetAxis (double d, int nAxis)
         m_dVec[(nAxis+1) %3]=m_dVec[(nAxis+2) %3]=0.0;
         Redraw ();
         return;
-    } 
+    }
     m_dVec[nAxis] = d;
     Normalize ();
     Redraw ();
@@ -322,9 +322,9 @@ void CVectorCtl::CreateBackground ()
     if (!m_bBackgroundBitmapUsed) { // No background used - fill with gradient color
         double r = GetRValue (m_clrBackgroundStart),
                g = GetGValue (m_clrBackgroundStart),
-               b = GetBValue (m_clrBackgroundStart), 
+               b = GetBValue (m_clrBackgroundStart),
                rd = double (GetRValue (m_clrBackgroundEnd) - r) / double (m_iHeight),
-               gd = double (GetGValue (m_clrBackgroundEnd) - g) / double (m_iHeight), 
+               gd = double (GetGValue (m_clrBackgroundEnd) - g) / double (m_iHeight),
                bd = double (GetBValue (m_clrBackgroundEnd) - b) / double (m_iHeight);
         for (int j=0; j<m_iHeight; j++) {
             for (int i=0; i<m_iWidth; i++)
@@ -344,15 +344,15 @@ void CVectorCtl::CreateBackground ()
 
     DCtmp.CreateCompatibleDC (&m_dcMem);
     m_pOldBitmap = DCtmp.SelectObject (&m_bmpBack);
-    
+
     for (int i=0; i<m_iWidth; i++)
         for (int j=0; j<m_iHeight; j++)
             m_dcMem.SetPixelV (i,j, DCtmp.GetPixel (i % iTmpWidth, j % iTmpHeight));
     DCtmp.SelectObject (m_pOldBitmap);
     Redraw (TRUE);
-}    
+}
 
-    
+
 void CVectorCtl::ClearBackgroundBitmap ()
 {
     if (!m_bBackgroundBitmapUsed)

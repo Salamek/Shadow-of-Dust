@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -1067,7 +1067,7 @@ void idConsoleLocal::DrawSolidConsole( float frac ) {
 	i = version.Length();
 
 	for ( x = 0; x < i; x++ ) {
-		renderSystem->DrawSmallChar( SCREEN_WIDTH - ( i - x ) * SMALLCHAR_WIDTH, 
+		renderSystem->DrawSmallChar( SCREEN_WIDTH - ( i - x ) * SMALLCHAR_WIDTH,
 			(lines-(SMALLCHAR_HEIGHT+SMALLCHAR_HEIGHT/2)), version[x], localConsole.charSetShader );
 
 	}
@@ -1145,7 +1145,7 @@ void	idConsoleLocal::Draw( bool forceFullScreen ) {
 	}
 
 	if ( forceFullScreen ) {
-		// if we are forced full screen because of a disconnect, 
+		// if we are forced full screen because of a disconnect,
 		// we want the console closed when we go back to a session state
 		Close();
 		// we are however catching keyboard input

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -1681,8 +1681,8 @@ void QGL_Shutdown( void )
 /*
 ** QGL_Init
 **
-** This is responsible for binding our qgl function pointers to 
-** the appropriate GL stuff.  In Windows this means doing a 
+** This is responsible for binding our qgl function pointers to
+** the appropriate GL stuff.  In Windows this means doing a
 ** LoadLibrary and a bunch of calls to GetProcAddress.  On other
 ** operating systems we need to do the right thing, whatever that
 ** might be.
@@ -2115,7 +2115,7 @@ void GLimp_EnableLogging( bool enable ) {
 
 			// scan for an unused filename
 			for ( i = 0 ; i < 9999 ; i++ ) {
-				sprintf( qpath, "renderlog_%i.txt", i ); 
+				sprintf( qpath, "renderlog_%i.txt", i );
 				if ( fileSystem->ReadFile( qpath, NULL, NULL ) == -1 ) {
 					break;		// use this name
 				}

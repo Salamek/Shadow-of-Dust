@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -553,8 +553,8 @@ static bool R_ParseImageProgram_r( idLexer &src, byte **pic, int *width, int *he
 			int		c;
 			c = *width * *height * 4;
 			for ( i = 0 ; i < c ; i+=4 ) {
-				(*pic)[i+1] = 
-				(*pic)[i+2] = 
+				(*pic)[i+1] =
+				(*pic)[i+2] =
 				(*pic)[i+3] = (*pic)[i];
 			}
 		}
@@ -576,8 +576,8 @@ static bool R_ParseImageProgram_r( idLexer &src, byte **pic, int *width, int *he
 			c = *width * *height * 4;
 			for ( i = 0 ; i < c ; i+=4 ) {
 				(*pic)[i+3] = ( (*pic)[i+0] + (*pic)[i+1] + (*pic)[i+2] ) / 3;
-				(*pic)[i+0] = 
-				(*pic)[i+1] = 
+				(*pic)[i+0] =
+				(*pic)[i+1] =
 				(*pic)[i+2] = 255;
 			}
 		}

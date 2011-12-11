@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -221,9 +221,9 @@ public:
 
 private:
 	enum {
-		LOOKUP_BITS				= 8,							
-		EXP_POS					= 23,							
-		EXP_BIAS				= 127,							
+		LOOKUP_BITS				= 8,
+		EXP_POS					= 23,
+		EXP_BIAS				= 127,
 		LOOKUP_POS				= (EXP_POS-LOOKUP_BITS),
 		SEED_POS				= (EXP_POS-8),
 		SQRT_TABLE_SIZE			= (2<<LOOKUP_BITS),

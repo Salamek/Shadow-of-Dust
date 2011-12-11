@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -277,7 +277,7 @@ The resulting surface will be a subset of the original triangles,
 it will never clip triangles, but it may cull on a per-triangle basis.
 ====================
 */
-static srfTriangles_t *R_CreateLightTris( const idRenderEntityLocal *ent, 
+static srfTriangles_t *R_CreateLightTris( const idRenderEntityLocal *ent,
 									 const srfTriangles_t *tri, const idRenderLightLocal *light,
 									 const idMaterial *shader, srfCullInfo_t &cullInfo ) {
 	int			i;
@@ -1157,13 +1157,13 @@ void idInteraction::AddActiveInteraction( void ) {
 					// there will only be localSurfaces if the light casts shadows and
 					// there are surfaces with NOSELFSHADOW
 					if ( sint->shader->Coverage() == MC_TRANSLUCENT ) {
-						R_LinkLightSurf( &vLight->translucentInteractions, lightTris, 
+						R_LinkLightSurf( &vLight->translucentInteractions, lightTris,
 							vEntity, lightDef, shader, lightScissor, false );
 					} else if ( !lightDef->parms.noShadows && sint->shader->TestMaterialFlag(MF_NOSELFSHADOW) ) {
-						R_LinkLightSurf( &vLight->localInteractions, lightTris, 
+						R_LinkLightSurf( &vLight->localInteractions, lightTris,
 							vEntity, lightDef, shader, lightScissor, false );
 					} else {
-						R_LinkLightSurf( &vLight->globalInteractions, lightTris, 
+						R_LinkLightSurf( &vLight->globalInteractions, lightTris,
 							vEntity, lightDef, shader, lightScissor, false );
 					}
 				}

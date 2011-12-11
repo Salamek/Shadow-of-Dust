@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -160,14 +160,14 @@ void idDeviceContext::SetTransformInfo(const idVec3 &org, const idMat3 &m) {
 	mat = m;
 }
 
-// 
+//
 //  added method
 void idDeviceContext::GetTransformInfo(idVec3& org, idMat3& m )
 {
 	m = mat;
 	org = origin;
 }
-// 
+//
 
 void idDeviceContext::PopClipRect() {
 	if (clipRects.Num()) {
@@ -192,7 +192,7 @@ bool idDeviceContext::ClippedCoords(float *x, float *y, float *w, float *h, floa
 	int c = clipRects.Num();
 	while( --c > 0 ) {
 		idRectangle *clipRect = &clipRects[c];
- 
+
 		float ox = *x;
 		float oy = *y;
 		float ow = *w;
@@ -362,7 +362,7 @@ void idDeviceContext::DrawMaterial(float x, float y, float w, float h, const idM
 	renderSystem->SetColor(color);
 
 	float	s0, s1, t0, t1;
-// 
+//
 //  handle negative scales as well	
 	if ( scalex < 0 )
 	{
@@ -374,7 +374,7 @@ void idDeviceContext::DrawMaterial(float x, float y, float w, float h, const idM
 		h *= -1;
 		scaley *= -1;
 	}
-// 
+//
 	if( w < 0 ) {	// flip about vertical
 		w  = -w;
 		s0 = 1 * scalex;
@@ -409,7 +409,7 @@ void idDeviceContext::DrawMaterialRotated(float x, float y, float w, float h, co
 	renderSystem->SetColor(color);
 
 	float	s0, s1, t0, t1;
-	// 
+	//
 	//  handle negative scales as well	
 	if ( scalex < 0 )
 	{
@@ -421,7 +421,7 @@ void idDeviceContext::DrawMaterialRotated(float x, float y, float w, float h, co
 		h *= -1;
 		scaley *= -1;
 	}
-	// 
+	//
 	if( w < 0 ) {	// flip about vertical
 		w  = -w;
 		s0 = 1 * scalex;
@@ -877,7 +877,7 @@ idRegion *idDeviceContext::GetTextRegion(const char *text, float textScale, idRe
 		return;
 	}
 
-	y = lineSkip + rectDraw.y + yStart; 
+	y = lineSkip + rectDraw.y + yStart;
 	len = 0;
 	buff[0] = '\0';
 	newLine = 0;
@@ -963,7 +963,7 @@ int idDeviceContext::DrawText( const char *text, float textScale, int textAlign,
 
 	textPtr = text;
 
-	y = lineSkip + rectDraw.y; 
+	y = lineSkip + rectDraw.y;
 	len = 0;
 	buff[0] = '\0';
 	newLine = 0;

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ void idListGUILocal::StateChanged() {
 	}
 
 	for( i = 0; i < Num(); i++ ) {
-		m_pGUI->SetStateString( va( "%s_item_%i", m_name.c_str(), i ), (*this)[i].c_str() ); 
+		m_pGUI->SetStateString( va( "%s_item_%i", m_name.c_str(), i ), (*this)[i].c_str() );
 	}
 	for( i = Num() ; i < m_water ; i++ ) {
 		m_pGUI->SetStateString( va( "%s_item_%i", m_name.c_str(), i ), "" );
@@ -82,7 +82,7 @@ int idListGUILocal::GetSelection( char *s, int size, int _sel ) const {
 	if ( sel >= m_ids.Num() ) {
 		sel = 0;
 	}
-	m_pGUI->SetStateInt( va( "%s_selid_0", m_name.c_str() ), m_ids[ sel ] ); 
+	m_pGUI->SetStateInt( va( "%s_selid_0", m_name.c_str() ), m_ids[ sel ] );
 	return m_ids[ sel ];
 }
 

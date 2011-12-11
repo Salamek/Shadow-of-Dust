@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -61,9 +61,9 @@ BOOL CALLBACK EditCommandDlgProc (
 		return FALSE;
 		break;
 
-	case WM_COMMAND: 
-		switch (LOWORD(wParam)) 
-		{ 
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
 			case IDOK:
 				if (!GetDlgItemText(hwndDlg, IDC_CMDMENUTEXT, key, 64))
 				{
@@ -108,9 +108,9 @@ BOOL CALLBACK AddCommandDlgProc (
 
 	switch (uMsg)
     {
-	case WM_COMMAND: 
-		switch (LOWORD(wParam)) 
-		{ 
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
 			case IDOK:
 				if (!GetDlgItemText(hwndDlg, IDC_CMDMENUTEXT, key, 64))
 				{
@@ -188,9 +188,9 @@ BOOL CALLBACK ProjectDlgProc (
 //		SendMessage( ::GetDlgItem( hwndDlg, IDC_CHECK_BPRIMIT ), BM_SETCHECK, (WPARAM) g_qeglobals.m_bBrushPrimitMode, 0 );
 		return TRUE;
 
-	case WM_COMMAND: 
-		switch (LOWORD(wParam)) 
-		{ 
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
 			case IDC_ADDCMD:
 //				DialogBox(g_qeglobals.d_hInstance, (char *)IDD_ADDCMD, g_qeglobals.d_hwndMain, AddCommandDlgProc);
 				DialogBox(g_qeglobals.d_hInstance, (char *)IDD_ADDCMD, hwndDlg, AddCommandDlgProc);
@@ -270,9 +270,9 @@ BOOL CALLBACK GammaDlgProc (
 		sprintf(sz, "%1.1f", g_qeglobals.d_savedinfo.fGamma);		
 		SetWindowText(GetDlgItem(hwndDlg, IDC_G_EDIT), sz);
 		return TRUE;
-	case WM_COMMAND: 
-		switch (LOWORD(wParam)) 
-		{ 
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
 		
 		case IDOK:
 			GetWindowText(GetDlgItem(hwndDlg, IDC_G_EDIT), sz, 255);
@@ -350,7 +350,7 @@ void SelectBrush (int entitynum, int brushnum)
 
     if (g_pParentWnd->GetXZWnd())
       g_pParentWnd->GetXZWnd()->GetOrigin()[i] = (b->mins[i] + b->maxs[i])/2;
-    
+
     if (g_pParentWnd->GetYZWnd())
       g_pParentWnd->GetYZWnd()->GetOrigin()[i] = (b->mins[i] + b->maxs[i])/2;
   }
@@ -378,13 +378,13 @@ void GetSelectionIndex (int *ent, int *brush)
 	if (b->owner != world_entity)
 	{
 		(*ent)++;
-		for (entity = entities.next ; entity != &entities 
+		for (entity = entities.next ; entity != &entities
 			; entity=entity->next, (*ent)++)
 		;
 	}
 
 	// find brush
-	for (b2=b->owner->brushes.onext 
+	for (b2=b->owner->brushes.onext
 		; b2 != b && b2 != &b->owner->brushes
 		; b2=b2->onext, (*brush)++)
 	;
@@ -416,9 +416,9 @@ BOOL CALLBACK FindBrushDlgProc (
 		SetFocus (h);
 		return FALSE;
 
-	case WM_COMMAND: 
-		switch (LOWORD(wParam)) 
-		{ 
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
 			case IDOK:
 				GetWindowText(GetDlgItem(hwndDlg, IDC_FIND_ENTITY), entstr, 255);
 				GetWindowText(GetDlgItem(hwndDlg, IDC_FIND_BRUSH), brushstr, 255);
@@ -468,9 +468,9 @@ BOOL CALLBACK RotateDlgProc (
 		SetFocus (h);
 		return FALSE;
 
-	case WM_COMMAND: 
-		switch (LOWORD(wParam)) 
-		{ 
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
 		
 		case IDOK:
 			GetWindowText(GetDlgItem(hwndDlg, IDC_ROTX), str, 255);
@@ -534,8 +534,8 @@ BOOL CALLBACK SidesDlgProc (
 		SetFocus (h);
 		return FALSE;
 
-	case WM_COMMAND: 
-		switch (LOWORD(wParam)) { 
+	case WM_COMMAND:
+		switch (LOWORD(wParam)) {
 		
 		case IDOK:
 			GetWindowText(GetDlgItem(hwndDlg, IDC_SIDES), str, 255);

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -167,7 +167,7 @@ bool GEItescriptsDlg_Apply ( HWND hwnd )
 	idStr parse = text;
 	delete[] text;
 	
-	try 
+	try
 	{
 		idParser src ( parse, parse.Length(), "", LEXFL_ALLOWMULTICHARLITERALS | LEXFL_NOSTRINGCONCAT | LEXFL_ALLOWBACKSLASHSTRINGCONCAT );
 		idToken token;
@@ -235,7 +235,7 @@ bool GEItescriptsDlg_Apply ( HWND hwnd )
 				
 				continue;
 			}		
-			// If the token is a scriptdef then just parse out the 
+			// If the token is a scriptdef then just parse out the
 			// braced section and add it to the list.  Right now only
 			// one scriptdef per window is supported
 			else if ( !token.Icmp ( "scriptdef" ) )
@@ -317,10 +317,10 @@ INT_PTR CALLBACK GEItescriptsDlg_WndProc ( HWND hwnd, UINT msg, WPARAM wParam, L
 		{
 			RECT rClient;
 			GetClientRect ( hwnd, &rClient );
-			MoveWindow ( GetDlgItem ( hwnd, IDC_GUIED_SCRIPT ), 
-						 rClient.left, rClient.top, 
+			MoveWindow ( GetDlgItem ( hwnd, IDC_GUIED_SCRIPT ),
+						 rClient.left, rClient.top,
 						 rClient.right - rClient.left,
-						 rClient.bottom - rClient.top, 
+						 rClient.bottom - rClient.top,
 						 FALSE );
 			break;
 		}

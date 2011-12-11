@@ -29,10 +29,10 @@ extern void _analysis_output(char *base,int i,float *v,int n,int bark,int dB,
 #ifdef DEBUG_MALLOC
 
 #define _VDBG_GRAPHFILE "malloc.m"
-extern void *_VDBG_malloc(void *ptr,long bytes,char *file,long line); 
-extern void _VDBG_free(void *ptr,char *file,long line); 
+extern void *_VDBG_malloc(void *ptr,long bytes,char *file,long line);
+extern void _VDBG_free(void *ptr,char *file,long line);
 
-#ifndef MISC_C 
+#ifndef MISC_C
 #undef _ogg_malloc
 #undef _ogg_calloc
 #undef _ogg_realloc

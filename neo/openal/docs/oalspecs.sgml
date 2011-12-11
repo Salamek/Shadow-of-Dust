@@ -1,18 +1,18 @@
 <!DOCTYPE Book PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
- 
+
         <!-- INCLUDE or IGNORE for marked sections -->
         <!ENTITY % Marks        system  "ent-marks.sgml"  >
 
         <!-- keywords and other standard entities -->
         <!ENTITY % Entities     system  "ent-names.sgml"  >
-      
+
         <!-- C programs and other example entities -->
         <!ENTITY % Examples     system  "ent-examples.sgml"  >
-    
+
         <!-- Extensions as external ASCII documents -->
         <!ENTITY % Extensions   system  "ent-extensions.sgml"  >
-      
-        %Marks; 
+
+        %Marks;
         %Entities;
         %Examples;
         %Extensions;
@@ -40,8 +40,8 @@
         <!-- misc. specifics -->
         <!ENTITY   DocVersion   "1.0 (draft)"           >
         <!ENTITY   DocDate      "2000/10/10"            >
-        <!ENTITY   ALVersion    "1.0"                   > 
-        <!ENTITY   ALCVersion   "1.0"                   > 
+        <!ENTITY   ALVersion    "1.0"                   >
+        <!ENTITY   ALCVersion   "1.0"                   >
 ]>
 
 
@@ -50,7 +50,7 @@
 <book id="index">
 
 <!-- HEADING -->
-  &secBookInfo;    
+  &secBookInfo;
 
 <!-- INTRODUCTION -->
   &chpIntroduction;
@@ -67,22 +67,22 @@
 ]]>
 
   &alcContext;
- 
+
 <!-- APPENDICITIS [sic] -->
 
   &appConstants;
   &appExtensions;
   &appExtensionProcess;
 
-<![ %Scratch [ 
-  &appAnnotations; 
+<![ %Scratch [
+  &appAnnotations;
 ]]>
 
 
-<![ %Revision [ 
+<![ %Revision [
   <appendix>
   <title>Main Document CVS Revision History</title>
-  <para><literallayout>  
+  <para><literallayout>
    CVS Document: $Id: oalspecs.sgml,v 1.15 2000/11/10 23:10:44 bk Exp $
    CVS Revision: $Revision: 1.15 $
 
@@ -99,7 +99,7 @@
    Revision 1.12  2000/10/26 02:59:46  bk
    External entities.
 
-   </literallayout><para>     
+   </literallayout><para>
   </appendix>
 ]]>
 

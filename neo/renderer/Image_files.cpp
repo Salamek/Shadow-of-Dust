@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -305,7 +305,7 @@ static void LoadBMP( const char *name, byte **pic, int *width, int *height, ID_T
 	if ( bmpHeader.bitsPerPixel == 8 )
 		buf_p += 1024;
 
-	if ( bmpHeader.id[0] != 'B' && bmpHeader.id[1] != 'M' ) 
+	if ( bmpHeader.id[0] != 'B' && bmpHeader.id[1] != 'M' )
 	{
 		common->Error( "LoadBMP: only Windows-style BMP files supported (%s)\n", name );
 	}
@@ -328,7 +328,7 @@ static void LoadBMP( const char *name, byte **pic, int *width, int *height, ID_T
 		rows = -rows;
 	numPixels = columns * rows;
 
-	if ( width ) 
+	if ( width )
 		*width = columns;
 	if ( height )
 		*height = rows;
@@ -410,7 +410,7 @@ PCX LOADING
 LoadPCX
 ==============
 */
-static void LoadPCX ( const char *filename, byte **pic, byte **palette, int *width, int *height, 
+static void LoadPCX ( const char *filename, byte **pic, byte **palette, int *width, int *height,
 					 ID_TIME_T *timestamp ) {
 	byte	*raw;
 	pcx_t	*pcx;
@@ -583,7 +583,7 @@ static void LoadTGA( const char *name, byte **pic, int *width, int *height, ID_T
 	targa_header.id_length = *buf_p++;
 	targa_header.colormap_type = *buf_p++;
 	targa_header.image_type = *buf_p++;
-	
+
 	targa_header.colormap_index = LittleShort ( *(short *)buf_p );
 	buf_p += 2;
 	targa_header.colormap_length = LittleShort ( *(short *)buf_p );
@@ -636,9 +636,9 @@ static void LoadTGA( const char *name, byte **pic, int *width, int *height, ID_T
 	if ( targa_header.id_length != 0 ) {
 		buf_p += targa_header.id_length;  // skip TARGA image comment
 	}
-	
+
 	if ( targa_header.image_type == 2 || targa_header.image_type == 3 )
-	{ 
+	{
 		// Uncompressed RGB or gray scale image
 		for( row = rows - 1; row >= 0; row-- )
 		{
@@ -648,7 +648,7 @@ static void LoadTGA( const char *name, byte **pic, int *width, int *height, ID_T
 				unsigned char red,green,blue,alphabyte;
 				switch( targa_header.pixel_size )
 				{
-					
+
 				case 8:
 					blue = *buf_p++;
 					green = blue;
@@ -716,7 +716,7 @@ static void LoadTGA( const char *name, byte **pic, int *width, int *height, ID_T
 							common->Error( "LoadTGA( %s ): illegal pixel_size '%d'\n", name, targa_header.pixel_size );
 							break;
 					}
-	
+
 					for( j = 0; j < packetSize; j++ ) {
 						*pixbuf++=red;
 						*pixbuf++=green;
@@ -771,7 +771,7 @@ static void LoadTGA( const char *name, byte **pic, int *width, int *height, ID_T
 								goto breakOut;
 							}
 							pixbuf = targa_rgba + row*columns*4;
-						}						
+						}
 					}
 				}
 			}
@@ -901,12 +901,12 @@ static void LoadJPG( const char *filename, unsigned char **pic, int *width, int 
    * output image dimensions available, as well as the output colormap
    * if we asked for color quantization.
    * In this example, we need to make an output work buffer of the right size.
-   */ 
+   */
   /* JSAMPLEs per row in output buffer */
   row_stride = cinfo.output_width * cinfo.output_components;
 
   if (cinfo.output_components!=4) {
-		common->DWarning( "JPG %s is unsupported color depth (%d)", 
+		common->DWarning( "JPG %s is unsupported color depth (%d)",
 			filename, cinfo.output_components);
   }
   out = (byte *)R_StaticAlloc(cinfo.output_width*cinfo.output_height*4);
@@ -1087,9 +1087,9 @@ Loads six files with proper extensions
 */
 bool R_LoadCubeImages( const char *imgName, cubeFiles_t extensions, byte *pics[6], int *outSize, ID_TIME_T *timestamp ) {
 	int		i, j;
-	char	*cameraSides[6] =  { "_forward.tga", "_back.tga", "_left.tga", "_right.tga", 
+	char	*cameraSides[6] =  { "_forward.tga", "_back.tga", "_left.tga", "_right.tga",
 		"_up.tga", "_down.tga" };
-	char	*axisSides[6] =  { "_px.tga", "_nx.tga", "_py.tga", "_ny.tga", 
+	char	*axisSides[6] =  { "_px.tga", "_nx.tga", "_py.tga", "_ny.tga",
 		"_pz.tga", "_nz.tga" };
 	char	**sides;
 	char	fullName[MAX_IMAGE_NAME];

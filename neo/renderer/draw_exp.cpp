@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -245,7 +245,7 @@ static void R_CheckWglErrors( void ) {
 					MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
 					(LPTSTR) &lpMsgBuf,
 					0,
-					NULL 
+					NULL
 					);
 #endif
 	err &= 0xffff;
@@ -286,7 +286,7 @@ static void R_BindTexImage( HPBUFFERARB pbuffer ) {
 static void R_ReportTextureParms( void ) {
 	int	parms[8];
 
-//	q glGetTexParameteriv( GL_TEXTURE_RECTANGLE_NV, 
+//	q glGetTexParameteriv( GL_TEXTURE_RECTANGLE_NV,
 	qglGetIntegerv( GL_TEXTURE_BINDING_RECTANGLE_NV, parms );
 
 }
@@ -342,13 +342,13 @@ static void R_CreateShadowBufferImage( idImage *image ) {
 
 	memset( data, 0, lightBufferSize*lightBufferSize );
 
-	image->GenerateImage( (byte *)data, 4, 4, 
+	image->GenerateImage( (byte *)data, 4, 4,
 		TF_LINEAR, false, TR_CLAMP_TO_BORDER, TD_HIGH_QUALITY );
 
 	// now reset it to a shadow depth image
 	GL_CheckErrors();
-	image->uploadWidth = image->uploadHeight = lightBufferSize; 
-	qglTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24_ARB, lightBufferSize, lightBufferSize, 
+	image->uploadWidth = image->uploadHeight = lightBufferSize;
+	qglTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24_ARB, lightBufferSize, lightBufferSize,
 		0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, data );
 
 	qglTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE );
@@ -375,7 +375,7 @@ static void R_CreateViewAlphaImage( idImage *image ) {
 	}
 	memset( data, 0, viewBufferSize*viewBufferSize );
 
-	image->GenerateImage( (byte *)data, viewBufferSize, viewBufferSize, 
+	image->GenerateImage( (byte *)data, viewBufferSize, viewBufferSize,
 		TF_LINEAR, false, TR_CLAMP, TD_HIGH_QUALITY );
 }
 
@@ -413,7 +413,7 @@ static void R_CreateJitterImage16( idImage *image ) {
 		}
 	}
 
-	image->GenerateImage( (byte *)data, JITTER_SIZE*16, JITTER_SIZE, 
+	image->GenerateImage( (byte *)data, JITTER_SIZE*16, JITTER_SIZE,
 		TF_NEAREST, false, TR_REPEAT, TD_HIGH_QUALITY );
 }
 
@@ -434,7 +434,7 @@ static void R_CreateJitterImage4( idImage *image ) {
 		}
 	}
 
-	image->GenerateImage( (byte *)data, JITTER_SIZE*4, JITTER_SIZE, 
+	image->GenerateImage( (byte *)data, JITTER_SIZE*4, JITTER_SIZE,
 		TF_NEAREST, false, TR_REPEAT, TD_HIGH_QUALITY );
 }
 
@@ -450,7 +450,7 @@ static void R_CreateJitterImage1( idImage *image ) {
 		}
 	}
 
-	image->GenerateImage( (byte *)data, JITTER_SIZE, JITTER_SIZE, 
+	image->GenerateImage( (byte *)data, JITTER_SIZE, JITTER_SIZE,
 		TF_NEAREST, false, TR_REPEAT, TD_HIGH_QUALITY );
 }
 
@@ -466,7 +466,7 @@ static void R_CreateRandom256Image( idImage *image ) {
 		}
 	}
 
-	image->GenerateImage( (byte *)data, 256, 256, 
+	image->GenerateImage( (byte *)data, 256, 256,
 		TF_NEAREST, false, TR_REPEAT, TD_HIGH_QUALITY );
 }
 
@@ -530,7 +530,7 @@ void R_Exp_Allocate( void ) {
 	*atr_p++ = 0;
 	*atr_p++ = 0;
 
-	ret = wglChoosePixelFormatARB( win32.hDC, iAttributes, fAttributes, 
+	ret = wglChoosePixelFormatARB( win32.hDC, iAttributes, fAttributes,
 		sizeof( pixelformats ) / sizeof( pixelformats[0] ), pixelformats, &numFormats );
 
 #if 0
@@ -543,7 +543,7 @@ void R_Exp_Allocate( void ) {
 
 	// allocate a pbuffer with this pixel format
 	int	pbiAttributesTexture[] = {
-		WGL_TEXTURE_FORMAT_ARB, WGL_TEXTURE_FLOAT_RGBA_NV, 
+		WGL_TEXTURE_FORMAT_ARB, WGL_TEXTURE_FLOAT_RGBA_NV,
 		WGL_TEXTURE_TARGET_ARB, WGL_TEXTURE_RECTANGLE_NV, // WGL_TEXTURE_2D_ARB,
 			0, 0};
 
@@ -577,7 +577,7 @@ void R_Exp_Allocate( void ) {
 	floatPbufferQuarterImage = globalImages->ImageFromFunction( "floatPbufferQuarter", R_CreateStubImage );
 
 	// create a new GL context for this pixel format and share textures
-	floatContext = wglCreateContext( floatPbufferDC ); 
+	floatContext = wglCreateContext( floatPbufferDC );
 	if ( !floatContext ) {
 		common->Printf( "failed to create context for floatPbufferDC.\n" );
 		GL_CheckErrors();
@@ -589,7 +589,7 @@ void R_Exp_Allocate( void ) {
 
 	// create a rendering context for this pixel format and share textures
 
-	// allocate a texture for the rendering 
+	// allocate a texture for the rendering
 
 #endif
 
@@ -617,7 +617,7 @@ void R_Exp_Allocate( void ) {
 	*atr_p++ = 0;
 	*atr_p++ = 0;
 
-	ret = wglChoosePixelFormatARB( win32.hDC, iAttributes, fAttributes, 
+	ret = wglChoosePixelFormatARB( win32.hDC, iAttributes, fAttributes,
 		sizeof( pixelformats ) / sizeof( pixelformats[0] ), pixelformats, &numFormats );
 #if 0
 	for ( int i = 0 ; i < (int)numFormats ; i++ ) {
@@ -812,7 +812,7 @@ void RB_EXP_RenderOccluders( viewLight_t *vLight ) {
 			// render it
 			const srfTriangles_t *tri = surfInt->ambientTris;
 			if ( !tri->ambientCache ) {
-				R_CreateAmbientCache( const_cast<srfTriangles_t *>(tri), false ); 
+				R_CreateAmbientCache( const_cast<srfTriangles_t *>(tri), false );
 			}
 			idDrawVert *ac = (idDrawVert *)vertexCache.Position( tri->ambientCache );
 			qglVertexPointer( 3, GL_FLOAT, sizeof( idDrawVert ), ac->xyz.ToFloatPtr() );
@@ -1076,7 +1076,7 @@ qglEnableClientState( GL_TEXTURE_COORD_ARRAY );
 
 			// draw a full screen quad
 			qglMatrixMode( GL_PROJECTION );
-			qglLoadIdentity(); 
+			qglLoadIdentity();
 			qglOrtho( 0, 1, 0, 1, -1, 1 );
 			qglMatrixMode( GL_MODELVIEW );
 			qglLoadIdentity();
@@ -1212,7 +1212,7 @@ qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, 21, qRow );
 	qglProgramLocalParameter4fvARB( GL_FRAGMENT_PROGRAM_ARB, 2, parm );
 
 	// jitter tex scale
-	parm[0] = 
+	parm[0] =
 	parm[1] = r_sb_jitterScale.GetFloat() * lightBufferSizeFraction;
 	parm[2] = -r_sb_biasScale.GetFloat();
 	parm[3] = 0;
@@ -1601,7 +1601,7 @@ void	RB_Exp_SelectFrustum( viewLight_t *vLight, int side ) {
 
 	RB_DrawElementsWithCounters( tri );
 	
-	// draw back faces of the light frustum with 
+	// draw back faces of the light frustum with
 	// depth test greater
 	// stencil test of equal 1
 	// zero stencil stencil when depth test passes, so subsequent surface drawing
@@ -1766,7 +1766,7 @@ PARAM	jitterTexOffset				= program.local[9];
 	qglProgramLocalParameter4fvARB( GL_FRAGMENT_PROGRAM_ARB, 7, parm );
 
 	// jitter tex scale
-	parm[0] = 
+	parm[0] =
 	parm[1] = r_sb_jitterScale.GetFloat() * lightBufferSizeFraction;
 	parm[2] = -r_sb_biasScale.GetFloat();
 	parm[3] = 0;
@@ -1895,12 +1895,12 @@ void R_EXP_RenderViewDepthImage( void ) {
 		qglLoadMatrixf( backEnd.viewDef->projectionMatrix );
 		qglMatrixMode( GL_MODELVIEW );
 
-		qglViewport( tr.viewportOffset[0] + backEnd.viewDef->viewport.x1, 
-			tr.viewportOffset[1] + backEnd.viewDef->viewport.y1, 
+		qglViewport( tr.viewportOffset[0] + backEnd.viewDef->viewport.x1,
+			tr.viewportOffset[1] + backEnd.viewDef->viewport.y1,
 			backEnd.viewDef->viewport.x2 + 1 - backEnd.viewDef->viewport.x1,
 			backEnd.viewDef->viewport.y2 + 1 - backEnd.viewDef->viewport.y1 );
-		qglScissor( tr.viewportOffset[0] + backEnd.viewDef->viewport.x1, 
-			tr.viewportOffset[1] + backEnd.viewDef->viewport.y1, 
+		qglScissor( tr.viewportOffset[0] + backEnd.viewDef->viewport.x1,
+			tr.viewportOffset[1] + backEnd.viewDef->viewport.y1,
 			backEnd.viewDef->viewport.x2 + 1 - backEnd.viewDef->viewport.x1,
 			backEnd.viewDef->viewport.y2 + 1 - backEnd.viewDef->viewport.y1 );
 
@@ -1925,14 +1925,14 @@ void RB_EXP_SetNativeBuffer( void ) {
 	// set the normal screen drawable current
 	R_MakeCurrent( win32.hDC, win32.hGLRC, NULL );
 
-	qglViewport( tr.viewportOffset[0] + backEnd.viewDef->viewport.x1, 
-		tr.viewportOffset[1] + backEnd.viewDef->viewport.y1, 
+	qglViewport( tr.viewportOffset[0] + backEnd.viewDef->viewport.x1,
+		tr.viewportOffset[1] + backEnd.viewDef->viewport.y1,
 		backEnd.viewDef->viewport.x2 + 1 - backEnd.viewDef->viewport.x1,
 		backEnd.viewDef->viewport.y2 + 1 - backEnd.viewDef->viewport.y1 );
 
 	backEnd.currentScissor = backEnd.viewDef->viewport;
 	if ( r_useScissor.GetBool() ) {
-		qglScissor( backEnd.viewDef->viewport.x1 + backEnd.currentScissor.x1, 
+		qglScissor( backEnd.viewDef->viewport.x1 + backEnd.currentScissor.x1,
 			backEnd.viewDef->viewport.y1 + backEnd.currentScissor.y1,
 			backEnd.currentScissor.x2 + 1 - backEnd.currentScissor.x1,
 			backEnd.currentScissor.y2 + 1 - backEnd.currentScissor.y1 );
@@ -1956,8 +1956,8 @@ void RB_EXP_SetRenderBuffer( viewLight_t *vLight ) {
 		}
 	}
 
-	qglViewport( tr.viewportOffset[0] + backEnd.viewDef->viewport.x1, 
-		tr.viewportOffset[1] + backEnd.viewDef->viewport.y1, 
+	qglViewport( tr.viewportOffset[0] + backEnd.viewDef->viewport.x1,
+		tr.viewportOffset[1] + backEnd.viewDef->viewport.y1,
 		backEnd.viewDef->viewport.x2 + 1 - backEnd.viewDef->viewport.x1,
 		backEnd.viewDef->viewport.y2 + 1 - backEnd.viewDef->viewport.y1 );
 
@@ -1967,7 +1967,7 @@ void RB_EXP_SetRenderBuffer( viewLight_t *vLight ) {
 		backEnd.currentScissor = vLight->scissorRect;
 	}
 	if ( r_useScissor.GetBool() ) {
-		qglScissor( backEnd.viewDef->viewport.x1 + backEnd.currentScissor.x1, 
+		qglScissor( backEnd.viewDef->viewport.x1 + backEnd.currentScissor.x1,
 			backEnd.viewDef->viewport.y1 + backEnd.currentScissor.y1,
 			backEnd.currentScissor.x2 + 1 - backEnd.currentScissor.x1,
 			backEnd.currentScissor.y2 + 1 - backEnd.currentScissor.y1 );
@@ -2014,7 +2014,7 @@ void	RB_shadowResampleAlpha( void ) {
 
 	RB_DrawElementsWithCounters( tri );
 	
-	// draw back faces of the light frustum with 
+	// draw back faces of the light frustum with
 	// depth test greater
 	// stencil test of equal 1
 	// zero stencil stencil when depth test passes, so subsequent interaction drawing
@@ -2077,7 +2077,7 @@ RB_EXP_CoverScreen
 void RB_EXP_CoverScreen( void ) {
 	// draw a full screen quad
 	qglMatrixMode( GL_PROJECTION );
-	qglLoadIdentity(); 
+	qglLoadIdentity();
 	qglOrtho( 0, 1, 0, 1, -1, 1 );
 	qglMatrixMode( GL_MODELVIEW );
 	qglLoadIdentity();
@@ -2122,7 +2122,7 @@ void RB_EXP_ReadFloatBuffer( void ) {
 	GL_State( GLS_DEPTHFUNC_ALWAYS );
 	qglColor3f( 1, 1, 1 );
 	qglPushMatrix();
-	qglLoadIdentity(); 
+	qglLoadIdentity();
 	qglDisable( GL_TEXTURE_2D );
     qglOrtho( 0, 1, 0, 1, -1, 1 );
 	qglRasterPos2f( 0.01f, 0.01f );
@@ -2468,7 +2468,7 @@ void    RB_Exp_DrawInteractions( void ) {
 		}
 
 		if ( !vLight->frustumTris->ambientCache ) {
-			R_CreateAmbientCache( const_cast<srfTriangles_t *>(vLight->frustumTris), false ); 
+			R_CreateAmbientCache( const_cast<srfTriangles_t *>(vLight->frustumTris), false );
 		}
 
 		// all light side projections must currently match, so non-centered

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -98,24 +98,24 @@ bool rvGEApp::Initialize ( void )
 	wndClass.cbSize = sizeof(WNDCLASSEX);
 	wndClass.lpszClassName	= "QUAKE4_GUIEDITOR_CLASS";		
 	wndClass.lpfnWndProc	= FrameWndProc;
-	wndClass.hbrBackground	= (HBRUSH) (COLOR_APPWORKSPACE + 1); 
-	wndClass.hCursor		= LoadCursor((HINSTANCE) NULL, IDC_ARROW); 
+	wndClass.hbrBackground	= (HBRUSH) (COLOR_APPWORKSPACE + 1);
+	wndClass.hCursor		= LoadCursor((HINSTANCE) NULL, IDC_ARROW);
 	wndClass.lpszMenuName	= MAKEINTRESOURCE(IDR_GUIED_MAIN);
-	wndClass.hInstance		= mInstance; 
+	wndClass.hInstance		= mInstance;
 	RegisterClassEx ( &wndClass );
 
 	wndClass.lpszMenuName	= NULL;
 	wndClass.lpfnWndProc	= MDIChildProc;
 	wndClass.lpszClassName	= "QUAKE4_GUIEDITOR_CHILD_CLASS";
 	wndClass.style			= CS_OWNDC|CS_DBLCLKS|CS_BYTEALIGNWINDOW|CS_VREDRAW|CS_HREDRAW;
-	wndClass.hbrBackground	= (HBRUSH)GetStockObject( LTGRAY_BRUSH );  
+	wndClass.hbrBackground	= (HBRUSH)GetStockObject( LTGRAY_BRUSH );
 	RegisterClassEx ( &wndClass );
 	
 	// Create the main window
-	mMDIFrame = CreateWindow ( "QUAKE4_GUIEDITOR_CLASS", 
-							  "Quake IV GUI Editor", 
-							  WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS, 
-							  CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, 
+	mMDIFrame = CreateWindow ( "QUAKE4_GUIEDITOR_CLASS",
+							  "Quake IV GUI Editor",
+							  WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS,
+							  CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 							  NULL, NULL, mInstance, (LPVOID)this );
 
 	if ( !mMDIFrame )
@@ -129,10 +129,10 @@ bool rvGEApp::Initialize ( void )
 	CLIENTCREATESTRUCT ccs;
 	ccs.hWindowMenu = GetSubMenu ( GetMenu ( mMDIFrame ), 5 );
 	ccs.idFirstChild = IDM_WINDOWCHILD;
-	mMDIClient = CreateWindow ( "MDICLIENT", NULL, 
-								WS_CHILDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, 
-								0, 0, 1000, 1000, 
-								mMDIFrame, NULL, 
+	mMDIClient = CreateWindow ( "MDICLIENT", NULL,
+								WS_CHILDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+								0, 0, 1000, 1000,
+								mMDIFrame, NULL,
 								mInstance, &ccs );
 
 	if ( !mMDIClient )
@@ -146,7 +146,7 @@ bool rvGEApp::Initialize ( void )
 	
 	// Show both windows
 	mOptions.GetWindowPlacement ( "mdiframe", mMDIFrame );
-	ShowWindow ( mMDIFrame, SW_SHOW ); 
+	ShowWindow ( mMDIFrame, SW_SHOW );
 	UpdateWindow ( mMDIFrame );
 
 	ShowWindow ( mMDIClient, SW_SHOW );
@@ -450,15 +450,15 @@ LRESULT CALLBACK rvGEApp::MDIChildProc ( HWND hWnd, UINT uMsg, WPARAM wParam, LP
 			HDC			dc;
 			PAINTSTRUCT	ps;
 			
-			dc = BeginPaint(hWnd, &ps); 
+			dc = BeginPaint(hWnd, &ps);
 			
 			if ( workspace )
 			{
 				workspace->Render ( dc );
 			}
 			
-            EndPaint(hWnd, &ps); 
-           
+            EndPaint(hWnd, &ps);
+
 			break;
 		}
 	}
@@ -495,8 +495,8 @@ void rvGEApp::HandleCommandSave ( rvGEWorkspace* workspace, const char* filename
 		ofn.nFilterIndex = 1;
 		ofn.Flags = OFN_PATHMUSTEXIST;
 
-		// Display the save dialog box. 
-		if ( !GetSaveFileName(&ofn) ) 
+		// Display the save dialog box.
+		if ( !GetSaveFileName(&ofn) )
 		{
 			return;
 		}
@@ -869,8 +869,8 @@ int rvGEApp::HandleCommand ( WPARAM wParam, LPARAM lParam )
 			ofn.lpstrInitialDir = NULL;
 			ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
-			// Display the Open dialog box. 
-			if (GetOpenFileName(&ofn)==TRUE) 
+			// Display the Open dialog box.
+			if (GetOpenFileName(&ofn)==TRUE)
 			{			
 				OpenFile ( ofn.lpstrFile );
 			}
@@ -888,25 +888,25 @@ rvGEApp::HandleInitMenu
 Handles the initialization of the main menu
 ================
 */
-int rvGEApp::HandleInitMenu ( WPARAM wParam, LPARAM lParam ) 
-{ 
-    int				cMenuItems = GetMenuItemCount((HMENU)wParam); 
-    int				nPos; 
-    int				id; 
-    UINT			flags; 
+int rvGEApp::HandleInitMenu ( WPARAM wParam, LPARAM lParam )
+{
+    int				cMenuItems = GetMenuItemCount((HMENU)wParam);
+    int				nPos;
+    int				id;
+    UINT			flags;
     rvGEWorkspace*	workspace;
     HMENU			hmenu;
- 
+
 	hmenu     = (HMENU) wParam;
 	workspace = GetActiveWorkspace ( );
 
 	// Run through all the menu items in the menu and see if any of them need
 	// modification in any way
-    for (nPos = 0; nPos < cMenuItems; nPos++) 
-    { 
-        id    = GetMenuItemID(hmenu, nPos); 
+    for (nPos = 0; nPos < cMenuItems; nPos++)
+    {
+        id    = GetMenuItemID(hmenu, nPos);
         flags = 0;
- 
+
 		// Handle popup menus too
 		if ( id < 0 )
 		{
@@ -941,7 +941,7 @@ int rvGEApp::HandleInitMenu ( WPARAM wParam, LPARAM lParam )
 				CheckMenuItem ( hmenu, id, flags );
 				break;				
 		}
- 
+
 		// Handle the basic case where an item is disabled because
 		// there is no workspace available
 		if ( !workspace )
@@ -994,8 +994,8 @@ int rvGEApp::HandleInitMenu ( WPARAM wParam, LPARAM lParam )
 			continue;
 		}
 
-        switch (id) 
-        { 
+        switch (id)
+        {
 			// Undo is greyed out when there is noting to undo and the text is
 			// modified to include the name of the modifier that will be undone
 			case ID_GUIED_EDIT_UNDO:
@@ -1134,7 +1134,7 @@ int rvGEApp::HandleInitMenu ( WPARAM wParam, LPARAM lParam )
 	}
 	
 	return 0;
-} 
+}
 
 /*
 ================
@@ -1214,7 +1214,7 @@ bool rvGEApp::OpenFile ( const char* filename )
 														
 		ShowWindow ( child, SW_SHOW );
 		
-		mOptions.AddRecentFile ( filename ); 
+		mOptions.AddRecentFile ( filename );
 		UpdateRecentFiles ( );
 
 		result = true;
@@ -1343,7 +1343,7 @@ int	rvGEApp::ToolWindowActivate ( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 	
 	for ( i = 0; i < mToolWindows.Num (); i ++ )
 	{
-		if ( (HWND)lParam == mToolWindows[i] ) 
+		if ( (HWND)lParam == mToolWindows[i] )
 		{
 			keepActive = true;
 			syncOthers = false;
@@ -1374,7 +1374,7 @@ int	rvGEApp::ToolWindowActivate ( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 ================
 rvGEApp::MessageBox
 
-Displays a modal message box 
+Displays a modal message box
 ================
 */
 int rvGEApp::MessageBox ( const char* text, int flags )

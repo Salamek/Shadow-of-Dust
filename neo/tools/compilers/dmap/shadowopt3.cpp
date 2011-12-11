@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ If you have questions concerning this license or the applicable additional terms
 
 
 
-  classify triangles on common planes, so they can be optimized 
+  classify triangles on common planes, so they can be optimized
 
   what about interpenetrating triangles???
 
@@ -91,7 +91,7 @@ If you have questions concerning this license or the applicable additional terms
   for each vertex
 	project onto the apropriate plane and mark plane bit as in use
 for each triangle
-	if points project onto different planes, clip 
+	if points project onto different planes, clip
 */
 
 
@@ -309,7 +309,7 @@ Generates outputTris by clipping all the triangles against each other,
 retaining only those closest to the projectionOrigin
 ====================
 */
-static void ClipOccluders( idVec4 *verts, glIndex_t *indexes, int numIndexes, 
+static void ClipOccluders( idVec4 *verts, glIndex_t *indexes, int numIndexes,
 										 idVec3 projectionOrigin ) {
 	int					numTris = numIndexes / 3;
 	int					i;
@@ -434,7 +434,7 @@ static void OptimizeOutputTris( void ) {
 			tri->v[2] = mtri->v[2].xyz;
 		}
 	}
-	FreeOptimizeGroupList( optGroups ); 
+	FreeOptimizeGroupList( optGroups );
 }
 
 //==================================================================================
@@ -620,7 +620,7 @@ In theory, we should never have more than one edge clipping a given
 fragment, but it is more robust if we check them all
 ===================
 */
-static void FragmentSilQuad( silQuad_t quad, silPlane_t *silPlane, 
+static void FragmentSilQuad( silQuad_t quad, silPlane_t *silPlane,
 							shadowOptEdge_t *startEdge, shadowOptEdge_t *skipEdge ) {
 	if ( quad.nearV[0] == quad.nearV[1] ) {
 		return;
@@ -966,7 +966,7 @@ ProjectUniqued
 ======================
 */
 static void ProjectUniqued( idVec3 projectionOrigin, idPlane projectionPlane ) {
-	// calculate the projection 
+	// calculate the projection
 	idVec4		mat[4];
 
 	R_LightProjectionMatrix( projectionOrigin, projectionPlane, mat );
@@ -1006,7 +1006,7 @@ verts have been culled against individual frustums of point lights
 
 ====================
 */
-optimizedShadow_t SuperOptimizeOccluders( idVec4 *verts, glIndex_t *indexes, int numIndexes, 
+optimizedShadow_t SuperOptimizeOccluders( idVec4 *verts, glIndex_t *indexes, int numIndexes,
 										 idPlane projectionPlane, idVec3 projectionOrigin )
 {
 	memset( &ret, 0, sizeof( ret ) );
@@ -1063,7 +1063,7 @@ optimizedShadow_t SuperOptimizeOccluders( idVec4 *verts, glIndex_t *indexes, int
 	ret.totalIndexes = ret.numFrontCapIndexes + ret.numRearCapIndexes;
 
 	if ( dmapGlobals.shadowOptLevel >= SO_CLIP_SILS ) {
-		// re-optimize the sil planes, cutting 
+		// re-optimize the sil planes, cutting
 		EmitFragmentedSilQuads();
 	} else {
 		// indexes for silhouette edges

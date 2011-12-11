@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ LPMRUMENU       CreateMruMenu  (WORD wNbLruShowInit,
 #endif
 
 LPMRUMENU       CreateMruMenuDefault();
-void            DeleteMruMenu  (LPMRUMENU lpMruMenu);  
+void            DeleteMruMenu  (LPMRUMENU lpMruMenu);
 
 void            SetNbLruShow   (LPMRUMENU lpMruMenu,WORD wNbLruShowInit);
 BOOL            SetMenuItem    (LPMRUMENU lpMruMenu,WORD wItem,
@@ -80,7 +80,7 @@ BOOL            LoadMruInIni   (LPMRUMENU lpMruMenu,LPSTR lpszSection,LPSTR lpsz
 BOOL            SaveMruInReg   (LPMRUMENU lpMruMenu,LPSTR lpszKey);
 BOOL            LoadMruInReg   (LPMRUMENU lpMruMenu,LPSTR lpszKey);
 
-typedef enum 
+typedef enum
 {
 WIN32S,
 WINNT,

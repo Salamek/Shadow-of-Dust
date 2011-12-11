@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -286,7 +286,7 @@ static void Session_PromptKey_f( const idCmdArgs &args ) {
 ===============================================================================
 
 SESSION LOCAL
-  
+
 ===============================================================================
 */
 
@@ -848,7 +848,7 @@ void idSessionLocal::StopPlayingRenderDemo() {
 		return;
 	}
 
-	// Record the stop time before doing anything that could be time consuming 
+	// Record the stop time before doing anything that could be time consuming
 	int timeDemoStopTime = Sys_Milliseconds();
 
 	EndAVICapture();
@@ -1016,7 +1016,7 @@ void idSessionLocal::EndAVICapture() {
 	sw->AVIClose();
 
 	// write a .roqParam file so the demo can be converted to a roq file
-	idFile *f = fileSystem->OpenFileWrite( va( "demos/%s/%s.roqParam", 
+	idFile *f = fileSystem->OpenFileWrite( va( "demos/%s/%s.roqParam",
 		aviDemoShortName.c_str(), aviDemoShortName.c_str() ) );
 	f->Printf( "INPUT_DIR demos/%s\n", aviDemoShortName.c_str() );
 	f->Printf( "FILENAME demos/%s/%s.RoQ\n", aviDemoShortName.c_str(), aviDemoShortName.c_str() );
@@ -1566,7 +1566,7 @@ void idSessionLocal::ExecuteMapChange( bool noFadeWipe ) {
 	// and draw the loading gui instead of game draws
 	insideExecuteMapChange = true;
 
-	// if this works out we will probably want all the sizes in a def file although this solution will 
+	// if this works out we will probably want all the sizes in a def file although this solution will
 	// work for new maps etc. after the first load. we can also drop the sizes into the default.cfg
 	fileSystem->ResetReadCount();
 	if ( !reloadingSameMap  ) {
@@ -1590,7 +1590,7 @@ void idSessionLocal::ExecuteMapChange( bool noFadeWipe ) {
 	// if net play, we get the number of clients during mapSpawnInfo processing
 	if ( !idAsyncNetwork::IsActive() ) {
 		numClients = 1;
-	} 
+	}
 	
 	int start = Sys_Milliseconds();
 
@@ -1788,7 +1788,7 @@ void idSessionLocal::TakeNotes( const char *p, bool extended ) {
 		};
 #else
 		const char *people[] = {
-			"Tim", "Kenneth", "Robert", 
+			"Tim", "Kenneth", "Robert",
 			"Matt", "Mal", "Jerry", "Steve", "Pat",
 			"Xian", "Ed", "Fred", "James", "Eric", "Andy", "Seneca", "Patrick", "Kevin",
 			"MrElusive", "Jim", "Brian", "John", "Adrian", "Nobody"
@@ -1936,7 +1936,7 @@ bool idSessionLocal::SaveGame( const char *saveName, bool autosave ) {
 		return false;
 	}
 
-	// Write SaveGame Header: 
+	// Write SaveGame Header:
 	// Game Name / Version / Map Name / Persistant Player Info
 
 	// game
@@ -2022,7 +2022,7 @@ bool idSessionLocal::SaveGame( const char *saveName, bool autosave ) {
 idSessionLocal::LoadGame
 ===============
 */
-bool idSessionLocal::LoadGame( const char *saveName ) { 
+bool idSessionLocal::LoadGame( const char *saveName ) {
 #ifdef	ID_DEDICATED
 	common->Printf( "Dedicated servers cannot load games.\n" );
 	return false;
@@ -2239,7 +2239,7 @@ void idSessionLocal::AdvanceRenderDemo( bool singleFrameOnly ) {
 		lastDemoTic = latchedTicNumber - latchedTicNumber % USERCMD_PER_DEMO_FRAME;
 	} else {
 		// always advance a single frame with avidemo and timedemo
-		lastDemoTic = latchedTicNumber; 
+		lastDemoTic = latchedTicNumber;
 	}
 
 	while( skipFrames > -1 ) {
@@ -2362,7 +2362,7 @@ void idSessionLocal::Draw() {
 		}
 		if ( guiActive == guiMsg ) {
 			guiMsg->Redraw( com_frameTime );
-		} 
+		}
 	} else if ( guiTest ) {
 		// if testing a gui, clear the screen and draw it
 		// clear the background, in case the tested gui is transparent

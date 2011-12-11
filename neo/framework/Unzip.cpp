@@ -3,7 +3,7 @@
 
 #include "Unzip.h"
 
-/* unzip.h -- IO for uncompress .zip files using zlib 
+/* unzip.h -- IO for uncompress .zip files using zlib
    Version 0.15 beta, Mar 19th, 1998,
 
    Copyright (C) 1998 Gilles Vollant
@@ -38,7 +38,7 @@
 
 
 */
-/* for more info about .ZIP format, see 
+/* for more info about .ZIP format, see
       ftp://ftp.cdrom.com/pub/infozip/doc/appnote-970311-iz.zip
    PkWare has also a specification at :
       ftp://ftp.pkware.com/probdesc.zip */
@@ -75,7 +75,7 @@
 
 /* zconf.h -- configuration of the zlib compression library
  * Copyright (C) 1995-1998 Jean-loup Gailly.
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 /* @(#) $Id: unzip.c,v 1.2 1999/09/07 20:51:25 zoid Exp $ */
@@ -135,7 +135,7 @@ typedef Byte    *voidp;
 
 #define ZLIB_VERSION "1.1.3"
 
-/* 
+/*
      The 'zlib' compression library provides in-memory compression and
   decompression functions, including integrity checks of the uncompressed
   data.  This version of the library supports only one compression method
@@ -243,7 +243,7 @@ const char * zlibVersion OF((void));
    This check is automatically made by deflateInit and inflateInit.
  */
 
-/* 
+/*
 int deflateInit OF((z_streamp strm, int level));
 
      Initializes the internal stream state for compression. The fields
@@ -321,7 +321,7 @@ int deflate OF((z_streamp strm, int flush));
   more input data, until it returns with Z_STREAM_END or an error. After
   deflate has returned Z_STREAM_END, the only possible operations on the
   stream are deflateReset or deflateEnd.
-  
+
     Z_FINISH can be used immediately after deflateInit if all the compression
   is to be done in a single step. In this case, avail_out must be at least
   0.1% larger than avail_in plus 12 bytes.  If deflate does not return
@@ -358,7 +358,7 @@ int deflateEnd OF((z_streamp strm));
 */
 
 
-/* 
+/*
 int inflateInit OF((z_streamp strm));
 
      Initializes the internal stream state for decompression. The fields
@@ -427,7 +427,7 @@ int inflate OF((z_streamp strm, int flush));
 
      If a preset dictionary is needed at this point (see inflateSetDictionary
   below), inflate sets strm-adler to the adler32 checksum of the
-  dictionary chosen by the compressor and returns Z_NEED_DICT; otherwise 
+  dictionary chosen by the compressor and returns Z_NEED_DICT; otherwise
   it sets strm->adler to the adler32 checksum of all output produced
   so (that is, total_out bytes) and returns Z_OK, Z_STREAM_END or
   an error code as described below. At the end of the stream, inflate()
@@ -465,7 +465,7 @@ int inflateEnd OF((z_streamp strm));
     The following functions are needed only in some special applications.
 */
 
-/*   
+/*
 int deflateInit2 OF((z_streamp strm,
                                      int  level,
                                      int  method,
@@ -508,7 +508,7 @@ int deflateInit2 OF((z_streamp strm,
    method). msg is set to null if there is no error message.  deflateInit2 does
    not perform any compression: this will be done by deflate().
 */
-                            
+
 int deflateSetDictionary OF((z_streamp strm,
                                              const Byte *dictionary,
                                              uInt  dictLength));
@@ -595,7 +595,7 @@ int deflateParams OF((z_streamp strm,
    if strm->avail_out was zero.
 */
 
-/*   
+/*
 int inflateInit2 OF((z_streamp strm,
                                      int  windowBits));
 
@@ -638,7 +638,7 @@ int inflateSetDictionary OF((z_streamp strm,
 */
 
 int inflateSync OF((z_streamp strm));
-/* 
+/*
     Skips invalid compressed data until a full flush point (see above the
   description of deflate with Z_FULL_FLUSH) can be found, or until all
   available input is skipped. No output is provided.
@@ -769,7 +769,7 @@ int    gzread  OF((gzFile file, voidp buf, unsigned len));
      gzread returns the number of uncompressed bytes actually read (0 for
    end of file, -1 for error). */
 
-int    gzwrite OF((gzFile file, 
+int    gzwrite OF((gzFile file,
 				   const voidp buf, unsigned len));
 /*
      Writes the given number of uncompressed bytes into the compressed file.
@@ -824,7 +824,7 @@ int    gzflush OF((gzFile file, int flush));
 
 long gzseek OF((gzFile file,
 				      long offset, int whence));
-/* 
+/*
       Sets the starting position for the next gzread or gzwrite on the
    given compressed file. The offset represents a number of bytes in the
    uncompressed data stream. The whence parameter is defined as in lseek(2);
@@ -1087,7 +1087,7 @@ static int unzlocal_getByte(FILE *fin,int *pi)
     }
     else
     {
-        if (ferror(fin)) 
+        if (ferror(fin))
             return UNZ_ERRNO;
         else
             return UNZ_EOF;
@@ -1096,7 +1096,7 @@ static int unzlocal_getByte(FILE *fin,int *pi)
 */
 
 /* ===========================================================================
-   Reads a long in LSB order from the given gz_stream. Sets 
+   Reads a long in LSB order from the given gz_stream. Sets
 */
 static int unzlocal_getShort (FILE* fin, uLong *pX)
 {
@@ -1114,11 +1114,11 @@ static int unzlocal_getShort (FILE* fin, uLong *pX)
 
     err = unzlocal_getByte(fin,&i);
     x = (uLong)i;
-    
+
     if (err==UNZ_OK)
         err = unzlocal_getByte(fin,&i);
     x += ((uLong)i)<<8;
-   
+
     if (err==UNZ_OK)
         *pX = x;
     else
@@ -1143,7 +1143,7 @@ static int unzlocal_getLong (FILE *fin, uLong *pX)
 
     err = unzlocal_getByte(fin,&i);
     x = (uLong)i;
-    
+
     if (err==UNZ_OK)
         err = unzlocal_getByte(fin,&i);
     x += ((uLong)i)<<8;
@@ -1155,7 +1155,7 @@ static int unzlocal_getLong (FILE *fin, uLong *pX)
     if (err==UNZ_OK)
         err = unzlocal_getByte(fin,&i);
     x += ((uLong)i)<<24;
-   
+
     if (err==UNZ_OK)
         *pX = x;
     else
@@ -1198,7 +1198,7 @@ static int strcmpcasenosensitive_internal (const char* fileName1,const char* fil
 #define STRCMPCASENOSENTIVEFUNCTION strcmpcasenosensitive_internal
 #endif
 
-/* 
+/*
    Compare two filename (fileName1,fileName2).
    If iCaseSenisivity = 1, comparision is case sensitivity (like strcmp)
    If iCaseSenisivity = 2, comparision is not case sensitivity (like strcmpi
@@ -1216,7 +1216,7 @@ extern int unzStringFileNameCompare (const char* fileName1,const char* fileName2
 		return strcmp(fileName1,fileName2);
 
 	return STRCMPCASENOSENTIVEFUNCTION(fileName1,fileName2);
-} 
+}
 
 #define BUFREADCOMMENT (0x400)
 
@@ -1250,13 +1250,13 @@ static uLong unzlocal_SearchCentralDir(FILE *fin)
 	{
 		uLong uReadSize,uReadPos ;
 		int i;
-		if (uBackRead+BUFREADCOMMENT>uMaxBack) 
+		if (uBackRead+BUFREADCOMMENT>uMaxBack)
 			uBackRead = uMaxBack;
 		else
 			uBackRead+=BUFREADCOMMENT;
 		uReadPos = uSizeFile-uBackRead ;
 		
-		uReadSize = ((BUFREADCOMMENT+4) < (uSizeFile-uReadPos)) ? 
+		uReadSize = ((BUFREADCOMMENT+4) < (uSizeFile-uReadPos)) ?
                      (BUFREADCOMMENT+4) : (uSizeFile-uReadPos);
 		if (fseek(fin,uReadPos,SEEK_SET)!=0)
 			break;
@@ -1265,7 +1265,7 @@ static uLong unzlocal_SearchCentralDir(FILE *fin)
 			break;
 
                 for (i=(int)uReadSize-3; (i--)>0;)
-			if (((*(buf+i))==0x50) && ((*(buf+i+1))==0x4b) && 
+			if (((*(buf+i))==0x50) && ((*(buf+i+1))==0x4b) &&
 				((*(buf+i+2))==0x05) && ((*(buf+i+3))==0x06))
 			{
 				uPosFound = uReadPos+i;
@@ -1313,12 +1313,12 @@ extern unzFile unzOpen (const char* path)
 	uLong central_pos,uL;
 	FILE * fin ;
 
-	uLong number_disk;          /* number of the current dist, used for 
+	uLong number_disk;          /* number of the current dist, used for
 								   spaning ZIP, unsupported, always 0*/
 	uLong number_disk_with_CD;  /* number the the disk with central dir, used
 								   for spaning ZIP, unsupported, always 0*/
 	uLong number_entry_CD;      /* total number of entries in
-	                               the central dir 
+	                               the central dir
 	                               (same than number_entry on nospan) */
 
 	int err=UNZ_OK;
@@ -1363,7 +1363,7 @@ extern unzFile unzOpen (const char* path)
 	if (unzlocal_getLong(fin,&us.size_central_dir)!=UNZ_OK)
 		err=UNZ_ERRNO;
 
-	/* offset of start of central directory with respect to the 
+	/* offset of start of central directory with respect to the
 	      starting disk number */
 	if (unzlocal_getLong(fin,&us.offset_central_dir)!=UNZ_OK)
 		err=UNZ_ERRNO;
@@ -1372,7 +1372,7 @@ extern unzFile unzOpen (const char* path)
 	if (unzlocal_getShort(fin,&us.gi.size_comment)!=UNZ_OK)
 		err=UNZ_ERRNO;
 
-	if ((central_pos<us.offset_central_dir+us.size_central_dir) && 
+	if ((central_pos<us.offset_central_dir+us.size_central_dir) &&
 		(err==UNZ_OK))
 		err=UNZ_BADZIPFILE;
 
@@ -1453,7 +1453,7 @@ static void unzlocal_DosDateToTmuDate (uLong ulDosDate, tm_unz* ptm)
 */
 static int unzlocal_GetCurrentFileInfoInternal (unzFile file,
                                                   unz_file_info *pfile_info,
-                                                  unz_file_info_internal 
+                                                  unz_file_info_internal
                                                   *pfile_info_internal,
                                                   char *szFileName,
 												  uLong fileNameBufferSize,
@@ -1568,7 +1568,7 @@ static int unzlocal_GetCurrentFileInfoInternal (unzFile file,
 		lSeek += file_info.size_file_extra - uSizeRead;
 	}
 	else
-		lSeek+=file_info.size_file_extra; 
+		lSeek+=file_info.size_file_extra;
 
 	
 	if ((err==UNZ_OK) && (szComment!=NULL))
@@ -1822,7 +1822,7 @@ static int unzlocal_CheckCurrentFileCoherencyHeader (unz_s* s, uInt* piSizeVar,
 
 	if (unzlocal_getLong(s->file,&uData) != UNZ_OK) /* size uncompr */
 		err=UNZ_ERRNO;
-	else if ((err==UNZ_OK) && (uData!=s->cur_file_info.uncompressed_size) && 
+	else if ((err==UNZ_OK) && (uData!=s->cur_file_info.uncompressed_size) &&
 							  ((uFlags & 8)==0))
 		err=UNZ_BADZIPFILE;
 
@@ -1908,27 +1908,27 @@ extern int unzOpenCurrentFile (unzFile file)
 	{
 	  pfile_in_zip_read_info->stream.zalloc = (alloc_func)0;
 	  pfile_in_zip_read_info->stream.zfree = (free_func)0;
-	  pfile_in_zip_read_info->stream.opaque = (voidp)0; 
-      
+	  pfile_in_zip_read_info->stream.opaque = (voidp)0;
+
 	  err=inflateInit2(&pfile_in_zip_read_info->stream, -MAX_WBITS);
 	  if (err == Z_OK)
 	    pfile_in_zip_read_info->stream_initialised=1;
         /* windowBits is passed < 0 to tell that there is no zlib header.
          * Note that in this case inflate *requires* an extra "dummy" byte
          * after the compressed stream in order to complete decompression and
-         * return Z_STREAM_END. 
-         * In unzip, i don't wait absolutely Z_STREAM_END because I known the 
+         * return Z_STREAM_END.
+         * In unzip, i don't wait absolutely Z_STREAM_END because I known the
          * size of both compressed and uncompressed data
          */
 	}
-	pfile_in_zip_read_info->rest_read_compressed = 
+	pfile_in_zip_read_info->rest_read_compressed =
             s->cur_file_info.compressed_size ;
-	pfile_in_zip_read_info->rest_read_uncompressed = 
+	pfile_in_zip_read_info->rest_read_uncompressed =
             s->cur_file_info.uncompressed_size ;
 
 	
-	pfile_in_zip_read_info->pos_in_zipfile = 
-            s->cur_file_info_internal.offset_curfile + SIZEZIPLOCALHEADER + 
+	pfile_in_zip_read_info->pos_in_zipfile =
+            s->cur_file_info_internal.offset_curfile + SIZEZIPLOCALHEADER +
 			  iSizeVar;
 	
 	pfile_in_zip_read_info->stream.avail_in = (uInt)0;
@@ -1974,7 +1974,7 @@ extern int unzReadCurrentFile  (unzFile file, void *buf, unsigned len)
 	pfile_in_zip_read_info->stream.avail_out = (uInt)len;
 	
 	if (len>pfile_in_zip_read_info->rest_read_uncompressed)
-		pfile_in_zip_read_info->stream.avail_out = 
+		pfile_in_zip_read_info->stream.avail_out =
 		  (uInt)pfile_in_zip_read_info->rest_read_uncompressed;
 
 	while (pfile_in_zip_read_info->stream.avail_out>0)
@@ -1989,7 +1989,7 @@ extern int unzReadCurrentFile  (unzFile file, void *buf, unsigned len)
 				return UNZ_EOF;
 			if (s->cur_file_info.compressed_size == pfile_in_zip_read_info->rest_read_compressed)
 				if (fseek(pfile_in_zip_read_info->file,
-						  pfile_in_zip_read_info->pos_in_zipfile + 
+						  pfile_in_zip_read_info->pos_in_zipfile +
 							 pfile_in_zip_read_info->byte_before_the_zipfile,SEEK_SET)!=0)
 					return UNZ_ERRNO;
 			if (fread(pfile_in_zip_read_info->read_buffer,uReadThis,1,
@@ -1999,7 +1999,7 @@ extern int unzReadCurrentFile  (unzFile file, void *buf, unsigned len)
 
 			pfile_in_zip_read_info->rest_read_compressed-=uReadThis;
 			
-			pfile_in_zip_read_info->stream.next_in = 
+			pfile_in_zip_read_info->stream.next_in =
                 (Byte*)pfile_in_zip_read_info->read_buffer;
 			pfile_in_zip_read_info->stream.avail_in = (uInt)uReadThis;
 		}
@@ -2007,7 +2007,7 @@ extern int unzReadCurrentFile  (unzFile file, void *buf, unsigned len)
 		if (pfile_in_zip_read_info->compression_method==0)
 		{
 			uInt uDoCopy,i ;
-			if (pfile_in_zip_read_info->stream.avail_out < 
+			if (pfile_in_zip_read_info->stream.avail_out <
                             pfile_in_zip_read_info->stream.avail_in)
 				uDoCopy = pfile_in_zip_read_info->stream.avail_out ;
 			else
@@ -2049,7 +2049,7 @@ extern int unzReadCurrentFile  (unzFile file, void *buf, unsigned len)
 			uTotalOutAfter = pfile_in_zip_read_info->stream.total_out;
 			uOutThis = uTotalOutAfter-uTotalOutBefore;
 			
-			pfile_in_zip_read_info->crc32 = 
+			pfile_in_zip_read_info->crc32 =
                 crc32(pfile_in_zip_read_info->crc32,bufBefore,
                         (uInt)(uOutThis));
 
@@ -2057,10 +2057,10 @@ extern int unzReadCurrentFile  (unzFile file, void *buf, unsigned len)
                 uOutThis;
 
 			iRead += (uInt)(uTotalOutAfter - uTotalOutBefore);
-            
+
 			if (err==Z_STREAM_END)
 				return (iRead==0) ? UNZ_EOF : iRead;
-			if (err!=Z_OK) 
+			if (err!=Z_OK)
 				break;
 		}
 	}
@@ -2091,7 +2091,7 @@ extern long unztell (unzFile file)
 
 
 /*
-  return 1 if the end of file was reached, 0 elsewhere 
+  return 1 if the end of file was reached, 0 elsewhere
 */
 extern int unzeof (unzFile file)
 {
@@ -2122,7 +2122,7 @@ extern int unzeof (unzFile file)
 
   if buf!=NULL, len is the size of the buffer, the extra header is copied in
 	buf.
-  the return value is the number of bytes copied in buf, or (if <0) 
+  the return value is the number of bytes copied in buf, or (if <0)
 	the error code
 */
 extern int unzGetLocalExtrafield (unzFile file,void *buf,unsigned len)
@@ -2140,7 +2140,7 @@ extern int unzGetLocalExtrafield (unzFile file,void *buf,unsigned len)
 	if (pfile_in_zip_read_info==NULL)
 		return UNZ_PARAMERROR;
 
-	size_to_read = (pfile_in_zip_read_info->size_local_extrafield - 
+	size_to_read = (pfile_in_zip_read_info->size_local_extrafield -
 				pfile_in_zip_read_info->pos_local_extrafield);
 
 	if (buf==NULL)
@@ -2155,7 +2155,7 @@ extern int unzGetLocalExtrafield (unzFile file,void *buf,unsigned len)
 		return 0;
 	
 	if (fseek(pfile_in_zip_read_info->file,
-              pfile_in_zip_read_info->offset_local_extrafield + 
+              pfile_in_zip_read_info->offset_local_extrafield +
 			  pfile_in_zip_read_info->pos_local_extrafield,SEEK_SET)!=0)
 		return UNZ_ERRNO;
 
@@ -2239,7 +2239,7 @@ extern int unzGetGlobalComment (unzFile file, char *szComment, uLong uSizeBuf)
 
 /* crc32.c -- compute the CRC-32 of a data stream
  * Copyright (C) 1995-1998 Mark Adler
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 /* @(#) $Id: unzip.c,v 1.2 1999/09/07 20:51:25 zoid Exp $ */
@@ -2286,7 +2286,7 @@ static void make_crc_table()
   poly = 0L;
   for (n = 0; n < sizeof(p)/sizeof(Byte); n++)
     poly |= 1L << (31 - p[n]);
- 
+
   for (n = 0; n < 256; n++)
   {
     c = (uLong)n;
@@ -2395,7 +2395,7 @@ uLong crc32(uLong crc, const Byte *buf, uInt len)
 
 /* infblock.h -- header to use infblock.c
  * Copyright (C) 1995-1998 Mark Adler
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 /* WARNING: this file should *not* be used by applications. It is
@@ -2443,7 +2443,7 @@ static const uInt border[] = { /* Order of the bit length code lengths */
 
 /* inftrees.h -- header to use inftrees.c
  * Copyright (C) 1995-1998 Mark Adler
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 /* WARNING: this file should *not* be used by applications. It is
@@ -2503,7 +2503,7 @@ extern int inflate_trees_fixed OF((
 
 /* infcodes.h -- header to use infcodes.c
  * Copyright (C) 1995-1998 Mark Adler
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 /* WARNING: this file should *not* be used by applications. It is
@@ -2530,7 +2530,7 @@ extern void inflate_codes_free OF((
 
 /* infutil.h -- types and macros common to blocks and codes
  * Copyright (C) 1995-1998 Mark Adler
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 /* WARNING: this file should *not* be used by applications. It is
@@ -2571,7 +2571,7 @@ struct inflate_blocks_state {
       inflate_huft *tb;         /* bit length decoding tree */
     } trees;            /* if DTREE, decoding info for trees */
     struct {
-      inflate_codes_statef 
+      inflate_codes_statef
          *codes;
     } decode;           /* if CODES, current state */
   } sub;                /* submode */
@@ -2998,7 +2998,7 @@ void inflate_set_dictionary(inflate_blocks_statef *s, const Byte *d, uInt n)
 
 
 /* Returns true if inflate is currently at the end of a block generated
- * by Z_SYNC_FLUSH or Z_FULL_FLUSH. 
+ * by Z_SYNC_FLUSH or Z_FULL_FLUSH.
  * IN assertion: s != Z_NULL
  */
 int inflate_blocks_sync_point(inflate_blocks_statef *s)
@@ -3096,7 +3096,7 @@ int inflate_flush(inflate_blocks_statef *s, z_streamp z, int r)
 
 /* inftrees.c -- generate Huffman trees for efficient decoding
  * Copyright (C) 1995-1998 Mark Adler
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 const char inflate_copyright[] =
@@ -3789,7 +3789,7 @@ int inflate_fast(uInt bl, uInt bd, inflate_huft *tl, inflate_huft *td, inflate_b
 
 /* infcodes.c -- process literals and length/distance pairs
  * Copyright (C) 1995-1998 Mark Adler
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 /* simplify the use of the inflate_huft type with some defines */
@@ -4031,7 +4031,7 @@ void inflate_codes_free(inflate_codes_statef *c, z_streamp z)
 
 /* adler32.c -- compute the Adler-32 checksum of a data stream
  * Copyright (C) 1995-1998 Mark Adler
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 #define BASE 65521L /* largest prime smaller than 65536 */
@@ -4080,7 +4080,7 @@ uLong adler32(uLong adler, const Byte *buf, uInt len)
 
 /* infblock.h -- header to use infblock.c
  * Copyright (C) 1995-1998 Mark Adler
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 /* WARNING: this file should *not* be used by applications. It is
@@ -4151,7 +4151,7 @@ struct internal_state {
   /* mode independent information */
   int  nowrap;          /* flag for no wrapper */
   uInt wbits;           /* log2(window size)  (8..15, defaults to 15) */
-  inflate_blocks_statef 
+  inflate_blocks_statef
     *blocks;            /* current inflate_blocks state */
 
 };

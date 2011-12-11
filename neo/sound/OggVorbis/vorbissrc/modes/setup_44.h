@@ -79,7 +79,7 @@ ve_setup_data_template ve_setup_44_stereo={
   2,
   40000,
   50000,
-  
+
   blocksize_short_44,
   blocksize_long_44,
 
@@ -97,7 +97,7 @@ ve_setup_data_template ve_setup_44_stereo={
   _psy_noisebias_trans,
   _psy_noisebias_long,
   _psy_noise_suppress,
-  
+
   _psy_compand_44,
   _psy_compand_short_mapping,
   _psy_compand_long_mapping,
@@ -108,7 +108,7 @@ ve_setup_data_template ve_setup_44_stereo={
 
   _psy_ath_floater,
   _psy_ath_abs,
-  
+
   _psy_lowpass_44,
 
   _psy_global_44,
@@ -130,7 +130,7 @@ ve_setup_data_template ve_setup_44_stereo_low={
   2,
   40000,
   50000,
-  
+
   blocksize_short_44_low,
   blocksize_long_44_low,
 
@@ -148,7 +148,7 @@ ve_setup_data_template ve_setup_44_stereo_low={
   _psy_noisebias_trans_low,
   _psy_noisebias_long_low,
   _psy_noise_suppress,
-  
+
   _psy_compand_44,
   _psy_compand_short_mapping,
   _psy_compand_long_mapping,
@@ -159,7 +159,7 @@ ve_setup_data_template ve_setup_44_stereo_low={
 
   _psy_ath_floater,
   _psy_ath_abs,
-  
+
   _psy_lowpass_44_low,
 
   _psy_global_44,

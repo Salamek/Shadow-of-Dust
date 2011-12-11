@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -211,7 +211,7 @@ bool OSPathToRelativePath( const char *osPath, idStr &qpath, const char *game ) 
 				base = s;
 			}
 		}
-	} 
+	}
 
 	if ( base ) {
 		s = strstr( base, "/" );
@@ -1027,7 +1027,7 @@ bool idExportModel::WriteMesh( const char *filename, idExportOptions &options ) 
 		}
 
 		idCQuat	bindQuat = joint->bindmat.ToQuat().ToCQuat();
-		WriteFloatString( file, "\t\"%s\"\t%d ( %f %f %f ) ( %f %f %f )\t\t// %s\n", joint->name.c_str(), parentNum, 
+		WriteFloatString( file, "\t\"%s\"\t%d ( %f %f %f ) ( %f %f %f )\t\t// %s\n", joint->name.c_str(), parentNum,
 			joint->bindpos.x, joint->bindpos.y, joint->bindpos.z, bindQuat[ 0 ], bindQuat[ 1 ], bindQuat[ 2 ], parentName );
 	}
 	WriteFloatString( file, "}\n" );
@@ -1046,7 +1046,7 @@ bool idExportModel::WriteMesh( const char *filename, idExportOptions &options ) 
 		WriteFloatString( file, "\n\tnumverts %d\n", mesh->verts.Num() );
 		for( j = 0; j < mesh->verts.Num(); j++ ) {
 			WriteFloatString( file, "\tvert %d ( %f %f ) %d %d\n", j, mesh->verts[ j ].texCoords[ 0 ], mesh->verts[ j ].texCoords[ 1 ],
-				mesh->verts[ j ].startweight, mesh->verts[ j ].numWeights ); 
+				mesh->verts[ j ].startweight, mesh->verts[ j ].numWeights );
 		}
 
 		WriteFloatString( file, "\n\tnumtris %d\n", mesh->tris.Num() );
@@ -1059,7 +1059,7 @@ bool idExportModel::WriteMesh( const char *filename, idExportOptions &options ) 
 			exportWeight_t *weight;
 
 			weight = &mesh->weights[ j ];
-			WriteFloatString( file, "\tweight %d %d %f ( %f %f %f )\n", j, 
+			WriteFloatString( file, "\tweight %d %d %f ( %f %f %f )\n", j,
 				weight->joint->exportNum, weight->jointWeight, weight->offset.x, weight->offset.y, weight->offset.z );
 		}
 
@@ -1511,7 +1511,7 @@ void idMayaExport::GetBindPose( MObject &jointNode, idExportJoint *joint, float 
 					if ( MS::kSuccess != status ) {
 						// Problem retrieving world matrix
 						return;
-					} 
+					}
 
 					MFnMatrixData	dMatrix( worldMatrix );
 					MMatrix			wMatrix = dMatrix.matrix( &status );
@@ -1881,9 +1881,9 @@ void idMayaExport::GetTextureForMesh( idExportMesh *mesh, MFnDagNode &dagNode ) 
 		}
 
 		MItDependencyGraph dgIt(colorPlug, MFn::kFileTexture,
-						   MItDependencyGraph::kUpstream, 
+						   MItDependencyGraph::kUpstream,
 						   MItDependencyGraph::kBreadthFirst,
-						   MItDependencyGraph::kNodeLevel, 
+						   MItDependencyGraph::kNodeLevel,
 						   &status);
 
 		if ( status == MS::kFailure ) {
@@ -1897,7 +1897,7 @@ void idMayaExport::GetTextureForMesh( idExportMesh *mesh, MFnDagNode &dagNode ) 
 		if ( dgIt.isDone() ) {
 			continue;
 		}
-		  
+		
         // Print out the texture node name and texture file that it references.
         //
 		MObject textureNode = dgIt.thisNode();
@@ -2093,7 +2093,7 @@ void idMayaExport::CreateMesh( float scale ) {
 		MFnSkinCluster skinCluster( object, &status );
 		if ( !status ) {
 			MayaError( "%s: Error getting skin cluster (%s)", object.apiTypeStr(), status.errorString().asChar() );
-		} 
+		}
 
 		mesh = CopyMesh( skinCluster, scale );
 		if ( !mesh ) {
@@ -2947,7 +2947,7 @@ void idMayaExport::ConvertToMD3( void ) {
 		common->Printf( "R_LoadMD3: %s has no frames\n", mod_name );
 		return qfalse;
 	}
-    
+
 	// swap all the frames
     frame = (md3Frame_t *) ( (byte *)mod->md3[lod] + mod->md3[lod]->ofsFrames );
     for ( i = 0 ; i < mod->md3[lod]->numFrames ; i++, frame++) {
@@ -3038,7 +3038,7 @@ void idMayaExport::ConvertToMD3( void ) {
 
 		// swap all the XyzNormals
         xyz = (md3XyzNormal_t *) ( (byte *)surf + surf->ofsXyzNormals );
-        for ( j = 0 ; j < surf->numVerts * surf->numFrames ; j++, xyz++ ) 
+        for ( j = 0 ; j < surf->numVerts * surf->numFrames ; j++, xyz++ )
 		{
             xyz->xyz[0] = LittleShort( xyz->xyz[0] );
             xyz->xyz[1] = LittleShort( xyz->xyz[1] );
@@ -3086,7 +3086,7 @@ Maya_ConvertModel
 const char *Maya_ConvertModel( const char *ospath, const char *commandline ) {
 	
 	errorMessage = "Ok";
- 
+
 	try {
 		idExportOptions options( commandline, ospath );
 		idMayaExport	exportM( options );

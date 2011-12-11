@@ -126,7 +126,7 @@ Bool XNVCTRLQueryValidAttributeValues (
     Display *dpy,
     int screen,
     unsigned int display_mask,
-    unsigned int attribute,                                 
+    unsigned int attribute,
     NVCTRLAttributeValidValuesRec *values
 );
 

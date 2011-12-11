@@ -6,13 +6,13 @@
 //
 //  This material is provided "as is", with absolutely no warranty expressed
 //  or implied. Any use is at your own risk.
-// 
-//  Permission to use or copy this software for any purpose is hereby granted 
+//
+//  Permission to use or copy this software for any purpose is hereby granted
 //  without fee, provided the above notices are retained on all copies.
 //  Permission to modify the code and to distribute modified code is granted,
 //  provided the above notices are retained, and a notice that the code was
 //  modified is included with the above copyright notice.
-// 
+//
 //	If you use this code, drop me an email.  I'd like to know if you find the code
 //	useful.
 
@@ -38,7 +38,7 @@ typedef struct _ColorTableEntry
 	RECT		rcSpot;
 } ColorTableEntry;
 
-static ColorTableEntry _crColors[] = 
+static ColorTableEntry _crColors[] =
 {
     {RGB(0x00, 0x00, 0x00)},
     {RGB(0xA5, 0x2A, 0x00)},
@@ -60,7 +60,7 @@ static ColorTableEntry _crColors[] =
 
     {RGB(0xFF, 0x00, 0x00)},
     {RGB(0xFF, 0xAD, 0x5B)},
-    {RGB(0x32, 0xCD, 0x32)}, 
+    {RGB(0x32, 0xCD, 0x32)},
     {RGB(0x3C, 0xB3, 0x71)},
     {RGB(0x7F, 0xFF, 0xD4)},
     {RGB(0x7D, 0x9E, 0xC0)},
@@ -69,7 +69,7 @@ static ColorTableEntry _crColors[] =
 
     {RGB(0xFF, 0xC0, 0xCB)},
     {RGB(0xFF, 0xD7, 0x00)},
-    {RGB(0xFF, 0xFF, 0x00)},    
+    {RGB(0xFF, 0xFF, 0x00)},
     {RGB(0x00, 0xFF, 0x00)},
     {RGB(0x40, 0xE0, 0xD0)},
     {RGB(0xC0, 0xFF, 0xFF)},
@@ -245,7 +245,7 @@ void CPropTreeItemColor::OnActivate(int activateType, CPoint point)
 }
 
 
-void CPropTreeItemColor::OnKillFocus(CWnd* pNewWnd) 
+void CPropTreeItemColor::OnKillFocus(CWnd* pNewWnd)
 {
 	CWnd::OnKillFocus(pNewWnd);
 	
@@ -254,7 +254,7 @@ void CPropTreeItemColor::OnKillFocus(CWnd* pNewWnd)
 }
 
 
-void CPropTreeItemColor::OnPaint() 
+void CPropTreeItemColor::OnPaint()
 {
 	CPaintDC dc(this);
 	CPoint pt;
@@ -281,13 +281,13 @@ void CPropTreeItemColor::OnPaint()
 }
 
 
-void CPropTreeItemColor::OnClose() 
+void CPropTreeItemColor::OnClose()
 {
 	CommitChanges();
 }
 
 
-void CPropTreeItemColor::OnMouseMove(UINT, CPoint point) 
+void CPropTreeItemColor::OnMouseMove(UINT, CPoint point)
 {
 	BOOL bButton;
 	LONG nSpot;
@@ -309,7 +309,7 @@ void CPropTreeItemColor::OnMouseMove(UINT, CPoint point)
 }
 
 
-BOOL CPropTreeItemColor::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CPropTreeItemColor::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	if (nHitTest==HTCLIENT)
 	{
@@ -330,7 +330,7 @@ BOOL CPropTreeItemColor::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 }
 
 
-void CPropTreeItemColor::OnLButtonDown(UINT, CPoint point) 
+void CPropTreeItemColor::OnLButtonDown(UINT, CPoint point)
 {
 	if (m_nSpot!=-1)
 	{

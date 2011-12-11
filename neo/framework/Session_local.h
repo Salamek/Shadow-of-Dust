@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -171,7 +171,7 @@ public:
 
 	bool				insideExecuteMapChange;	// draw loading screen and update
 												// screen on prints
-	int					bytesNeededForMapLoad;	// 
+	int					bytesNeededForMapLoad;	//
 
 	// we don't want to redraw the loading screen for every single
 	// console print that happens
@@ -207,7 +207,7 @@ public:
 
 
 	bool				aviCaptureMode;		// if true, screenshots will be taken and sound captured
-	idStr				aviDemoShortName;	// 
+	idStr				aviDemoShortName;	//
 	float				aviDemoFrameCount;
 	int					aviTicStart;
 
@@ -216,7 +216,7 @@ public:
 	int					numDemoFrames;		// for timeDemo and demoShot
 	int					demoTimeOffset;
 	renderView_t		currentDemoRenderView;
-	// the next one will be read when 
+	// the next one will be read when
 	// com_frameTime + demoTimeOffset > currentDemoRenderView.
 
 	// TODO: make this private (after sync networking removal and idnet tweaks)

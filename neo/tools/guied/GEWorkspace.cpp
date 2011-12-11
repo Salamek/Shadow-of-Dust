@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -142,7 +142,7 @@ bool rvGEWorkspace::Attach ( HWND wnd )
 	// Initialize the pixel format for this window
 	SetupPixelFormat ( );
 
-	// Jam the workspace pointer into the userdata window long so 
+	// Jam the workspace pointer into the userdata window long so
 	// we can retrieve the workspace from the window later
 	SetWindowLong ( mWnd, GWL_USERDATA, (LONG) this );
 	
@@ -179,14 +179,14 @@ bool rvGEWorkspace::SetupPixelFormat ( void )
 	bool result = true;
 
 	int pixelFormat = ChoosePixelFormat(hDC, &win32.pfd);
-	if (pixelFormat > 0) 
+	if (pixelFormat > 0)
 	{
-		if (SetPixelFormat(hDC, pixelFormat, &win32.pfd) == NULL) 
+		if (SetPixelFormat(hDC, pixelFormat, &win32.pfd) == NULL)
 		{
 			result = false;
 		}
 	}
-	else 
+	else
 	{
 		result = false;
 	}
@@ -271,7 +271,7 @@ void rvGEWorkspace::Render ( HDC hdc )
 	scale = g_ZoomScales[mZoom];
 
 	// Switch GL contexts to our dc
-	if (!qwglMakeCurrent( hdc, win32.hGLRC )) 
+	if (!qwglMakeCurrent( hdc, win32.hGLRC ))
 	{
 		common->Printf("ERROR: wglMakeCurrent failed.. Error:%i\n", qglGetError());
 		common->Printf("Please restart Q3Radiant if the Map view is not working\n");
@@ -443,7 +443,7 @@ void rvGEWorkspace::Scroll ( int scrollbar, int offset )
 	UpdateRectangle ( );
 }
 
-int rvGEWorkspace::HandleScroll ( int scrollbar, WPARAM wParam, LPARAM lParam ) 
+int rvGEWorkspace::HandleScroll ( int scrollbar, WPARAM wParam, LPARAM lParam )
 {
 	SCROLLINFO si;
 	
@@ -457,30 +457,30 @@ int rvGEWorkspace::HandleScroll ( int scrollbar, WPARAM wParam, LPARAM lParam )
 	switch (LOWORD (wParam))
 	{
 		// user clicked left or up arrow
-		case SB_LINELEFT: 
+		case SB_LINELEFT:
 			si.nPos -= 1000;
 			break;
-	        
+	
 		// user clicked right or down arrow
-		case SB_LINERIGHT: 
+		case SB_LINERIGHT:
 			si.nPos += 1000;
 			break;
-		        
+		
 		// user clicked shaft left of the scroll box
 		case SB_PAGELEFT:
 			si.nPos -= si.nPage;
 			break;
-		        
+		
 		// user clicked shaft right of the scroll box
 		case SB_PAGERIGHT:
 			si.nPos += si.nPage;
 			break;
-		        
+		
 		// user dragged the scroll box
-		case SB_THUMBTRACK: 
+		case SB_THUMBTRACK:
 			si.nPos = si.nTrackPos;
 			break;
-		        
+		
 		default :
 			break;
 	}
@@ -863,7 +863,7 @@ int	rvGEWorkspace::HandleRButtonDown ( WPARAM wParam, LPARAM lParam )
 	// Add the select menu
 	mSelectMenu.Clear ( );
 	
-	// Cache where the menu is being brought up so we can 
+	// Cache where the menu is being brought up so we can
 	// figure out which windows are under the point
 	mSelectMenuPos[0] = point.x;
 	mSelectMenuPos[1] = point.y;
@@ -871,11 +871,11 @@ int	rvGEWorkspace::HandleRButtonDown ( WPARAM wParam, LPARAM lParam )
 	
 	// Build a list of all the windows under the menu point
 	rvGEWindowWrapper::GetWrapper ( mInterface->GetDesktop() )->EnumChildren ( BuildSelectMenuEnumProc, this );
- 
+
 	// Add the desktop window always
 	mSelectMenu.Append ( mInterface->GetDesktop() );
 
-	// 
+	//
 	menu = GetSubMenu ( LoadMenu ( mApplication->GetInstance(), MAKEINTRESOURCE(IDR_GUIED_ITEM_POPUP) ), 0 );
 		
 	HMENU popup = CreatePopupMenu ( );	
@@ -1038,7 +1038,7 @@ int	rvGEWorkspace::HandleMouseMove ( WPARAM wParam, LPARAM lParam )
 	
 	cursor.Set ( (short)LOWORD(lParam), (short)HIWORD(lParam) );
 
-	// Convert the window point to the workspace before updating the 
+	// Convert the window point to the workspace before updating the
 	// cursor with the position
 	WindowToWorkspace ( cursor );
 
@@ -1164,11 +1164,11 @@ int	rvGEWorkspace::HandleKeyDown ( WPARAM wParam, LPARAM lParam )
 		case VK_RIGHT:
 			if ( shift )
 			{
-				AddModifierSizeNudge ( 1, 0, false ); 
+				AddModifierSizeNudge ( 1, 0, false );
 			}
 			else
 			{
-				AddModifierMoveNudge ( 1, 0, false ); 
+				AddModifierMoveNudge ( 1, 0, false );
 			}
 			break;					
 
@@ -1186,11 +1186,11 @@ int	rvGEWorkspace::HandleKeyDown ( WPARAM wParam, LPARAM lParam )
 		case VK_UP:
 			if ( shift )
 			{
-				AddModifierSizeNudge ( 0, -1, false ); 
+				AddModifierSizeNudge ( 0, -1, false );
 			}
 			else
 			{
-				AddModifierMoveNudge ( 0, -1, false ); 
+				AddModifierMoveNudge ( 0, -1, false );
 			}
 			break;		
 			
@@ -1303,7 +1303,7 @@ rvGEWorkspace::EZoomLevel rvGEWorkspace::ZoomOut ( void )
 ================
 rvGEWorkspace::CreateModifier
 
-Creates a new modifier of the given type for the given window.  This function is called 
+Creates a new modifier of the given type for the given window.  This function is called
 specifically from the add modifiers function with the variable args list forwarded.
 ================
 */
@@ -1472,7 +1472,7 @@ void rvGEWorkspace::DeleteSelected ( void )
 ================
 rvGEWorkspace::NewWindow
 
-Create a new window 
+Create a new window
 ================
 */
 idWindow* rvGEWorkspace::NewWindow ( idDict* state, rvGEWindowWrapper::EWindowType type )
@@ -1513,7 +1513,7 @@ idWindow* rvGEWorkspace::NewWindow ( idDict* state, rvGEWindowWrapper::EWindowTy
 	baseName.StripQuotes ( );
 
 	count = 0;
-	if ( mInterface->GetDesktop()->FindChildByName ( baseName ) ) 
+	if ( mInterface->GetDesktop()->FindChildByName ( baseName ) )
 	{
 		count = 1;
 		while ( 1 )
@@ -1963,7 +1963,7 @@ void rvGEWorkspace::Copy ( void )
 {
 	int i;
 	
-	// Clear the current clipboard 
+	// Clear the current clipboard
 	for ( i = 0; i < mClipboard.Num(); i ++ )
 	{
 		delete mClipboard[i];

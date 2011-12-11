@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -55,9 +55,9 @@ If you have questions concerning this license or the applicable additional terms
 // Callback pointer prototype:
 typedef void (*VectorCtlCallbackProc)( idQuat rotation );
 
-// The callback should look like: 
+// The callback should look like:
 //      void CALLBACK MyCallBack (double dVecX, double dVecY, double dVecZ);
-// or 
+// or
 //      static void CALLBACK MyClass::MyCallBack (double dVecX, double dVecY, double dVecZ);
 
 
@@ -77,18 +77,18 @@ class CVectorCtl : public CButton
 
 
 public:
-    CVectorCtl (); 
+    CVectorCtl ();
 
     virtual ~CVectorCtl ();
 
         // Owner-drawn control support function
     virtual void DrawItem( LPDRAWITEMSTRUCT lpDrawItemStruct );
 
-        // Sets / Gets diffuse (ball) color. 
+        // Sets / Gets diffuse (ball) color.
     void SetDiffuseColor (COLORREF clr)                 { m_clrDiffuse = clr; Redraw (); }
     COLORREF GetDiffuseColor ()                         { return m_clrDiffuse; }
 
-        // Sets / Gets ambient (background) color. 
+        // Sets / Gets ambient (background) color.
     void SetAmbientColor (COLORREF clr)                 { m_clrAmbient = clr; Redraw (); }
     COLORREF GetAmbientColor ()                         { return m_clrAmbient; }
 
@@ -140,7 +140,7 @@ public:
 
         // Bounds / Unbounds vector to front (positive Z) only
     void ClipToFront (BOOL bEnable)                     { m_bFrontVector = bEnable; }
-    
+
         // Set user-defined callback function to call whenever the vector has changed.
         // Set to NULL to disable callback.
     void SetVectorChangingCallback (VectorCtlCallbackProc proc)
@@ -158,7 +158,7 @@ private:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 
         // Mouse is being dragged
-    void OnMouseDrag (int , int);   
+    void OnMouseDrag (int , int);
         // Create and measure off-screen buffer
     void InitBitmap (LPDRAWITEMSTRUCT lpDrawItemStruct, CDC *pDC);
         // Build image to BitBlt
@@ -195,7 +195,7 @@ private:
                 m_iSqrRadius,           // Ball radius to the power of two
                 m_iXCenter,             // X center point
                 m_iYCenter;             // Y center point
-    CBitmap    *m_pOldBitmap;           // Previously selected bitmap    
+    CBitmap    *m_pOldBitmap;           // Previously selected bitmap
     COLORREF    m_clrDiffuse,           // Ball diffusion color (self color)
                 m_clrAmbient,           // Ambient (background) color
                 m_clrLight,             // Color of light

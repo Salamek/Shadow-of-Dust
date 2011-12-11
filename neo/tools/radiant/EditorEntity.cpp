@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -355,7 +355,7 @@ void Entity_Free( entity_t *e ) {
  =======================================================================================================================
  */
 
-int Entity_MemorySize( entity_t *e ) 
+int Entity_MemorySize( entity_t *e )
 {
 	brush_t		*b;
 	int			size;
@@ -487,7 +487,7 @@ void Entity_UpdateCurveData( entity_t *ent ) {
 	}
 
 	const idKeyValue *kv = ent->epairs.MatchPrefix( CURVE_TAG );
-	if ( kv == NULL ) { 
+	if ( kv == NULL ) {
 		if ( ent->curve ) {
 			delete ent->curve;
 			ent->curve = NULL;
@@ -1371,7 +1371,7 @@ void Entity_UpdateSoundEmitter( entity_t *ent ) {
 
 	// if an entity doesn't have any brushes at all, don't do anything
 	// if the brush isn't displayed (filtered or culled), don't do anything
-	if ( g_pParentWnd->GetCamera()->GetSoundMode() 
+	if ( g_pParentWnd->GetCamera()->GetSoundMode()
 		&& ent->brushes.onext != &ent->brushes && !FilterBrush(ent->brushes.onext) ) {
 		// check for sounds
 		const char *v = ValueForKey( ent, "s_shader" );

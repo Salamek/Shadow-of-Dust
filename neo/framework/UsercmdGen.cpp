@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ void usercmd_t::ByteSwap( void ) {
 usercmd_t::operator==
 ================
 */
-bool usercmd_t::operator==( const usercmd_t &rhs ) const { 
+bool usercmd_t::operator==( const usercmd_t &rhs ) const {
 	return ( buttons == rhs.buttons &&
 			forwardmove == rhs.forwardmove &&
 			rightmove == rhs.rightmove &&
@@ -791,7 +791,7 @@ void idUsercmdGenLocal::MakeCurrent( void ) {
 			viewangles[PITCH] = oldAngles[PITCH] + 90;
 		} else if ( oldAngles[PITCH] - viewangles[PITCH] > 90 ) {
 			viewangles[PITCH] = oldAngles[PITCH] - 90;
-		} 
+		}
 	} else {
 		mouseDx = 0;
 		mouseDy = 0;
@@ -870,7 +870,7 @@ idUsercmdGenLocal::Clear
 ================
 */
 void idUsercmdGenLocal::Clear( void ) {
-	// clears all key states 
+	// clears all key states
 	memset( buttonState, 0, sizeof( buttonState ) );
 	memset( keyState, false, sizeof( keyState ) );
 

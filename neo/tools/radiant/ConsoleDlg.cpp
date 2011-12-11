@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ BOOL CConsoleDlg::PreTranslateMessage(MSG* pMsg)
 			return TRUE;
 		}
 
-		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_UP ) {     
+		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_UP ) {
             //save off the current in-progress command so we can get back to it
 			if ( saveCurrentCommand == true ) {
                 CString str;
@@ -135,7 +135,7 @@ BOOL CConsoleDlg::PreTranslateMessage(MSG* pMsg)
 
 			if ( consoleHistory.Num () > 0 ) {
 				editInput.SetWindowText ( consoleHistory[currentHistoryPosition] );
-            
+
 				int selLocation = consoleHistory[currentHistoryPosition].Length ();
 				editInput.SetSel ( selLocation , selLocation + 1);
 }
@@ -147,7 +147,7 @@ BOOL CConsoleDlg::PreTranslateMessage(MSG* pMsg)
 			return TRUE;
 		}
 
-		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_DOWN ) {  
+		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_DOWN ) {
             int selLocation = 0;
             if ( currentHistoryPosition < consoleHistory.Num () - 1 ) {
                 ++currentHistoryPosition;
@@ -160,12 +160,12 @@ BOOL CConsoleDlg::PreTranslateMessage(MSG* pMsg)
 				currentCommand.Clear ();
 				saveCurrentCommand = true;
             }
-                        
+
             editInput.SetSel ( selLocation , selLocation + 1);
 
 			return TRUE;
 		}
-		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB ) {  
+		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB ) {
 			common->Printf ( "Command History\n----------------\n" );
 			for ( int i = 0 ; i < consoleHistory.Num ();i++ )
 {
@@ -173,19 +173,19 @@ BOOL CConsoleDlg::PreTranslateMessage(MSG* pMsg)
 			}
 			common->Printf ( "----------------\n" );
 		}
-		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_NEXT) {  
+		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_NEXT) {
 			editConsole.LineScroll ( 10 );	
 		}
 
-		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_PRIOR ) {  
+		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_PRIOR ) {
 			editConsole.LineScroll ( -10 );	
 		}
 
-		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_HOME ) {  
+		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_HOME ) {
 			editConsole.LineScroll ( -editConsole.GetLineCount() );	
 		}
 
-		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_END ) {  
+		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_END ) {
 			editConsole.LineScroll ( editConsole.GetLineCount() );	
 		}
 	}
@@ -224,7 +224,7 @@ void CConsoleDlg::ExecuteCommand ( const idStr& cmd ) {
 			if ( consoleHistory.Num () > 16 ) {
 				consoleHistory.RemoveIndex ( 0 );
 			}
-			currentHistoryPosition = consoleHistory.Append ( str.GetBuffer (0) );    
+			currentHistoryPosition = consoleHistory.Append ( str.GetBuffer (0) );
 		}
 		else {
 			currentHistoryPosition = consoleHistory.Num () - 1;

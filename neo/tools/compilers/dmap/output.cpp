@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -168,7 +168,7 @@ static bool MatchVert( const idDrawVert *a, const idDrawVert *b ) {
 	}
 
 	// if the normal is 0 (smoothed normals), consider it a match
-	if ( a->normal[0] == 0 && a->normal[1] == 0 && a->normal[2] == 0 
+	if ( a->normal[0] == 0 && a->normal[1] == 0 && a->normal[2] == 0
 		&& b->normal[0] == 0 && b->normal[1] == 0 && b->normal[2] == 0 ) {
 		return true;
 	}
@@ -265,7 +265,7 @@ static void WriteUTriangles( const srfTriangles_t *uTris ) {
 	int			i;
 
 	// emit this chain
-	procFile->WriteFloatString( "/* numVerts = */ %i /* numIndexes = */ %i\n", 
+	procFile->WriteFloatString( "/* numVerts = */ %i /* numIndexes = */ %i\n",
 		uTris->numVerts, uTris->numIndexes );
 
 	// verts
@@ -323,7 +323,7 @@ static void WriteShadowTriangles( const srfTriangles_t *tri ) {
 	int			i;
 
 	// emit this chain
-	procFile->WriteFloatString( "/* numVerts = */ %i /* noCaps = */ %i /* noFrontCaps = */ %i /* numIndexes = */ %i /* planeBits = */ %i\n", 
+	procFile->WriteFloatString( "/* numVerts = */ %i /* noCaps = */ %i /* noFrontCaps = */ %i /* numIndexes = */ %i /* planeBits = */ %i\n",
 		tri->numVerts, tri->numShadowIndexesNoCaps, tri->numShadowIndexesNoFrontCaps, tri->numIndexes, tri->shadowCapPlaneBits );
 
 	// verts
@@ -406,7 +406,7 @@ typedef struct interactionTris_s {
 
 
 	if ( entityNum == 0 ) {
-		procFile->WriteFloatString( "model { /* name = */ \"_area%i\" /* numSurfaces = */ %i\n\n", 
+		procFile->WriteFloatString( "model { /* name = */ \"_area%i\" /* numSurfaces = */ %i\n\n",
 			areaNum, numSurfaces );
 	} else {
 		const char *name;
@@ -415,7 +415,7 @@ typedef struct interactionTris_s {
 		if ( !name[0] ) {
 			common->Error( "Entity %i has surfaces, but no name key", entityNum );
 		}
-		procFile->WriteFloatString( "model { /* name = */ \"%s\" /* numSurfaces = */ %i\n\n", 
+		procFile->WriteFloatString( "model { /* name = */ \"%s\" /* numSurfaces = */ %i\n\n",
 			name, numSurfaces );
 	}
 
@@ -578,7 +578,7 @@ static void WriteOutputPortals( uEntity_t *e ) {
 	interAreaPortal_t	*iap;
 	idWinding			*w;
 
-	procFile->WriteFloatString( "interAreaPortals { /* numAreas = */ %i /* numIAP = */ %i\n\n", 
+	procFile->WriteFloatString( "interAreaPortals { /* numAreas = */ %i /* numIAP = */ %i\n\n",
 		e->numAreas, numInterAreaPortals );
 	procFile->WriteFloatString( "/* interAreaPortal format is: numPoints positiveSideArea negativeSideArea ( point) ... */\n" );
 	for ( i = 0 ; i < numInterAreaPortals ; i++ ) {
