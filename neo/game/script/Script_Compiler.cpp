@@ -962,8 +962,8 @@ idVarDef *idCompiler::EmitFunctionParms( int op, idVarDef *func, int startarg, i
 
 			//if ( funcArg->Type() == ev_object ) {
 			if ( funcArg->Type() == ev_object or funcArg->Type() == ev_entity) {
-				size += sizeof(int);
-			//	size += type_object.Size();
+				//size += sizeof(int);
+				size += type_object.Size();
 			} else {
 				size += funcArg->Size();
 			}
@@ -1129,8 +1129,8 @@ idVarDef *idCompiler::ParseEventCall( idVarDef *object, idVarDef *funcDef ) {
 	} else {
 		EmitPush( object, object->TypeDef() );
 	}
-	return EmitFunctionParms( OP_EVENTCALL, funcDef, 0, sizeof(int), NULL );
-	//return EmitFunctionParms( OP_EVENTCALL, funcDef, 0, type_object.Size(), NULL );
+	//return EmitFunctionParms( OP_EVENTCALL, funcDef, 0, sizeof(int), NULL );
+	return EmitFunctionParms( OP_EVENTCALL, funcDef, 0, type_object.Size(), NULL );
 }
 
 /*
@@ -2156,12 +2156,13 @@ void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 	// calculate stack space used by parms
 	numParms = type->NumParameters();
 	func->parmSize.SetNum( numParms );
+	//
 	for( i = 0; i < numParms; i++ ) {
 		parmType = type->GetParmType( i );
 		//if ( parmType->Inherits( &type_object ) ) {
 		if ( parmType->Inherits( &type_object ) or parmType->Type() == ev_entity) {
 			//func->parmSize[ i ] = type_object.Size();
-			func->parmSize[ i ] = sizeof(int);
+			func->parmSize[ i ] = type_object.Size();
 		} else {
 			func->parmSize[ i ] = parmType->Size();
 		}

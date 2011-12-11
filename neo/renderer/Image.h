@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -64,57 +64,57 @@ typedef enum {
 static const int	MAX_TEXTURE_LEVELS = 14;
 
 // surface description flags
-const uint DDSF_CAPS           = 0x00000001l;
-const uint DDSF_HEIGHT         = 0x00000002l;
-const uint DDSF_WIDTH          = 0x00000004l;
-const uint DDSF_PITCH          = 0x00000008l;
-const uint DDSF_PIXELFORMAT    = 0x00001000l;
-const uint DDSF_MIPMAPCOUNT    = 0x00020000l;
-const uint DDSF_LINEARSIZE     = 0x00080000l;
-const uint DDSF_DEPTH          = 0x00800000l;
+const unsigned int DDSF_CAPS           = 0x00000001l;
+const unsigned int DDSF_HEIGHT         = 0x00000002l;
+const unsigned int DDSF_WIDTH          = 0x00000004l;
+const unsigned int DDSF_PITCH          = 0x00000008l;
+const unsigned int DDSF_PIXELFORMAT    = 0x00001000l;
+const unsigned int DDSF_MIPMAPCOUNT    = 0x00020000l;
+const unsigned int DDSF_LINEARSIZE     = 0x00080000l;
+const unsigned int DDSF_DEPTH          = 0x00800000l;
 
 // pixel format flags
-const uint DDSF_ALPHAPIXELS    = 0x00000001l;
-const uint DDSF_FOURCC         = 0x00000004l;
-const uint DDSF_RGB            = 0x00000040l;
-const uint DDSF_RGBA           = 0x00000041l;
+const unsigned int DDSF_ALPHAPIXELS    = 0x00000001l;
+const unsigned int DDSF_FOURCC         = 0x00000004l;
+const unsigned int DDSF_RGB            = 0x00000040l;
+const unsigned int DDSF_RGBA           = 0x00000041l;
 
 // our extended flags
-const uint DDSF_ID_INDEXCOLOR	= 0x10000000l;
-const uint DDSF_ID_MONOCHROME	= 0x20000000l;
+const unsigned int DDSF_ID_INDEXCOLOR	= 0x10000000l;
+const unsigned int DDSF_ID_MONOCHROME	= 0x20000000l;
 
 // dwCaps1 flags
-const uint DDSF_COMPLEX         = 0x00000008l;
-const uint DDSF_TEXTURE         = 0x00001000l;
-const uint DDSF_MIPMAP          = 0x00400000l;
+const unsigned int DDSF_COMPLEX         = 0x00000008l;
+const unsigned int DDSF_TEXTURE         = 0x00001000l;
+const unsigned int DDSF_MIPMAP          = 0x00400000l;
 
 #define DDS_MAKEFOURCC(a, b, c, d) ((a) | ((b) << 8) | ((c) << 16) | ((d) << 24))
 
 typedef struct {
-    uint dwSize;
-    uint dwFlags;
-    uint dwFourCC;
-    uint dwRGBBitCount;
-    uint dwRBitMask;
-    uint dwGBitMask;
-    uint dwBBitMask;
-    uint dwABitMask;
+	unsigned int dwSize;
+	unsigned int dwFlags;
+	unsigned int dwFourCC;
+	unsigned int dwRGBBitCount;
+	unsigned int dwRBitMask;
+	unsigned int dwGBitMask;
+	unsigned int dwBBitMask;
+	unsigned int dwABitMask;
 } ddsFilePixelFormat_t;
 
 typedef struct
 {
-    uint dwSize;
-    uint dwFlags;
-    uint dwHeight;
-    uint dwWidth;
-    uint dwPitchOrLinearSize;
-    uint dwDepth;
-    uint dwMipMapCount;
-    uint dwReserved1[11];
-    ddsFilePixelFormat_t ddspf;
-    uint dwCaps1;
-    uint dwCaps2;
-    uint dwReserved2[3];
+	unsigned int dwSize;
+	unsigned int dwFlags;
+	unsigned int dwHeight;
+	unsigned int dwWidth;
+	unsigned int dwPitchOrLinearSize;
+	unsigned int dwDepth;
+	unsigned int dwMipMapCount;
+	unsigned int dwReserved1[11];
+	ddsFilePixelFormat_t ddspf;
+	unsigned int dwCaps1;
+	unsigned int dwCaps2;
+	unsigned int dwReserved2[3];
 } ddsFileHeader_t;
 
 
@@ -163,14 +163,14 @@ public:
 	// data goes from the bottom to the top line of the image, as OpenGL expects it
 	// These perform an implicit Bind() on the current texture unit
 	// FIXME: should we implement cinematics this way, instead of with explicit calls?
-	void		GenerateImage( const byte *pic, int width, int height, 
-					   textureFilter_t filter, bool allowDownSize, 
+	void		GenerateImage( const byte *pic, int width, int height,
+					   textureFilter_t filter, bool allowDownSize,
 					   textureRepeat_t repeat, textureDepth_t depth );
 	void		Generate3DImage( const byte *pic, int width, int height, int depth,
-						textureFilter_t filter, bool allowDownSize, 
+						textureFilter_t filter, bool allowDownSize,
 						textureRepeat_t repeat, textureDepth_t minDepth );
-	void		GenerateCubeImage( const byte *pic[6], int size, 
-						textureFilter_t filter, bool allowDownSize, 
+	void		GenerateCubeImage( const byte *pic[6], int size,
+						textureFilter_t filter, bool allowDownSize,
 						textureDepth_t depth );
 
 	void		CopyFramebuffer( int x, int y, int width, int height, bool useOversizedBuffer );
@@ -249,7 +249,7 @@ public:
 	int					uploadWidth, uploadHeight, uploadDepth;	// after power of two, downsample, and MAX_TEXTURE_SIZE
 	int					internalFormat;
 
-	idImage 			*cacheUsagePrev, *cacheUsageNext;	// for dynamic cache purging of old images
+	idImage				*cacheUsagePrev, *cacheUsageNext;	// for dynamic cache purging of old images
 
 	idImage *			hashNext;				// for hash chains to speed lookup
 
@@ -412,7 +412,7 @@ public:
 	idImage *			borderClampImage;			// white inside, black outside
 
 	//--------------------------------------------------------
-	
+
 	idImage *			AllocImage( const char *name );
 	void				SetNormalPalette();
 	void				ChangeTextureFilter();
@@ -455,9 +455,9 @@ FIXME: make an "imageBlock" type to hold byte*,width,height?
 ====================================================================
 */
 
-byte *R_Dropsample( const byte *in, int inwidth, int inheight,  
+byte *R_Dropsample( const byte *in, int inwidth, int inheight,
 							int outwidth, int outheight );
-byte *R_ResampleTexture( const byte *in, int inwidth, int inheight,  
+byte *R_ResampleTexture( const byte *in, int inwidth, int inheight,
 							int outwidth, int outheight );
 byte *R_MipMapWithAlphaSpecularity( const byte *in, int width, int height );
 byte *R_MipMap( const byte *in, int width, int height, bool preserveBorder );

@@ -137,9 +137,8 @@ bool idAudioHardwareALSA::Initialize( void ) {
 	// set hardware parameters ----------------------------------------------------------------------
 
 	// init hwparams with the full configuration space
-	snd_pcm_hw_params_t *hwparams;
-	// this one is a define
-	id_snd_pcm_hw_params_alloca( &hwparams );
+	snd_pcm_hw_params_t *hwparams = (snd_pcm_hw_params_t *) alloca(id_snd_pcm_hw_params_sizeof());
+	memset(hwparams, 0, id_snd_pcm_hw_params_sizeof());
 	if ( ( err = id_snd_pcm_hw_params_any( m_pcm_handle, hwparams ) ) < 0 ) {
 		common->Printf( "cannot configure the PCM device: %s\n", id_snd_strerror( err ) );
 		InitFailed();
@@ -282,6 +281,7 @@ bool idAudioHardwareALSA::Flush( void ) {
 		Sys_Printf( "preparing audio device for output\n" );
 	}
 	Write( true );
+	return true;
 }
 
 /*
@@ -304,7 +304,7 @@ void idAudioHardwareALSA::Write( bool flushing ) {
 		return;
 	}
 	// write the max frames you can in one shot - we need to write it all out in Flush() calls before the next Write() happens
-	std::ptrdiff_t pos = (std::ptrdiff_t)m_buffer + ( MIXBUFFER_SAMPLES - m_remainingFrames ) * m_channels * 2;
+	uintptr_t pos = (uintptr_t)m_buffer + ( MIXBUFFER_SAMPLES - m_remainingFrames ) * m_channels * 2;
 	snd_pcm_sframes_t frames = id_snd_pcm_writei( m_pcm_handle, (void*)pos, m_remainingFrames );
 	if ( frames < 0 ) {
 		if ( frames != -EAGAIN ) {

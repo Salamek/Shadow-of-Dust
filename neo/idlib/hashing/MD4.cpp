@@ -245,8 +245,8 @@ MD4_BlockChecksum
 ===============
 */
 unsigned int MD4_BlockChecksum( const void *data, int length ) {
-	unsigned long	digest[4];
-	unsigned long	val;
+	unsigned int	digest[4];
+	unsigned int	val;
 	MD4_CTX			ctx;
 
 	MD4_Init( &ctx );

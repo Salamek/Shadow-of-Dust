@@ -588,8 +588,7 @@ void idSoundWorldLocal::AVIUpdate() {
 	}
 
 	float	mix[MIXBUFFER_SAMPLES*6+16];
-	float	*mix_p = (float *)(((std::ptrdiff_t)mix + 15 ) & ~15);	// SIMD align
-
+	float  *mix_p = (float *)((( intptr_t)mix + 15 ) & ~15);  // SIMD align
 	SIMDProcessor->Memset( mix_p, 0, MIXBUFFER_SAMPLES*sizeof(float)*numSpeakers );
 
 	MixLoop( lastAVI44kHz, numSpeakers, mix_p );
@@ -1713,8 +1712,7 @@ void idSoundWorldLocal::AddChannelContribution( idSoundEmitterLocal *sound, idSo
 	//
 	int offset = current44kHz - chan->trigger44kHzTime;
 	float inputSamples[MIXBUFFER_SAMPLES*2+16];
-	float *alignedInputSamples = (float *) ( ( ( (size_t)inputSamples ) + 15 ) & ~15 );
-
+	float *alignedInputSamples = (float *) ( ( ( (intptr_t)inputSamples ) + 15 ) & ~15 );
 	//
 	// allocate and initialize hardware source
 	// 
