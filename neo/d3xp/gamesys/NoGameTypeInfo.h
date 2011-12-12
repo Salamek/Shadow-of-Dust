@@ -67,11 +67,6 @@ typedef struct {
 	const classVariableInfo_t * variables;
 } classTypeInfo_t;
 
-
-static const constantInfo_t constantInfo[] = {
-	{ NULL, NULL, NULL }
-};
-
 static const enumTypeInfo_t enumTypeInfo[] = {
 	{ NULL, NULL }
 };

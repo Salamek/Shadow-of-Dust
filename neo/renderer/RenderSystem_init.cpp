@@ -40,8 +40,6 @@ If you have questions concerning this license or the applicable additional terms
 
 glconfig_t	glConfig;
 
-static void GfxInfo_f( void );
-
 const char *r_rendererArgs[] = { "best", "arb", "arb2", "Cg", "exp", "nv10", "nv20", "r200", NULL };
 
 idCVar r_inhibitFragmentProgram( "r_inhibitFragmentProgram", "0", CVAR_RENDERER | CVAR_BOOL, "ignore the fragment program extension" );
@@ -1354,8 +1352,6 @@ void R_ScreenShot_f( const idCmdArgs &args ) {
 
 	int width = glConfig.vidWidth;
 	int height = glConfig.vidHeight;
-	int	x = 0;
-	int y = 0;
 	int	blends = 0;
 
 	switch ( args.Argc() ) {
@@ -1600,8 +1596,6 @@ void R_MakeAmbientMap_f( const idCmdArgs &args ) {
 	idStr fullname;
 	const char	*baseName;
 	int			i;
-	renderView_t	ref;
-	viewDef_t	primary;
 	int			downSample;
 	const char	*extensions[6] =  { "_px.tga", "_nx.tga", "_py.tga", "_ny.tga",
 		"_pz.tga", "_nz.tga" };
@@ -1774,7 +1768,7 @@ void R_SetColorMappings( void ) {
 GfxInfo_f
 ================
 */
-void GfxInfo_f( const idCmdArgs &args ) {
+static void GfxInfo_f( const idCmdArgs &args ) {
 	const char *fsstrings[] =
 	{
 		"windowed",

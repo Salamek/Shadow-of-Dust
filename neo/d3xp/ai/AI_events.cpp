@@ -1792,7 +1792,6 @@ idAI::Event_TestChargeAttack
 =====================
 */
 void idAI::Event_TestChargeAttack( void ) {
-	trace_t trace;
 	idActor *enemyEnt = enemy.GetEntity();
 	predictedPath_t path;
 	idVec3 end;
@@ -2489,7 +2488,7 @@ void idAI::Event_ThrowMoveable( void ) {
 	}
 	if ( moveable ) {
 		moveable->Unbind();
-		moveable->PostEventMS( &EV_SetOwner, 200, NULL );
+		moveable->PostEventMS( &EV_SetOwner, 200, 0 );
 	}
 }
 
@@ -2510,7 +2509,7 @@ void idAI::Event_ThrowAF( void ) {
 	}
 	if ( af ) {
 		af->Unbind();
-		af->PostEventMS( &EV_SetOwner, 200, NULL );
+		af->PostEventMS( &EV_SetOwner, 200, 0 );
 	}
 }
 

@@ -269,7 +269,7 @@ private:
 	void			ParseNamespace( idVarDef *newScope );
 
 public :
-	static opcode_t	opcodes[];
+	static const opcode_t	opcodes[];
 
 					idCompiler();
 	void			CompileFile( const char *text, const char *filename, bool console );
