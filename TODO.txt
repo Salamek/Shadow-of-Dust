@@ -2,10 +2,7 @@ CONTRIBUTORS, FEEL FREE TO ADD MORE POINTS HERE!
 
 Working idtech4 on modern systems with doom3 game files (original doom3)
 --------------------------------------------------------------------------------
-++ Finish x86_64 suppor for doom3 (game working withnout any problem like 32b version)
 ++ Remove bunded vorbis
-++ Why we use md4 AND md5 ??? (check)
-++ Is there anything we can modernize ? (check)
 ++ Clean out ALL (i mean rly all) compile warnings (yes its slavery, but i dont want be surprised)
 
 Here starts a real fun!
