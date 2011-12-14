@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -93,11 +93,11 @@ Sys_Createthread
 void Sys_CreateThread(  xthread_t function, void *parms, xthreadPriority priority, xthreadInfo &info, const char *name, xthreadInfo *threads[MAX_THREADS], int *thread_count ) {
 	HANDLE temp = CreateThread(	NULL,	// LPSECURITY_ATTRIBUTES lpsa,
 									0,		// DWORD cbStack,
-									(LPTHREAD_START_ROUTINE)function,	// LPTHREAD_START_ROUTINE lpStartAddr,
+									function,	// LPTHREAD_START_ROUTINE lpStartAddr,
 									parms,	// LPVOID lpvThreadParm,
 									0,		//   DWORD fdwCreate,
 									&info.threadId);
-	info.threadHandle = (int) temp;
+	info.threadHandle = (intptr_t) temp;
 	if (priority == THREAD_HIGHEST) {
 		SetThreadPriority( (HANDLE)info.threadHandle, THREAD_PRIORITY_HIGHEST );		//  we better sleep enough to do this
 	} else if (priority == THREAD_ABOVE_NORMAL ) {
@@ -137,7 +137,7 @@ Sys_GetThreadName
 ==================
 */
 const char* Sys_GetThreadName(int *index) {
-	int id = GetCurrentThreadId();
+	size_t id = GetCurrentThreadId();
 	for( int i = 0; i < g_thread_count; i++ ) {
 		if ( id == g_threads[i]->threadId ) {
 			if ( index ) {
@@ -246,7 +246,7 @@ int Sys_AllocHook( int nAllocType, void *pvData, size_t nSize, int nBlockUse, lo
 
 	if ( nBlockUse == _CRT_BLOCK )
 	{
-      return( TRUE );
+	  return( TRUE );
 	}
 
 	// get a pointer to memory block header
@@ -294,8 +294,8 @@ Sys_DebugMemory_f
 ==================
 */
 void Sys_DebugMemory_f( void ) {
-  	common->Printf( "Total allocation %8dk in %d blocks\n", debug_total_alloc / 1024, debug_total_alloc_count );
-  	common->Printf( "Current allocation %8dk in %d blocks\n", debug_current_alloc / 1024, debug_current_alloc_count );
+	common->Printf( "Total allocation %8dk in %d blocks\n", debug_total_alloc / 1024, debug_total_alloc_count );
+	common->Printf( "Current allocation %8dk in %d blocks\n", debug_current_alloc / 1024, debug_current_alloc_count );
 }
 
 /*
@@ -335,7 +335,7 @@ Show the early console as an error dialog
 void Sys_Error( const char *error, ... ) {
 	va_list		argptr;
 	char		text[4096];
-    MSG        msg;
+	MSG        msg;
 
 	va_start( argptr, error );
 	vsprintf( text, error, argptr );
@@ -359,7 +359,7 @@ void Sys_Error( const char *error, ... ) {
 			common->Quit();
 		}
 		TranslateMessage( &msg );
-      	DispatchMessage( &msg );
+		DispatchMessage( &msg );
 	}
 
 	Sys_DestroyConsole();
@@ -759,7 +759,7 @@ This allows windows to be moved during renderbump
 =============
 */
 void Sys_PumpEvents( void ) {
-    MSG msg;
+	MSG msg;
 
 	// pump the message loop
 	while( PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE ) ) {
@@ -782,7 +782,7 @@ void Sys_PumpEvents( void ) {
 #endif
 
 		TranslateMessage (&msg);
-      	DispatchMessage (&msg);
+		DispatchMessage (&msg);
 	}
 }
 
@@ -870,7 +870,7 @@ void Sys_In_Restart_f( const idCmdArgs &args ) {
 Sys_AsyncThread
 ==================
 */
-static void Sys_AsyncThread( void *parm ) {
+static THREAD_RETURN_TYPE Sys_AsyncThread( void *parm ) {
 	int		wakeNumber;
 	int		startTime;
 
@@ -900,6 +900,8 @@ static void Sys_AsyncThread( void *parm ) {
 
 		common->Async();
 	}
+
+	return (THREAD_RETURN_TYPE) 0;
 }
 
 /*
@@ -920,7 +922,7 @@ void Sys_StartAsyncThread( void ) {
 	t.HighPart = t.LowPart = 0;
 	SetWaitableTimer( hTimer, &t, USERCMD_MSEC, NULL, NULL, TRUE );
 
-	Sys_CreateThread( (xthread_t)Sys_AsyncThread, NULL, THREAD_ABOVE_NORMAL, threadInfo, "Async", g_threads,  &g_thread_count );
+	Sys_CreateThread( Sys_AsyncThread, NULL, THREAD_ABOVE_NORMAL, threadInfo, "Async", g_threads,  &g_thread_count );
 
 #ifdef SET_THREAD_AFFINITY
 	// give the async thread an affinity for the second cpu
@@ -1029,9 +1031,9 @@ void Sys_Init( void ) {
 			}
 		} else if( win32.osversion.dwMajorVersion == 4 && win32.osversion.dwMinorVersion == 90 ) {
 			// WinMe
-		  	win32.sys_arch.SetString( "WinMe (95)" );
+			win32.sys_arch.SetString( "WinMe (95)" );
 		} else {
-		  	win32.sys_arch.SetString( "Unknown 95 variant" );
+			win32.sys_arch.SetString( "Unknown 95 variant" );
 		}
 	} else {
 		win32.sys_arch.SetString( "unknown Windows variant" );
@@ -1070,7 +1072,7 @@ void Sys_Init( void ) {
 			string += "SSE & ";
 		}
 		if ( win32.cpuid & CPUID_SSE2 ) {
-            string += "SSE2 & ";
+			string += "SSE2 & ";
 		}
 		if ( win32.cpuid & CPUID_SSE3 ) {
 			string += "SSE3 & ";
@@ -1135,7 +1137,7 @@ Sys_GetProcessorId
 ================
 */
 cpuid_t Sys_GetProcessorId( void ) {
-    return win32.cpuid;
+	return win32.cpuid;
 }
 
 /*
@@ -1345,8 +1347,8 @@ EXCEPTION_DISPOSITION __cdecl _except_handler( struct _EXCEPTION_RECORD *Excepti
 	EmailCrashReport( msg );
 	common->FatalError( msg );
 
-    // Tell the OS to restart the faulting instruction
-    return ExceptionContinueExecution;
+	// Tell the OS to restart the faulting instruction
+	return ExceptionContinueExecution;
 }
 
 #define TEST_FPU_EXCEPTIONS	/*	FPU_EXCEPTION_INVALID_OPERATION |		*/	\
@@ -1371,13 +1373,13 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	Sys_GetCurrentMemoryStatus( exeLaunchMemoryStats );
 
 #if 0
-    DWORD handler = (DWORD)_except_handler;
-    __asm
-    {                           // Build EXCEPTION_REGISTRATION record:
-        push    handler         // Address of handler function
-        push    FS:[0]          // Address of previous handler
-        mov     FS:[0],ESP      // Install new EXECEPTION_REGISTRATION
-    }
+	DWORD handler = (DWORD)_except_handler;
+	__asm
+	{                           // Build EXCEPTION_REGISTRATION record:
+		push    handler         // Address of handler function
+		push    FS:[0]          // Address of previous handler
+		mov     FS:[0],ESP      // Install new EXECEPTION_REGISTRATION
+	}
 #endif
 
 	win32.hInstance = hInstance;
@@ -1440,7 +1442,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	::SetFocus( win32.hWnd );
 
-    // main game loop
+	// main game loop
 	while( 1 ) {
 
 		Win_Frame();
@@ -1517,27 +1519,27 @@ __declspec( naked ) void clrstk( void ) {
 	// eax = bytes to add to stack
 	__asm {
 		mov		[parmBytes],eax
-        neg     eax                     ; compute new stack pointer in eax
-        add     eax,esp
-        add     eax,4
-        xchg    eax,esp
-        mov     eax,dword ptr [eax]		; copy the return address
-        push    eax
+		neg     eax                     ; compute new stack pointer in eax
+		add     eax,esp
+		add     eax,4
+		xchg    eax,esp
+		mov     eax,dword ptr [eax]		; copy the return address
+		push    eax
 
-        ; clear to zero
-        push	edi
-        push	ecx
-        mov		edi,esp
-        add		edi,12
-        mov		ecx,[parmBytes]
+		; clear to zero
+		push	edi
+		push	ecx
+		mov		edi,esp
+		add		edi,12
+		mov		ecx,[parmBytes]
 		shr		ecx,2
-        xor		eax,eax
+		xor		eax,eax
 		cld
-        rep	stosd
-        pop		ecx
-        pop		edi
+		rep	stosd
+		pop		ecx
+		pop		edi
 
-        ret
+		ret
 	}
 }
 
@@ -1589,7 +1591,7 @@ void idSysLocal::StartProcess( const char *exePath, bool doexit ) {
 	strncpy( szPathOrig, exePath, _MAX_PATH );
 
 	if( !CreateProcess( NULL, szPathOrig, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi ) ) {
-        common->Error( "Could not start process: '%s' ", szPathOrig );
+		common->Error( "Could not start process: '%s' ", szPathOrig );
 	    return;
 	}
 

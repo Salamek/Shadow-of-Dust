@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -49,7 +49,8 @@ If you have questions concerning this license or the applicable additional terms
 #define ALIGN16( x )					__declspec(align(16)) x
 #define PACKED
 
-#define _alloca16( x )          ((void *)((((uintptr_t)_alloca( (x)+15 )) + 15) & ~15))
+#define _alloca16( x )					((void *)((((uintptr_t)_alloca( (x)+15 )) + 15) & ~15))
+
 #define PATHSEPERATOR_STR				"\\"
 #define PATHSEPERATOR_CHAR				'\\'
 
@@ -58,7 +59,14 @@ If you have questions concerning this license or the applicable additional terms
 
 #define assertmem( x, y )				assert( _CrtIsValidPointer( x, y, true ) )
 
+#define THREAD_RETURN_TYPE				dword
+
+#if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
+	#define ID_LITTLE_ENDIAN			1
 #endif
+
+#endif
+
 
 // Mac OSX
 #if defined(MACOS_X) || defined(__APPLE__)
@@ -83,7 +91,8 @@ If you have questions concerning this license or the applicable additional terms
 #endif
 
 #define _alloca							alloca
-#define _alloca16( x )          ((void *)((((uintptr_t)alloca( (x)+15 )) + 15) & ~15))
+#define _alloca16( x )					((void *)((((uintptr_t)alloca( (x)+15 )) + 15) & ~15))
+
 #define PATHSEPERATOR_STR				"/"
 #define PATHSEPERATOR_CHAR				'/'
 
@@ -95,30 +104,48 @@ If you have questions concerning this license or the applicable additional terms
 
 #define assertmem( x, y )
 
+#define THREAD_RETURN_TYPE				void *
+
 #endif
 
 
-// Linux
+// Unix
+#ifdef __unix__
+
+#define BUILD_OS_ID					2
+
 #ifdef __linux__
+	#define BUILD_OS "linux"
+#elif defined(__FreeBSD__)
+	#define BUILD_OS "FreeBSD"
+#elif defined(__DragonFly__)
+	#define BUILD_OS "DragonFly"
+#elif defined(__OpenBSD__)
+	#define BUILD_OS "OpenBSD"
+#elif defined(__NetBSD__)
+	#define BUILD_OS "NetBSD"
+#else
+	#error unknown operating system!
+#endif
 
 #ifdef __i386__
-	#define	BUILD_STRING				"linux-x86"
-	#define BUILD_OS_ID					2
 	#define CPUSTRING					"x86"
 	#define CPU_EASYARGS				1
-#elif __x86_64__
-	#define	BUILD_STRING				"linux-x86_64"
-	#define BUILD_OS_ID					2
+#elif defined(__x86_64__)
 	#define CPUSTRING					"x86_64"
 	#define CPU_EASYARGS				0
 #elif defined(__ppc__)
-	#define	BUILD_STRING				"linux-ppc"
 	#define CPUSTRING					"ppc"
 	#define CPU_EASYARGS				0
+#else
+	#error unknown cpu architecture!
 #endif
 
+#define	BUILD_STRING					(BUILD_OS "-" CPUSTRING)
+
 #define _alloca							alloca
-#define _alloca16( x )          ((void *)((((uintptr_t)alloca( (x)+15 )) + 15) & ~15))
+#define _alloca16( x )					((void *)((((uintptr_t)alloca( (x)+15 )) + 15) & ~15))
+
 #define ALIGN16( x )					x
 #define PACKED							__attribute__((packed))
 
@@ -133,6 +160,29 @@ If you have questions concerning this license or the applicable additional terms
 
 #define assertmem( x, y )
 
+#define THREAD_RETURN_TYPE				void *
+
+#endif
+
+
+#if !defined(ID_LITTLE_ENDIAN) && !defined(ID_BIG_ENDIAN)
+	#if defined(__BYTE_ORDER__) && defined(__ORDER_LITTLE_ENDIAN__)
+		#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+			#define ID_LITTLE_ENDIAN
+		#endif
+	#elif defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__)
+		#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+			#define ID_BIG_ENDIAN
+		#endif
+	#endif
+#endif
+
+#if !defined(ID_LITTLE_ENDIAN) && !defined(ID_BIG_ENDIAN)
+	#if defined(__i386__) || defined(__x86_64__)
+		#define ID_LITTLE_ENDIAN		1
+	#elif defined(__ppc__)
+		#define ID_BIG_ENDIAN			1
+	#endif
 #endif
 
 #ifdef __GNUC__
@@ -328,7 +378,7 @@ const char *	Sys_GetCallStackCurAddressStr( int depth );
 void			Sys_ShutdownSymbols( void );
 
 // DLL loading, the path should be a fully qualified OS path to the DLL file to be loaded
-uintptr_t			Sys_DLL_Load( const char *dllName );
+uintptr_t		Sys_DLL_Load( const char *dllName );
 void *			Sys_DLL_GetProcAddress( uintptr_t dllHandle, const char *procName );
 void			Sys_DLL_Unload( uintptr_t dllHandle );
 
@@ -479,7 +529,7 @@ void			Sys_ShutdownNetworking( void );
 ==============================================================
 */
 
-typedef size_t (*xthread_t)( void * );
+typedef THREAD_RETURN_TYPE (*xthread_t)( void * );
 
 typedef enum {
 	THREAD_NORMAL,
@@ -489,8 +539,8 @@ typedef enum {
 
 typedef struct {
 	const char *	name;
-	size_t				threadHandle;
-	unsigned long	threadId;
+	intptr_t		threadHandle;
+	size_t			threadId;
 } xthreadInfo;
 
 const int MAX_THREADS				= 10;

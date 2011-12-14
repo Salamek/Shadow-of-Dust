@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -401,7 +401,7 @@ public:
 	static void				TouchFileList_f( const idCmdArgs &args );
 
 private:
-	friend dword 			BackgroundDownloadThread( void *parms );
+	friend THREAD_RETURN_TYPE	BackgroundDownloadThread( void *parms );
 
 	searchpath_t *			searchPaths;
 	int						readCount;			// total bytes read
@@ -447,7 +447,7 @@ private:
 
 private:
 	void					ReplaceSeparators( idStr &path, char sep = PATHSEPERATOR_CHAR );
-	int					HashFileName( const char *fname ) const;
+	int						HashFileName( const char *fname ) const;
 	int						ListOSFiles( const char *directory, const char *extension, idStrList &list );
 	FILE *					OpenOSFile( const char *name, const char *mode, idStr *caseSensitiveName = NULL );
 	FILE *					OpenOSFileCorrectName( idStr &path, const char *mode );
@@ -527,7 +527,7 @@ return a hash value for the filename
 */
 int idFileSystemLocal::HashFileName( const char *fname ) const {
 	int		i;
-	int	hash;
+	int		hash;
 	char	letter;
 
 	hash = 0;
@@ -974,7 +974,7 @@ bool idFileSystemLocal::FileIsInPAK( const char *relativePath ) {
 	searchpath_t	*search;
 	pack_t			*pak;
 	fileInPack_t	*pakFile;
-	int			hash;
+	int				hash;
 
 	if ( !searchPaths ) {
 		common->FatalError( "Filesystem call made without initialization\n" );
@@ -1706,9 +1706,9 @@ idFileSystemLocal::ListMods
 ===============
 */
 idModList *idFileSystemLocal::ListMods( void ) {
-	int 		i;
-	const int 	MAX_DESCRIPTION = 256;
-	char 		desc[ MAX_DESCRIPTION ];
+	int			i;
+	const int	MAX_DESCRIPTION = 256;
+	char		desc[ MAX_DESCRIPTION ];
 
 	idStrList	dirs;
 	idStrList	pk4s;
@@ -1988,7 +1988,7 @@ void idFileSystemLocal::Path_f( const idCmdArgs &args ) {
 				} else {
 					status += ")\n";
 				}
-				common->Printf("%s\n", status.c_str() );
+				common->Printf( status.c_str() );
 			} else {
 				common->Printf( "%s (%i files)\n", sp->pack->pakFilename.c_str(), sp->pack->numfiles );
 			}
@@ -2504,7 +2504,7 @@ bool idFileSystemLocal::UpdateGamePakChecksums( void ) {
 							if ( fs_debug.GetBool() ) {
 								common->Printf( "Adding game pak checksum for OS %d: %s 0x%x\n", id, confFile->GetFullPath(), search->pack->checksum );
 							}
- 							gamePakForOS[ id ] = search->pack->checksum;
+							gamePakForOS[ id ] = search->pack->checksum;
 						}
 					}
 				}
@@ -2524,22 +2524,7 @@ bool idFileSystemLocal::UpdateGamePakChecksums( void ) {
 
 	if ( !cvarSystem->GetCVarBool( "net_serverAllowServerMod" ) &&
 		gamePakChecksum != gamePakForOS[ BUILD_OS_ID ] ) {
-		if(!gamePakChecksum)
-		{
-			common->Warning("Game DLL is not in game pak, skipping checksum\n");
-			return true;
-		}
-		if(gamePakChecksum != gamePakForOS[ BUILD_OS_ID ])
-		{
-			common->Warning( "The current game code doesn't match pak files (Checksum not match)" );
-			common->Printf( "A game pack for OS sum is 0x%x \n", gamePakForOS[ BUILD_OS_ID ] );
-			common->Printf( "A game pack sum is 0x%x \n", gamePakChecksum );
-
-		}
-		else
-		{
-			common->Warning( "The current game code doesn't match pak files (net_serverAllowServerMod is off)" );
-		}
+		common->Warning( "The current game code doesn't match pak files (net_serverAllowServerMod is off)" );
 		return false;
 	}
 
@@ -3159,7 +3144,7 @@ idFile *idFileSystemLocal::OpenFileReadFlags( const char *relativePath, int sear
 	pack_t *		pak;
 	fileInPack_t *	pakFile;
 	directory_t *	dir;
-	int			hash;
+	int				hash;
 	FILE *			fp;
 
 	if ( !searchPaths ) {
@@ -3190,7 +3175,6 @@ idFile *idFileSystemLocal::OpenFileReadFlags( const char *relativePath, int sear
 	if ( relativePath[0] == '\0' ) {
 		return NULL;
 	}
-
 
 	//
 	// search through the path, one element at a time
@@ -3633,7 +3617,7 @@ BackgroundDownload
 Reads part of a file from a background thread.
 ===================
 */
-dword BackgroundDownloadThread( void *parms ) {
+THREAD_RETURN_TYPE BackgroundDownloadThread( void *parms ) {
 	while( 1 ) {
 		Sys_EnterCriticalSection();
 		backgroundDownload_t	*bgl = fileSystemLocal.backgroundDownloads;
@@ -3653,10 +3637,7 @@ dword BackgroundDownloadThread( void *parms ) {
 			#if defined(WIN32)
 				_read( static_cast<idFile_Permanent*>(bgl->f)->GetFilePtr()->_file, bgl->file.buffer, bgl->file.length );
 			#else
-				int len = fread(  bgl->file.buffer, bgl->file.length, 1, static_cast<idFile_Permanent*>(bgl->f)->GetFilePtr() );
-				if ( len != bgl->file.length) {
-					bgl->completed = false;
-				}
+				fread(  bgl->file.buffer, bgl->file.length, 1, static_cast<idFile_Permanent*>(bgl->f)->GetFilePtr() );
 			#endif
 			bgl->completed = true;
 		} else {
@@ -3749,7 +3730,7 @@ dword BackgroundDownloadThread( void *parms ) {
 #endif
 		}
 	}
-	return 0;
+	return (THREAD_RETURN_TYPE) 0;
 }
 
 /*
@@ -3759,7 +3740,7 @@ idFileSystemLocal::StartBackgroundReadThread
 */
 void idFileSystemLocal::StartBackgroundDownloadThread() {
 	if ( !backgroundThread.threadHandle ) {
-		Sys_CreateThread( (xthread_t)BackgroundDownloadThread, NULL, THREAD_NORMAL, backgroundThread, "backgroundDownload", g_threads, &g_thread_count );
+		Sys_CreateThread( BackgroundDownloadThread, NULL, THREAD_NORMAL, backgroundThread, "backgroundDownload", g_threads, &g_thread_count );
 		if ( !backgroundThread.threadHandle ) {
 			common->Warning( "idFileSystemLocal::StartBackgroundDownloadThread: failed" );
 		}
@@ -3896,8 +3877,6 @@ void idFileSystemLocal::FindDLL( const char *name, char _dllPath[ MAX_OSPATH ], 
 		dllPath.StripFilename( );
 		dllPath.AppendPath( dllName );
 		dllFile = OpenExplicitFileRead( dllPath );
-		if(dllFile)
-			common->Printf("found DLL in exe dir\n");
 	}
 	if ( !dllFile ) {
 		if ( !serverPaks.Num() ) {
@@ -4027,7 +4006,7 @@ bool idFileSystemLocal::HasD3XP( void ) {
 	// checking wether the pak is loaded by checksum wouldn't be enough:
 	// we may have a different fs_game right now but still need to reply that it's installed
 	const char	*search[4];
-	idFile	  	*pakfile;
+	idFile		*pakfile;
 	search[0] = fs_savepath.GetString();
 	search[1] = fs_devpath.GetString();
 	search[2] = fs_basepath.GetString();
@@ -4161,7 +4140,7 @@ retrieve the decl dictionary, add a 'path' value
 ===============
 */
 const idDict * idFileSystemLocal::GetMapDecl( int idecl ) {
-	int 					i;
+	int						i;
 	const idDecl			*mapDecl;
 	const idDeclEntityDef	*mapDef;
 	int						numdecls = declManager->GetNumDecls( DECL_MAPDEF );

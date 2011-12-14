@@ -337,9 +337,15 @@ Posix_Cwd
 const char *Posix_Cwd( void ) {
 	static char cwd[MAX_OSPATH];
 
-	getcwd( cwd, sizeof( cwd ) - 1 );
-	cwd[MAX_OSPATH-1] = 0;
-
+	
+	if (getcwd( cwd, sizeof( cwd ) - 1 ))
+	{
+		cwd[MAX_OSPATH-1] = 0;
+	}
+	else
+	{
+		cwd[0] = 0;
+	}
 	return cwd;
 }
 
@@ -430,7 +436,7 @@ const char *Sys_DefaultCDPath( void ) {
 	return "";
 }
 
-long Sys_FileTimeStamp(FILE * fp) {
+ID_TIME_T Sys_FileTimeStamp(FILE * fp) {
 	struct stat st;
 	fstat(fileno(fp), &st);
 	return st.st_mtime;
@@ -633,24 +639,19 @@ terminal support utilities
 */
 
 void tty_Del() {
-	char key;
-	key = '\b';
-	write( STDOUT_FILENO, &key, 1 );
-	key = ' ';
-	write( STDOUT_FILENO, &key, 1 );
-	key = '\b';
-	write( STDOUT_FILENO, &key, 1 );
+	putchar('\b');
+	putchar(' ');
+	putchar('\b');
 }
 
 void tty_Left() {
-	char key = '\b';
-	write( STDOUT_FILENO, &key, 1 );
+	putchar('\b');
 }
 
 void tty_Right() {
-	char key = 27;
-	write( STDOUT_FILENO, &key, 1 );
-	write( STDOUT_FILENO, "[C", 2 );
+	putchar(27);
+	putchar('[');
+	putchar('C');
 }
 
 // clear the display of the line currently edited
@@ -688,23 +689,33 @@ void tty_Show() {
 	input_hide--;
 	if ( input_hide == 0 ) {
 		char *buf = input_field.GetBuffer();
-		if ( buf[0] ) {
-			write( STDOUT_FILENO, buf, strlen( buf ) );
-			int back = strlen( buf ) - input_field.GetCursor();
-			while ( back > 0 ) {
-				tty_Left();
-				back--;
-			}
+		size_t len = strlen(buf);
+		if ( len < 1 )
+		{
+			return;
+		}
+		
+		len = write( STDOUT_FILENO, buf, len );
+		if ( len < 1 )
+		{
+			return;
+		}
+		
+		len -= input_field.GetCursor();
+		while ( len > 0 ) 
+		{
+			tty_Left();
+			len--;
 		}
 	}
 }
 
 void tty_FlushIn() {
-  char key;
-  while ( read(0, &key, 1) != -1 ) {
-	  Sys_Printf( "'%d' ", key );
-  }
-  Sys_Printf( "\n" );
+	char key;
+	while ( ( key = getchar() ) != EOF ) {
+		Sys_Printf( "'%d' ", key );
+	}
+	Sys_Printf( "\n" );
 }
 
 /*
@@ -716,10 +727,9 @@ Return NULL if a complete line is not ready.
 */
 char *Posix_ConsoleInput( void ) {
 	if ( tty_enabled ) {
-		int		ret;
 		char	key;
 		bool	hidden = false;
-		while ( ( ret = read( STDIN_FILENO, &key, 1 ) ) > 0 ) {
+		while ( ( key = getchar() ) != EOF ) {
 			if ( !hidden ) {
 				tty_Hide();
 				hidden = true;
@@ -739,7 +749,7 @@ char *Posix_ConsoleInput( void ) {
 				idStr::Copynz( input_ret, input_field.GetBuffer(), sizeof( input_ret ) );
 				assert( hidden );
 				tty_Show();
-				write( STDOUT_FILENO, &key, 1 );
+				putchar(key);
 				input_field.Clear();
 				if ( history_count < COMMAND_HISTORY ) {
 					history[ history_count ] = input_ret;
@@ -756,8 +766,7 @@ char *Posix_ConsoleInput( void ) {
 				break;
 			case 27: {
 				// enter escape sequence mode
-				ret = read( STDIN_FILENO, &key, 1 );
-				if ( ret <= 0 ) {
+				if ( ( key = getchar() ) == EOF ) {
 					Sys_Printf( "dropping sequence: '27' " );
 					tty_FlushIn();
 					assert( hidden );
@@ -766,8 +775,7 @@ char *Posix_ConsoleInput( void ) {
 				}
 				switch ( key ) {
 				case 79:
-					ret = read( STDIN_FILENO, &key, 1 );
-					if ( ret <= 0 ) {
+					if ( ( key = getchar() ) == EOF ) {
 						Sys_Printf( "dropping sequence: '27' '79' " );
 						tty_FlushIn();
 						assert( hidden );
@@ -792,8 +800,7 @@ char *Posix_ConsoleInput( void ) {
 					}
 					break;
 				case 91: {
-					ret = read( STDIN_FILENO, &key, 1 );
-					if ( ret <= 0 ) {
+					if ( ( key = getchar() ) == EOF ) {
 						Sys_Printf( "dropping sequence: '27' '91' " );
 						tty_FlushIn();
 						assert( hidden );
@@ -802,8 +809,7 @@ char *Posix_ConsoleInput( void ) {
 					}
 					switch ( key ) {
 					case 49: {
-						ret = read( STDIN_FILENO, &key, 1 );
-						if ( ret <= 0 || key != 126 ) {
+						if ( ( key = getchar() ) == EOF  || key != 126 ) {
 							Sys_Printf( "dropping sequence: '27' '91' '49' '%d' ", key );
 							tty_FlushIn();
 							assert( hidden );
@@ -815,8 +821,7 @@ char *Posix_ConsoleInput( void ) {
 						break;
 					}
 					case 50: {
-						ret = read( STDIN_FILENO, &key, 1 );
-						if ( ret <= 0 || key != 126 ) {
+						if ( ( key = getchar() ) == EOF || key != 126 ) {
 							Sys_Printf( "dropping sequence: '27' '91' '50' '%d' ", key );
 							tty_FlushIn();
 							assert( hidden );
@@ -828,8 +833,7 @@ char *Posix_ConsoleInput( void ) {
 						break;
 					}
 					case 52: {
-						ret = read( STDIN_FILENO, &key, 1 );
-						if ( ret <= 0 || key != 126 ) {
+						if ( ( key = getchar() ) == EOF || key != 126 ) {
 							Sys_Printf( "dropping sequence: '27' '91' '52' '%d' ", key );
 							tty_FlushIn();
 							assert( hidden );
@@ -841,8 +845,7 @@ char *Posix_ConsoleInput( void ) {
 						break;
 					}
 					case 51: {
-						ret = read( STDIN_FILENO, &key, 1 );
-						if ( ret <= 0 ) {
+						if ( ( key = getchar() ) == EOF ) {
 							Sys_Printf( "dropping sequence: '27' '91' '51' " );
 							tty_FlushIn();
 							assert( hidden );

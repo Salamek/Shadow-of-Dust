@@ -349,7 +349,7 @@ void idCommonLocal::VPrintf( const char *fmt, va_list args ) {
 	// don't overflow
 	if ( idStr::vsnPrintf( msg+timeLength, MAX_PRINT_MSG_SIZE-timeLength-1, fmt, args ) < 0 ) {
 		msg[sizeof(msg)-2] = '\n'; msg[sizeof(msg)-1] = '\0'; // avoid output garbling
-		Sys_Printf( "idCommon::VPrintf: truncated to %zu characters\n", strlen(msg)-1 );
+		Sys_Printf( "idCommon::VPrintf: truncated to %zd characters\n", strlen(msg)-1 );
 	}
 
 	if ( rd_buffer ) {
@@ -817,10 +817,9 @@ idCommonLocal::ParseCommandLine
 ==================
 */
 void idCommonLocal::ParseCommandLine( int argc, const char **argv ) {
-	int i, current_count;
+	int i;
 
 	com_numConsoleLines = 0;
-	current_count = 0;
 	// API says no program path
 	for ( i = 0; i < argc; i++ ) {
 		if ( argv[ i ][ 0 ] == '+' ) {
@@ -1354,8 +1353,11 @@ static void Com_Crash_f( const idCmdArgs &args ) {
 		commonLocal.Printf( "crash may only be used in developer mode\n" );
 		return;
 	}
-
+#ifdef __GNUC__
+  __builtin_trap();
+#else
 	* ( int * ) 0 = 0x12345678;
+#endif
 }
 
 /*

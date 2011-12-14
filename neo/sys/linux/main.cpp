@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ void Sys_InitScanTable( void ) {
 Sys_AsyncThread
 =================
 */
-void Sys_AsyncThread( void ) {
+THREAD_RETURN_TYPE Sys_AsyncThread( void * ) {
 	int now;
 	int next;
 	int	want_sleep;
@@ -69,17 +69,17 @@ void Sys_AsyncThread( void ) {
 	ticked = now >> 4;
 	while (1) {
 		// sleep
-		now = Sys_Milliseconds();		
+		now = Sys_Milliseconds();
 		next = ( now & 0xFFFFFFF0 ) + 0x10;
 		want_sleep = ( next-now-1 ) * 1000;
 		if ( want_sleep > 0 ) {
 			usleep( want_sleep ); // sleep 1ms less than true target
 		}
-		
+
 		// compensate if we slept too long
 		now = Sys_Milliseconds();
 		to_ticked = now >> 4;
-		
+
 		// show ticking statistics - every 100 ticks, print a summary
 		#if 0
 			#define STAT_BUF 100
@@ -100,7 +100,7 @@ void Sys_AsyncThread( void ) {
 				counter = 0;
 			}
 		#endif
-		
+
 		while ( ticked < to_ticked ) {
 			common->Async();
 			ticked++;
@@ -109,6 +109,8 @@ void Sys_AsyncThread( void ) {
 		// thread exit
 		pthread_testcancel();
 	}
+
+	return (THREAD_RETURN_TYPE) 0;
 }
 
 /*
@@ -139,7 +141,7 @@ const char *Sys_EXEPath( void ) {
 	len = readlink( linkpath.c_str(), buf, sizeof( buf ) );
 	if ( len == -1 ) {
 		Sys_Printf("couldn't stat exe path link %s\n", linkpath.c_str());
-		buf[ len ] = '\0';
+		buf[ 0 ] = '\0';
 	}
 	return buf;
 }
@@ -256,23 +258,8 @@ double Sys_GetClockTicks( void ) {
 						  "pop %%ebx\n"
 						  : "=r" (lo), "=r" (hi) );
 	return (double) lo + (double) 0xFFFFFFFF * hi;
-#elif defined( __x86_64__ )
-	unsigned long lo, hi;
-
-	__asm__ __volatile__ (
-						  "push %%rbx\n"			\
-						  "push %%rax\n"			\
-						  "xor %%rax,%%rax\n"		\
-						  "cpuid\n"					\
-						  "rdtsc\n"					\
-						  "mov %%rax,%0\n"			\
-						  "mov %%rdx,%1\n"			\
-						  "pop %%rax\n"				\
-						  "pop %%rbx\n"
-						  : "=r" (lo), "=r" (hi) );
-	return (double) lo + (double) 0xFFFFFFFF * hi;	
 #else
-#error unsupported CPU
+	return 0.0;
 #endif
 }
 
@@ -286,7 +273,7 @@ double MeasureClockTicks( void ) {
 
 	t0 = Sys_GetClockTicks( );
 	Sys_Sleep( 1000 );
-	t1 = Sys_GetClockTicks( );	
+	t1 = Sys_GetClockTicks( );
 	return t1 - t0;
 }
 
@@ -312,7 +299,7 @@ double Sys_ClockTicksPerSecond(void) {
 		ret = MeasureClockTicks();
 		init = true;
 		common->Printf( "measured CPU frequency: %g MHz\n", ret / 1000000.0 );
-		return ret;		
+		return ret;
 	}
 	len = read( fd, buf, 4096 );
 	close( fd );
@@ -329,7 +316,7 @@ double Sys_ClockTicksPerSecond(void) {
 				ret = MeasureClockTicks();
 				init = true;
 				common->Printf( "measured CPU frequency: %g MHz\n", ret / 1000000.0 );
-				return ret;		
+				return ret;
 			}
 			common->Printf( "/proc/cpuinfo CPU frequency: %g MHz\n", ret );
 			ret *= 1000000;
@@ -342,7 +329,7 @@ double Sys_ClockTicksPerSecond(void) {
 	ret = MeasureClockTicks();
 	init = true;
 	common->Printf( "measured CPU frequency: %g MHz\n", ret / 1000000.0 );
-	return ret;		
+	return ret;
 }
 
 /*
@@ -359,7 +346,7 @@ int Sys_GetSystemRam( void ) {
 	if ( count == -1 ) {
 		common->Printf( "GetSystemRam: sysconf _SC_PHYS_PAGES failed\n" );
 		return 512;
-	}	
+	}
 	page_size = sysconf( _SC_PAGE_SIZE );
 	if ( page_size == -1 ) {
 		common->Printf( "GetSystemRam: sysconf _SC_PAGE_SIZE failed\n" );
@@ -380,7 +367,7 @@ the no-fork lets you keep the terminal when you're about to spawn an installer
 if the command contains spaces, system() is used. Otherwise the more straightforward execl ( system() blows though )
 ==================
 */
-void Sys_DoStartProcess( const char *exeName, bool dofork ) {	
+void Sys_DoStartProcess( const char *exeName, bool dofork ) {
 	bool use_system = false;
 	if ( strchr( exeName, ' ' ) ) {
 		use_system = true;
@@ -398,12 +385,13 @@ void Sys_DoStartProcess( const char *exeName, bool dofork ) {
 	if ( dofork ) {
 		switch ( fork() ) {
 		case -1:
-			// main thread
+			printf( "fork failed: %s\n", strerror( errno ) );
 			break;
 		case 0:
 			if ( use_system ) {
 				printf( "system %s\n", exeName );
-				system( exeName );
+				if (system( exeName ) == -1)
+					printf( "system failed: %s\n", strerror( errno ) );
 				_exit( 0 );
 			} else {
 				printf( "execl %s\n", exeName );
@@ -412,12 +400,16 @@ void Sys_DoStartProcess( const char *exeName, bool dofork ) {
 				_exit( -1 );
 			}
 			break;
+		default:
+			break;
 		}
 	} else {
 		if ( use_system ) {
 			printf( "system %s\n", exeName );
-			system( exeName );
-			sleep( 1 );	// on some systems I've seen that starting the new process and exiting this one should not be too close
+			if (system( exeName ) == -1)
+				printf( "system failed: %s\n", strerror( errno ) );
+			else
+				sleep( 1 );	// on some systems I've seen that starting the new process and exiting this one should not be too close
 		} else {
 			printf( "execl %s\n", exeName );
 			execl( exeName, exeName, NULL );
@@ -563,7 +555,7 @@ int main(int argc, const char **argv) {
 	mcheck( abrt_func );
 	Sys_Printf( "memory consistency checking enabled\n" );
 #endif
-	
+
 	Posix_EarlyInit( );
 
 	if ( argc > 1 ) {

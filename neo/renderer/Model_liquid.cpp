@@ -179,7 +179,7 @@ idRenderModelLiquid::IntersectBounds
 void idRenderModelLiquid::IntersectBounds( const idBounds &bounds, float displacement ) {
 	int		cx, cy;
 	int		left,top,right,bottom;
-	float	up, down;
+	float	/*up,*/ down;
 	float	*pos;
 
 	left	= ( int )( bounds[ 0 ].x / scale_x );
@@ -187,7 +187,7 @@ void idRenderModelLiquid::IntersectBounds( const idBounds &bounds, float displac
 	top		= ( int )( bounds[ 0 ].y / scale_y );
 	bottom	= ( int )( bounds[ 1 ].y / scale_y );
 	down	= bounds[ 0 ].z;
-	up		= bounds[ 1 ].z;
+	//up		= bounds[ 1 ].z;
 
 	if ( ( right < 1 ) || ( left >= verts_x ) || ( bottom < 1 ) || ( top >= verts_x ) ) {
 		return;

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ void Cmd_EntityList_f( const idCmdArgs &args ) {
 		size += check->spawnArgs.Allocated();
 	}
 
-	gameLocal.Printf( "...%d entities\n...%zu bytes of spawnargs\n", count, size );
+	gameLocal.Printf( "...%d entities\n...%zd bytes of spawnargs\n", count, size );
 }
 
 /*
@@ -335,7 +335,7 @@ void Cmd_Give_f( const idCmdArgs &args ) {
 	}
 
 	if ( give_all || idStr::Icmp( name, "weapons" ) == 0 ) {
-		player->inventory.weapons = BIT( MAX_WEAPONS ) - 1;
+		player->inventory.weapons = 0xffffffff >> ( 32 - MAX_WEAPONS );
 		player->CacheWeapons();
 
 		if ( !give_all ) {
@@ -446,7 +446,7 @@ argv(0) god
 ==================
 */
 void Cmd_God_f( const idCmdArgs &args ) {
-	const char  *msg;
+	const char	*msg;
 	idPlayer	*player;
 
 	player = gameLocal.GetLocalPlayer();
@@ -475,7 +475,7 @@ argv(0) notarget
 ==================
 */
 void Cmd_Notarget_f( const idCmdArgs &args ) {
-	const char  *msg;
+	const char	*msg;
 	idPlayer	*player;
 
 	player = gameLocal.GetLocalPlayer();
@@ -502,7 +502,7 @@ argv(0) noclip
 ==================
 */
 void Cmd_Noclip_f( const idCmdArgs &args ) {
-	const char  *msg;
+	const char	*msg;
 	idPlayer	*player;
 
 	player = gameLocal.GetLocalPlayer();
@@ -623,19 +623,19 @@ static void Cmd_Say( bool team, const idCmdArgs &args ) {
 		}
 
 #ifdef CTF
-        // Append the player's location to team chat messages in CTF
-        if ( gameLocal.mpGame.IsGametypeFlagBased() && team && player ) {
-            idLocationEntity *locationEntity = gameLocal.LocationForPoint( player->GetEyePosition() );
+		// Append the player's location to team chat messages in CTF
+		if ( gameLocal.mpGame.IsGametypeFlagBased() && team && player ) {
+			idLocationEntity *locationEntity = gameLocal.LocationForPoint( player->GetEyePosition() );
 
-            if ( locationEntity ) {
-                idStr temp = "[";
-                temp += locationEntity->GetLocation();
-                temp += "] ";
-                temp += text;
-                text = temp;
-            }
+			if ( locationEntity ) {
+				idStr temp = "[";
+				temp += locationEntity->GetLocation();
+				temp += "] ";
+				temp += text;
+				text = temp;
+			}
 
-        }
+		}
 #endif
 
 
@@ -680,7 +680,7 @@ Cmd_AddChatLine_f
 ==================
 */
 static void Cmd_AddChatLine_f( const idCmdArgs &args ) {
-	gameLocal.mpGame.AddChatLine( "%s", args.Argv( 1 ) );
+	gameLocal.mpGame.AddChatLine( args.Argv( 1 ) );
 }
 
 /*
@@ -1283,7 +1283,7 @@ static void PrintFloat( float f ) {
 		buf[i] = ' ';
 	}
 	buf[i] = '\0';
-	gameLocal.Printf( "%s", buf );
+	gameLocal.Printf( buf );
 }
 
 /*
@@ -1508,7 +1508,7 @@ static void Cmd_ListAnims_f( const idCmdArgs &args ) {
 			}
 		}
 
-		gameLocal.Printf( "%zu memory used in %d entity animators\n", size, num );
+		gameLocal.Printf( "%zd memory used in %d entity animators\n", size, num );
 	}
 }
 
@@ -2120,7 +2120,7 @@ static void Cmd_CloseViewNotes_f( const idCmdArgs &args ) {
 	if ( !player ) {
 		return;
 	}
-	
+
 	player->hud->SetStateString( "viewcomments", "" );
 	player->hud->HandleNamedEvent( "hideViewComments" );
 }
@@ -2275,7 +2275,7 @@ void Cmd_NextGUI_f( const idCmdArgs &args ) {
 			if ( ent->spawnArgs.GetString( "gui", NULL ) != NULL ) {
 				break;
 			}
-			
+
 			if ( ent->spawnArgs.GetString( "gui2", NULL ) != NULL ) {
 				break;
 			}
@@ -2283,7 +2283,7 @@ void Cmd_NextGUI_f( const idCmdArgs &args ) {
 			if ( ent->spawnArgs.GetString( "gui3", NULL ) != NULL ) {
 				break;
 			}
-			
+
 			// try the next entity
 			gameLocal.lastGUIEnt = ent;
 		}
@@ -2318,7 +2318,7 @@ void Cmd_NextGUI_f( const idCmdArgs &args ) {
 
 	assert( geom->facePlanes != NULL );
 
-	modelMatrix = idMat4( renderEnt->axis, renderEnt->origin );	
+	modelMatrix = idMat4( renderEnt->axis, renderEnt->origin );
 	normal = geom->facePlanes[ 0 ].Normal() * renderEnt->axis;
 	center = geom->bounds.GetCenter() * modelMatrix;
 
@@ -2347,7 +2347,7 @@ void Cmd_SetActorState_f( const idCmdArgs &args ) {
 		return;
 	}
 
-	
+
 	if(!ent->IsType(idActor::Type)) {
 		gameLocal.Printf( "entity not an actor\n" );
 		return;
@@ -2382,7 +2382,7 @@ void Cmd_TestId_f( const idCmdArgs &args ) {
 	if ( idStr::Cmpn( id, STRTABLE_ID, STRTABLE_ID_LENGTH ) != 0 ) {
 		id = STRTABLE_ID + id;
 	}
-	gameLocal.mpGame.AddChatLine( common->GetLanguageDict()->GetString( id ), "<nothing>", "<nothing>", "<nothing>" );	
+	gameLocal.mpGame.AddChatLine( common->GetLanguageDict()->GetString( id ), "<nothing>", "<nothing>", "<nothing>" );
 }
 
 /*

@@ -1377,7 +1377,7 @@ void FullscreenFX_DoubleVision::HighQuality() {
 		color.z = 0;
 	}
 
-	if ( !gameLocal.isMultiplayer && (gameLocal.fast.time < player->inventory.powerupEndTime[ HELLTIME ]) || (gameLocal.fast.time < player->inventory.powerupEndTime[ INVULNERABILITY ])) {
+	if ( !gameLocal.isMultiplayer && (gameLocal.fast.time < player->inventory.powerupEndTime[ HELLTIME ] || gameLocal.fast.time < player->inventory.powerupEndTime[ INVULNERABILITY ])) {
 		color.y = 0;
 		color.z = 0;
 	}
@@ -1756,7 +1756,6 @@ FullscreenFXManager::Process
 */
 void FullscreenFXManager::Process( const renderView_t *view ) {
 	bool allpass = false;
-	bool atLeastOneFX = false;
 
 	if ( g_testFullscreenFX.GetInteger() == -2 ) {
 		allpass = true;
@@ -1808,8 +1807,6 @@ void FullscreenFXManager::Process( const renderView_t *view ) {
 
 		// do the actual drawing
 		if ( drawIt ) {
-			atLeastOneFX = true;
-
 			// we need to dump to _currentRender
 			CaptureCurrentRender();
 

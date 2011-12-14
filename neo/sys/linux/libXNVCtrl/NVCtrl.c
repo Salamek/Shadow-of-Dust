@@ -7,8 +7,8 @@
 #include "NVCtrlLib.h"
 #include "nv_control.h"
 
-#if !defined(XTRHEADS)
-#warning XTRHEADS not defined -- this libXNVCtrl.a will not be thread safe!
+#if !defined(XTHREADS)
+#warning XTHREADS not defined -- this libXNVCtrl.a will not be thread safe!
 #endif
 
 static XExtensionInfo _nvctrl_ext_info_data;
@@ -37,7 +37,7 @@ static /* const */ XExtensionHooks nvctrl_extension_hooks = {
 };
 
 static XEXT_GENERATE_FIND_DISPLAY (find_display, nvctrl_ext_info,
-                                   nvctrl_extension_name,
+                                   nvctrl_extension_name, 
                                    &nvctrl_extension_hooks,
                                    NV_CONTROL_EVENTS, NULL)
 
@@ -239,14 +239,14 @@ Bool XNVCTRLQueryValidAttributeValues (
     Display *dpy,
     int screen,
     unsigned int display_mask,
-    unsigned int attribute,
+    unsigned int attribute,                                 
     NVCTRLAttributeValidValuesRec *values
 ){
     XExtDisplayInfo *info = find_display (dpy);
     xnvCtrlQueryValidAttributeValuesReply rep;
     xnvCtrlQueryValidAttributeValuesReq   *req;
     Bool exists;
-
+    
     if (!values) return False;
 
     if(!XextHasExtension(info))
@@ -315,11 +315,11 @@ static Bool wire_to_event (Display *dpy, XEvent *host, xEvent *wire)
     xnvctrlEvent *event = (xnvctrlEvent *) wire;
 
     XNVCTRLCheckExtension (dpy, info, False);
-
+    
     switch ((event->u.u.type & 0x7F) - info->codes->first_event) {
     case ATTRIBUTE_CHANGED_EVENT:
         re->attribute_changed.type = event->u.u.type & 0x7F;
-        re->attribute_changed.serial =
+        re->attribute_changed.serial = 
             _XSetLastRequestRead(dpy, (xGenericReply*) event);
         re->attribute_changed.send_event = ((event->u.u.type & 0x80) != 0);
         re->attribute_changed.display = dpy;
@@ -333,7 +333,6 @@ static Bool wire_to_event (Display *dpy, XEvent *host, xEvent *wire)
     default:
         return False;
     }
-
+    
     return True;
 }
-

@@ -759,9 +759,6 @@ void idCollisionModelManagerLocal::SetupTranslationHeartPlanes( cm_traceWork_t *
 idCollisionModelManagerLocal::Translation
 ================
 */
-#ifdef _DEBUG
-static int entered = 0;
-#endif
 
 void idCollisionModelManagerLocal::Translation( trace_t *results, const idVec3 &start, const idVec3 &end,
 										const idTraceModel *trm, const idMat3 &trmAxis, int contentMask,
@@ -798,20 +795,6 @@ void idCollisionModelManagerLocal::Translation( trace_t *results, const idVec3 &
 		return;
 	}
 
-#ifdef _DEBUG
-	bool startsolid = false;
-	// test whether or not stuck to begin with
-	if ( cm_debugCollision.GetBool() ) {
-		if ( !entered && !idCollisionModelManagerLocal::getContacts ) {
-			entered = 1;
-			// if already messed up to begin with
-			if ( idCollisionModelManagerLocal::Contents( start, trm, trmAxis, -1, model, modelOrigin, modelAxis ) & contentMask ) {
-				startsolid = true;
-			}
-			entered = 0;
-		}
-	}
-#endif
 
 	idCollisionModelManagerLocal::checkCount++;
 
@@ -1100,10 +1083,9 @@ void idCollisionModelManagerLocal::Translation( trace_t *results, const idVec3 &
 	}
 
 #ifdef _DEBUG
-	// test for missed collisions
+	// test for collisions
 	if ( cm_debugCollision.GetBool() ) {
-		if ( !entered && !idCollisionModelManagerLocal::getContacts ) {
-			entered = 1;
+		if ( !idCollisionModelManagerLocal::getContacts ) {
 			// if the trm is stuck in the model
 			if ( idCollisionModelManagerLocal::Contents( results->endpos, trm, trmAxis, -1, model, modelOrigin, modelAxis ) & contentMask ) {
 				trace_t tr;
@@ -1113,7 +1095,6 @@ void idCollisionModelManagerLocal::Translation( trace_t *results, const idVec3 &
 				// re-run collision detection to find out where it failed
 				idCollisionModelManagerLocal::Translation( &tr, start, end, trm, trmAxis, contentMask, model, modelOrigin, modelAxis );
 			}
-			entered = 0;
 		}
 	}
 #endif

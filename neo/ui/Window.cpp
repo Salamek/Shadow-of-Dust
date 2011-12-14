@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -1373,7 +1373,7 @@ void idWindow::CalcClientRect(float xofs, float yofs) {
 
 		textRect = clientRect;
 		textRect.x += 2.0;
-	 	textRect.w -= 2.0;
+		textRect.w -= 2.0;
 		textRect.y += 2.0;
 		textRect.h -= 2.0;
 
@@ -1715,38 +1715,38 @@ idWindow::GetWinVarOffset
 ================
 */
 intptr_t idWindow::GetWinVarOffset( idWinVar *wv, drawWin_t* owner) {
-	long ret = -1;
+	intptr_t ret = -1;
 
 	if ( wv == &rect ) {
-		ret = (long)&( ( idWindow * ) 0 )->rect;
+		ret = (ptrdiff_t)&this->rect - (ptrdiff_t)this;
 	}
 
 	if ( wv == &backColor ) {
-		ret = (long)&( ( idWindow * ) 0 )->backColor;
+		ret = (ptrdiff_t)&this->backColor - (ptrdiff_t)this;
 	}
 
 	if ( wv == &matColor ) {
-		ret = (long)&( ( idWindow * ) 0 )->matColor;
+		ret = (ptrdiff_t)&this->matColor - (ptrdiff_t)this;
 	}
 
 	if ( wv == &foreColor ) {
-		ret = (long)&( ( idWindow * ) 0 )->foreColor;
+		ret = (ptrdiff_t)&this->foreColor - (ptrdiff_t)this;
 	}
 
 	if ( wv == &hoverColor ) {
-		ret = (long)&( ( idWindow * ) 0 )->hoverColor;
+		ret = (ptrdiff_t)&this->hoverColor - (ptrdiff_t)this;
 	}
 
 	if ( wv == &borderColor ) {
-		ret = (long)&( ( idWindow * ) 0 )->borderColor;
+		ret = (ptrdiff_t)&this->borderColor - (ptrdiff_t)this;
 	}
 
 	if ( wv == &textScale ) {
-		ret = (long)&( ( idWindow * ) 0 )->textScale;
+		ret = (ptrdiff_t)&this->textScale - (ptrdiff_t)this;
 	}
 
 	if ( wv == &rotate ) {
-		ret = (long)&( ( idWindow * ) 0 )->rotate;
+		ret = (ptrdiff_t)&this->rotate - (ptrdiff_t)this;
 	}
 
 	if ( ret != -1 ) {
@@ -2198,9 +2198,9 @@ bool idWindow::Parse( idParser *src, bool rebuild) {
 		}
 		else if ( token == "editDef" ) {
 			idEditWindow *win = new idEditWindow(dc, gui);
-		  	SaveExpressionParseState();
+			SaveExpressionParseState();
 			win->Parse(src, rebuild);
-		  	RestoreExpressionParseState();
+			RestoreExpressionParseState();
 			AddChild(win);
 			win->SetParent(this);
 			dwt.simp = NULL;
@@ -2209,9 +2209,9 @@ bool idWindow::Parse( idParser *src, bool rebuild) {
 		}
 		else if ( token == "choiceDef" ) {
 			idChoiceWindow *win = new idChoiceWindow(dc, gui);
-		  	SaveExpressionParseState();
+			SaveExpressionParseState();
 			win->Parse(src, rebuild);
-		  	RestoreExpressionParseState();
+			RestoreExpressionParseState();
 			AddChild(win);
 			win->SetParent(this);
 			dwt.simp = NULL;
@@ -2220,9 +2220,9 @@ bool idWindow::Parse( idParser *src, bool rebuild) {
 		}
 		else if ( token == "sliderDef" ) {
 			idSliderWindow *win = new idSliderWindow(dc, gui);
-		  	SaveExpressionParseState();
+			SaveExpressionParseState();
 			win->Parse(src, rebuild);
-		  	RestoreExpressionParseState();
+			RestoreExpressionParseState();
 			AddChild(win);
 			win->SetParent(this);
 			dwt.simp = NULL;
@@ -2231,9 +2231,9 @@ bool idWindow::Parse( idParser *src, bool rebuild) {
 		}
 		else if ( token == "markerDef" ) {
 			idMarkerWindow *win = new idMarkerWindow(dc, gui);
-		  	SaveExpressionParseState();
+			SaveExpressionParseState();
 			win->Parse(src, rebuild);
-		  	RestoreExpressionParseState();
+			RestoreExpressionParseState();
 			AddChild(win);
 			win->SetParent(this);
 			dwt.simp = NULL;
@@ -2242,9 +2242,9 @@ bool idWindow::Parse( idParser *src, bool rebuild) {
 		}
 		else if ( token == "bindDef" ) {
 			idBindWindow *win = new idBindWindow(dc, gui);
-		  	SaveExpressionParseState();
+			SaveExpressionParseState();
 			win->Parse(src, rebuild);
-		  	RestoreExpressionParseState();
+			RestoreExpressionParseState();
 			AddChild(win);
 			win->SetParent(this);
 			dwt.simp = NULL;
@@ -2253,9 +2253,9 @@ bool idWindow::Parse( idParser *src, bool rebuild) {
 		}
 		else if ( token == "listDef" ) {
 			idListWindow *win = new idListWindow(dc, gui);
-		  	SaveExpressionParseState();
+			SaveExpressionParseState();
 			win->Parse(src, rebuild);
-		  	RestoreExpressionParseState();
+			RestoreExpressionParseState();
 			AddChild(win);
 			win->SetParent(this);
 			dwt.simp = NULL;
@@ -2264,9 +2264,9 @@ bool idWindow::Parse( idParser *src, bool rebuild) {
 		}
 		else if ( token == "fieldDef" ) {
 			idFieldWindow *win = new idFieldWindow(dc, gui);
-		  	SaveExpressionParseState();
+			SaveExpressionParseState();
 			win->Parse(src, rebuild);
-		  	RestoreExpressionParseState();
+			RestoreExpressionParseState();
 			AddChild(win);
 			win->SetParent(this);
 			dwt.simp = NULL;
@@ -2275,9 +2275,9 @@ bool idWindow::Parse( idParser *src, bool rebuild) {
 		}
 		else if ( token == "renderDef" ) {
 			idRenderWindow *win = new idRenderWindow(dc, gui);
-		  	SaveExpressionParseState();
+			SaveExpressionParseState();
 			win->Parse(src, rebuild);
-		  	RestoreExpressionParseState();
+			RestoreExpressionParseState();
 			AddChild(win);
 			win->SetParent(this);
 			dwt.simp = NULL;
@@ -2829,7 +2829,7 @@ Returns a register index
 */
 intptr_t idWindow::ParseTerm( idParser *src,	idWinVar *var, intptr_t component ) {
 	idToken token;
-	intptr_t	a, b;
+	intptr_t a, b;
 
 	src->ReadToken( &token );
 
@@ -2919,7 +2919,7 @@ Returns a register index
 #define	TOP_PRIORITY 4
 intptr_t idWindow::ParseExpressionPriority( idParser *src, int priority, idWinVar *var, intptr_t component ) {
 	idToken token;
-	intptr_t		a;
+	intptr_t a;
 
 	if ( priority == 0 ) {
 		return ParseTerm( src, var, component );
@@ -3351,7 +3351,7 @@ void idWindow::WriteToDemoFile( class idDemoFile *f ) {
 	idStr work;
 	f->SetLog(true, work);
 
- 	int i, c;
+	int i, c;
 
 	f->SetLog(true, (work + "-transitions"));
 	c = transitions.Num();
@@ -3776,35 +3776,35 @@ void idWindow::FixupTransitions() {
 		transitions[i].data = NULL;
 		if ( dw && ( dw->win || dw->simp ) ){
 			if ( dw->win ) {
-				if ( transitions[i].offset == (long)&( ( idWindow * ) 0 )->rect ) {
+				if ( transitions[i].offset == (ptrdiff_t)&this->rect - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->win->rect;
-				} else if ( transitions[i].offset == (long)&( ( idWindow * ) 0 )->backColor ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->backColor - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->win->backColor;
-				} else if ( transitions[i].offset == (long)&( ( idWindow * ) 0 )->matColor ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->matColor - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->win->matColor;
-				} else if ( transitions[i].offset == (long)&( ( idWindow * ) 0 )->foreColor ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->foreColor - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->win->foreColor;
-				} else if ( transitions[i].offset == (long)&( ( idWindow * ) 0 )->borderColor ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->borderColor - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->win->borderColor;
-				} else if ( transitions[i].offset == (long)&( ( idWindow * ) 0 )->textScale ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->textScale - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->win->textScale;
-				} else if ( transitions[i].offset == (long)&( ( idWindow * ) 0 )->rotate ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->rotate - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->win->rotate;
 				}
 			} else {
-				if ( transitions[i].offset == (long)&( ( idSimpleWindow * ) 0 )->rect ) {
+				if ( transitions[i].offset == (ptrdiff_t)&this->rect - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->simp->rect;
-				} else if ( transitions[i].offset == (long)&( ( idSimpleWindow * ) 0 )->backColor ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->backColor - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->simp->backColor;
-				} else if ( transitions[i].offset == (long)&( ( idSimpleWindow * ) 0 )->matColor ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->matColor - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->simp->matColor;
-				} else if ( transitions[i].offset == (long)&( ( idSimpleWindow * ) 0 )->foreColor ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->foreColor - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->simp->foreColor;
-				} else if ( transitions[i].offset == (long)&( ( idSimpleWindow * ) 0 )->borderColor ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->borderColor - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->simp->borderColor;
-				} else if ( transitions[i].offset == (long)&( ( idSimpleWindow * ) 0 )->textScale ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->textScale - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->simp->textScale;
-				} else if ( transitions[i].offset == (long)&( ( idSimpleWindow * ) 0 )->rotate ) {
+				} else if ( transitions[i].offset == (ptrdiff_t)&this->rotate - (ptrdiff_t)this ) {
 					transitions[i].data = &dw->simp->rotate;
 				}
 			}

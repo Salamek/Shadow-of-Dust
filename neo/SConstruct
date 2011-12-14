@@ -329,8 +329,7 @@ BASECPPFLAGS.append( '-Wno-unknown-pragmas' )
 CORECPPFLAGS.append( '-DXTHREADS' )
 # don't wrap gcc messages
 BASECPPFLAGS.append( '-fmessage-length=0' )
-# gcc 4.0
-BASECPPFLAGS.append( '-fpermissive' )
+
 
 if ( g_os == 'Linux' ):
 	# gcc 4.x option only - only export what we mean to from the game SO

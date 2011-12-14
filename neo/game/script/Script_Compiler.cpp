@@ -2011,7 +2011,6 @@ void idCompiler::ParseObjectDef( const char *objname ) {
 	const char  *fieldname;
 	idTypeDef	newtype( ev_field, NULL, "", 0, NULL );
 	idVarDef	*oldscope;
-	int			num;
 	int			i;
 
 	oldscope = scope;
@@ -2039,7 +2038,6 @@ void idCompiler::ParseObjectDef( const char *objname ) {
 	scope = objtype->def;
 
 	// inherit all the functions
-	num = parentType->NumFunctions();
 	for( i = 0; i < parentType->NumFunctions(); i++ ) {
 		const function_t *func = parentType->GetFunction( i );
 		objtype->AddFunction( func );
@@ -2116,7 +2114,6 @@ idCompiler::ParseFunctionDef
 void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 	idTypeDef		*type;
 	idVarDef		*def;
-	const idVarDef	*parm;
 	idVarDef		*oldscope;
 	int 			i;
 	int 			numParms;
@@ -2174,7 +2171,7 @@ void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 		if ( gameLocal.program.GetDef( type->GetParmType( i ), type->GetParmName( i ), def ) ) {
 			Error( "'%s' defined more than once in function parameters", type->GetParmName( i ) );
 		}
-		parm = gameLocal.program.AllocDef( type->GetParmType( i ), type->GetParmName( i ), def, false );
+		gameLocal.program.AllocDef( type->GetParmType( i ), type->GetParmName( i ), def, false );
 	}
 
 	oldscope = scope;

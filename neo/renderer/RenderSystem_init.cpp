@@ -1596,7 +1596,6 @@ void R_MakeAmbientMap_f( const idCmdArgs &args ) {
 	idStr fullname;
 	const char	*baseName;
 	int			i;
-	int			downSample;
 	const char	*extensions[6] =  { "_px.tga", "_nx.tga", "_py.tga", "_ny.tga",
 		"_pz.tga", "_nz.tga" };
 	int			outSize;
@@ -1609,7 +1608,6 @@ void R_MakeAmbientMap_f( const idCmdArgs &args ) {
 	}
 	baseName = args.Argv( 1 );
 
-	downSample = 0;
 	if ( args.Argc() == 3 ) {
 		outSize = atoi( args.Argv( 2 ) );
 	} else {

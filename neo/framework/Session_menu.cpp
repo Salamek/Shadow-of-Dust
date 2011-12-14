@@ -87,7 +87,6 @@ idSessionLocal::SetGUI
 =================
 */
 void idSessionLocal::SetGUI( idUserInterface *gui, HandleGuiCommand_t handle ) {
-	const char	*cmd;
 
 	guiActive = gui;
 	guiHandle = handle;
@@ -110,7 +109,7 @@ void idSessionLocal::SetGUI( idUserInterface *gui, HandleGuiCommand_t handle ) {
 	memset( &ev, 0, sizeof( ev ) );
 	ev.evType = SE_NONE;
 
-	cmd = guiActive->HandleEvent( &ev, com_frameTime );
+	guiActive->HandleEvent( &ev, com_frameTime );
 	guiActive->Activate( true, com_frameTime );
 }
 
@@ -1095,8 +1094,7 @@ void idSessionLocal::HandleInGameCommands( const char *menuCommand ) {
 		if ( guiActive ) {
 			sysEvent_t  ev;
 			ev.evType = SE_NONE;
-			const char	*cmd;
-			cmd = guiActive->HandleEvent( &ev, com_frameTime );
+			guiActive->HandleEvent( &ev, com_frameTime );
 			guiActive->Activate( false, com_frameTime );
 			guiActive = NULL;
 		}
