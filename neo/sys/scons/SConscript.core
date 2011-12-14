@@ -285,9 +285,6 @@ ogg_env.Append( CPPPATH = '#sound/OggVorbis/vorbissrc' )
 libogg = ogg_env.StaticLibrary( 'ogg', ogg_list )
 
 sound_env = local_env.Clone()
-sound_env.Append( CPPPATH = '/usr/local/lib/oss/include' )
-# store a local copy of the include headers as well for holy build
-sound_env.Append( CPPPATH = '../linux/oss/include' )
 sound_list = [ '../linux/sound.cpp' ]
 if ( ALSA != '0' ):
 	sound_list.append( '../../sys/linux/sound_alsa.cpp' )
