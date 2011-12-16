@@ -193,6 +193,8 @@ static uBrush_t *FinishBrush( void ) {
 	return b;
 }
 
+
+#if 0
 /*
 ================
 AdjustEntityForOrigin
@@ -230,6 +232,7 @@ static void AdjustEntityForOrigin( uEntity_t *ent ) {
 	}
 }
 
+#endif
 /*
 =================
 RemoveDuplicateBrushPlanes

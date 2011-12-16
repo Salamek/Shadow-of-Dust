@@ -98,7 +98,7 @@ void R_OrderIndexes( int numIndexes, glIndex_t *indexes ) {
 	int			numVerts;
 	int			v1, v2;
 	int			c_starts;
-	int			c_cost;
+	//int			c_cost;
 
 	if ( !r_orderIndexes.GetBool() ) {
 		return;
@@ -191,9 +191,7 @@ void R_OrderIndexes( int numIndexes, glIndex_t *indexes ) {
 			}
 		} while ( 1 );
 	}
-
-	c_cost = R_MeshCost( numIndexes, indexes );
-
+	//c_cost = R_MeshCost( numIndexes, indexes );
 }
 
 

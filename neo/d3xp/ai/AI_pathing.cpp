@@ -428,6 +428,7 @@ int GetObstacles( const idPhysics *physics, const idAAS *aas, const idEntity *ig
 
 		lastVerts[0] = lastVerts[1] = 0;
 		lastEdgeNormal.Zero();
+		nextEdgeNormal.Zero();
 		nextVerts[0] = nextVerts[1] = 0;
 		for ( i = 0; i < numWallEdges && numObstacles < MAX_OBSTACLES; i++ ) {
             aas->GetEdge( wallEdges[i], start, end );
@@ -1330,6 +1331,8 @@ static int Ballistics( const idVec3 &start, const idVec3 &end, float speed, floa
 	return n;
 }
 
+
+#if 0
 /*
 =====================
 HeightForTrajectory
@@ -1346,6 +1349,8 @@ static float HeightForTrajectory( const idVec3 &start, float zVel, float gravity
 	
 	return maxHeight;
 }
+
+#endif
 
 /*
 =====================

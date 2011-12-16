@@ -184,7 +184,12 @@ void GetPointOutsideObstacles( const obstacle_t *obstacles, const int numObstacl
 			break;
 		}
 	}
-
+	
+	if(i == 0)
+	{
+		return;
+	}
+	
 	newPoint = point - ( bestd + PUSH_OUTSIDE_OBSTACLES ) * bestPlane.ToVec2();
 	if ( PointInsideObstacle( obstacles, numObstacles, newPoint ) == -1 ) {
 		point = newPoint;
@@ -423,6 +428,7 @@ int GetObstacles( const idPhysics *physics, const idAAS *aas, const idEntity *ig
 
 		lastVerts[0] = lastVerts[1] = 0;
 		lastEdgeNormal.Zero();
+		nextEdgeNormal.Zero();
 		nextVerts[0] = nextVerts[1] = 0;
 		for ( i = 0; i < numWallEdges && numObstacles < MAX_OBSTACLES; i++ ) {
             aas->GetEdge( wallEdges[i], start, end );
@@ -1324,6 +1330,7 @@ static int Ballistics( const idVec3 &start, const idVec3 &end, float speed, floa
 	return n;
 }
 
+#if 0
 /*
 =====================
 HeightForTrajectory
@@ -1340,6 +1347,7 @@ static float HeightForTrajectory( const idVec3 &start, float zVel, float gravity
 	
 	return maxHeight;
 }
+#endif
 
 /*
 =====================

@@ -87,7 +87,7 @@ void Cmd_EntityList_f( const idCmdArgs &args ) {
 		size += check->spawnArgs.Allocated();
 	}
 
-	gameLocal.Printf( "...%zd entities\n...%zu bytes of spawnargs\n", count, size );
+	gameLocal.Printf( "...%d entities\n...%zu bytes of spawnargs\n", count, size );
 }
 
 /*

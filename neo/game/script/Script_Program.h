@@ -440,7 +440,7 @@ private:
 	idStr 										filename;
 	int											filenum;
 
-	size_t											numVariables;
+	int											numVariables;
 	byte										variables[ MAX_GLOBALS ];
 	idStaticList<byte,MAX_GLOBALS>				variableDefaults;
 	idStaticList<function_t,MAX_FUNCS>			functions;

@@ -61,6 +61,7 @@ static const char *EnumString( GLenum t )
 	return buffer[oldIndex];
 }
 
+#if 0
 /*
 ======================
 FloatData
@@ -86,6 +87,7 @@ static const char *FloatData( const GLfloat *v, int count ) {
 
 	return name;
 }
+#endif
 
 #include "glimp_logfuncs.cpp"
 

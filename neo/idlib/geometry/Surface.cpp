@@ -680,8 +680,10 @@ bool idSurface::IsPolytope( const float epsilon ) const {
 	}
 
 	for ( i = 0; i < indexes.Num(); i += 3 ) {
-		plane.FromPoints( verts[indexes[i+0]].xyz, verts[indexes[i+1]].xyz, verts[indexes[i+2]].xyz );
-
+		if (!plane.FromPoints( verts[indexes[i+0]].xyz, verts[indexes[i+1]].xyz, verts[indexes[i+2]].xyz ))
+		{
+			return false;
+		}
 		for ( j = 0; j < verts.Num(); j++ ) {
 			if ( plane.Side( verts[j].xyz, epsilon ) == SIDE_FRONT ) {
 				return false;
@@ -811,13 +813,19 @@ bool idSurface::RayIntersection( const idVec3 &start, const idVec3 &dir, float &
 		s2 = sidedness[abs(i2)] ^ INTSIGNBITSET( i2 );
 
 		if ( s0 & s1 & s2 ) {
-			plane.FromPoints( verts[indexes[i+0]].xyz, verts[indexes[i+1]].xyz, verts[indexes[i+2]].xyz );
+			if (!plane.FromPoints( verts[indexes[i+0]].xyz, verts[indexes[i+1]].xyz, verts[indexes[i+2]].xyz ))
+			{
+				return false;
+			}
 			plane.RayIntersection( start, dir, s );
 			if ( idMath::Fabs( s ) < idMath::Fabs( scale ) ) {
 				scale = s;
 			}
 		} else if ( !backFaceCull && !(s0 | s1 | s2) ) {
-			plane.FromPoints( verts[indexes[i+0]].xyz, verts[indexes[i+1]].xyz, verts[indexes[i+2]].xyz );
+			if (!plane.FromPoints( verts[indexes[i+0]].xyz, verts[indexes[i+1]].xyz, verts[indexes[i+2]].xyz ))
+			{
+				return false;
+			}
 			plane.RayIntersection( start, dir, s );
 			if ( idMath::Fabs( s ) < idMath::Fabs( scale ) ) {
 				scale = s;

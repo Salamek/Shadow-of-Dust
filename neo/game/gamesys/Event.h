@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,8 +36,8 @@ Event are used for scheduling tasks and for linking script commands.
 #define D_EVENT_MAXARGS				8			// if changed, enable the CREATE_EVENT_CODE define in Event.cpp to generate switch statement for idClass::ProcessEventArgPtr.
 												// running the game will then generate c:\doom\base\events.txt, the contents of which should be copied into the switch statement.
 
-// stack size of idVec3, aligned to native pointer size	
-#define E_EVENT_SIZEOF_VEC      ((sizeof(idVec3) + (sizeof(intptr_t) - 1)) & ~(sizeof(intptr_t) - 1))
+// stack size of idVec3, aligned to native pointer size
+#define E_EVENT_SIZEOF_VEC			((sizeof(idVec3) + (sizeof(intptr_t) - 1)) & ~(sizeof(intptr_t) - 1))
 
 #define D_EVENT_VOID				( ( char )0 )
 #define D_EVENT_INTEGER				'd'
@@ -60,7 +60,7 @@ private:
 	unsigned int				formatspecIndex;
 	int							returnType;
 	int							numargs;
-	int						argsize;
+	size_t						argsize;
 	int							argOffset[ D_EVENT_MAXARGS ];
 	int							eventnum;
 	const idEventDef *			next;
@@ -70,14 +70,14 @@ private:
 
 public:
 								idEventDef( const char *command, const char *formatspec = NULL, char returnType = 0 );
-								
+
 	const char					*GetName( void ) const;
 	const char					*GetArgFormat( void ) const;
 	unsigned int				GetFormatspecIndex( void ) const;
 	char						GetReturnType( void ) const;
 	int							GetEventNum( void ) const;
 	int							GetNumArgs( void ) const;
-	int						GetArgSize( void ) const;
+	size_t						GetArgSize( void ) const;
 	int							GetArgOffset( int arg ) const;
 
 	static int					NumEventCommands( void );
@@ -108,7 +108,7 @@ public:
 
 	static idEvent				*Alloc( const idEventDef *evdef, int numargs, va_list args );
 	static void					CopyArgs( const idEventDef *evdef, int numargs, va_list args, intptr_t data[ D_EVENT_MAXARGS ]  );
-	
+
 	void						Free( void );
 	void						Schedule( idClass *object, const idTypeInfo *cls, int time );
 	byte						*GetData( void );
@@ -124,7 +124,7 @@ public:
 	static void					Restore( idRestoreGame *savefile );				// unarchives object from save game file
 	static void					SaveTrace( idSaveGame *savefile, const trace_t &trace );
 	static void					RestoreTrace( idRestoreGame *savefile, trace_t &trace );
-	
+
 };
 
 /*
@@ -186,7 +186,7 @@ ID_INLINE int idEventDef::GetNumArgs( void ) const {
 idEventDef::GetArgSize
 ================
 */
-ID_INLINE int idEventDef::GetArgSize( void ) const {
+ID_INLINE size_t idEventDef::GetArgSize( void ) const {
 	return argsize;
 }
 

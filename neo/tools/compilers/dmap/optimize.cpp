@@ -632,6 +632,7 @@ static	void RemoveIfColinear( optVertex_t *ov, optIsland_t *island ) {
 			e = e->v2link;
 		} else {
 			common->Error( "RemoveIfColinear: mislinked edge" );
+			return;
 		}
 	}
 
@@ -653,6 +654,7 @@ static	void RemoveIfColinear( optVertex_t *ov, optIsland_t *island ) {
 		v1 = e1->v1;
 	} else {
 		common->Error( "RemoveIfColinear: mislinked edge" );
+		return;
 	}
 	if ( e2->v1 == v2 ) {
 		v3 = e2->v2;
@@ -660,10 +662,12 @@ static	void RemoveIfColinear( optVertex_t *ov, optIsland_t *island ) {
 		v3 = e2->v1;
 	} else {
 		common->Error( "RemoveIfColinear: mislinked edge" );
+		return;
 	}
 
 	if ( v1 == v3 ) {
 		common->Error( "RemoveIfColinear: mislinked edge" );
+		return;
 	}
 
 	// they must point in opposite directions
@@ -707,6 +711,7 @@ static	void RemoveIfColinear( optVertex_t *ov, optIsland_t *island ) {
 	// v2 should have no edges now
 	if ( v2->edges ) {
 		common->Error( "RemoveIfColinear: didn't remove properly" );
+		return;
 	}
 
 
@@ -942,6 +947,7 @@ static void CreateOptTri( optVertex_t *first, optEdge_t *e1, optEdge_t *e2, optI
 		second = e1->v1;
 	} else {
 		common->Error( "CreateOptTri: mislinked edge" );
+		return;
 	}
 
 	if ( e2->v1 == first ) {
@@ -950,10 +956,12 @@ static void CreateOptTri( optVertex_t *first, optEdge_t *e1, optEdge_t *e2, optI
 		third = e2->v1;
 	} else {
 		common->Error( "CreateOptTri: mislinked edge" );
+		return;
 	}
 
 	if ( !IsTriangleValid( first, second, third ) ) {
 		common->Error( "CreateOptTri: invalid" );
+		return;
 	}
 
 //DrawEdges( island );
@@ -984,6 +992,7 @@ static void CreateOptTri( optVertex_t *first, optEdge_t *e1, optEdge_t *e2, optI
 			opposite = opposite->v2link;
 		} else {
 			common->Error( "BuildOptTriangles: mislinked edge" );
+			return;
 		}
 	}
 
@@ -1057,6 +1066,7 @@ static void CreateOptTri( optVertex_t *first, optEdge_t *e1, optEdge_t *e2, optI
 	LinkTriToEdge( optTri, opposite );
 }
 
+#if 0
 // debugging tool
 static void ReportNearbyVertexes( const optVertex_t *v, const optIsland_t *island ) {
 	const optVertex_t	*ov;
@@ -1077,6 +1087,7 @@ static void ReportNearbyVertexes( const optVertex_t *v, const optIsland_t *islan
 		}
 	}
 }
+#endif
 
 /*
 ====================
@@ -1086,8 +1097,8 @@ Generate a new list of triangles from the optEdeges
 ====================
 */
 static void BuildOptTriangles( optIsland_t *island ) {
-	optVertex_t		*ov, *second, *third, *middle;
-	optEdge_t		*e1, *e1Next, *e2, *e2Next, *check, *checkNext;
+	optVertex_t		*ov, *second = NULL, *third = NULL, *middle = NULL;
+	optEdge_t		*e1, *e1Next = NULL, *e2, *e2Next = NULL, *check, *checkNext = NULL;
 
 	// free them
 	FreeOptTriangles( island );
@@ -1744,6 +1755,7 @@ static void OptimizeIsland( optIsland_t *island ) {
 	RegenerateTriangles( island );
 }
 
+#if 0
 /*
 ================
 AddVertexToIsland_r
@@ -1783,7 +1795,9 @@ static void AddVertexToIsland_r( optVertex_t *vert, optIsland_t *island ) {
 	}
 
 }
+#endif
 
+#if 0
 /*
 ====================
 SeparateIslands
@@ -1820,6 +1834,7 @@ static void SeparateIslands( optimizeGroup_t *opt ) {
 		common->Printf( "%6i islands\n", numIslands );
 	}
 }
+#endif
 
 static void DontSeparateIslands( optimizeGroup_t *opt ) {
 	int		i;
@@ -1844,7 +1859,7 @@ static void DontSeparateIslands( optimizeGroup_t *opt ) {
 	OptimizeIsland( &island );
 }
 
-
+#if 0
 /*
 ====================
 PointInSourceTris
@@ -1876,7 +1891,7 @@ static bool PointInSourceTris( float x, float y, float z, optimizeGroup_t *opt )
 	}
 	return false;
 }
-
+#endif
 /*
 ====================
 OptimizeOptList

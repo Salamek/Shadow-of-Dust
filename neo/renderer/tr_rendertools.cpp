@@ -1213,7 +1213,7 @@ static void RB_ShowNormals( drawSurf_t **drawSurfs, int numDrawSurfs ) {
 	qglEnable( GL_STENCIL_TEST );
 }
 
-
+#if 0
 /*
 =====================
 RB_ShowNormals
@@ -1288,7 +1288,7 @@ static void RB_AltShowNormals( drawSurf_t **drawSurfs, int numDrawSurfs ) {
 	qglEnable( GL_DEPTH_TEST );
 	qglEnable( GL_STENCIL_TEST );
 }
-
+#endif
 
 
 /*
@@ -1758,7 +1758,7 @@ RB_DrawText
 */
 static void RB_DrawText( const char *text, const idVec3 &origin, float scale, const idVec4 &color, const idMat3 &viewAxis, const int align ) {
 	int i, j, len, num, index, charIndex, line;
-	float textLen, spacing;
+	float textLen = 0.0f, spacing;
 	idVec3 org, p1, p2;
 
 	if ( text && *text ) {
@@ -1770,7 +1770,8 @@ static void RB_DrawText( const char *text, const idVec3 &origin, float scale, co
 		} else {
 			line = 0;
 		}
-
+		
+		org.Zero();
 		len = strlen( text );
 		for ( i = 0; i < len; i++ ) {
 
