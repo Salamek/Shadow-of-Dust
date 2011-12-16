@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -178,7 +178,7 @@ ID_INLINE idMat2 &idMat2::operator*=( const float a ) {
 	mat[0].x *= a; mat[0].y *= a;
 	mat[1].x *= a; mat[1].y *= a;
 
-    return *this;
+	return *this;
 }
 
 ID_INLINE idMat2 &idMat2::operator*=( const idMat2 &a ) {
@@ -196,14 +196,14 @@ ID_INLINE idMat2 &idMat2::operator+=( const idMat2 &a ) {
 	mat[0].x += a[0].x; mat[0].y += a[0].y;
 	mat[1].x += a[1].x; mat[1].y += a[1].y;
 
-    return *this;
+	return *this;
 }
 
 ID_INLINE idMat2 &idMat2::operator-=( const idMat2 &a ) {
 	mat[0].x -= a[0].x; mat[0].y -= a[0].y;
 	mat[1].x -= a[1].x; mat[1].y -= a[1].y;
 
-    return *this;
+	return *this;
 }
 
 ID_INLINE idVec2 operator*( const idVec2 &vec, const idMat2 &mat ) {
@@ -295,7 +295,7 @@ ID_INLINE idMat2 idMat2::Inverse( void ) const {
 	idMat2 invMat;
 
 	invMat = *this;
-	int __attribute__ ((__unused__)) r = invMat.InverseSelf();
+	int r id_attribute((unused)) = invMat.InverseSelf();
 	assert( r );
 	return invMat;
 }
@@ -304,7 +304,7 @@ ID_INLINE idMat2 idMat2::InverseFast( void ) const {
 	idMat2 invMat;
 
 	invMat = *this;
-	int __attribute__ ((__unused__)) r = invMat.InverseFastSelf();
+	int r id_attribute((unused)) = invMat.InverseFastSelf();
 	assert( r );
 	return invMat;
 }
@@ -502,7 +502,7 @@ ID_INLINE idMat3 &idMat3::operator*=( const float a ) {
 	mat[1].x *= a; mat[1].y *= a; mat[1].z *= a;
 	mat[2].x *= a; mat[2].y *= a; mat[2].z *= a;
 
-    return *this;
+	return *this;
 }
 
 ID_INLINE idMat3 &idMat3::operator*=( const idMat3 &a ) {
@@ -530,7 +530,7 @@ ID_INLINE idMat3 &idMat3::operator+=( const idMat3 &a ) {
 	mat[1].x += a[1].x; mat[1].y += a[1].y; mat[1].z += a[1].z;
 	mat[2].x += a[2].x; mat[2].y += a[2].y; mat[2].z += a[2].z;
 
-    return *this;
+	return *this;
 }
 
 ID_INLINE idMat3 &idMat3::operator-=( const idMat3 &a ) {
@@ -538,7 +538,7 @@ ID_INLINE idMat3 &idMat3::operator-=( const idMat3 &a ) {
 	mat[1].x -= a[1].x; mat[1].y -= a[1].y; mat[1].z -= a[1].z;
 	mat[2].x -= a[2].x; mat[2].y -= a[2].y; mat[2].z -= a[2].z;
 
-    return *this;
+	return *this;
 }
 
 ID_INLINE idVec3 operator*( const idVec3 &vec, const idMat3 &mat ) {
@@ -700,7 +700,7 @@ ID_INLINE idMat3 idMat3::Inverse( void ) const {
 	idMat3 invMat;
 
 	invMat = *this;
-	int __attribute__ ((__unused__)) r = invMat.InverseSelf();
+	int r id_attribute((unused)) = invMat.InverseSelf();
 	assert( r );
 	return invMat;
 }
@@ -709,7 +709,7 @@ ID_INLINE idMat3 idMat3::InverseFast( void ) const {
 	idMat3 invMat;
 
 	invMat = *this;
-	int __attribute__ ((__unused__)) r = invMat.InverseFastSelf();
+	int r id_attribute((unused)) = invMat.InverseFastSelf();
 	assert( r );
 	return invMat;
 }
@@ -964,7 +964,7 @@ ID_INLINE idMat4 &idMat4::operator*=( const float a ) {
 	mat[1].x *= a; mat[1].y *= a; mat[1].z *= a; mat[1].w *= a;
 	mat[2].x *= a; mat[2].y *= a; mat[2].z *= a; mat[2].w *= a;
 	mat[3].x *= a; mat[3].y *= a; mat[3].z *= a; mat[3].w *= a;
-    return *this;
+	return *this;
 }
 
 ID_INLINE idMat4 &idMat4::operator*=( const idMat4 &a ) {
@@ -977,7 +977,7 @@ ID_INLINE idMat4 &idMat4::operator+=( const idMat4 &a ) {
 	mat[1].x += a[1].x; mat[1].y += a[1].y; mat[1].z += a[1].z; mat[1].w += a[1].w;
 	mat[2].x += a[2].x; mat[2].y += a[2].y; mat[2].z += a[2].z; mat[2].w += a[2].w;
 	mat[3].x += a[3].x; mat[3].y += a[3].y; mat[3].z += a[3].z; mat[3].w += a[3].w;
-    return *this;
+	return *this;
 }
 
 ID_INLINE idMat4 &idMat4::operator-=( const idMat4 &a ) {
@@ -985,7 +985,7 @@ ID_INLINE idMat4 &idMat4::operator-=( const idMat4 &a ) {
 	mat[1].x -= a[1].x; mat[1].y -= a[1].y; mat[1].z -= a[1].z; mat[1].w -= a[1].w;
 	mat[2].x -= a[2].x; mat[2].y -= a[2].y; mat[2].z -= a[2].z; mat[2].w -= a[2].w;
 	mat[3].x -= a[3].x; mat[3].y -= a[3].y; mat[3].z -= a[3].z; mat[3].w -= a[3].w;
-    return *this;
+	return *this;
 }
 
 ID_INLINE idMat4 operator*( const float a, const idMat4 &mat ) {
@@ -1108,7 +1108,7 @@ ID_INLINE idMat4 idMat4::Inverse( void ) const {
 	idMat4 invMat;
 
 	invMat = *this;
-	int __attribute__ ((__unused__)) r = invMat.InverseSelf();
+	int r id_attribute((unused)) = invMat.InverseSelf();
 	assert( r );
 	return invMat;
 }
@@ -1117,7 +1117,7 @@ ID_INLINE idMat4 idMat4::InverseFast( void ) const {
 	idMat4 invMat;
 
 	invMat = *this;
-	int __attribute__ ((__unused__)) r = invMat.InverseFastSelf();
+	int r id_attribute((unused)) = invMat.InverseFastSelf();
 	assert( r );
 	return invMat;
 }
@@ -1413,7 +1413,7 @@ ID_INLINE idMat5 idMat5::Inverse( void ) const {
 	idMat5 invMat;
 
 	invMat = *this;
-	int __attribute__ ((__unused__)) r = invMat.InverseSelf();
+	int r id_attribute((unused)) = invMat.InverseSelf();
 	assert( r );
 	return invMat;
 }
@@ -1422,7 +1422,7 @@ ID_INLINE idMat5 idMat5::InverseFast( void ) const {
 	idMat5 invMat;
 
 	invMat = *this;
-	int __attribute__ ((__unused__)) r = invMat.InverseFastSelf();
+	int r id_attribute((unused)) = invMat.InverseFastSelf();
 	assert( r );
 	return invMat;
 }
@@ -1740,7 +1740,7 @@ ID_INLINE idMat6 idMat6::Inverse( void ) const {
 	idMat6 invMat;
 
 	invMat = *this;
-	int __attribute__ ((__unused__)) r = invMat.InverseSelf();
+	int r id_attribute((unused)) = invMat.InverseSelf();
 	assert( r );
 	return invMat;
 }
@@ -1749,7 +1749,7 @@ ID_INLINE idMat6 idMat6::InverseFast( void ) const {
 	idMat6 invMat;
 
 	invMat = *this;
-	int __attribute__ ((__unused__)) r = invMat.InverseFastSelf();
+	int r id_attribute((unused)) = invMat.InverseFastSelf();
 	assert( r );
 	return invMat;
 }
@@ -2584,7 +2584,7 @@ ID_INLINE idMatX idMatX::Inverse( void ) const {
 
 	invMat.SetTempSize( numRows, numColumns );
 	memcpy( invMat.mat, mat, numRows * numColumns * sizeof( float ) );
-	int __attribute__ ((__unused__)) r = invMat.InverseSelf();
+	int r id_attribute((unused)) = invMat.InverseSelf();
 	assert( r );
 	return invMat;
 }
@@ -2620,7 +2620,7 @@ ID_INLINE idMatX idMatX::InverseFast( void ) const {
 
 	invMat.SetTempSize( numRows, numColumns );
 	memcpy( invMat.mat, mat, numRows * numColumns * sizeof( float ) );
-	int __attribute__ ((__unused__)) r = invMat.InverseFastSelf();
+	int r id_attribute((unused)) = invMat.InverseFastSelf();
 	assert( r );
 	return invMat;
 }

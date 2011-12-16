@@ -2026,6 +2026,8 @@ void idAI::Event_RestoreMove( void ) {
 	case MOVE_WANDER :
 		WanderAround();
 		break;
+	default:
+	break;
 	}
 
 	if ( GetMovePos( goalPos ) ) {

@@ -1193,6 +1193,8 @@ void idAI::Think( void ) {
 				PlayChatter();
 				CheckBlink();
 				break;
+			default:
+			break;
 			}
 		}
 
@@ -2307,6 +2309,8 @@ bool idAI::GetMovePos( idVec3 &seekPos ) {
 		seekPos = org;
 		return false;
 		break;
+	default:
+	break;
 	}
 
 	if ( move.moveCommand == MOVE_TO_ENTITY ) {
