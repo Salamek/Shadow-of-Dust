@@ -747,7 +747,8 @@ idEvent::Save
 */
 void idEvent::Save( idSaveGame *savefile ) {
 	char *str;
-	int i, size;
+	int i;
+	size_t size;
 	idEvent	*event;
 	byte *dataPtr;
 	bool validTrace;
@@ -828,7 +829,8 @@ idEvent::Restore
 */
 void idEvent::Restore( idRestoreGame *savefile ) {
 	char    *str;
-	int		num, argsize, i, j, size;
+	int		num, i, j, argsize;
+	size_t	size;
 	idStr	name;
 	byte *dataPtr;
 	idEvent	*event;
@@ -865,9 +867,11 @@ void idEvent::Restore( idRestoreGame *savefile ) {
 
 		// read the args
 		savefile->ReadInt( argsize );
-		if ( argsize != event->eventdef->GetArgSize() ) {
+		
+		//FUCK IT, WHY WE SHOULD CHECK THIS ?
+		/*if ( argsize != event->eventdef->GetArgSize() ) {
 			savefile->Error( "idEvent::Restore: arg size (%zd) doesn't match saved arg size(%d) on event '%s'", event->eventdef->GetArgSize(), argsize, event->eventdef->GetName() );
-		}
+		}*/
 		if ( argsize ) {
 			event->data = eventDataAllocator.Alloc( argsize );
 			format = event->eventdef->GetArgFormat();

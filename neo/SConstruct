@@ -326,7 +326,8 @@ BASECPPFLAGS.append( '-pipe' )
 # warn all
 BASECPPFLAGS.append( '-Wall' )
 BASECPPFLAGS.append( '-Wno-unknown-pragmas' )
-BASECPPFLAGS.append('-Wno-sign-compare')
+#BASECPPFLAGS.append( '-Wno-sign-compare' )
+BASECPPFLAGS.append( '-Wenum-compare' )
 
 # this define is necessary to make sure threading support is enabled in X
 CORECPPFLAGS.append( '-DXTHREADS' )
