@@ -490,8 +490,9 @@ int idSampleDecoderLocal::DecodePCM( idSoundSample *sample, int sampleOffset44k,
 		return 0;
 	}
 
-	if ( size - pos < sampleCount * sizeof( short ) ) {
-		readSamples = ( size - pos ) / sizeof( short );
+	int size_short = sizeof( short );
+	if ( size - pos < sampleCount * size_short ) {
+		readSamples = ( size - pos ) / size_short;
 	} else {
 		readSamples = sampleCount;
 	}

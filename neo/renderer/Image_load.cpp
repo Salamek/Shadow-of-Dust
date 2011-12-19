@@ -1382,8 +1382,9 @@ bool idImage::CheckPrecompressedImage( bool fullLoad ) {
 		return false;
 	}
 
-	int	len = f->Length();
-	if ( len < sizeof( ddsFileHeader_t ) ) {
+	int len = f->Length();
+	int size_dd = sizeof( ddsFileHeader_t );
+	if ( len < size_dd ) {
 		fileSystem->CloseFile( f );
 		return false;
 	}

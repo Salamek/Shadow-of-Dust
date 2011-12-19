@@ -234,7 +234,7 @@ idKeyInput::ArgCompletion_KeyName
 */
 void idKeyInput::ArgCompletion_KeyName( const idCmdArgs &args, void(*callback)( const char *s ) ) {
 	const keyname_t *kn;
-	int i;
+	size_t i;
 
 	for( i = 0; i < sizeof( unnamedkeys ) - 1; i++ ) {
 		callback( va( "%s %c", args.Argv( 0 ), unnamedkeys[ i ] ) );

@@ -188,7 +188,7 @@ const char *idTypeInfoTools::OutputString( const char *string ) {
 	static int index = 0;
 	static char buffers[4][16384];
 	char *out;
-	int i, c;
+	size_t i, c;
 
 	out = buffers[index];
 	index = ( index + 1 ) & 3;

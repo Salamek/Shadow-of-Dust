@@ -1236,8 +1236,9 @@ reserves memory for global variables and returns the starting pointer
 byte *idProgram::ReserveMem(int size) {
 	byte *res = &variables[ numVariables ];
 	numVariables += size;
-	if ( numVariables > sizeof( variables ) ) {
-		throw idCompileError( va( "Exceeded global memory size (%zd bytes)", sizeof( variables ) ) );
+	int var_size = sizeof( variables );
+	if ( numVariables > var_size ) {
+		throw idCompileError( va( "Exceeded global memory size (%d bytes)", var_size ) );
 	}
 
 	memset( res, 0, size );

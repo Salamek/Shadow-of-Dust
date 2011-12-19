@@ -623,7 +623,8 @@ bool idMsgChannel::Process( const netadr_t from, int time, idBitMsg &msg, int &s
 		}
 
 		// copy the fragment to the fragment buffer
-		if ( fragLength < 0 || fragLength > msg.GetRemaingData() || fragmentLength + fragLength > sizeof( fragmentBuffer ) ) {
+		int frag_size = sizeof( fragmentBuffer );
+		if ( fragLength < 0 || fragLength > msg.GetRemaingData() || fragmentLength + fragLength > frag_size ) {
 			if ( net_channelShowDrop.GetBool() || net_channelShowPackets.GetBool() ) {
 				common->Printf( "%s: illegal fragment length\n", Sys_NetAdrToString( remoteAddress ) );
 			}

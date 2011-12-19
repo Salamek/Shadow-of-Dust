@@ -248,7 +248,7 @@ static void LoadBMP( const char *name, byte **pic, int *width, int *height, ID_T
 	int		row, column;
 	byte	*buf_p;
 	byte	*buffer;
-	int		length;
+	size_t		length;
 	BMPHeader_t bmpHeader;
 	byte		*bmpRGBA;
 
@@ -311,7 +311,7 @@ static void LoadBMP( const char *name, byte **pic, int *width, int *height, ID_T
 	}
 	if ( bmpHeader.fileSize != length )
 	{
-		common->Error( "LoadBMP: header size does not match file size (%u vs. %d) (%s)\n", bmpHeader.fileSize, length, name );
+		common->Error( "LoadBMP: header size does not match file size (%u vs. %zd) (%s)\n", bmpHeader.fileSize, length, name );
 	}
 	if ( bmpHeader.compression != 0 )
 	{

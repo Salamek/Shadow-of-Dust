@@ -334,7 +334,7 @@ void *idHeap::Allocate16( const dword bytes ) {
 		}
 	}
 	alignedPtr = (byte *) ( ( ( (intptr_t) ptr ) + 15) & ~15 );
-	if ( alignedPtr - ptr < sizeof(intptr_t) ) {
+	if ( alignedPtr - ptr < (int)sizeof(intptr_t) ) {
 		alignedPtr += 16;
 	}
 	*((intptr_t *)(alignedPtr - sizeof(intptr_t))) = (intptr_t) ptr;
