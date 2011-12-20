@@ -3052,7 +3052,6 @@ void idCommonLocal::ShutdownGame( bool reloading ) {
 	if ( sw ) {
 		sw->StopAllSounds();
 	}
-	soundSystem->ClearBuffer();
 
 	// shutdown the script debugger
 	// DebuggerServerShutdown();

@@ -2,7 +2,7 @@ CONTRIBUTORS, FEEL FREE TO ADD MORE POINTS HERE!
 
 Working idtech4 on modern systems with doom3 game files (original doom3)
 --------------------------------------------------------------------------------
-++ Clean out ALL (i mean rly all) compile warnings (yes its slavery, but i dont want be surprised)
+++ Clean out warnings( few left)
 
 Here starts a real fun!
 --------------------------------------------------------------------------------

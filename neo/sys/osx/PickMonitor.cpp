@@ -164,17 +164,13 @@ OSErr DisposeUserPaneProcs(ControlRef inUserPane)
 	return noErr;
 }
 
-#pragma mark -
-
 //-----------------------------------------------------------------------------
 //	drawProc
 //-----------------------------------------------------------------------------
 //	Custom drawProc for our UserPane control.
 
-static pascal void drawProc(ControlRef inControl, SInt16 inPart)
+static pascal void drawProc(ControlRef, SInt16)
 {
-	#pragma unused(inControl, inPart)
-	
 	int i;
 	RGBColor saveForeColor;
 	RGBColor saveBackColor;
@@ -249,9 +245,8 @@ static pascal ControlPartCode hitTestProc(ControlRef inControl, Point inWhere)
 static pascal ControlPartCode trackingProc (
 					ControlRef inControl,
 					Point inStartPt,
-					ControlActionUPP inActionProc)
+					ControlActionUPP)
 {
-	#pragma unused (inControl, inStartPt, inActionProc)
 	int i;
 
 	for (i = 0; i < sNumMonitors; i++)
@@ -269,9 +264,6 @@ static pascal ControlPartCode trackingProc (
 	
 	return kControlNoPart;
 }
-
-
-#pragma mark -
 
 
 //-----------------------------------------------------------------------------
@@ -394,10 +386,9 @@ OSErr TearDownPickMonitorPane(ControlRef inPane)
 //------------------------------------------------------------------------------------
 // Our command handler for the PickMonitor dialog.
 
-static pascal OSStatus PickMonitorHandler( EventHandlerCallRef inHandler, EventRef inEvent, void* inUserData )
+static pascal OSStatus PickMonitorHandler( EventHandlerCallRef, EventRef inEvent, void* inUserData )
 {
-	#pragma unused( inHandler )
-	
+
 	HICommand			cmd;
 	OSStatus			result = eventNotHandledErr;
 	WindowRef			theWindow = (WindowRef)inUserData;

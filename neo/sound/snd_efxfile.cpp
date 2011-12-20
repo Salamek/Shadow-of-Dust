@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -79,8 +79,9 @@ idEFXFile::ReadEffect
 ===============
 */
 bool idEFXFile::ReadEffect( idLexer &src, idSoundEffect *effect ) {
+#if ID_OPENAL_EAX
 	idToken name, token;
-	
+
 	if ( !src.ReadToken( &token ) )
 		return false;
 
@@ -90,18 +91,18 @@ bool idEFXFile::ReadEffect( idLexer &src, idSoundEffect *effect ) {
 		if ( reverb ) {
 			src.ReadTokenOnLine( &token );
 			name = token;
-				
+
 			if ( !src.ReadToken( &token ) ) {
 				Mem_Free( reverb );
 				return false;
 			}
-			
+
 			if ( token != "{" ) {
 				src.Error( "idEFXFile::ReadEffect: { not found, found %s", token.c_str() );
 				Mem_Free( reverb );
 				return false;
 			}
-			
+
 			do {
 				if ( !src.ReadToken( &token ) ) {
 					src.Error( "idEFXFile::ReadEffect: EOF without closing brace" );
@@ -183,6 +184,7 @@ bool idEFXFile::ReadEffect( idLexer &src, idSoundEffect *effect ) {
 		// other effect (not supported at the moment)
 		src.Error( "idEFXFile::ReadEffect: Unknown effect definition" );
 	}
+#endif
 
 	return false;
 }
@@ -210,7 +212,7 @@ bool idEFXFile::LoadFile( const char *filename, bool OSPath ) {
 		src.Error( "idEFXFile::LoadFile: Unknown file version" );
 		return false;
 	}
-	
+
 	while ( !src.EndOfFile() ) {
 		idSoundEffect *effect = new idSoundEffect;
 		if ( ReadEffect( src, effect ) ) {

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -107,7 +107,7 @@ int	Factorial( int val ) {
 	return fact;
 }
 
-void GeneratePermutedList( int *list, int listLength, int permute ) {	
+void GeneratePermutedList( int *list, int listLength, int permute ) {
 	for ( int i = 0 ; i < listLength ; i++ ) {
 		list[i] = i;
 	}
@@ -222,28 +222,25 @@ idSoundChannel::ALStop
 ===================
 */
 void idSoundChannel::ALStop( void ) {
-	if ( idSoundSystemLocal::useOpenAL ) {
+	if ( alIsSource( openalSource ) ) {
+		alSourceStop( openalSource );
+		alSourcei( openalSource, AL_BUFFER, 0 );
+		soundSystemLocal.FreeOpenALSource( openalSource );
+	}
 
-		if ( alIsSource( openalSource ) ) {
-			alSourceStop( openalSource );
-			alSourcei( openalSource, AL_BUFFER, 0 );
-			soundSystemLocal.FreeOpenALSource( openalSource );
+	if ( openalStreamingBuffer[0] && openalStreamingBuffer[1] && openalStreamingBuffer[2] ) {
+		alGetError();
+		alDeleteBuffers( 3, &openalStreamingBuffer[0] );
+		if ( alGetError() == AL_NO_ERROR ) {
+			openalStreamingBuffer[0] = openalStreamingBuffer[1] = openalStreamingBuffer[2] = 0;
 		}
+	}
 
-		if ( openalStreamingBuffer[0] && openalStreamingBuffer[1] && openalStreamingBuffer[2] ) {
-			alGetError();
-			alDeleteBuffers( 3, &openalStreamingBuffer[0] );
-			if ( alGetError() == AL_NO_ERROR ) {
-				openalStreamingBuffer[0] = openalStreamingBuffer[1] = openalStreamingBuffer[2] = 0;
-			}
-		}
-
-		if ( lastopenalStreamingBuffer[0] && lastopenalStreamingBuffer[1] && lastopenalStreamingBuffer[2] ) {
-			alGetError();
-			alDeleteBuffers( 3, &lastopenalStreamingBuffer[0] );
-			if ( alGetError() == AL_NO_ERROR ) {
-				lastopenalStreamingBuffer[0] = lastopenalStreamingBuffer[1] = lastopenalStreamingBuffer[2] = 0;
-			}
+	if ( lastopenalStreamingBuffer[0] && lastopenalStreamingBuffer[1] && lastopenalStreamingBuffer[2] ) {
+		alGetError();
+		alDeleteBuffers( 3, &lastopenalStreamingBuffer[0] );
+		if ( alGetError() == AL_NO_ERROR ) {
+			lastopenalStreamingBuffer[0] = lastopenalStreamingBuffer[1] = lastopenalStreamingBuffer[2] = 0;
 		}
 	}
 }
@@ -274,7 +271,7 @@ void idSoundChannel::GatherChannelSamples( int sampleOffset44k, int sampleCount4
 		sampleCount44k -= len;
 		sampleOffset44k += len;
 	}
-	
+
 	// grab part of the leadin sample
 	idSoundSample *leadin = leadinSample;
 	if ( !leadin || sampleOffset44k < 0 || sampleCount44k <= 0 ) {
@@ -340,7 +337,7 @@ idSoundEmitterLocal::idSoundEmitterLocal
 
 ===============
 */
-idSoundEmitterLocal::idSoundEmitterLocal( void ) {	
+idSoundEmitterLocal::idSoundEmitterLocal( void ) {
 	soundWorld = NULL;
 	Clear();
 }
@@ -452,7 +449,7 @@ void idSoundEmitterLocal::CheckForCompletion( int current44kHzTime ) {
 			if ( !( chan->parms.soundShaderFlags & SSF_LOOPING ) ) {
 				ALint state = AL_PLAYING;
 
-				if ( idSoundSystemLocal::useOpenAL && alIsSource( chan->openalSource ) ) {
+				if ( alIsSource( chan->openalSource ) ) {
 					alGetSourcei( chan->openalSource, AL_SOURCE_STATE, &state );
 				}
 				idSlowChannel slow = GetSlowChannel( chan );
@@ -471,7 +468,7 @@ void idSoundEmitterLocal::CheckForCompletion( int current44kHzTime ) {
 
 					// free hardware resources
 					chan->ALStop();
-					
+
 					// if this was an onDemand sound, purge the sample now
 					if ( chan->leadinSample->onDemand ) {
 						chan->leadinSample->PurgeSoundSample();
@@ -686,7 +683,7 @@ int idSoundEmitterLocal::StartSound( const idSoundShader *shader, const s_channe
 
 	// this is the sample time it will be first mixed
 	int start44kHz;
-	
+
 	if ( soundWorld->fpa[0] ) {
 		// if we are recording an AVI demo, don't use hardware time
 		start44kHz = soundWorld->lastAVI44kHz + MIXBUFFER_SAMPLES;
@@ -763,7 +760,7 @@ int idSoundEmitterLocal::StartSound( const idSoundShader *shader, const s_channe
 				if ( idSoundSystemLocal::s_showStartSound.GetInteger() ) {
 					common->Printf( "(override %s)", chan->soundShader->base->GetName() );
 				}
-				
+
 				chan->Stop();
 
 				// if this was an onDemand sound, purge the sample now
@@ -859,7 +856,7 @@ int idSoundEmitterLocal::StartSound( const idSoundShader *shader, const s_channe
 		chan->triggerGame44kHzTime -= diversity * length;
 		chan->triggerGame44kHzTime &= ~7;
 	}
-	
+
 	length *= 1000 / (float)PRIMARYFREQ;
 
 	Sys_LeaveCriticalSection();

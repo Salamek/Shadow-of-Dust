@@ -35,9 +35,6 @@ If you have questions concerning this license or the applicable additional terms
 #include <math.h>
 #include <float.h>
 
-#ifdef PPC_INTRINSICS
-	#include <ppc_intrinsics.h>
-#endif
 
 // Doom3 SIMD Library version 0.5
 // Patrick Flanagan (pflanagan@apple.com)
@@ -51,7 +48,11 @@ If you have questions concerning this license or the applicable additional terms
 //
 //===============================================================
 
-#if defined(MACOS_X) && defined(__ppc__)
+#if defined(__GNUC__) && defined(__ALTIVEC__)
+
+#ifdef PPC_INTRINSICS
+	#include <ppc_intrinsics.h>
+#endif
 
 // Data struct sizes
 

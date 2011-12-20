@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,9 +31,8 @@ If you have questions concerning this license or the applicable additional terms
 
 // you need the OpenAL headers for build, even if AL is not enabled - http://www.openal.org/
 #ifdef _WIN32
-#include "../openal/include/al.h"
-#include "../openal/include/alc.h"
-#include "../openal/idal.h"
+#include <al.h>
+#include <alc.h>
 // broken OpenAL SDK ?
 #define ID_ALCHAR (ALubyte *)
 #elif defined( MACOS_X )
@@ -45,7 +44,7 @@ If you have questions concerning this license or the applicable additional terms
 #include <AL/alc.h>
 #define ID_ALCHAR
 #endif
-#include "../openal/include/efxlib.h"
+#include "efxlib.h"
 
 // demo sound commands
 typedef enum {
@@ -69,7 +68,6 @@ const float SND_EPSILON				= 1.0f / 32768.0f;	// if volume is below this, it wil
 
 const int ROOM_SLICES_IN_BUFFER		= 10;
 
-class idAudioHardware;
 class idAudioBuffer;
 class idWaveFile;
 class idSoundCache;
@@ -94,25 +92,25 @@ class idSoundWorldLocal;
 #pragma pack (push, 1)
 #endif
 struct waveformatex_s {
-    word    wFormatTag;        /* format type */
-    word    nChannels;         /* number of channels (i.e. mono, stereo...) */
-    dword   nSamplesPerSec;    /* sample rate */
-    dword   nAvgBytesPerSec;   /* for buffer estimation */
-    word    nBlockAlign;       /* block size of data */
-    word    wBitsPerSample;    /* Number of bits per sample of mono data */
-    word    cbSize;            /* The count in bytes of the size of
-                                    extra information (after cbSize) */
+	word    wFormatTag;        /* format type */
+	word    nChannels;         /* number of channels (i.e. mono, stereo...) */
+	dword   nSamplesPerSec;    /* sample rate */
+	dword   nAvgBytesPerSec;   /* for buffer estimation */
+	word    nBlockAlign;       /* block size of data */
+	word    wBitsPerSample;    /* Number of bits per sample of mono data */
+	word    cbSize;            /* The count in bytes of the size of
+									extra information (after cbSize) */
 } PACKED;
 
 typedef waveformatex_s waveformatex_t;
 
 /* OLD general waveform format structure (information common to all formats) */
 struct waveformat_s {
-    word    wFormatTag;        /* format type */
-    word    nChannels;         /* number of channels (i.e. mono, stereo, etc.) */
-    dword   nSamplesPerSec;    /* sample rate */
-    dword   nAvgBytesPerSec;   /* for buffer estimation */
-    word    nBlockAlign;       /* block size of data */
+	word    wFormatTag;        /* format type */
+	word    nChannels;         /* number of channels (i.e. mono, stereo, etc.) */
+	dword   nSamplesPerSec;    /* sample rate */
+	dword   nAvgBytesPerSec;   /* for buffer estimation */
+	word    nBlockAlign;       /* block size of data */
 } PACKED;
 
 typedef waveformat_s waveformat_t;
@@ -125,8 +123,8 @@ enum {
 
 /* specific waveform format structure for PCM data */
 struct pcmwaveformat_s {
-    waveformat_t	wf;
-    word			wBitsPerSample;
+	waveformat_t	wf;
+	word			wBitsPerSample;
 } PACKED;
 
 typedef pcmwaveformat_s pcmwaveformat_t;
@@ -140,15 +138,15 @@ typedef pcmwaveformat_s pcmwaveformat_t;
 #define fourcc_riff     mmioFOURCC('R', 'I', 'F', 'F')
 
 struct waveformatextensible_s {
-    waveformatex_t    Format;
-    union {
-        word wValidBitsPerSample;       /* bits of precision  */
-        word wSamplesPerBlock;          /* valid if wBitsPerSample==0*/
-        word wReserved;                 /* If neither applies, set to zero*/
-    } Samples;
-    dword           dwChannelMask;      /* which channels are */
-                                        /* present in stream  */
-    int            SubFormat;
+	waveformatex_t    Format;
+	union {
+		word wValidBitsPerSample;       /* bits of precision  */
+		word wSamplesPerBlock;          /* valid if wBitsPerSample==0*/
+		word wReserved;                 /* If neither applies, set to zero*/
+	} Samples;
+	dword           dwChannelMask;      /* which channels are */
+										/* present in stream  */
+	int            SubFormat;
 } PACKED;
 
 typedef waveformatextensible_s waveformatextensible_t;
@@ -182,76 +180,44 @@ idWaveFile
 
 class idWaveFile {
 public:
-				    idWaveFile( void );
+					idWaveFile( void );
 					~idWaveFile( void );
 
-    int				Open( const char* strFileName, waveformatex_t* pwfx = NULL );
-    int				OpenFromMemory( short* pbData, int ulDataSize, waveformatextensible_t* pwfx );
-    int				Read( byte* pBuffer, int dwSizeToRead, int *pdwSizeRead );
+	int				Open( const char* strFileName, waveformatex_t* pwfx = NULL );
+	int				OpenFromMemory( short* pbData, int ulDataSize, waveformatextensible_t* pwfx );
+	int				Read( byte* pBuffer, int dwSizeToRead, int *pdwSizeRead );
 	int				Seek( int offset );
-    int				Close( void );
-    int				ResetFile( void );
+	int				Close( void );
+	int				ResetFile( void );
 
 	int				GetOutputSize( void ) { return mdwSize; }
 	int				GetMemorySize( void ) { return mMemSize; }
 
-    waveformatextensible_t	mpwfx;        // Pointer to waveformatex structure
+	waveformatextensible_t	mpwfx;        // Pointer to waveformatex structure
 
 private:
 	idFile *		mhmmio;			// I/O handle for the WAVE
-    mminfo_t		mck;			// Multimedia RIFF chunk
-    mminfo_t		mckRiff;		// used when opening a WAVE file
-    dword			mdwSize;		// size in samples
+	mminfo_t		mck;			// Multimedia RIFF chunk
+	mminfo_t		mckRiff;		// used when opening a WAVE file
+	dword			mdwSize;		// size in samples
 	dword			mMemSize;		// size of the wave data in memory
 	dword			mseekBase;
 	ID_TIME_T			mfileTime;
 
-    bool			mbIsReadingFromMemory;
-    short *			mpbData;
-    short *			mpbDataCur;
-    dword			mulDataSize;
+	bool			mbIsReadingFromMemory;
+	short *			mpbData;
+	short *			mpbDataCur;
+	dword			mulDataSize;
 
 	void *			ogg;			// only !NULL when !s_realTimeDecoding
 	bool			isOgg;
 
 private:
-    int				ReadMMIO( void );
+	int				ReadMMIO( void );
 
-    int				OpenOGG( const char* strFileName, waveformatex_t* pwfx = NULL );
+	int				OpenOGG( const char* strFileName, waveformatex_t* pwfx = NULL );
 	int				ReadOGG( byte* pBuffer, int dwSizeToRead, int *pdwSizeRead );
 	int				CloseOGG( void );
-};
-
-
-/*
-===================================================================================
-
-idAudioHardware
-
-===================================================================================
-*/
-
-class idAudioHardware {
-public:
-	static idAudioHardware *Alloc();
-
-    virtual					~idAudioHardware();
-
-    virtual bool			Initialize( ) = 0;
-
-	virtual bool			Lock( void **pDSLockedBuffer, ulong *dwDSLockedBufferSize ) = 0;
-	virtual bool			Unlock( void *pDSLockedBuffer, dword dwDSLockedBufferSize ) = 0;
-	virtual bool			GetCurrentPosition( ulong *pdwCurrentWriteCursor ) = 0;
-	
-	// try to write as many sound samples to the device as possible without blocking and prepare for a possible new mixing call
-	// returns wether there is *some* space for writing available
-	virtual bool			Flush( void ) = 0;
-
-	virtual void			Write( bool flushing ) = 0;
-
-	virtual int				GetNumberOfSpeakers( void )= 0;
-	virtual int				GetMixBufferSize( void ) = 0;
-	virtual short*			GetMixBuffer( void ) = 0;
 };
 
 
@@ -265,11 +231,11 @@ Encapsulates functionality of a DirectSound buffer.
 
 class idAudioBuffer {
 public:
-    virtual int 		Play( dword dwPriority=0, dword dwFlags=0 ) = 0;
-    virtual int			Stop( void ) = 0;
-    virtual int			Reset( void ) = 0;
-    virtual bool		IsSoundPlaying( void ) = 0;
-    virtual void	 	SetVolume( float x ) = 0;
+	virtual int		Play( dword dwPriority=0, dword dwFlags=0 ) = 0;
+	virtual int			Stop( void ) = 0;
+	virtual int			Reset( void ) = 0;
+	virtual bool		IsSoundPlaying( void ) = 0;
+	virtual void		SetVolume( float x ) = 0;
 };
 
 
@@ -479,7 +445,7 @@ public:
 	removeStatus_t		removeStatus;
 
 	idVec3				origin;
-	int					listenerId;		
+	int					listenerId;
 	soundShaderParms_t	parms;						// default overrides for all channels
 
 
@@ -591,12 +557,12 @@ public:
 	// SaveGame Support
 	virtual void			WriteToSaveGame( idFile *savefile );
 	virtual void			ReadFromSaveGame( idFile *savefile );
-	
+
 	virtual void			ReadFromSaveGameSoundChannel( idFile *saveGame, idSoundChannel *ch );
 	virtual void			ReadFromSaveGameSoundShaderParams( idFile *saveGame, soundShaderParms_t *params );
 	virtual void			WriteToSaveGameSoundChannel( idFile *saveGame, idSoundChannel *ch );
 	virtual void			WriteToSaveGameSoundShaderParams( idFile *saveGame, soundShaderParms_t *params );
-	
+
 	virtual void			SetSlowmo( bool active );
 	virtual void			SetSlowmoSpeed( float speed );
 	virtual void			SetEnviroSuit( bool active );
@@ -607,7 +573,6 @@ public:
 
 	void					Shutdown( void );
 	void					Init( idRenderWorld *rw );
-	void					ClearBuffer( void );
 
 	// update
 	void					ForegroundUpdate( int currentTime );
@@ -684,7 +649,6 @@ public:
 
 	// shutdown routine
 	virtual	void			Shutdown( void );
-	virtual void			ClearBuffer( void );
 
 	// sound is attached to the window, and must be recreated when the window is changed
 	virtual bool			ShutdownHW( void );
@@ -732,7 +696,6 @@ public:
 	ALuint					AllocOpenALSource( idSoundChannel *chan, bool looping, bool stereo );
 	void					FreeOpenALSource( ALuint handle );
 
-	idAudioHardware *		snd_audio_hw;
 	idSoundCache *			soundCache;
 
 	idSoundWorldLocal *		currentSoundWorld;	// the one to mix each async tic
@@ -743,7 +706,7 @@ public:
 
 	unsigned int			nextWriteBlock;
 
-	float 					realAccum[6*MIXBUFFER_SAMPLES+16];
+	float					realAccum[6*MIXBUFFER_SAMPLES+16];
 	float *					finalMixBuffer;			// points inside realAccum at a 16 byte aligned boundary
 
 	bool					isInitialized;
@@ -765,14 +728,15 @@ public:
 	ALCcontext				*openalContext;
 	ALsizei					openalSourceCount;
 	openalSource_t			openalSources[256];
+#if ID_OPENAL_EAX
 	EAXSet					alEAXSet;
 	EAXGet					alEAXGet;
 	EAXSetBufferMode		alEAXSetBufferMode;
 	EAXGetBufferMode		alEAXGetBufferMode;
+#endif
 	idEFXFile				EFXDatabase;
 	bool					efxloaded;
 							// latches
-	static bool				useOpenAL;
 	static bool				useEAXReverb;
 							// mark available during initialization, or through an explicit test
 	static int				EAXAvailable;
@@ -841,7 +805,7 @@ public:
 							~idSoundSample();
 
 	idStr					name;						// name of the sample file
-	ID_TIME_T		 			timestamp;					// the most recent of all images used in creation, for reloadImages command
+	ID_TIME_T					timestamp;					// the most recent of all images used in creation, for reloadImages command
 
 	waveformatex_t			objectInfo;					// what are we caching
 	int						objectSize;					// size of waveform in samples, excludes the header
@@ -856,7 +820,7 @@ public:
 	bool					levelLoadReferenced;		// so we can tell which samples aren't needed any more
 
 	int						LengthIn44kHzSamples() const;
-	ID_TIME_T		 			GetNewTimeStamp( void ) const;
+	ID_TIME_T					GetNewTimeStamp( void ) const;
 	void					MakeDefault();				// turns it into a beep
 	void					Load();						// loads the current sound based on name
 	void					Reload( bool force );		// reloads if timestamp has changed, or always if force

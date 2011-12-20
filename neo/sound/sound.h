@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -289,11 +289,6 @@ public:
 
 	// shutdown routine
 	virtual	void			Shutdown( void ) = 0;
-
-	// call ClearBuffer if there is a chance that the AsyncUpdate won't get called
-	// for 20+ msec, which would cause a stuttering repeat of the current
-	// buffer contents
-	virtual void			ClearBuffer( void ) = 0;
 
 	// sound is attached to the window, and must be recreated when the window is changed
 	virtual bool			InitHW( void ) = 0;

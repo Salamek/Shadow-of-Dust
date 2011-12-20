@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -247,13 +247,13 @@ int idWaveFile::ResetFile( void ) {
 			}
 			mck.ckid = (mck.ckid>>8) | (ioin<<24);
 		} while (mck.ckid != mmioFOURCC('d', 'a', 't', 'a'));
-		
+
 		mhmmio->Read( &mck.cksize, 4 );
 		assert( !isOgg );
 		mck.cksize = LittleLong( mck.cksize );
 		mseekBase = mhmmio->Tell();
 	}
-	
+
 	return 0;
 }
 
@@ -279,7 +279,7 @@ int idWaveFile::Read( byte* pBuffer, int dwSizeToRead, int *pdwSizeRead ) {
 		if( (byte*)(mpbDataCur + dwSizeToRead) > (byte*)(mpbData + mulDataSize) ) {
 			dwSizeToRead = mulDataSize - (int)(mpbDataCur - mpbData);
 		}
- 		SIMDProcessor->Memcpy( pBuffer, mpbDataCur, dwSizeToRead );
+		SIMDProcessor->Memcpy( pBuffer, mpbDataCur, dwSizeToRead );
 		mpbDataCur += dwSizeToRead;
 
 		if ( pdwSizeRead != NULL ) {
@@ -296,7 +296,7 @@ int idWaveFile::Read( byte* pBuffer, int dwSizeToRead, int *pdwSizeRead ) {
 		if( pBuffer == NULL ) {
 			return -1;
 		}
-		
+
 		dwSizeToRead = mhmmio->Read( pBuffer, dwSizeToRead );
 		// this is hit by ogg code, which does it's own byte swapping internally
 		if ( !isOgg ) {

@@ -96,33 +96,16 @@ If you have questions concerning this license or the applicable additional terms
 	#define	ID_ALLOW_TOOLS
 #endif
 
-// don't do backtraces in release builds.
-// atm, we have no useful way to reconstruct the trace, so let's leave it off
-#define ID_BT_STUB
-#ifndef ID_BT_STUB
-	#if defined( __linux__ )
-		#if defined( _DEBUG )
-			#define ID_BT_STUB
-		#endif
-	#else
-		#define ID_BT_STUB
-	#endif
-#endif
-
-#ifndef ID_ENFORCE_KEY
-#	if !defined( ID_DEDICATED ) && !defined( ID_DEMO_BUILD )
-#		define ID_ENFORCE_KEY 1
-#	else
-#		define ID_ENFORCE_KEY 0
-#	endif
-#endif
-
 #ifndef ID_OPENAL
-#	if ( defined(_WIN32) || defined(MACOS_X) ) && !defined( ID_DEDICATED )
+#	if !defined( ID_DEDICATED )
 #		define ID_OPENAL 1
 #	else
 #		define ID_OPENAL 0
 #	endif
+#endif
+
+#ifndef ID_OPENAL_EAX
+#  define ID_OPENAL_EAX 0	
 #endif
 
 #ifndef ID_ALLOW_D3XP

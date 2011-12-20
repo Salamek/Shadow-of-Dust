@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -71,8 +71,8 @@ idCVar idSoundSystemLocal::s_skipHelltimeFX( "s_skipHelltimeFX", "0", CVAR_SOUND
 
 #if ID_OPENAL
 // off by default. OpenAL DLL gets loaded on-demand
-idCVar idSoundSystemLocal::s_libOpenAL( "s_libOpenAL", "openal32.dll", CVAR_SOUND | CVAR_ARCHIVE, "OpenAL DLL name/path" );
-idCVar idSoundSystemLocal::s_useOpenAL( "s_useOpenAL", "0", CVAR_SOUND | CVAR_BOOL | CVAR_ARCHIVE, "use OpenAL" );
+idCVar idSoundSystemLocal::s_libOpenAL( "s_libOpenAL", "openal32.dll", CVAR_SOUND | CVAR_ARCHIVE, "Deprecated, kept for compability" );
+idCVar idSoundSystemLocal::s_useOpenAL( "s_useOpenAL", "0", CVAR_SOUND | CVAR_BOOL | CVAR_ARCHIVE, "Deprecated, kept for compability" );
 idCVar idSoundSystemLocal::s_useEAXReverb( "s_useEAXReverb", "0", CVAR_SOUND | CVAR_BOOL | CVAR_ARCHIVE, "use EAX reverb" );
 idCVar idSoundSystemLocal::s_muteEAXReverb( "s_muteEAXReverb", "0", CVAR_SOUND | CVAR_BOOL, "mute eax reverb" );
 idCVar idSoundSystemLocal::s_decompressionLimit( "s_decompressionLimit", "6", CVAR_SOUND | CVAR_INTEGER | CVAR_ARCHIVE, "specifies maximum uncompressed sample length in seconds" );
@@ -84,7 +84,6 @@ idCVar idSoundSystemLocal::s_muteEAXReverb( "s_muteEAXReverb", "0", CVAR_SOUND |
 idCVar idSoundSystemLocal::s_decompressionLimit( "s_decompressionLimit", "6", CVAR_SOUND | CVAR_INTEGER | CVAR_ROM, "specifies maximum uncompressed sample length in seconds" );
 #endif
 
-bool idSoundSystemLocal::useOpenAL = false;
 bool idSoundSystemLocal::useEAXReverb = false;
 int idSoundSystemLocal::EAXAvailable = -1;
 
@@ -164,7 +163,7 @@ void ListSounds_f( const idCmdArgs &args ) {
 	common->Printf( "%8d total samples loaded\n", totalSamples );
 	common->Printf( "%8d kB total system memory used\n", totalMemory >> 10 );
 #if ID_OPENAL
-	common->Printf( "%8d kB total OpenAL audio memory used\n", ( alGetInteger( alGetEnumValue( (ALubyte*)"AL_EAX_RAM_SIZE" ) ) - alGetInteger( alGetEnumValue( (ALubyte*)"AL_EAX_RAM_FREE" ) ) ) >> 10 );
+	common->Printf( "%8d kB total OpenAL audio memory used\n", ( alGetInteger( alGetEnumValue( "AL_EAX_RAM_SIZE" ) ) - alGetInteger( alGetEnumValue( "AL_EAX_RAM_FREE" ) ) ) >> 10 );
 #endif
 }
 
@@ -334,88 +333,75 @@ void idSoundSystemLocal::Init() {
 	common->StartupVariable( "s_useOpenAL", true );
 	common->StartupVariable( "s_useEAXReverb", true );
 
-	if ( idSoundSystemLocal::s_useOpenAL.GetBool() || idSoundSystemLocal::s_useEAXReverb.GetBool() ) {
-		if ( !Sys_LoadOpenAL() ) {
-			idSoundSystemLocal::s_useOpenAL.SetBool( false );
+	common->Printf( "Setup OpenAL device and context... " );
+	openalDevice = alcOpenDevice( NULL );
+	openalContext = alcCreateContext( openalDevice, NULL );
+	alcMakeContextCurrent( openalContext );
+	common->Printf( "Done.\n" );
+
+#if ID_OPENAL_EAX
+	// try to obtain EAX extensions
+	if ( idSoundSystemLocal::s_useEAXReverb.GetBool() && alIsExtensionPresent( ID_ALCHAR "EAX4.0" ) ) {
+		alEAXSet = (EAXSet)alGetProcAddress( ID_ALCHAR "EAXSet" );
+		alEAXGet = (EAXGet)alGetProcAddress( ID_ALCHAR "EAXGet" );
+		common->Printf( "OpenAL: found EAX 4.0 extension\n" );
+		EAXAvailable = 1;
+	} else {
+		common->Printf( "OpenAL: EAX 4.0 extension not found\n" );
+		idSoundSystemLocal::s_useEAXReverb.SetBool( false );
+		alEAXSet = (EAXSet)NULL;
+		alEAXGet = (EAXGet)NULL;
+		EAXAvailable = 0;
+	}
+#else
+	common->Printf("OpenAL: EAX 4.0 not supported in this build\n");
+	idSoundSystemLocal::s_useEAXReverb.SetBool( false );
+	EAXAvailable = 0;
+#endif
+
+#if ID_OPENAL_EAX
+	// try to obtain EAX-RAM extension - not required for operation
+	if ( alIsExtensionPresent( ID_ALCHAR "EAX-RAM" ) == AL_TRUE ) {
+		alEAXSetBufferMode = (EAXSetBufferMode)alGetProcAddress( ID_ALCHAR "EAXSetBufferMode" );
+		alEAXGetBufferMode = (EAXGetBufferMode)alGetProcAddress( ID_ALCHAR "EAXGetBufferMode" );
+		common->Printf( "OpenAL: found EAX-RAM extension, %dkB\\%dkB\n", alGetInteger( alGetEnumValue( ID_ALCHAR "AL_EAX_RAM_FREE" ) ) / 1024, alGetInteger( alGetEnumValue( ID_ALCHAR "AL_EAX_RAM_SIZE" ) ) / 1024 );
+	} else {
+		alEAXSetBufferMode = (EAXSetBufferMode)NULL;
+		alEAXGetBufferMode = (EAXGetBufferMode)NULL;
+		common->Printf( "OpenAL: no EAX-RAM extension\n" );
+	}
+#endif
+
+	ALuint handle;
+	openalSourceCount = 0;
+
+	while ( openalSourceCount < 256 ) {
+		alGetError();
+		alGenSources( 1, &handle );
+		if ( alGetError() != AL_NO_ERROR ) {
+			break;
 		} else {
-			common->Printf( "Setup OpenAL device and context... " );
-			openalDevice = alcOpenDevice( NULL );
-			openalContext = alcCreateContext( openalDevice, NULL );
-			alcMakeContextCurrent( openalContext );
-			common->Printf( "Done.\n" );
+			// store in source array
+			openalSources[openalSourceCount].handle = handle;
+			openalSources[openalSourceCount].startTime = 0;
+			openalSources[openalSourceCount].chan = NULL;
+			openalSources[openalSourceCount].inUse = false;
+			openalSources[openalSourceCount].looping = false;
 
-			// try to obtain EAX extensions
-			if ( idSoundSystemLocal::s_useEAXReverb.GetBool() && alIsExtensionPresent( ID_ALCHAR "EAX4.0" ) ) {
-				idSoundSystemLocal::s_useOpenAL.SetBool( true );	// EAX presence causes AL enable
-				alEAXSet = (EAXSet)alGetProcAddress( ID_ALCHAR "EAXSet" );
-				alEAXGet = (EAXGet)alGetProcAddress( ID_ALCHAR "EAXGet" );
-				common->Printf( "OpenAL: found EAX 4.0 extension\n" );
-			} else {
-				common->Printf( "OpenAL: EAX 4.0 extension not found\n" );
-				idSoundSystemLocal::s_useEAXReverb.SetBool( false );
-				alEAXSet = (EAXSet)NULL;
-				alEAXGet = (EAXGet)NULL;
-			}
+			// initialise sources
+			alSourcef( handle, AL_ROLLOFF_FACTOR, 0.0f );
 
-			// try to obtain EAX-RAM extension - not required for operation
-			if ( alIsExtensionPresent( ID_ALCHAR "EAX-RAM" ) == AL_TRUE ) {
-				alEAXSetBufferMode = (EAXSetBufferMode)alGetProcAddress( ID_ALCHAR "EAXSetBufferMode" );
-				alEAXGetBufferMode = (EAXGetBufferMode)alGetProcAddress( ID_ALCHAR "EAXGetBufferMode" );
-				common->Printf( "OpenAL: found EAX-RAM extension, %dkB\\%dkB\n", alGetInteger( alGetEnumValue( ID_ALCHAR "AL_EAX_RAM_FREE" ) ) / 1024, alGetInteger( alGetEnumValue( ID_ALCHAR "AL_EAX_RAM_SIZE" ) ) / 1024 );
-			} else {
-				alEAXSetBufferMode = (EAXSetBufferMode)NULL;
-				alEAXGetBufferMode = (EAXGetBufferMode)NULL;
-				common->Printf( "OpenAL: no EAX-RAM extension\n" );
-			}
-
-			if ( !idSoundSystemLocal::s_useOpenAL.GetBool() ) {
-				common->Printf( "OpenAL: disabling ( no EAX ). Using legacy mixer.\n" );
-
-				alcMakeContextCurrent( NULL );
-		
-				alcDestroyContext( openalContext );
-				openalContext = NULL;
-		
-				alcCloseDevice( openalDevice );
-				openalDevice = NULL;
-			} else {
-
-				ALuint handle;		
-				openalSourceCount = 0;
-				
-				while ( openalSourceCount < 256 ) {
-					alGetError();
-					alGenSources( 1, &handle );
-					if ( alGetError() != AL_NO_ERROR ) {
-						break;
-					} else {
-						// store in source array
-						openalSources[openalSourceCount].handle = handle;
-						openalSources[openalSourceCount].startTime = 0;
-						openalSources[openalSourceCount].chan = NULL;
-						openalSources[openalSourceCount].inUse = false;
-						openalSources[openalSourceCount].looping = false;
-
-						// initialise sources
-						alSourcef( handle, AL_ROLLOFF_FACTOR, 0.0f );
-
-						// found one source
-						openalSourceCount++;
-					}
-				}
-
-				common->Printf( "OpenAL: found %s\n", alcGetString( openalDevice, ALC_DEVICE_SPECIFIER ) );
-				common->Printf( "OpenAL: found %d hardware voices\n", openalSourceCount );
-
-				// adjust source count to allow for at least eight stereo sounds to play
-				openalSourceCount -= 8;
-
-				EAXAvailable = 1;
-			}
+			// found one source
+			openalSourceCount++;
 		}
 	}
 
-	useOpenAL = idSoundSystemLocal::s_useOpenAL.GetBool();
+	common->Printf( "OpenAL: found %s\n", alcGetString( openalDevice, ALC_DEVICE_SPECIFIER ) );
+	common->Printf( "OpenAL: found %d hardware voices\n", openalSourceCount );
+
+	// adjust source count to allow for at least eight stereo sounds to play
+	openalSourceCount -= 8;
+
 	useEAXReverb = idSoundSystemLocal::s_useEAXReverb.GetBool();
 
 	cmdSystem->AddCommand( "listSounds", ListSounds_f, CMD_FL_SOUND, "lists all sounds" );
@@ -439,30 +425,25 @@ void idSoundSystemLocal::Shutdown() {
 	// EAX or not, the list needs to be cleared
 	EFXDatabase.Clear();
 
-	// destroy openal sources
-	if ( useOpenAL ) {
-		
-		efxloaded = false;
+	efxloaded = false;
 
-		// adjust source count back up to allow for freeing of all resources
-		openalSourceCount += 8;
+	// adjust source count back up to allow for freeing of all resources
+	openalSourceCount += 8;
 
-		for ( ALsizei i = 0; i < openalSourceCount; i++ ) {
-			// stop source
-			alSourceStop( openalSources[i].handle );
-			alSourcei( openalSources[i].handle, AL_BUFFER, 0 );
-			
-			// delete source
-			alDeleteSources( 1, &openalSources[i].handle );
+	for ( ALsizei i = 0; i < openalSourceCount; i++ ) {
+		// stop source
+		alSourceStop( openalSources[i].handle );
+		alSourcei( openalSources[i].handle, AL_BUFFER, 0 );
 
-			// clear entry in source array
-			openalSources[i].handle = 0;
-			openalSources[i].startTime = 0;
-			openalSources[i].chan = NULL;
-			openalSources[i].inUse = false;
-			openalSources[i].looping = false;
+		// delete source
+		alDeleteSources( 1, &openalSources[i].handle );
 
-		}
+		// clear entry in source array
+		openalSources[i].handle = 0;
+		openalSources[i].startTime = 0;
+		openalSources[i].chan = NULL;
+		openalSources[i].inUse = false;
+		openalSources[i].looping = false;
 	}
 
 	// destroy all the sounds (hardware buffers as well)
@@ -470,17 +451,13 @@ void idSoundSystemLocal::Shutdown() {
 	soundCache = NULL;
 
 	// destroy openal device and context
-	if ( useOpenAL ) {
-		alcMakeContextCurrent( NULL );
-		
-		alcDestroyContext( openalContext );
-		openalContext = NULL;
-		
-		alcCloseDevice( openalDevice );
-		openalDevice = NULL;
-	}
+	alcMakeContextCurrent( NULL );
 
-	Sys_FreeOpenAL();
+	alcDestroyContext( openalContext );
+	openalContext = NULL;
+
+	alcCloseDevice( openalDevice );
+	openalDevice = NULL;
 
 	idSampleDecoder::Shutdown();
 }
@@ -491,31 +468,20 @@ idSoundSystemLocal::InitHW
 ===============
 */
 bool idSoundSystemLocal::InitHW() {
+	int numSpeakers = s_numberOfSpeakers.GetInteger();
+
+	if (numSpeakers != 2 && numSpeakers != 6) {
+		common->Warning("invalid value for s_numberOfSpeakers. Use either 2 or 6");
+		numSpeakers = 2;
+		s_numberOfSpeakers.SetInteger(numSpeakers);
+	}
 
 	if ( s_noSound.GetBool() ) {
 		return false;
 	}
 
-	delete snd_audio_hw;
-	snd_audio_hw = idAudioHardware::Alloc();
-
-	if ( snd_audio_hw == NULL ) {
-		return false;
-	}
-
-	if ( !useOpenAL ) {
-		if ( !snd_audio_hw->Initialize() ) {
-			delete snd_audio_hw;
-			snd_audio_hw = NULL;
-			return false;
-		}
-
-		if ( snd_audio_hw->GetNumberOfSpeakers() == 0 ) {
-			return false;
-		}
-		// put the real number in there
-		s_numberOfSpeakers.SetInteger( snd_audio_hw->GetNumberOfSpeakers() );
-	}
+	// put the real number in there
+	s_numberOfSpeakers.SetInteger(numSpeakers);
 
 	isInitialized = true;
 	shutdown = false;
@@ -538,9 +504,6 @@ bool idSoundSystemLocal::ShutdownHW() {
 
 	common->Printf( "Shutting down sound hardware\n" );
 
-	delete snd_audio_hw;
-	snd_audio_hw = NULL;
-
 	isInitialized = false;
 
 	if ( graph ) {
@@ -557,37 +520,12 @@ idSoundSystemLocal::GetCurrent44kHzTime
 ===============
 */
 int idSoundSystemLocal::GetCurrent44kHzTime( void ) const {
-	if ( snd_audio_hw ) {
+	if ( isInitialized ) {
 		return CurrentSoundTime;
 	} else {
-		// NOTE: this would overflow 31bits within about 1h20 ( not that important since we get a snd_audio_hw right away pbly )
+		// NOTE: this would overflow 31bits within about 1h20
 		//return ( ( Sys_Milliseconds()*441 ) / 10 ) * 4;
 		return idMath::FtoiFast( (float)Sys_Milliseconds() * 176.4f );
-	}
-}
-
-/*
-===================
-idSoundSystemLocal::ClearBuffer
-===================
-*/
-void idSoundSystemLocal::ClearBuffer( void ) {
-
-	// check to make sure hardware actually exists
-	if ( !snd_audio_hw ) {
-		return;
-	}
-
-	short *fBlock;
-	ulong fBlockLen;
-
-	if ( !snd_audio_hw->Lock( (void **)&fBlock, &fBlockLen ) ) {
-		return;
-	}
-
-	if ( fBlock ) {
-		SIMDProcessor->Memset( fBlock, 0, fBlockLen );
-		snd_audio_hw->Unlock( fBlock, fBlockLen );
 	}
 }
 
@@ -600,20 +538,20 @@ Mac OSX version. The system uses it's own thread and an IOProc callback
 int idSoundSystemLocal::AsyncMix( int soundTime, float *mixBuffer ) {
 	int	inTime, numSpeakers;
 
-	if ( !isInitialized || shutdown || !snd_audio_hw ) {
+	if ( !isInitialized || shutdown ) {
 		return 0;
 	}
 
 	inTime = Sys_Milliseconds();
-	numSpeakers = snd_audio_hw->GetNumberOfSpeakers();
-	
+	numSpeakers = s_numberOfSpeakers.GetInteger();
+
 	// let the active sound world mix all the channels in unless muted or avi demo recording
 	if ( !muted && currentSoundWorld && !currentSoundWorld->fpa[0] ) {
 		currentSoundWorld->MixLoop( soundTime, numSpeakers, mixBuffer );
 	}
 
 	CurrentSoundTime = soundTime;
-	
+
 	return Sys_Milliseconds() - inTime;
 }
 
@@ -625,27 +563,16 @@ called from async sound thread when com_asyncSound == 1 ( Windows )
 */
 int idSoundSystemLocal::AsyncUpdate( int inTime ) {
 
-	if ( !isInitialized || shutdown || !snd_audio_hw ) {
+	if ( !isInitialized || shutdown ) {
 		return 0;
 	}
 
 	ulong dwCurrentWritePos;
 	dword dwCurrentBlock;
 
-	// If not using openal, get actual playback position from sound hardware
-	if ( useOpenAL ) {
-		// here we do it in samples ( overflows in 27 hours or so )
-		dwCurrentWritePos = idMath::Ftol( (float)Sys_Milliseconds() * 44.1f ) % ( MIXBUFFER_SAMPLES * ROOM_SLICES_IN_BUFFER );
-		dwCurrentBlock = dwCurrentWritePos / MIXBUFFER_SAMPLES;
-	} else {
-		// and here in bytes
-		// get the current byte position in the buffer where the sound hardware is currently reading
-		if ( !snd_audio_hw->GetCurrentPosition( &dwCurrentWritePos ) ) {
-			return 0;
-		}
-		// mixBufferSize is in bytes
-		dwCurrentBlock = dwCurrentWritePos / snd_audio_hw->GetMixBufferSize();
-	}
+	// here we do it in samples ( overflows in 27 hours or so )
+	dwCurrentWritePos = idMath::Ftol( (float)Sys_Milliseconds() * 44.1f ) % ( MIXBUFFER_SAMPLES * ROOM_SLICES_IN_BUFFER );
+	dwCurrentBlock = dwCurrentWritePos / MIXBUFFER_SAMPLES;
 
 	if ( nextWriteBlock == 0xffffffff ) {
 		nextWriteBlock = dwCurrentBlock;
@@ -655,21 +582,10 @@ int idSoundSystemLocal::AsyncUpdate( int inTime ) {
 		return 0;
 	}
 
-	// lock the buffer so we can actually write to it
-	short *fBlock = NULL;
-	ulong fBlockLen = 0;
-	if ( !useOpenAL ) {
-		snd_audio_hw->Lock( (void **)&fBlock, &fBlockLen );
-		if ( !fBlock ) {
-			return 0;
-		}
-	}
-
-	int j;
 	soundStats.runs++;
 	soundStats.activeSounds = 0;
 
-	int	numSpeakers = snd_audio_hw->GetNumberOfSpeakers();
+	int	numSpeakers = s_numberOfSpeakers.GetInteger();
 
 	nextWriteBlock++;
 	nextWriteBlock %= ROOM_SLICES_IN_BUFFER;
@@ -687,7 +603,7 @@ int idSoundSystemLocal::AsyncUpdate( int inTime ) {
 
 	// newSoundTime is in multi-channel samples since the sound system was started
 	int newSoundTime = ( buffers * MIXBUFFER_SAMPLES * ROOM_SLICES_IN_BUFFER ) + nextWriteSamples;
-	
+
 	// check for impending overflow
 	// FIXME: we don't handle sound wrap-around correctly yet
 	if ( newSoundTime > 0x6fffffff ) {
@@ -698,37 +614,16 @@ int idSoundSystemLocal::AsyncUpdate( int inTime ) {
 		soundStats.missedWindow++;
 	}
 
-	if ( useOpenAL ) {
-		// enable audio hardware caching
-		alcSuspendContext( openalContext );
-	} else {
-		// clear the buffer for all the mixing output
-		SIMDProcessor->Memset( finalMixBuffer, 0, MIXBUFFER_SAMPLES * sizeof(float) * numSpeakers );
-	}
+	// enable audio hardware caching
+	alcSuspendContext( openalContext );
 
 	// let the active sound world mix all the channels in unless muted or avi demo recording
 	if ( !muted && currentSoundWorld && !currentSoundWorld->fpa[0] ) {
 		currentSoundWorld->MixLoop( newSoundTime, numSpeakers, finalMixBuffer );
 	}
 
-	if ( useOpenAL ) {
-		// disable audio hardware caching (this updates ALL settings since last alcSuspendContext)
-		alcProcessContext( openalContext );
-	} else {
-		short *dest = fBlock + nextWriteSamples * numSpeakers;
-
-		SIMDProcessor->MixedSoundToSamples( dest, finalMixBuffer, MIXBUFFER_SAMPLES * numSpeakers );
-
-		// allow swapping the left / right speaker channels for people with miswired systems
-		if ( numSpeakers == 2 && s_reverse.GetBool() ) {
-			for( j = 0; j < MIXBUFFER_SAMPLES; j++ ) {
-				short temp = dest[j*2];
-				dest[j*2] = dest[j*2+1];
-				dest[j*2+1] = temp;
-			}
-		}
-		snd_audio_hw->Unlock( fBlock, fBlockLen );
-	}
+	// disable audio hardware caching (this updates ALL settings since last alcSuspendContext)
+	alcProcessContext( openalContext );
 
 	CurrentSoundTime = newSoundTime;
 
@@ -747,12 +642,8 @@ called by the sound thread when com_asyncSound is 3 ( Linux )
 */
 int idSoundSystemLocal::AsyncUpdateWrite( int inTime ) {
 
-	if ( !isInitialized || shutdown || !snd_audio_hw ) {
+	if ( !isInitialized || shutdown ) {
 		return 0;
-	}
-
-	if ( !useOpenAL ) {
-		snd_audio_hw->Flush();
 	}
 
 	unsigned int dwCurrentBlock = (unsigned int)( inTime * 44.1f / MIXBUFFER_SAMPLES );
@@ -769,41 +660,19 @@ int idSoundSystemLocal::AsyncUpdateWrite( int inTime ) {
 		Sys_Printf( "missed %d sound updates\n", dwCurrentBlock - nextWriteBlock );
 	}
 
-	int sampleTime = dwCurrentBlock * MIXBUFFER_SAMPLES;	
-	int numSpeakers = snd_audio_hw->GetNumberOfSpeakers();
+	int sampleTime = dwCurrentBlock * MIXBUFFER_SAMPLES;
+	int numSpeakers = s_numberOfSpeakers.GetInteger();
 
-	if ( useOpenAL ) {
-		// enable audio hardware caching
-		alcSuspendContext( openalContext );
-	} else {
-		// clear the buffer for all the mixing output
-		SIMDProcessor->Memset( finalMixBuffer, 0, MIXBUFFER_SAMPLES * sizeof(float) * numSpeakers );
-	}
+	// enable audio hardware caching
+	alcSuspendContext( openalContext );
 
 	// let the active sound world mix all the channels in unless muted or avi demo recording
 	if ( !muted && currentSoundWorld && !currentSoundWorld->fpa[0] ) {
 		currentSoundWorld->MixLoop( sampleTime, numSpeakers, finalMixBuffer );
 	}
 
-	if ( useOpenAL ) {
-		// disable audio hardware caching (this updates ALL settings since last alcSuspendContext)
-		alcProcessContext( openalContext );
-	} else {
-		short *dest = snd_audio_hw->GetMixBuffer();
-
-		SIMDProcessor->MixedSoundToSamples( dest, finalMixBuffer, MIXBUFFER_SAMPLES * numSpeakers );
-
-		// allow swapping the left / right speaker channels for people with miswired systems
-		if ( numSpeakers == 2 && s_reverse.GetBool() ) {
-			int j;
-			for( j = 0; j < MIXBUFFER_SAMPLES; j++ ) {
-				short temp = dest[j*2];
-				dest[j*2] = dest[j*2+1];
-				dest[j*2+1] = temp;
-			}
-		}
-		snd_audio_hw->Write( false );
-	}
+	// disable audio hardware caching (this updates ALL settings since last alcSuspendContext)
+	alcProcessContext( openalContext );
 
 	// only move to the next block if the write was successful
 	nextWriteBlock = dwCurrentBlock + 1;
@@ -838,7 +707,7 @@ cinData_t idSoundSystemLocal::ImageForTime( const int milliseconds, const bool w
 	cinData_t ret;
 	int i, j;
 
-	if ( !isInitialized || !snd_audio_hw ) {
+	if ( !isInitialized ) {
 		memset( &ret, 0, sizeof( ret ) );
 		return ret;
 	}
@@ -852,7 +721,7 @@ cinData_t idSoundSystemLocal::ImageForTime( const int milliseconds, const bool w
 	float *accum = finalMixBuffer;	// unfortunately, these are already clamped
 	int time = Sys_Milliseconds();
 
-	int numSpeakers = snd_audio_hw->GetNumberOfSpeakers();
+	int numSpeakers = s_numberOfSpeakers.GetInteger();
 
 	if ( !waveform ) {
 		for( j = 0; j < numSpeakers; j++ ) {
@@ -1115,7 +984,7 @@ void idSoundSystemLocal::BeginLevelLoad() {
 		return;
 	}
 	soundCache->BeginLevelLoad();
-	
+
 	if ( efxloaded ) {
 		EFXDatabase.UnloadFile();
 		efxloaded = false;
@@ -1133,6 +1002,7 @@ void idSoundSystemLocal::EndLevelLoad( const char *mapstring ) {
 	}
 	soundCache->EndLevelLoad();
 
+#if ID_OPENAL_EAX
 	idStr efxname( "efxs/" );
 	idStr mapname( mapstring );
 
@@ -1147,6 +1017,7 @@ void idSoundSystemLocal::EndLevelLoad( const char *mapstring ) {
 	} else {
 		common->Printf("sound: missing %s\n", efxname.c_str() );
 	}
+#endif
 }
 
 /*
@@ -1244,7 +1115,7 @@ void idSoundSystemLocal::FreeOpenALSource( ALuint handle ) {
 			if ( openalSources[i].chan ) {
 				openalSources[i].chan->openalSource = 0;
 			}
-#if ID_OPENAL
+#if ID_OPENAL_EAX
 			// Reset source EAX ROOM level when freeing stereo source
 			if ( openalSources[i].stereo && alEAXSet ) {
 				long Room = EAXSOURCE_DEFAULTROOM;
@@ -1351,7 +1222,8 @@ void idSoundSystemLocal::DoEnviroSuit( float* samples, int numSamples, int numSp
 	float out[10000], *out_p = out + 2;
 	float in[10000], *in_p = in + 2;
 
-	assert( !idSoundSystemLocal::useOpenAL );
+	// TODO port to OpenAL
+	assert( false );
 
 	if ( !fxList.Num() ) {
 		for ( int i = 0; i < 6; i++ ) {
@@ -1423,11 +1295,11 @@ void idSoundSystemLocal::PrintMemInfo( MemInfo_t *mi ) {
 
 /*
 ===============
-idSoundSystemLocal::EAXAvailable
+idSoundSystemLocal::IsEAXAvailable
 ===============
 */
 int idSoundSystemLocal::IsEAXAvailable( void ) {
-#if !ID_OPENAL
+#if !ID_OPENAL || !ID_OPENAL_EAX
 	return -1;
 #else
 	ALCdevice	*device;
@@ -1437,10 +1309,6 @@ int idSoundSystemLocal::IsEAXAvailable( void ) {
 		return EAXAvailable;
 	}
 
-	if ( !Sys_LoadOpenAL() ) {
-		EAXAvailable = 2;
-		return 2;
-	}
 	// when dynamically loading the OpenAL subsystem, we need to get a context before alIsExtensionPresent would work
 	device = alcOpenDevice( NULL );
 	context = alcCreateContext( device, NULL );
