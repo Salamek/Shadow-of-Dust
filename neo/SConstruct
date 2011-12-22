@@ -360,9 +360,6 @@ else:
 	print 'Unknown build configuration ' + BUILD
 	sys.exit(0)
 
-if ( GL_HARDLINK != '0' ):
-	CORECPPFLAGS.append( '-DID_GL_HARDLINK' )
-
 if ( DEBUG_MEMORY != '0' ):
 	BASECPPFLAGS += [ '-DID_DEBUG_MEMORY', '-DID_REDIRECT_NEWDELETE' ]
 	
