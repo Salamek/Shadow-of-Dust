@@ -208,8 +208,8 @@ if ( local_dedicated == 0 ):
 		linux/libXNVCtrl/NVCtrl.c'
 else:
 	sys_string += ' \
-	stub/stub_gl.cpp \
-	linux/dedicated.cpp'
+		stub/openal_stub.cpp \
+		linux/dedicated.cpp'
 
 sys_list = scons_utils.BuildList( 'sys', sys_string )
 
@@ -226,12 +226,6 @@ for i in range( len( core_list ) ):
 	core_list[ i ] = '../../' + core_list[ i ]
 
 local_env = g_env.Clone()
-
-if ( local_dedicated == 1 ):
-	local_env.Append( CPPDEFINES = [ 'ID_DEDICATED'] )
-	# don't enable openal or alsa for a dedicated server binary
-	ALSA = '0'
-	OPENAL = '0'
 
 if ( local_gamedll == 1 ):
 	local_env.Append( CPPDEFINES = [ '__DOOM_DLL__' ] )
@@ -253,7 +247,9 @@ local_env.Append( LIBS = [ 'pthread', 'dl', 'z', 'jpeg', 'vorbisfile' ] )
 if ( local_dedicated == 0 ):
 	local_env.Append( LIBS = [ 'X11', 'Xext', 'Xxf86vm', 'GL', 'openal' ] ) # 'Xxf86dga',
 	local_env.Append( LIBPATH = [ '/usr/X11R6/lib' ] )
-
+else:
+	local_env.Append( CPPDEFINES = [ 'ID_DEDICATED' ] )
+	
 source_list = core_list
 source_list += idlib_objects
 
