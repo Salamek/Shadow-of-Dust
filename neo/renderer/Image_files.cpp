@@ -29,6 +29,8 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
+#include <jpeglib.h>
+
 #include "tr_local.h"
 
 /*
@@ -46,8 +48,6 @@ void R_LoadImage( const char *name, byte **pic, int *width, int *height, bool ma
  * (stdio.h is sufficient on ANSI-conforming systems.)
  * You may also wish to include "jerror.h".
  */
-
-#include "../jpeg/jmemdatasrc.h"
 
 extern "C" {
 
@@ -837,25 +837,25 @@ static void LoadJPG( const char *filename, unsigned char **pic, int *width, int 
   if ( pic ) {
 	*pic = NULL;		// until proven otherwise
   }
-  {
-		idFile *f;
+  
+	idFile *f;
 
-		f = fileSystem->OpenFileRead( filename );
-		if ( !f ) {
-			return;
-		}
-		len = f->Length();
-		if ( timestamp ) {
-			*timestamp = f->Timestamp();
-		}
-		if ( !pic ) {
-			fileSystem->CloseFile( f );
-			return;	// just getting timestamp
-		}
-		fbuffer = (byte *)Mem_ClearedAlloc( len + 4096 );
-		f->Read( fbuffer, len );
+	f = fileSystem->OpenFileRead( filename );
+	if ( !f ) {
+		return;
+	}
+	len = f->Length();
+	if ( timestamp ) {
+		*timestamp = f->Timestamp();
+	}
+	if ( !pic ) {
 		fileSystem->CloseFile( f );
-  }
+		return;	// just getting timestamp
+	}
+	fbuffer = (byte *)Mem_ClearedAlloc( len + 4096 );
+	f->Read( fbuffer, len );
+	fileSystem->CloseFile( f );
+  
 
 
   /* Step 1: allocate and initialize JPEG decompression object */
@@ -872,7 +872,7 @@ static void LoadJPG( const char *filename, unsigned char **pic, int *width, int 
 
   /* Step 2: specify data source (eg, a file) */
 
-  jpeg_memory_src(&cinfo, fbuffer, len);
+	jpeg_mem_src(&cinfo, fbuffer, len);
 
   /* Step 3: read file parameters with jpeg_read_header() */
 

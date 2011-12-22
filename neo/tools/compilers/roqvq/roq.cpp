@@ -31,12 +31,6 @@ If you have questions concerning this license or the applicable additional terms
 #include "roq.h"
 #include "codec.h"
 
-extern "C" {
-#include "../../../jpeg/jpegint.h"
-}
-
-#include <jerror.h>
-
 roq		*theRoQ;				// current roq file
 
 roq::roq( void )
@@ -212,7 +206,7 @@ int roq::SizeFile( idFile *ftosize )
 {
 	return ftosize->Length();
 }
-
+#if 0
 /* Expanded data destination object for stdio output */
 
 typedef struct {
@@ -522,6 +516,7 @@ void roq::WriteLossless( void ) {
 	/* And we're done! */
 	encoder->SetPreviousImage( "first frame", image );
 }
+#endif
 
 void roq::InitRoQFile( const char *RoQFilename )
 {

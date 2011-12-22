@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,18 +40,17 @@ If you have questions concerning this license or the applicable additional terms
 //                                                        E
 //===============================================================
 
+#define DRAWVERT_SIZE				60
+#define DRAWVERT_XYZ_OFFSET			(0*4)
+#define DRAWVERT_ST_OFFSET			(3*4)
+#define DRAWVERT_NORMAL_OFFSET		(5*4)
+#define DRAWVERT_TANGENT0_OFFSET	(8*4)
+#define DRAWVERT_TANGENT1_OFFSET	(11*4)
+#define DRAWVERT_COLOR_OFFSET		(14*4)
 
-#if defined(MACOS_X) && defined(__i386__)
+#if defined(__GNUC__) && defined(__SSE__)
 
 #include <xmmintrin.h>
-
-#define DRAWVERT_SIZE        60
-#define DRAWVERT_XYZ_OFFSET      (ptrdiff_t(src) - ptrdiff_t(&src->xyz))
-#define DRAWVERT_ST_OFFSET      (ptrdiff_t(src) - ptrdiff_t(&src->st))
-#define DRAWVERT_NORMAL_OFFSET    (ptrdiff_t(src) - ptrdiff_t(&src->normal))
-#define DRAWVERT_TANGENT0_OFFSET  (ptrdiff_t(src) - ptrdiff_t(&src->tangents[0]))
-#define DRAWVERT_TANGENT1_OFFSET  (ptrdiff_t(src) - ptrdiff_t(&src->tangents[1]))
-#define DRAWVERT_COLOR_OFFSET    (ptrdiff_t(src) - ptrdiff_t(&src->color))
 
 #define SHUFFLEPS( x, y, z, w )		(( (x) & 3 ) << 6 | ( (y) & 3 ) << 4 | ( (z) & 3 ) << 2 | ( (w) & 3 ))
 #define R_SHUFFLEPS( x, y, z, w )	(( (w) & 3 ) << 6 | ( (z) & 3 ) << 4 | ( (y) & 3 ) << 2 | ( (x) & 3 ))
@@ -85,7 +84,7 @@ void VPCALL idSIMD_SSE::Dot( float *dst, const idPlane &constant, const idDrawVe
 		mov			esi, src
 		mov			ecx, dst
 	*/
-	__m128 xmm0, xmm1, xmm2, xmm3, xmm4, xmm5, xmm6, xmm7; 	// Declare 8 xmm registers.
+	__m128 xmm0, xmm1, xmm2, xmm3, xmm4, xmm5, xmm6, xmm7;	// Declare 8 xmm registers.
 	int count_l4 = count;                                   // count_l4 = eax
 	int count_l1 = count;                                   // count_l1 = edx
 	char *constant_p = (char *)&constant;                   // constant_p = edi
@@ -93,6 +92,7 @@ void VPCALL idSIMD_SSE::Dot( float *dst, const idPlane &constant, const idDrawVe
 	char *dst_p = (char *) dst;                             // dst_p = ecx
 
 	assert( sizeof( idDrawVert ) == DRAWVERT_SIZE );
+	assert( ptrdiff_t(&src->xyz) - ptrdiff_t(src) == DRAWVERT_XYZ_OFFSET );
 
 	/*
 		and			eax, ~3
@@ -113,7 +113,7 @@ void VPCALL idSIMD_SSE::Dot( float *dst, const idPlane &constant, const idDrawVe
 	xmm6 = _mm_load_ss((float *) (constant_p + 8));
 	xmm6 = _mm_shuffle_ps(xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 ));
 	xmm7 = _mm_load_ss((float *) (constant_p + 12));
- 	xmm7 = _mm_shuffle_ps(xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 ));
+	xmm7 = _mm_shuffle_ps(xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 ));
 
 	/*
 		jz			startVert1
@@ -255,6 +255,7 @@ idSIMD_SSE::MinMax
 void VPCALL idSIMD_SSE::MinMax( idVec3 &min, idVec3 &max, const idDrawVert *src, const int *indexes, const int count ) {
 
 	assert( sizeof( idDrawVert ) == DRAWVERT_SIZE );
+	assert( ptrdiff_t(&src->xyz) - ptrdiff_t(src) == DRAWVERT_XYZ_OFFSET );
 
 	__m128 xmm0, xmm1, xmm2, xmm3, xmm4, xmm5, xmm6, xmm7;
 	char *indexes_p;
@@ -701,7 +702,7 @@ void VPCALL idSIMD_SSE::Dot( float *dst, const idVec3 &constant, const idPlane *
 
 // transpose a 4x3 matrix to memory from 3 xmm registers (reg3 is temporary)
 #define TRANSPOSE_4x3_TO_MEMORY( address, reg0, reg1, reg2, reg3 )								\
-	__asm	movhlps		reg3, reg0 								/* reg3 =  3,  9,  X,  X */		\
+	__asm	movhlps		reg3, reg0								/* reg3 =  3,  9,  X,  X */		\
 	__asm	unpcklps	reg0, reg1								/* reg0 =  0,  1,  6,  7 */		\
 	__asm	unpckhps	reg1, reg2								/* reg1 =  4,  5, 10, 11 */		\
 	__asm	unpcklps	reg2, reg3								/* reg2 =  2,  3,  8,  9 */		\
@@ -1014,10 +1015,10 @@ ALIGN4_INIT1( unsigned int SIMD_DW_mat2quatShuffle1, (0<<0)|(1<<8)|(2<<16)|(3<<2
 ALIGN4_INIT1( unsigned int SIMD_DW_mat2quatShuffle2, (1<<0)|(0<<8)|(3<<16)|(2<<24) );
 ALIGN4_INIT1( unsigned int SIMD_DW_mat2quatShuffle3, (2<<0)|(3<<8)|(0<<16)|(1<<24) );
 
-ALIGN4_INIT4( unsigned int SIMD_SP_singleSignBitMask, (unsigned long) ( 1 << 31 ), 0, 0, 0 );
-ALIGN4_INIT1( unsigned int SIMD_SP_signBitMask, (unsigned long) ( 1 << 31 ) );
-ALIGN4_INIT1( unsigned int SIMD_SP_absMask, (unsigned long) ~( 1 << 31 ) );
-ALIGN4_INIT1( unsigned int SIMD_SP_infinityMask, (unsigned long) ~( 1 << 23 ) );
+ALIGN4_INIT4( unsigned int SIMD_SP_singleSignBitMask, (unsigned int) ( 1 << 31 ), 0, 0, 0 );
+ALIGN4_INIT1( unsigned int SIMD_SP_signBitMask, (unsigned int) ( 1 << 31 ) );
+ALIGN4_INIT1( unsigned int SIMD_SP_absMask, (unsigned int) ~( 1 << 31 ) );
+ALIGN4_INIT1( unsigned int SIMD_SP_infinityMask, (unsigned int) ~( 1 << 23 ) );
 ALIGN4_INIT1( unsigned int SIMD_SP_not, 0xFFFFFFFF );
 
 ALIGN4_INIT1( float SIMD_SP_zero, 0.0f );
@@ -3352,7 +3353,7 @@ void VPCALL idSIMD_SSE::Dot( float &dot, const float *src1, const float *src2, c
 	for ( i = 0; i < pre; i++ ) {														\
 		dst[i] = src0[i] CMP c;															\
 	}																					\
- 	for ( i = count - post; i < count; i++ ) {											\
+	for ( i = count - post; i < count; i++ ) {											\
 		dst[i] = src0[i] CMP c;															\
 	}
 
@@ -3448,7 +3449,7 @@ void VPCALL idSIMD_SSE::Dot( float &dot, const float *src1, const float *src2, c
 	for ( i = 0; i < pre; i++ ) {														\
 		dst[i] |= ( src0[i] CMP c ) << BITNUM;											\
 	}																					\
- 	for ( i = count - post; i < count; i++ ) {											\
+	for ( i = count - post; i < count; i++ ) {											\
 		dst[i] |= ( src0[i] CMP c ) << BITNUM;											\
 	}
 
@@ -3620,7 +3621,7 @@ done:
 			min = tmp;
 		}
 	}
- 	for ( i = count - post; i < count; i++ ) {
+	for ( i = count - post; i < count; i++ ) {
 		float tmp = src[i];
 		if ( tmp > max ) {
 			max = tmp;
@@ -4818,7 +4819,7 @@ void VPCALL idSIMD_SSE::MatX_MultiplyVecX( idVecX &dst, const idMatX &mat, const
 					__asm {
 						mov			esi, vPtr
 						mov			edi, mPtr
-                        mov			eax, dstPtr
+						mov			eax, dstPtr
 						movss		xmm0, [esi]
 						mulss		xmm0, [edi]
 						movss		xmm1, [esi+4]
@@ -5564,7 +5565,7 @@ void VPCALL idSIMD_SSE::MatX_MultiplyAddVecX( idVecX &dst, const idMatX &mat, co
 					__asm {
 						mov			esi, vPtr
 						mov			edi, mPtr
-                        mov			eax, dstPtr
+						mov			eax, dstPtr
 						movss		xmm0, [esi]
 						mulss		xmm0, [edi]
 						movss		xmm1, [esi+4]
@@ -6310,7 +6311,7 @@ void VPCALL idSIMD_SSE::MatX_MultiplySubVecX( idVecX &dst, const idMatX &mat, co
 					__asm {
 						mov			esi, vPtr
 						mov			edi, mPtr
-                        mov			eax, dstPtr
+						mov			eax, dstPtr
 						movss		xmm0, [esi]
 						mulss		xmm0, [edi]
 						movss		xmm1, [esi+4]
@@ -12647,7 +12648,7 @@ void VPCALL idSIMD_SSE::TracePointCull( byte *cullBits, byte &totalOr, const flo
 
 	done:
 		mov			esi, totalOr
-        mov			byte ptr [esi], dl
+		mov			byte ptr [esi], dl
 		pop			ebx
 	}
 

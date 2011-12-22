@@ -9,11 +9,6 @@ import scons_utils
 Import( 'GLOBALS' )
 Import( GLOBALS )
 
-jpeg_string = ' \
-	jmemdatasrc.c'
-
-jpeg_list = scons_utils.BuildList( 'jpeg', jpeg_string )
-
 renderer_string = ' \
 	Cinematic.cpp \
 	GuiModel.cpp \
@@ -223,7 +218,7 @@ tools_string = ' \
 
 tools_list = scons_utils.BuildList( 'tools', tools_string )
 
-core_list = framework_list + jpeg_list + renderer_list + ui_list \
+core_list = framework_list + renderer_list + ui_list \
 	+ cm_list + dmap_list + renderbump_list + aas_list + roq_list \
 	+ snd_list + sys_list + tools_list + [ 'TypeInfo/TypeInfoGen.cpp' ]
 
