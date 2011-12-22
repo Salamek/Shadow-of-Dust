@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,14 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/LangDict.h"
+#include "framework/Console.h"
+#include "framework/Game.h"
+#include "renderer/RenderSystem.h"
+#include "sound/sound.h"
 
-#include "AsyncNetwork.h"
+#include "framework/async/AsyncNetwork.h"
 
 idAsyncServer		idAsyncNetwork::server;
 idAsyncClient		idAsyncNetwork::client;
@@ -129,7 +133,7 @@ idAsyncNetwork::GetMasterAddress
 bool idAsyncNetwork::GetMasterAddress( int index, netadr_t &adr ) {
 	if ( !masters[ index ].var ) {
 		return false;
-	}	
+	}
 	if ( masters[ index ].var->GetString()[0] == '\0' ) {
 		return false;
 	}
@@ -203,7 +207,7 @@ void idAsyncNetwork::WriteUserCmdDelta( idBitMsg &msg, const usercmd_t &cmd, con
 
 	msg.WriteLong( cmd.gameTime );
 	msg.WriteByte( cmd.buttons );
-    msg.WriteShort( cmd.mx );
+	msg.WriteShort( cmd.mx );
 	msg.WriteShort( cmd.my );
 	msg.WriteChar( cmd.forwardmove );
 	msg.WriteChar( cmd.rightmove );
@@ -236,8 +240,8 @@ void idAsyncNetwork::ReadUserCmdDelta( const idBitMsg &msg, usercmd_t &cmd, cons
 	}
 
 	cmd.gameTime = msg.ReadLong();
-    cmd.buttons = msg.ReadByte();
-    cmd.mx = msg.ReadShort();
+	cmd.buttons = msg.ReadByte();
+	cmd.mx = msg.ReadShort();
 	cmd.my = msg.ReadShort();
 	cmd.forwardmove = msg.ReadChar();
 	cmd.rightmove = msg.ReadChar();
@@ -434,7 +438,7 @@ void idAsyncNetwork::Kick_f( const idCmdArgs &args ) {
 		return;
 	}
 	iclient = atoi( clientId );
-	
+
 	if ( server.GetLocalClientNum() == iclient ) {
 		common->Printf( "can't kick the host\n" );
 		return;
@@ -508,6 +512,5 @@ void idAsyncNetwork::BuildInvalidKeyMsg( idStr &msg, bool valid[ 2 ] ) {
 		msg += common->GetLanguageDict()->GetString( "#str_07195" );
 	}
 	msg += "\n";
-	msg += common->GetLanguageDict()->GetString( "#str_04304" );	
+	msg += common->GetLanguageDict()->GetString( "#str_04304" );
 }
-

@@ -418,7 +418,7 @@ byte *cccList;
 BOOL *use2, *use4;
 int dx,dy,dxMean,dyMean,index2[256],index4[256], dimension;
 
-	cccList = malloc( numQuadCels * 8);					// maximum length
+	cccList = malloc( numQuadCels * 8);					// maximum length 
 	use2 = malloc(256*sizeof(BOOL));
 	use4 = malloc(256*sizeof(BOOL));
 

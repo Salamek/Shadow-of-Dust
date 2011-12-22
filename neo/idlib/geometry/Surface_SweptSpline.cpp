@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,9 +26,9 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
+#include "idlib/geometry/Surface_SweptSpline.h"
 
 /*
 ====================
@@ -159,7 +159,7 @@ void idSurface_SweptSpline::Tessellate( const int splineSubdivisions, const int 
 
 	// calculate the points and first derivatives for the swept spline
 	totalTime = sweptSpline->GetTime( sweptSpline->GetNumValues() - 1 ) - sweptSpline->GetTime( 0 ) + sweptSpline->GetCloseTime();
-	sweptSplineDiv = sweptSpline->GetBoundaryType() == idCurve_Spline<idVec4>::BT_CLOSED ? sweptSplineSubdivisions : sweptSplineSubdivisions - 1;
+	sweptSplineDiv = sweptSpline->GetBoundaryType() == idCurve_Spline<idVec3>::BT_CLOSED ? sweptSplineSubdivisions : sweptSplineSubdivisions - 1;
 	baseOffset = (splineSubdivisions-1) * sweptSplineSubdivisions;
 	for ( i = 0; i < sweptSplineSubdivisions; i++ ) {
 		t = totalTime * i / sweptSplineDiv;
@@ -172,7 +172,7 @@ void idSurface_SweptSpline::Tessellate( const int splineSubdivisions, const int 
 
 	// sweep the spline
 	totalTime = spline->GetTime( spline->GetNumValues() - 1 ) - spline->GetTime( 0 ) + spline->GetCloseTime();
-	splineDiv = spline->GetBoundaryType() == idCurve_Spline<idVec4>::BT_CLOSED ? splineSubdivisions : splineSubdivisions - 1;
+	splineDiv = spline->GetBoundaryType() == idCurve_Spline<idVec3>::BT_CLOSED ? splineSubdivisions : splineSubdivisions - 1;
 	splineMat.Identity();
 	for ( i = 0; i < splineSubdivisions; i++ ) {
 		t = totalTime * i / splineDiv;

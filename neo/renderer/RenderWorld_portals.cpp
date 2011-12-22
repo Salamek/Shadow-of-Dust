@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/DemoFile.h"
+#include "framework/Session.h"
+#include "renderer/RenderWorld_local.h"
 
-#include "tr_local.h"
+#include "renderer/tr_local.h"
 
 /*
 
@@ -231,7 +233,7 @@ void idRenderWorldLocal::FloodViewThroughArea_r( const idVec3 origin, int areaNu
 		// find the screen pixel bounding box of the remaining portal
 		// so we can scissor things outside it
 		newStack.rect = ScreenRectFromWinding( &w, &tr.identitySpace );
-		
+
 		// slop might have spread it a pixel outside, so trim it back
 		newStack.rect.Intersect( ps->rect );
 
@@ -340,7 +342,7 @@ void idRenderWorldLocal::FloodLightThroughArea_r( idRenderLightLocal *light, int
 	area = &portalAreas[ areaNum ];
 
 	// add an areaRef
-	AddLightRefToArea( light, area );	
+	AddLightRefToArea( light, area );
 
 	// go through all the portals
 	for ( p = area->portals; p; p = p->next ) {

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,11 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/BitMsg.h"
+#include "framework/Compressor.h"
 
-#include "MsgChannel.h"
+#include "framework/async/MsgChannel.h"
 
 /*
 
@@ -101,7 +102,7 @@ bool idMsgQueue::Get( byte *data, int &size ) {
 		size = 0;
 		return false;
 	}
-	int sequence;
+	int sequence id_attribute((unused));
 	size = ReadShort();
 	sequence = ReadLong();
 	ReadData( data, size );
@@ -623,8 +624,7 @@ bool idMsgChannel::Process( const netadr_t from, int time, idBitMsg &msg, int &s
 		}
 
 		// copy the fragment to the fragment buffer
-		int frag_size = sizeof( fragmentBuffer );
-		if ( fragLength < 0 || fragLength > msg.GetRemaingData() || fragmentLength + fragLength > frag_size ) {
+		if ( fragLength < 0 || fragLength > msg.GetRemaingData() || fragmentLength + fragLength > sizeof( fragmentBuffer ) ) {
 			if ( net_channelShowDrop.GetBool() || net_channelShowPackets.GetBool() ) {
 				common->Printf( "%s: illegal fragment length\n", Sys_NetAdrToString( remoteAddress ) );
 			}

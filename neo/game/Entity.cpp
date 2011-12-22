@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,25 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/geometry/JointTransform.h"
+#include "idlib/LangDict.h"
+#include "framework/async/NetworkSystem.h"
+#include "framework/DeclEntityDef.h"
+#include "renderer/ModelManager.h"
 
-#include "Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "physics/Physics_Parametric.h"
+#include "physics/Physics_Actor.h"
+#include "script/Script_Thread.h"
+#include "Fx.h"
+#include "AFEntity.h"
+#include "Player.h"
+#include "Mover.h"
+#include "WorldSpawn.h"
+#include "SmokeParticles.h"
+
+#include "Entity.h"
 
 /*
 ===============================================================================
@@ -151,8 +166,8 @@ ABSTRACT_DECLARATION( idClass, idEntity )
 	EVENT( EV_GetMins,				idEntity::Event_GetMins)
 	EVENT( EV_GetMaxs,				idEntity::Event_GetMaxs )
 	EVENT( EV_Touches,				idEntity::Event_Touches )
-	EVENT( EV_SetGuiParm, 			idEntity::Event_SetGuiParm )
-	EVENT( EV_SetGuiFloat, 			idEntity::Event_SetGuiFloat )
+	EVENT( EV_SetGuiParm,			idEntity::Event_SetGuiParm )
+	EVENT( EV_SetGuiFloat,			idEntity::Event_SetGuiFloat )
 	EVENT( EV_GetNextKey,			idEntity::Event_GetNextKey )
 	EVENT( EV_SetKey,				idEntity::Event_SetKey )
 	EVENT( EV_GetKey,				idEntity::Event_GetKey )
@@ -2337,7 +2352,7 @@ void idEntity::JoinTeam( idEntity *teammember ) {
 			ent->teamChain->teamMaster = master;
 		}
 
-    	prev->teamChain = this;
+		prev->teamChain = this;
 		ent->teamChain = next;
 	}
 
@@ -2523,7 +2538,7 @@ idEntity::RunPhysics
 */
 bool idEntity::RunPhysics( void ) {
 	int			i, reachedTime, startTime, endTime;
-	idEntity *	part, *blockedPart, *blockingEntity = NULL;
+	idEntity *	part, *blockedPart, *blockingEntity;
 	bool		moved;
 
 	// don't run physics if not enabled
@@ -2866,9 +2881,9 @@ explosions and melee attacks.
 ============
 */
 bool idEntity::CanDamage( const idVec3 &origin, idVec3 &damagePoint ) const {
-	idVec3 	dest;
+	idVec3	dest;
 	trace_t	tr;
-	idVec3 	midpoint;
+	idVec3	midpoint;
 
 	// use the midpoint of the bounds instead of the origin, because
 	// bmodels may have their origin at 0,0,0
@@ -4386,9 +4401,9 @@ void idEntity::Event_RestorePosition( void ) {
 	if ( spawnArgs.GetMatrix( "rotation", "1 0 0 0 1 0 0 0 1", axis ) ) {
 		angles = axis.ToAngles();
 	} else {
-   		angles[ 0 ] = 0;
-   		angles[ 1 ] = spawnArgs.GetFloat( "angle" );
-   		angles[ 2 ] = 0;
+		angles[ 0 ] = 0;
+		angles[ 1 ] = spawnArgs.GetFloat( "angle" );
+		angles[ 2 ] = 0;
 	}
 
 	Teleport( org, angles, NULL );

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,21 +25,28 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-/*
 
-Invisible entities that affect other entities or the world when activated.
+#include "sys/platform.h"
+#include "idlib/LangDict.h"
+#include "renderer/ModelManager.h"
 
-*/
+#include "gamesys/SysCvar.h"
+#include "script/Script_Thread.h"
+#include "Light.h"
+#include "Player.h"
+#include "Mover.h"
+#include "Misc.h"
+#include "WorldSpawn.h"
+#include "Sound.h"
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
-
-#include "Game_local.h"
+#include "Target.h"
 
 /*
 ===============================================================================
 
 idTarget
+
+Invisible entities that affect other entities or the world when activated.
 
 ===============================================================================
 */
@@ -602,7 +609,7 @@ idTarget_Give::Event_Activate
 ================
 */
 void idTarget_Give::Event_Activate( idEntity *activator ) {
-	
+
 	if ( spawnArgs.GetBool( "development" ) && developer.GetInteger() == 0 ) {
 		return;
 	}
@@ -893,7 +900,7 @@ idTarget_SetInfluence::Event_ClearFlash
 */
 void idTarget_SetInfluence::Event_ClearFlash( float flash ) {
 	idPlayer *player = gameLocal.GetLocalPlayer();
-	player->playerView.Fade( vec4_zero , flash );		
+	player->playerView.Fade( vec4_zero , flash );
 }
 /*
 ================
@@ -1045,7 +1052,7 @@ void idTarget_SetInfluence::Event_Activate( idEntity *activator ) {
 		if ( parm && *parm ) {
 			light->SetShader( parm );
 		}
-		
+
 		color = light->spawnArgs.GetVector( "_color" );
 		color = light->spawnArgs.GetVector( "color_demonic", color.ToString() );
 		colorTo.Set( color.x, color.y, color.z, 1.0f );
@@ -1760,4 +1767,3 @@ void idTarget_FadeSoundClass::Event_RestoreVolume() {
 	// restore volume
 	gameSoundWorld->FadeSoundClasses( 0, fadeDB, fadeTime );
 }
-

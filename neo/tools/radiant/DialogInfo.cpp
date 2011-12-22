@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -47,14 +47,14 @@ void ShowInfoDialog(const char* pText)
 {
   if (g_dlgInfo.GetSafeHwnd())
   {
-    g_dlgInfo.m_wndInfo.SetWindowText(pText);
-    g_dlgInfo.ShowWindow(SW_SHOW);
+	g_dlgInfo.m_wndInfo.SetWindowText(pText);
+	g_dlgInfo.ShowWindow(SW_SHOW);
   }
   else
   {
-    g_dlgInfo.Create(IDD_DLG_INFORMATION);
-    g_dlgInfo.m_wndInfo.SetWindowText(pText);
-    g_dlgInfo.ShowWindow(SW_SHOW);
+	g_dlgInfo.Create(IDD_DLG_INFORMATION);
+	g_dlgInfo.m_wndInfo.SetWindowText(pText);
+	g_dlgInfo.ShowWindow(SW_SHOW);
   }
   g_pParentWnd->SetFocus();
 }
@@ -62,7 +62,7 @@ void ShowInfoDialog(const char* pText)
 void HideInfoDialog()
 {
   if (g_dlgInfo.GetSafeHwnd())
-    g_dlgInfo.ShowWindow(SW_HIDE);
+	g_dlgInfo.ShowWindow(SW_HIDE);
 }
 
 
@@ -95,7 +95,7 @@ BOOL CDialogInfo::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	// TODO: Add extra initialization here
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }

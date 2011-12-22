@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "Moveable.h"
+#include "Misc.h"
 
-#include "../Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "ai/AI.h"
 
 /***********************************************************************
 
@@ -308,7 +310,7 @@ CLASS_DECLARATION( idActor, idAI )
 	EVENT( AI_GetReachableEntityPosition,		idAI::Event_GetReachableEntityPosition )
 #ifdef _D3XP
 	EVENT( AI_MoveToPositionDirect,				idAI::Event_MoveToPositionDirect )
-	EVENT( AI_AvoidObstacles, 					idAI::Event_AvoidObstacles )
+	EVENT( AI_AvoidObstacles,					idAI::Event_AvoidObstacles )
 	EVENT( AI_TriggerFX,						idAI::Event_TriggerFX )
 	EVENT( AI_StartEmitter,						idAI::Event_StartEmitter )
 	EVENT( AI_GetEmitter,						idAI::Event_GetEmitter )
@@ -1852,7 +1854,7 @@ void idAI::Event_TestAnimMoveTowardEnemy( const char *animname ) {
 	}
 
 	delta = enemyEnt->GetPhysics()->GetOrigin() - physicsObj.GetOrigin();
-    yaw = delta.ToYaw();
+	yaw = delta.ToYaw();
 
 	moveVec = animator.TotalMovementDelta( anim ) * idAngles( 0.0f, yaw, 0.0f ).ToMat3() * physicsObj.GetGravityAxis();
 	idAI::PredictPath( this, aas, physicsObj.GetOrigin(), moveVec, 1000, 1000, ( move.moveType == MOVETYPE_FLY ) ? SE_BLOCKED : ( SE_ENTER_OBSTACLE | SE_BLOCKED | SE_ENTER_LEDGE_AREA ), path );
@@ -2180,8 +2182,6 @@ void idAI::Event_RestoreMove( void ) {
 	case MOVE_WANDER :
 		WanderAround();
 		break;
-	default:
-	break;
 	}
 
 	if ( GetMovePos( goalPos ) ) {
@@ -2904,4 +2904,3 @@ void idAI::Event_StopEmitter( const char* name ) {
 }
 
 #endif
-

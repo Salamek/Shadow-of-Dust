@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,9 +26,9 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
+#include "idlib/BitMsg.h"
 
 /*
 ==============================================================================
@@ -515,7 +515,7 @@ int idBitMsg::ReadDeltaByteCounter( int oldValue ) const {
 		return oldValue;
 	}
 	newValue = ReadBits( i );
-	return ( (oldValue & ~( ( 1 << i ) - 1 )) | newValue );
+	return ( (oldValue & ~( ( 1 << i ) - 1 ) ) | newValue );
 }
 
 /*
@@ -531,7 +531,7 @@ int idBitMsg::ReadDeltaShortCounter( int oldValue ) const {
 		return oldValue;
 	}
 	newValue = ReadBits( i );
-	return ( (oldValue & ~( ( 1 << i ) - 1 )) | newValue );
+	return ( (oldValue & ~( ( 1 << i ) - 1 ) ) | newValue );
 }
 
 /*
@@ -547,7 +547,7 @@ int idBitMsg::ReadDeltaLongCounter( int oldValue ) const {
 		return oldValue;
 	}
 	newValue = ReadBits( i );
-	return ( (oldValue & ~( ( 1 << i ) - 1 )) | newValue );
+	return ( ( oldValue & ~( ( 1 << i ) - 1 ) ) | newValue );
 }
 
 /*
@@ -803,7 +803,7 @@ void idBitMsgDelta::WriteData( const void *data, int length ) {
 		changed = true;
 	} else {
 		byte baseData[MAX_DATA_BUFFER];
-		assert( static_cast<size_t>(length) < sizeof( baseData ) );
+		assert( length < sizeof( baseData ) );
 		base->ReadData( baseData, length );
 		if ( memcmp( data, baseData, length ) == 0 ) {
 			writeDelta->WriteBits( 0, 1 );
@@ -946,7 +946,7 @@ void idBitMsgDelta::ReadData( void *data, int length ) const {
 		changed = true;
 	} else {
 		char baseData[MAX_DATA_BUFFER];
-		assert( static_cast<size_t>(length) < sizeof( baseData ) );
+		assert( length < sizeof( baseData ) );
 		base->ReadData( baseData, length );
 		if ( !readDelta || readDelta->ReadBits( 1 ) == 0 ) {
 			memcpy( data, baseData, length );

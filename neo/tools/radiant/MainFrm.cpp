@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -252,7 +252,7 @@ SCommandInfo	g_Commands[] = {
 	{ "Selection_Connect",      'K', RAD_CONTROL, ID_SELECTION_CONNECT },
 	{ "Selection_Ungroup",      'G', RAD_SHIFT, ID_SELECTION_UNGROUPENTITY },
 	{ "Selection_CSGMerge",     'M', RAD_SHIFT, ID_SELECTION_CSGMERGE },
-	
+
 	{ "Selection_CenterOrigin",           'O', RAD_SHIFT, ID_SELECTION_CENTER_ORIGIN },
 	{ "Selection_SelectCompleteEntity",   'E' , RAD_CONTROL|RAD_ALT|RAD_SHIFT , ID_SELECT_COMPLETE_ENTITY },
 	{ "Selection_SelectAllOfType",        'A', RAD_SHIFT, ID_SELECT_ALL },
@@ -274,7 +274,7 @@ SCommandInfo	g_Commands[] = {
 	{ "Render_Toggle",           VK_F3, 0, ID_VIEW_RENDERMODE },
 
 	{ "Find_Textures",    'F', RAD_SHIFT, ID_TEXTURE_REPLACEALL },
-	{ "Find_Entity",       VK_F3, RAD_CONTROL, ID_MISC_FINDORREPLACEENTITY},	
+	{ "Find_Entity",       VK_F3, RAD_CONTROL, ID_MISC_FINDORREPLACEENTITY},
 	{ "Find_NextEntity",   VK_F3,RAD_SHIFT, ID_MISC_FINDNEXTENT},
 
 	{ "_ShowDOOM",               VK_F2, 0, ID_SHOW_DOOM },
@@ -679,7 +679,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_COMMAND(ID_SOUND_SHOWSOUNDVOLUMES, OnSoundShowsoundvolumes)
 	ON_COMMAND(ID_SOUND_SHOWSELECTEDSOUNDVOLUMES, OnSoundShowselectedsoundvolumes)
 	ON_COMMAND(ID_PATCH_NURBEDITOR, OnNurbEditor)
-    ON_COMMAND(ID_SELECT_COMPLETE_ENTITY, OnSelectCompleteEntity)
+	ON_COMMAND(ID_SELECT_COMPLETE_ENTITY, OnSelectCompleteEntity)
 	ON_COMMAND(ID_PRECISION_CURSOR_CYCLE , OnPrecisionCursorCycle)
 	ON_COMMAND(ID_MATERIALS_GENERATEMATERIALSLIST,OnGenerateMaterialsList)
 	ON_COMMAND(ID_SELECTION_VIEW_WIREFRAMEON, OnSelectionWireFrameOn)
@@ -738,7 +738,7 @@ void CMainFrame::OnBSPStatus(UINT wParam, long lParam) {
 void CMainFrame::OnBSPDone(UINT wParam, long lParam) {
 	idStr str = cvarSystem->GetCVarString( "radiant_bspdone" );
 	if (str.Length()) {
-	    sndPlaySound(str.c_str(), SND_FILENAME | SND_ASYNC);
+		sndPlaySound(str.c_str(), SND_FILENAME | SND_ASYNC);
 	}
 }
 
@@ -1711,7 +1711,7 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext *pContext) {
 
 	//stupid hack to get the window resize itself properly
 	r.DeflateRect(0,0,0,1);
-	g_Inspectors->MoveWindow(r);	
+	g_Inspectors->MoveWindow(r);
 	r.InflateRect(0,0,0,1);
 	g_Inspectors->MoveWindow(r);
 
@@ -2069,7 +2069,7 @@ BOOL DoMru(HWND hWnd,WORD wId)
 		AddNewItem(g_qeglobals.d_lpMruMenu,(LPSTR)szFileName);
 
 		// Now perform opening this file !!!
-		Map_LoadFile (szFileName);	
+		Map_LoadFile (szFileName);
 	}
 	else
 		// Remove the file on MRU.
@@ -2173,7 +2173,7 @@ void RunBsp (const char *command) {
 		} else {
 			idStr::snPrintf( sys, sizeof(sys), "%s %s +set r_fullscreen 0 +dmap editorOutput %s +quit", buff, paths.c_str(), in );
 		}
-		
+
 		::GetStartupInfo (&startupinfo);
 		if (!CreateProcess(NULL, sys, NULL, NULL, FALSE, 0, NULL, NULL, &startupinfo, &ProcessInformation)) {
 			common->Printf("Could not start bsp process %s %s/n", buff, sys);
@@ -2728,7 +2728,7 @@ LPCSTR String_ToLower(LPCSTR psString)
 
 
 bool FindNextBrush(brush_t* pPrevFoundBrush)	// can be NULL for fresh search
-{	
+{
 	bool bFoundSomething = false;
 	entity_t *pLastFoundEnt;
 	brush_t  *pLastFoundBrush;
@@ -2756,14 +2756,14 @@ bool FindNextBrush(brush_t* pPrevFoundBrush)	// can be NULL for fresh search
 	}
 
 	// now do the search proper...
-	//	
+	//
 	int iBrushesScanned = 0;
 	int iBrushesSelected=0;
 	int iEntsScanned = 0;
 
-	brush_t* pNextBrush;		
+	brush_t* pNextBrush;
 	for (brush_t* b = pStartBrush; b != &active_brushes ; b = pNextBrush)
-	{	
+	{
 		// setup the <nextbrush> ptr before going any further (because selecting a brush down below moves it to a
 		//	different link list), but we need to ensure that the next brush has a different ent-owner than the current
 		//	one, or multi-brush ents will confuse the list process if they get selected (infinite loop badness)...
@@ -2781,7 +2781,7 @@ bool FindNextBrush(brush_t* pPrevFoundBrush)	// can be NULL for fresh search
 		//
 		static int iDotBodge=0;
 		if (!(++iDotBodge&15))
-			common->Printf(".");	// cut down on printing		
+			common->Printf(".");	// cut down on printing
 
 		bool bMatch = false;
 		entity_t* ent = b->owner;
@@ -2789,8 +2789,8 @@ bool FindNextBrush(brush_t* pPrevFoundBrush)	// can be NULL for fresh search
 		if (ent && ent!= world_entity)	// needed!
 		{
 			iEntsScanned++;
-	 		if (FilterBrush (b))
-	 			continue;			
+			if (FilterBrush (b))
+				continue;
 
 			// only check the find-key if there was one specified...
 			//
@@ -2857,7 +2857,7 @@ bool FindNextBrush(brush_t* pPrevFoundBrush)	// can be NULL for fresh search
 				iBrushesSelected++;
 
 				g_bScreenUpdates = false;	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				
+
 					Select_Brush(b);
 
 				g_bScreenUpdates = true;	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -2919,7 +2919,7 @@ void CMainFrame::OnMiscFindOrReplaceEntity()
 	switch (FindReplace.DoModal())
 	{
 		case ID_RET_REPLACE:
-		{	
+		{
 			brush_t* next = NULL;
 			int iOccurences = 0;
 			for (brush_t* b = active_brushes.next ; b != &active_brushes ; b = next)
@@ -2929,8 +2929,8 @@ void CMainFrame::OnMiscFindOrReplaceEntity()
 
 				if (ent)	// needed!
 				{
-	 				if (FilterBrush (b))
-	 					continue;
+					if (FilterBrush (b))
+						continue;
 
 					const char *psEntFoundValue = ValueForKey(ent, strFindKey);
 
@@ -3163,7 +3163,7 @@ void CMainFrame::OnBrushFlipx() {
 			Brush_Build(b);
 		}
 	}
-    Patch_ToggleInverted();
+	Patch_ToggleInverted();
 	Undo_EndBrushList(&selected_brushes);
 	Undo_End();
 }
@@ -3207,7 +3207,7 @@ void CMainFrame::OnBrushFlipy() {
 			Brush_Build(b);
 		}
 	}
-    Patch_ToggleInverted();
+	Patch_ToggleInverted();
 	Undo_EndBrushList(&selected_brushes);
 	Undo_End();
 }
@@ -3527,7 +3527,7 @@ void CMainFrame::OnSelectionUngroupentity() {
 
 void CMainFrame::OnAutocaulk()
 {
-	Select_AutoCaulk();	
+	Select_AutoCaulk();
 }
 void CMainFrame::OnUpdateAutocaulk(CCmdUI* pCmdUI)
 {
@@ -3573,7 +3573,7 @@ void CMainFrame::OnViewChange() {
  */
 void CMainFrame::OnViewCameraupdate() {
 	g_qeglobals.flatRotation++;
-	
+
 	if (g_qeglobals.flatRotation > 2) {
 		g_qeglobals.flatRotation = 0;
 	}
@@ -4317,7 +4317,7 @@ void CMainFrame::OnColorSetMax() {
 		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][i] = 0.89f;
 		g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][i] = 0.25f;
 	}
-	
+
 	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][0] = 1.0f;
 	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][1] = 1.0f;
 	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][2] = 1.0f;
@@ -4344,9 +4344,9 @@ void CMainFrame::OnColorSetMax() {
 	g_qeglobals.d_savedinfo.colors[COLOR_PRECISION_CROSSHAIR][0] = 1.0f;
 	g_qeglobals.d_savedinfo.colors[COLOR_PRECISION_CROSSHAIR][1] = 0.0f;
 	g_qeglobals.d_savedinfo.colors[COLOR_PRECISION_CROSSHAIR][2] = 1.0f;
-	
+
 	Sys_UpdateWindows (W_ALL);
-	
+
 }
 
 /*
@@ -6484,7 +6484,7 @@ void CMainFrame::OnSelectionMoveonly() {
 void CMainFrame::OnSelectBrushlight()
 {
 	// TODO: Add your command handler code here
-	
+
 }
 
 void CMainFrame::OnSelectionCombine()
@@ -6625,7 +6625,7 @@ extern void Face_SetAxialScale_BrushPrimit(face_t *face, bool y);
 void CMainFrame::OnAxialTextureByWidth() {
 	// temp test code
 	int faceCount = g_ptrSelectedFaces.GetSize();
-	
+
 	if (faceCount > 0) {
 		for (int i = 0; i < faceCount; i++) {
 			face_t	*selFace = reinterpret_cast < face_t * > (g_ptrSelectedFaces.GetAt(i));
@@ -6639,7 +6639,7 @@ void CMainFrame::OnAxialTextureByWidth() {
 void CMainFrame::OnAxialTextureByHeight() {
 	// temp test code
 	int faceCount = g_ptrSelectedFaces.GetSize();
-	
+
 	if (faceCount > 0) {
 		for (int i = 0; i < faceCount; i++) {
 			face_t	*selFace = reinterpret_cast < face_t * > (g_ptrSelectedFaces.GetAt(i));
@@ -6760,7 +6760,7 @@ void CMainFrame::OnNurbEditor() {
 		temp += "\r\n";
 		if (OpenClipboard()) {
 			::EmptyClipboard();
-	        HGLOBAL clip;
+			HGLOBAL clip;
 			char* buff;
 			clip = ::GlobalAlloc(GMEM_DDESHARE, temp.Length()+1);
 			buff = (char*)::GlobalLock(clip);
@@ -6793,26 +6793,26 @@ void CMainFrame::OnSelectAlltargets()
 
 void CMainFrame::OnSelectCompleteEntity()
 {
-    brush_t* b = NULL;
-    entity_t* e = NULL;
+	brush_t* b = NULL;
+	entity_t* e = NULL;
 
-    b = selected_brushes.next;
-    if ( b == &selected_brushes )
-    {
-        return; //no brushes selected
-    }
+	b = selected_brushes.next;
+	if ( b == &selected_brushes )
+	{
+		return; //no brushes selected
+	}
 
-    e = b->owner;
-    if ( b->owner == world_entity )
-    {
-        return; //don't select the world entity
-    }
+	e = b->owner;
+	if ( b->owner == world_entity )
+	{
+		return; //don't select the world entity
+	}
 
-    for (b = e->brushes.onext; b != &e->brushes; b = b->onext)
-    {
-        Select_Brush ( b , false );
-    }
-    Sys_UpdateWindows ( W_ALL );
+	for (b = e->brushes.onext; b != &e->brushes; b = b->onext)
+	{
+		Select_Brush ( b , false );
+	}
+	Sys_UpdateWindows ( W_ALL );
 }
 
 
@@ -6837,7 +6837,7 @@ void CMainFrame::OnGenerateMaterialsList()
 	idStrList mtrList;
 	idStr     mtrName,mtrFileName;
 
-	
+
 	g_Inspectors->consoleWnd.ExecuteCommand ( "clear" );
 	Sys_BeginWait ();
 	common->Printf ( "Generating list of active materials...\n" );
@@ -6859,14 +6859,14 @@ void CMainFrame::OnGenerateMaterialsList()
 				}
 
 			}
-		}				
+		}
 	}
 
 	mtrList.Sort();
 	for ( int i = 0 ; i < mtrList.Num() ; i++ ) {
 		common->Printf ( "%s\n" , mtrList[i].c_str());
 	}
-	
+
 	mtrFileName = currentmap;
 //	mtrFileName.ExtractFileName( mtrFileName );
 	mtrFileName = mtrFileName.StripPath();

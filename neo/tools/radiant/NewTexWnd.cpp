@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -430,7 +430,7 @@ BOOL CNewTexWnd::DestroyWindow() {
 /*
  =======================================================================================================================
  =======================================================================================================================
- */						
+ */
 BOOL CNewTexWnd::Create
 (
 	LPCTSTR			lpszClassName,
@@ -473,7 +473,7 @@ const idMaterial *CNewTexWnd::getMaterialAtPoint(CPoint point) {
 		if (point.x > draw.x && point.x - draw.x < width && my < draw.y &&  draw.y - my < height + FONT_HEIGHT) {
 			return mat;
 		}
-	
+
 	}
 
 }
@@ -623,7 +623,7 @@ void CNewTexWnd::LoadMaterials() {
 
 
 void Texture_SetTexture(texdef_t *texdef, brushprimit_texdef_t	*brushprimit_texdef, bool bFitScale, bool bSetSelection) {
-	
+
 	if (texdef->name[0] == '(') {
 		Sys_Status("Can't select an entity texture\n", 0);
 		return;
@@ -640,7 +640,7 @@ void Texture_SetTexture(texdef_t *texdef, brushprimit_texdef_t	*brushprimit_texd
 	}
 
 	g_dlgFind.updateTextures(texdef->name);
-	
+
 	if (!g_dlgFind.isOpen() && bSetSelection) {
 		Select_SetTexture(texdef, brushprimit_texdef, bFitScale);
 	}
@@ -745,7 +745,7 @@ bool texture_showinuse = true;
 
 /*
  =======================================================================================================================
-    Texture_SetMode
+	Texture_SetMode
  =======================================================================================================================
  */
 void Texture_SetMode(int iMenu) {
@@ -869,13 +869,13 @@ BOOL CNewTexWnd::OnToolTipNotify( UINT id, NMHDR * pNMHDR, LRESULT * pResult ) {
 	const idMaterial *mat = getMaterialAtPoint(point);
 
 	if (mat) {
-	    TOOLTIPTEXT *pTTT = (TOOLTIPTEXT *)pNMHDR;
+		TOOLTIPTEXT *pTTT = (TOOLTIPTEXT *)pNMHDR;
 		strcpy(tip, mat->GetDescription());
-	    pTTT->lpszText = tip;
-	    pTTT->hinst = NULL;
-	    return(TRUE);
-    }
-    return(FALSE);
+		pTTT->lpszText = tip;
+		pTTT->hinst = NULL;
+		return(TRUE);
+	}
+	return(FALSE);
 }
 
 int CNewTexWnd::OnToolHitTest(CPoint point, TOOLINFO * pTI)

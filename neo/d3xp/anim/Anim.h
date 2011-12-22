@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,6 +27,13 @@ If you have questions concerning this license or the applicable additional terms
 */
 #ifndef __ANIM_H__
 #define __ANIM_H__
+
+#include "idlib/containers/StrList.h"
+#include "idlib/containers/HashTable.h"
+#include "idlib/Dict.h"
+#include "renderer/Model.h"
+
+#include "physics/Clip.h"
 
 //
 // animation channels
@@ -251,7 +258,7 @@ public:
 	void					IncreaseRefs( void ) const;
 	void					DecreaseRefs( void ) const;
 	int						NumRefs( void ) const;
-	
+
 	void					CheckModelHierarchy( const idRenderModel *model ) const;
 	void					GetInterpolatedFrame( frameBlend_t &frame, idJointQuat *joints, const int *index, int numIndexes ) const;
 	void					GetSingleFrame( int framenum, idJointQuat *joints, const int *index, int numIndexes ) const;

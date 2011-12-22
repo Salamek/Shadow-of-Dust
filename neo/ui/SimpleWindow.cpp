@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,14 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "ui/DeviceContext.h"
+#include "ui/Window.h"
+#include "ui/UserInterfaceLocal.h"
 
-#include "DeviceContext.h"
-#include "Window.h"
-#include "UserInterfaceLocal.h"
-#include "SimpleWindow.h"
-
+#include "ui/SimpleWindow.h"
 
 idSimpleWindow::idSimpleWindow(idWindow *win) {
 	gui = win->GetGui();
@@ -205,7 +203,7 @@ void idSimpleWindow::CalcClientRect(float xofs, float yofs) {
 
 		textRect = clientRect;
 		textRect.x += 2.0;
-	 	textRect.w -= 2.0;
+		textRect.w -= 2.0;
 		textRect.y += 2.0;
 		textRect.h -= 2.0;
 		textRect.x += textAlignx;

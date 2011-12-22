@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,17 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/ModelManager.h"
 
-#include "Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "script/Script_Thread.h"
+#include "ai/AI.h"
+#include "Player.h"
+#include "Mover.h"
+#include "SmokeParticles.h"
+
+#include "Projectile.h"
 
 /*
 ===============================================================================
@@ -301,7 +308,7 @@ void idProjectile::Launch( const idVec3 &start, const idVec3 &dir, const idVec3 
 	endthrust			= spawnArgs.GetFloat( "thrust_end" );
 
 	spawnArgs.GetVector( "velocity", "0 0 0", velocity );
-	
+
 	speed = velocity.Length() * launchPower;
 
 	damagePower = dmgPower;
@@ -1091,7 +1098,7 @@ void idProjectile::WriteToSnapshot( idBitMsgDelta &msg ) const {
 
 		msg.WriteDeltaFloat( 0.0f, velocity[0], RB_VELOCITY_EXPONENT_BITS, RB_VELOCITY_MANTISSA_BITS );
 		msg.WriteDeltaFloat( 0.0f, velocity[1], RB_VELOCITY_EXPONENT_BITS, RB_VELOCITY_MANTISSA_BITS );
-		msg.WriteDeltaFloat( 0.0f, velocity[2], RB_VELOCITY_EXPONENT_BITS, RB_VELOCITY_MANTISSA_BITS );		
+		msg.WriteDeltaFloat( 0.0f, velocity[2], RB_VELOCITY_EXPONENT_BITS, RB_VELOCITY_MANTISSA_BITS );
 	}
 }
 
@@ -1336,7 +1343,7 @@ void idGuidedProjectile::Think( void ) {
 	int			i;
 
 	if ( state == LAUNCHED && !unGuided ) {
-		
+
 		GetSeekPos( seekPos );
 
 		if ( rndUpdateTime < gameLocal.time ) {
@@ -1644,7 +1651,7 @@ void idSoulCubeMissile::Launch( const idVec3 &start, const idVec3 &dir, const id
 	launchTime = gameLocal.time;
 	killPhase = false;
 	UpdateVisuals();
-	
+
 	ownerEnt = owner.GetEntity();
 	if ( ownerEnt && ownerEnt->IsType( idPlayer::Type ) ) {
 		static_cast<idPlayer *>( ownerEnt )->SetSoulCubeProjectile( this );
@@ -2153,7 +2160,7 @@ void idDebris::Launch( void ) {
 
 	spawnArgs.GetVector( "velocity", "0 0 0", velocity );
 	spawnArgs.GetAngles( "angular_velocity", "0 0 0", angular_velocity );
-	
+
 	linear_friction		= spawnArgs.GetFloat( "linear_friction" );
 	angular_friction	= spawnArgs.GetFloat( "angular_friction" );
 	contact_friction	= spawnArgs.GetFloat( "contact_friction" );

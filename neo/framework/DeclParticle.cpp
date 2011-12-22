@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/geometry/DrawVert.h"
+#include "framework/File.h"
+#include "renderer/RenderWorld.h"
+
+#include "framework/DeclParticle.h"
 
 struct ParticleParmDesc {
 	const char *name;
@@ -121,7 +125,7 @@ void idDeclParticle::GetStageBounds( idParticleStage *stage ) {
 			// don't increment the verts
 
 			idVec3	origin;
-			stage->ParticleOrigin( &g, origin );			
+			stage->ParticleOrigin( &g, origin );
 			stage->bounds.AddPoint( origin );
 		}
 	}
@@ -527,7 +531,7 @@ idDeclParticle::WriteStage
 ================
 */
 void idDeclParticle::WriteStage( idFile *f, idParticleStage *stage ) {
-	
+
 	int i;
 
 	f->WriteFloatString( "\t{\n" );
@@ -548,7 +552,7 @@ void idDeclParticle::WriteStage( idFile *f, idParticleStage *stage ) {
 		f->WriteFloatString( "\t\tdeadTime\t\t\t%.3f\n", stage->deadTime );
 	}
 	f->WriteFloatString( "\t\tbunching\t\t\t%.3f\n", stage->spawnBunching );
-	
+
 	f->WriteFloatString( "\t\tdistribution\t\t%s ", ParticleDistributionDesc[stage->distributionType].name );
 	for ( i = 0; i < ParticleDistributionDesc[stage->distributionType].count; i++ ) {
 		f->WriteFloatString( "%.3f ", stage->distributionParms[i] );
@@ -922,7 +926,7 @@ void idParticleStage::ParticleOrigin( particleGen_t *g, idVec3 &origin ) const {
 				// angle is the full angle, so 360 degrees is any spherical direction
 				angle1 = g->random.CRandomFloat() * directionParms[0] * idMath::M_DEG2RAD;
 				angle2 = g->random.CRandomFloat() * idMath::PI;
-		
+
 				float s1, c1, s2, c2;
 				idMath::SinCos16( angle1, s1, c1 );
 				idMath::SinCos16( angle2, s2, c2 );
@@ -937,12 +941,15 @@ void idParticleStage::ParticleOrigin( particleGen_t *g, idVec3 &origin ) const {
 				dir.Normalize();
 				dir[2] += directionParms[0];
 				break;
+			default:
+				common->Error( "idParticleStage::ParticleOrigin: bad direction" );
+				return;
 			}
 		}
 
 		// add speed
 		float iSpeed = speed.Integrate( g->frac, g->random );
-		origin += dir * iSpeed * particleLife;	
+		origin += dir * iSpeed * particleLife;
 
 	} else {
 		//
@@ -1045,6 +1052,7 @@ int	idParticleStage::ParticleVerts( particleGen_t *g, idVec3 origin, idDrawVert 
 		float		trailTime = orientationParms[1];
 
 		stepLeft.Zero();
+
 		if ( trailTime == 0 ) {
 			trailTime = 0.5f;
 		}

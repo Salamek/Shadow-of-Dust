@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -128,21 +128,21 @@ int ToggleListView::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 		return -1;
 
 	CListCtrl& list = GetListCtrl();
-	
+
 	list.SetExtendedStyle(LVS_EX_FULLROWSELECT);
 
 	//Turn off the horizontal scroll bar
 	//Todo: Figure out why the damn scroll bar pops up
 	list.ModifyStyle(WS_HSCROLL, 0L);
-	
-	
+
+
 	//Insert the one column
 	LVCOLUMN col;
 	col.mask = 0;
 	list.InsertColumn(0, &col);
 
 	SetToggleIcons();
-	
+
 	return 0;
 }
 
@@ -160,7 +160,7 @@ void ToggleListView::OnSize(UINT nType, int cx, int cy) {
 * Returns the size of each item in the toggle list.
 */
 void ToggleListView::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct) {
-	lpMeasureItemStruct->itemHeight = TOGGLELIST_ITEMHEIGHT;	
+	lpMeasureItemStruct->itemHeight = TOGGLELIST_ITEMHEIGHT;
 }
 
 /**
@@ -173,7 +173,7 @@ void ToggleListView::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult) {
 
 	LVHITTESTINFO info;
 	info.pt.x = LOWORD(dwpos);
-	info.pt.y = HIWORD(dwpos);		
+	info.pt.y = HIWORD(dwpos);
 
 	::MapWindowPoints(HWND_DESKTOP, pNMHDR->hwndFrom, &info.pt, 1);
 
@@ -191,7 +191,7 @@ void ToggleListView::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult) {
 				} else {
 					SetToggleState(index, TOGGLE_STATE_ON, true);
 				}
-			}												
+			}
 		}
 	}
 	*pResult = 0;
@@ -215,11 +215,11 @@ void ToggleListView::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) {
 
 	CListCtrl& ListCtrl=GetListCtrl();
 	int nItem = lpDrawItemStruct->itemID;
-	
+
 	// get item data
 	LV_ITEM lvi;
 	_TCHAR szBuff[MAX_PATH];
-	
+
 	memset(&lvi, 0, sizeof(LV_ITEM));
 	lvi.mask = LVIF_TEXT;
 	lvi.iItem = nItem;
@@ -228,8 +228,8 @@ void ToggleListView::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) {
 	ListCtrl.GetItem(&lvi);
 
 	RECT rDraw;
-	
-	
+
+
 	CopyRect ( &rDraw, &lpDrawItemStruct->rcItem );
 	rDraw.right = rDraw.left + TOGGLELIST_ITEMHEIGHT;
 	rDraw.top ++;
@@ -262,13 +262,13 @@ void ToggleListView::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) {
 			}
 			break;
 	};
-	
+
 	CopyRect ( &rDraw, &lpDrawItemStruct->rcItem );
 	rDraw.left += TOGGLELIST_ITEMHEIGHT;
 	rDraw.left += 1;
 
 	if ( lpDrawItemStruct->itemState & ODS_SELECTED ) {
-		FillRect ( lpDrawItemStruct->hDC, &rDraw, GetSysColorBrush ( COLOR_HIGHLIGHT ) );			
+		FillRect ( lpDrawItemStruct->hDC, &rDraw, GetSysColorBrush ( COLOR_HIGHLIGHT ) );
 	} else {
 		FillRect ( lpDrawItemStruct->hDC, &rDraw, GetSysColorBrush ( COLOR_WINDOW ) );
 	}
@@ -300,7 +300,3 @@ void ToggleListView::Draw3dRect (HDC hDC, RECT* rect, HBRUSH topLeft, HBRUSH bot
 	SetRect ( &rOut, rect->left, rect->bottom, rect->right, rect->bottom - 1 );
 	FillRect( hDC,&rOut, bottomRight );
 }
-
-
-
-

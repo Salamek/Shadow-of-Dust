@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,14 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/math/Quat.h"
 
-#include "../Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "physics/Force.h"
+#include "Entity.h"
+
+#include "physics/Physics_StaticMulti.h"
 
 CLASS_DECLARATION( idPhysics, idPhysics_StaticMulti )
 END_CLASS
@@ -762,7 +766,7 @@ void idPhysics_StaticMulti::DisableClip( void ) {
 	int i;
 
 	for ( i = 0; i < clipModels.Num(); i++ ) {
-        if ( clipModels[i] ) {
+		if ( clipModels[i] ) {
 			clipModels[i]->Disable();
 		}
 	}
@@ -792,7 +796,7 @@ void idPhysics_StaticMulti::UnlinkClip( void ) {
 	int i;
 
 	for ( i = 0; i < clipModels.Num(); i++ ) {
-        if ( clipModels[i] ) {
+		if ( clipModels[i] ) {
 			clipModels[i]->Unlink();
 		}
 	}
@@ -934,7 +938,7 @@ void idPhysics_StaticMulti::SetMaster( idEntity *master, const bool orientated )
 			// transform from world space to master space
 			self->GetMasterPosition( masterOrigin, masterAxis );
 			for ( i = 0; i < clipModels.Num(); i++ ) {
-                current[i].localOrigin = ( current[i].origin - masterOrigin ) * masterAxis.Transpose();
+				current[i].localOrigin = ( current[i].origin - masterOrigin ) * masterAxis.Transpose();
 				if ( orientated ) {
 					current[i].localAxis = current[i].axis * masterAxis.Transpose();
 				} else {
@@ -1023,7 +1027,7 @@ idPhysics_StaticMulti::ReadFromSnapshot
 ================
 */
 void idPhysics_StaticMulti::ReadFromSnapshot( const idBitMsgDelta &msg ) {
-	int i, num;
+	int i, num id_attribute((unused));
 	idCQuat quat, localQuat;
 
 	num = msg.ReadByte();

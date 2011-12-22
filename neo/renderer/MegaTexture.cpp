@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,10 +25,12 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../idlib/precompiled.h"
-#pragma hdrstop
 
-#include "tr_local.h"
+#include "sys/platform.h"
+#include "framework/Session.h"
+#include "renderer/tr_local.h"
+
+#include "renderer/MegaTexture.h"
 
 idCVar idMegaTexture::r_megaTextureLevel( "r_megaTextureLevel", "0", CVAR_RENDERER | CVAR_INTEGER, "draw only a specific level" );
 idCVar idMegaTexture::r_showMegaTexture( "r_showMegaTexture", "0", CVAR_RENDERER | CVAR_BOOL, "display all the level images" );
@@ -469,7 +471,7 @@ void idTextureLevel::Invalidate() {
 
 
 typedef struct _TargaHeader {
-	unsigned char 	id_length, colormap_type, image_type;
+	unsigned char	id_length, colormap_type, image_type;
 	unsigned short	colormap_index, colormap_length;
 	unsigned char	colormap_size;
 	unsigned short	x_origin, y_origin, width, height;
@@ -747,7 +749,7 @@ void idMegaTexture::MakeMegaTexture_f( const idCmdArgs &args ) {
 		common->Printf( "%i blockRowsRemaining\n", blockRowsRemaining );
 		session->UpdateScreen();
 
-		if ( targa_header.image_type == 2 || targa_header.image_type == 3 ) 	{
+		if ( targa_header.image_type == 2 || targa_header.image_type == 3 )	{
 			// Uncompressed RGB or gray scale image
 			for( row = 0 ; row < TILE_SIZE ; row++ ) {
 				pixbuf = targa_rgba + row*columns*4;
@@ -907,5 +909,3 @@ void idMegaTexture::MakeMegaTexture_f( const idCmdArgs &args ) {
 	}
 #endif
 }
-
-

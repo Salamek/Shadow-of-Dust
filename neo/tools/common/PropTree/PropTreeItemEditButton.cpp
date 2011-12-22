@@ -247,7 +247,7 @@ void CPropTreeItemEditButton::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CPropTreeItemEditButton::OnKillfocus()
 {
-	CommitChanges();	
+	CommitChanges();
 }
 
 BOOL CPropTreeItemEditButton::HitButton( const POINT& pt ) {

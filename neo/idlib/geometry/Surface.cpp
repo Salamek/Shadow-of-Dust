@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,9 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/math/Pluecker.h"
 
+#include "idlib/geometry/Surface.h"
 
 /*
 =================
@@ -618,7 +619,7 @@ bool idSurface::IsConnected( void ) const {
 			continue;
 		}
 
-        queueStart = 0;
+		queueStart = 0;
 		queueEnd = 1;
 		queue[0] = i;
 		islandNum[i] = numIslands;
@@ -681,9 +682,8 @@ bool idSurface::IsPolytope( const float epsilon ) const {
 
 	for ( i = 0; i < indexes.Num(); i += 3 ) {
 		if (!plane.FromPoints( verts[indexes[i+0]].xyz, verts[indexes[i+1]].xyz, verts[indexes[i+2]].xyz ))
-		{
 			return false;
-		}
+
 		for ( j = 0; j < verts.Num(); j++ ) {
 			if ( plane.Side( verts[j].xyz, epsilon ) == SIDE_FRONT ) {
 				return false;
@@ -814,18 +814,14 @@ bool idSurface::RayIntersection( const idVec3 &start, const idVec3 &dir, float &
 
 		if ( s0 & s1 & s2 ) {
 			if (!plane.FromPoints( verts[indexes[i+0]].xyz, verts[indexes[i+1]].xyz, verts[indexes[i+2]].xyz ))
-			{
 				return false;
-			}
 			plane.RayIntersection( start, dir, s );
 			if ( idMath::Fabs( s ) < idMath::Fabs( scale ) ) {
 				scale = s;
 			}
 		} else if ( !backFaceCull && !(s0 | s1 | s2) ) {
 			if (!plane.FromPoints( verts[indexes[i+0]].xyz, verts[indexes[i+1]].xyz, verts[indexes[i+2]].xyz ))
-			{
 				return false;
-			}
 			plane.RayIntersection( start, dir, s );
 			if ( idMath::Fabs( s ) < idMath::Fabs( scale ) ) {
 				scale = s;

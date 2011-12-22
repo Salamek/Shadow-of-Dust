@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/VertexCache.h"
 
-#include "tr_local.h"
+#include "renderer/tr_local.h"
 
 typedef enum {
 	FPROG_BUMP_AND_LIGHT,
@@ -602,7 +602,6 @@ RB_NV20_DrawInteraction
 ==================
 */
 static void	RB_NV20_DrawInteraction( const drawInteraction_t *din ) {
-
 	// load all the vertex program parameters
 	qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_LIGHT_ORIGIN, din->localLightOrigin.ToFloatPtr() );
 	qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_VIEW_ORIGIN, din->localViewOrigin.ToFloatPtr() );
@@ -721,15 +720,15 @@ static void RB_NV20_CreateDrawInteractions( const drawSurf_t *surf ) {
 	GL_SelectTexture( 3 );
 	globalImages->BindNull();
 	qglDisableClientState( GL_TEXTURE_COORD_ARRAY );
-	
+
 	GL_SelectTexture( 2 );
 	globalImages->BindNull();
 	qglDisableClientState( GL_TEXTURE_COORD_ARRAY );
-	
+
 	GL_SelectTexture( 1 );
 	globalImages->BindNull();
 	qglDisableClientState( GL_TEXTURE_COORD_ARRAY );
-#else	
+#else
 	GL_SelectTextureNoClient( 3 );
 	globalImages->BindNull();
 
@@ -880,4 +879,3 @@ void R_NV20_Init( void ) {
 
 	glConfig.allowNV20Path = true;
 }
-

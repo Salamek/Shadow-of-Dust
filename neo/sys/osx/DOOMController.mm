@@ -27,9 +27,6 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 // -*- mode: objc -*-
-#import "../../idlib/precompiled.h"
-#import "DOOMController.h"
-
 #import <unistd.h>
 #import <pthread.h>
 
@@ -38,13 +35,19 @@ If you have questions concerning this license or the applicable additional terms
 #import <AppKit/AppKit.h>
 #import <OpenGL/gl.h>
 
-#import "macosx_common.h"
-#import "macosx_local.h"
-#import "macosx_sys.h"
-
 #import <fenv.h>
 #import <ucontext.h>
 #import <mach/thread_status.h>
+
+#import "sys/platform.h"
+#import "idlib/Str.h"
+#import "framework/Licensee.h"
+#import "framework/Common.h"
+#import "sys/osx/macosx_common.h"
+#import "sys/osx/macosx_local.h"
+#import "sys/osx/macosx_sys.h"
+
+#import "DOOMController.h"
 
 #define	MAX_KEYS		256
 
@@ -466,8 +469,8 @@ void Sys_Shutdown( void ) {
 Sys_GetProcessorId
 ===============
 */
-cpuid_t Sys_GetProcessorId( void ) {
-	cpuid_t cpuid = CPUID_GENERIC;
+int Sys_GetProcessorId( void ) {
+	int cpuid = CPUID_GENERIC;
 #if defined(__ppc__)
 	cpuid |= CPUID_ALTIVEC;
 #elif defined(__i386__)

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -3181,7 +3181,7 @@ brush_t * Patch_Parse( bool bOld ) {
 			GetToken(true);
 		} else {
 			common->Printf("Warning: Patch read with no texture, using notexture... \n");
-		}   			
+		}
 
 		if ( strcmp(token, "(") ) {
 			return NULL;
@@ -4456,6 +4456,3 @@ g:\quake3\baseq3\textures\common
 
   Feature Addition: View/Hide Hint Brushes -- This should be a specific case.
 */
-
-
-

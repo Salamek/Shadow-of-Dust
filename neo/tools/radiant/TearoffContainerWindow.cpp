@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -77,18 +77,18 @@ void CTearoffContainerWindow::SetDialog ( CWnd* dlg , int ID )
 {
 	m_DialogID = ID;
 	m_ContainedDialog = dlg;
-	
+
 	CRect rect;
 	CPoint point (-10 , -10);
 	m_ContainedDialog->GetWindowRect ( rect );
-	
+
 	rect.OffsetRect(point);	//move the window slightly so you can tell it's been popped up
 
 	//stupid hack to get the window resize itself properly
 	rect.DeflateRect(0,0,0,1);
-	MoveWindow(rect);	
+	MoveWindow(rect);
 	rect.InflateRect(0,0,0,1);
-	MoveWindow(rect);	
+	MoveWindow(rect);
 }
 
 void CTearoffContainerWindow::SetDockManager ( CTabsDlg* dlg )
@@ -126,9 +126,9 @@ void CTearoffContainerWindow::OnSize(UINT nType, int cx, int cy)
 {
 	if ( m_ContainedDialog )
 	{
-		m_ContainedDialog->MoveWindow ( 0,0,cx,cy);		
+		m_ContainedDialog->MoveWindow ( 0,0,cx,cy);
 	}
-	
+
 	CWnd::OnSize(nType, cx, cy);
 }
 

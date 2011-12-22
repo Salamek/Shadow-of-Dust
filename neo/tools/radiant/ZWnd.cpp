@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ int CZWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_dcZ = ::GetDC(GetSafeHwnd());
 	QEW_SetupPixelFormat(m_dcZ, false);
 
-  	m_pZClip = new CZClip();
+	m_pZClip = new CZClip();
 
 	return 0;
 }
@@ -144,17 +144,17 @@ void CZWnd::OnPaint()
   //if (!qwglMakeCurrent(dc.m_hDC, m_hglrcZ))
   if (!qwglMakeCurrent(dc.m_hDC, win32.hGLRC))
   {
-    common->Printf("ERROR: wglMakeCurrent failed..\n ");
-    common->Printf("Please restart " EDITOR_WINDOWTEXT " if the Z view is not working\n");
+	common->Printf("ERROR: wglMakeCurrent failed..\n ");
+	common->Printf("Please restart " EDITOR_WINDOWTEXT " if the Z view is not working\n");
   }
   else
   {
 	  QE_CheckOpenGLForErrors();
 
-    Z_Draw ();
+	Z_Draw ();
 	  //qwglSwapBuffers(m_dcZ);
 	  qwglSwapBuffers(dc.m_hDC);
-    TRACE("Z Paint\n");
+	TRACE("Z Paint\n");
   }
 }
 
@@ -183,9 +183,9 @@ void CZWnd::OnSize(UINT nType, int cx, int cy)
   z.width = rctZ.right;
 	z.height = rctZ.bottom;
   if (z.width < 10)
-    z.width = 10;
+	z.width = 10;
   if (z.height < 10)
-    z.height = 10;
+	z.height = 10;
   Invalidate();
 }
 
@@ -217,7 +217,7 @@ void CZWnd::OnLButtonUp(UINT nFlags, CPoint point)
   GetClientRect(rctZ);
 	Z_MouseUp (point.x, rctZ.bottom - 1 - point.y, nFlags);
 	if (! (nFlags & (MK_LBUTTON|MK_RBUTTON|MK_MBUTTON)))
-  	ReleaseCapture ();
+	ReleaseCapture ();
 }
 
 void CZWnd::OnMButtonUp(UINT nFlags, CPoint point)
@@ -226,7 +226,7 @@ void CZWnd::OnMButtonUp(UINT nFlags, CPoint point)
   GetClientRect(rctZ);
 	Z_MouseUp (point.x, rctZ.bottom - 1 - point.y, nFlags);
 	if (! (nFlags & (MK_LBUTTON|MK_RBUTTON|MK_MBUTTON)))
-  	ReleaseCapture ();
+	ReleaseCapture ();
 }
 
 void CZWnd::OnRButtonUp(UINT nFlags, CPoint point)
@@ -235,7 +235,7 @@ void CZWnd::OnRButtonUp(UINT nFlags, CPoint point)
   GetClientRect(rctZ);
 	Z_MouseUp (point.x, rctZ.bottom - 1 - point.y, nFlags);
 	if (! (nFlags & (MK_LBUTTON|MK_RBUTTON|MK_MBUTTON)))
-  	ReleaseCapture ();
+	ReleaseCapture ();
 }
 
 
@@ -245,20 +245,20 @@ BOOL CZWnd::PreCreateWindow(CREATESTRUCT& cs)
   HINSTANCE hInstance = AfxGetInstanceHandle();
   if (::GetClassInfo(hInstance, Z_WINDOW_CLASS, &wc) == FALSE)
   {
-    // Register a new class
-  	memset (&wc, 0, sizeof(wc));
-    wc.style         = CS_NOCLOSE;// | CS_OWNDC;
-    wc.lpszClassName = Z_WINDOW_CLASS;
-    wc.hCursor       = LoadCursor (NULL,IDC_ARROW);
-    wc.lpfnWndProc = ::DefWindowProc;
-    if (AfxRegisterClass(&wc) == FALSE)
-      Error ("CZWnd RegisterClass: failed");
+	// Register a new class
+	memset (&wc, 0, sizeof(wc));
+	wc.style         = CS_NOCLOSE;// | CS_OWNDC;
+	wc.lpszClassName = Z_WINDOW_CLASS;
+	wc.hCursor       = LoadCursor (NULL,IDC_ARROW);
+	wc.lpfnWndProc = ::DefWindowProc;
+	if (AfxRegisterClass(&wc) == FALSE)
+	  Error ("CZWnd RegisterClass: failed");
   }
 
   cs.lpszClass = Z_WINDOW_CLASS;
   cs.lpszName = "Z";
   if (cs.style != QE3_CHILDSTYLE)
-    cs.style = QE3_SPLITTER_STYLE;
+	cs.style = QE3_SPLITTER_STYLE;
 
 	return CWnd::PreCreateWindow(cs);
 }

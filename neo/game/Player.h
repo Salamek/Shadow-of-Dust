@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,11 +29,23 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __GAME_PLAYER_H__
 #define __GAME_PLAYER_H__
 
+#include "idlib/math/Interpolate.h"
+
+#include "physics/Physics_Player.h"
+#include "Item.h"
+#include "Actor.h"
+#include "Weapon.h"
+#include "Projectile.h"
+#include "PlayerIcon.h"
+#include "GameEdit.h"
+
+class idAI;
+
 /*
 ===============================================================================
 
 	Player entity.
-	
+
 ===============================================================================
 */
 
@@ -397,7 +409,7 @@ public:
 	bool					GiveItem( idItem *item );
 	void					GiveItem( const char *name );
 	void					GiveHealthPool( float amt );
-	
+
 	bool					GiveInventoryItem( idDict *item );
 	void					RemoveInventoryItem( idDict *item );
 	bool					GiveInventoryItem( const char *name );
@@ -586,7 +598,7 @@ private:
 	int						focusTime;
 	idAFEntity_Vehicle *	focusVehicle;
 	idUserInterface *		cursor;
-	
+
 	// full screen guis track mouse movements directly
 	int						oldMouseX;
 	int						oldMouseY;
@@ -718,4 +730,3 @@ ID_INLINE void idPlayer::SetSelfSmooth( bool b ) {
 }
 
 #endif /* !__GAME_PLAYER_H__ */
-

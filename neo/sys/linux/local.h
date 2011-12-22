@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,9 +28,7 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __LINUX_LOCAL_H__
 #define __LINUX_LOCAL_H__
 
-extern glconfig_t glConfig;
-
-// glimp.cpp
+#include <X11/Xlib.h>
 
 //#define ID_ENABLE_DGA
 
@@ -39,6 +37,9 @@ extern glconfig_t glConfig;
 #endif
 #include <X11/extensions/xf86vmode.h>
 #include <X11/XKBlib.h>
+
+#include "renderer/RenderSystem.h"
+#include "renderer/tr_local.h"
 
 extern Display *dpy;
 extern Window win;

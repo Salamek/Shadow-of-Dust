@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,8 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __WINVAR_H__
 #define __WINVAR_H__
 
-#include "Rectangle.h"
+#include "framework/File.h"
+#include "ui/Rectangle.h"
 
 extern const char *VAR_GUIPREFIX;
 
@@ -84,7 +85,7 @@ public:
 	bool GetEval() {
 		return eval;
 	}
-	
+
 protected:
 	idDict *guiDict;
 	char *name;
@@ -123,7 +124,7 @@ public:
 		}
 	}
 
-	virtual void Update() {	
+	virtual void Update() {
 		const char *s = GetName();
 		if ( guiDict && s[0] != '\0' ) {
 			data = guiDict->GetBool( s );
@@ -379,7 +380,7 @@ public:
 			data.h = v.w;
 		}
 	}
-	
+
 	int	operator==(	const idRectangle &other ) const {
 		return (other == data);
 	}
@@ -405,7 +406,7 @@ public:
 		}
 		return data;
 	}
-	
+
 	operator const idRectangle&() const {
 		return data;
 	}
@@ -490,7 +491,7 @@ public:
 		data = other.data;
 		return *this;
 	}
-	
+
 	idVec2 &operator=(	const idVec2 &other ) {
 		data = other;
 		if (guiDict) {
@@ -852,4 +853,3 @@ public:
 };
 
 #endif /* !__WINVAR_H__ */
-

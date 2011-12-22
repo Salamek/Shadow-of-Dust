@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,12 +26,16 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/BuildVersion.h"
+#include "framework/DeclSkin.h"
+#include "renderer/ModelManager.h"
 
-#include "../Game_local.h"
+#include "physics/Clip.h"
+#include "Entity.h"
+#include "Game_local.h"
 
-#include "TypeInfo.h"
+#include "SaveGame.h"
 
 /*
 Save game related helper classes.
@@ -138,7 +142,7 @@ void idSaveGame::CallSave_r( const idTypeInfo *cls, const idClass *obj ) {
 			return;
 		}
 	}
-	
+
 	( obj->*cls->Save )( this );
 }
 
@@ -233,7 +237,7 @@ void idSaveGame::WriteString( const char *string ) {
 
 	len = strlen( string );
 	WriteInt( len );
-    file->Write( string, len );
+	file->Write( string, len );
 }
 
 /*
@@ -705,7 +709,7 @@ void idSaveGame::WriteTrace( const trace_t &trace ) {
  */
 void idSaveGame::WriteTraceModel( const idTraceModel &trace ) {
 	int j, k;
-	
+
 	WriteInt( (int&)trace.type );
 	WriteInt( trace.numVerts );
 	for ( j = 0; j < MAX_TRACEMODEL_VERTS; j++ ) {
@@ -771,7 +775,7 @@ void idSaveGame::WriteBuildNumber( const int value ) {
 /***********************************************************************
 
 	idRestoreGame
-	
+
 ***********************************************************************/
 
 /*
@@ -901,7 +905,7 @@ void idRestoreGame::CallRestore_r( const idTypeInfo *cls, idClass *obj ) {
 			return;
 		}
 	}
-	
+
 	( obj->*cls->Restore )( this );
 }
 
@@ -1481,7 +1485,7 @@ void idRestoreGame::ReadTrace( trace_t &trace ) {
  */
 void idRestoreGame::ReadTraceModel( idTraceModel &trace ) {
 	int j, k;
-	
+
 	ReadInt( (int&)trace.type );
 	ReadInt( trace.numVerts );
 	for ( j = 0; j < MAX_TRACEMODEL_VERTS; j++ ) {

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -52,11 +52,11 @@ public:
 	void AddText(const char *msg);
 	void SetConsoleText ( const idStr& text );
 	void ExecuteCommand ( const idStr& cmd = "" );
-	
+
 	idStr consoleStr;
-    idStrList consoleHistory;
-    idStr currentCommand;
-    int currentHistoryPosition;
+	idStrList consoleHistory;
+	idStr currentCommand;
+	int currentHistoryPosition;
 	bool saveCurrentCommand;
 
 	afx_msg void OnSize(UINT nType, int cx, int cy);

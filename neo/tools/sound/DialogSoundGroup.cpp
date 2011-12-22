@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -71,19 +71,19 @@ void CDialogSoundGroup::OnOK()
 		lstGroups.GetText(i, str);
 		list.Append(str.GetBuffer(0));
 	}
-	
+
 	CDialog::OnOK();
 }
 
 BOOL CDialogSoundGroup::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	int count = list.Num();
 	for (int i = 0; i < count; i++) {
 		lstGroups.AddString(list[i]);
 	}
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }

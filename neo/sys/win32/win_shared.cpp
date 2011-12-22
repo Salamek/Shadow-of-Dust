@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
-#include "win_local.h"
+#include "sys/win32/win_local.h"
+
 #include <lmerr.h>
 #include <lmcons.h>
 #include <lmwksta.h>
@@ -39,7 +39,7 @@ If you have questions concerning this license or the applicable additional terms
 #include <io.h>
 #include <conio.h>
 
-#ifndef	ID_DEDICATED
+#if !defined(ID_DEDICATED) && !defined(__MINGW32__)
 #include <comdef.h>
 #include <comutil.h>
 #include <wbemidl.h>
@@ -110,7 +110,7 @@ returns in megabytes
 ================
 */
 int Sys_GetVideoRam( void ) {
-#ifdef	ID_DEDICATED
+#if defined(ID_DEDICATED) || defined(__MINGW32__)
 	return 0;
 #else
 	unsigned int retSize = 64;
@@ -174,7 +174,7 @@ void Sys_GetCurrentMemoryStatus( sysMemoryStats_t &stats ) {
 	MEMORYSTATUSEX statex;
 	unsigned __int64 work;
 
-	memset( &statex, sizeof( statex ), 0 );
+	memset( &statex, 0, sizeof( statex ) );
 	statex.dwLength = sizeof( statex );
 	GlobalMemoryStatusEx( &statex );
 
@@ -250,4 +250,4 @@ char *Sys_GetCurrentUser( void ) {
 	}
 
 	return s_userName;
-}	
+}

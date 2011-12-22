@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,18 +25,23 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
+
+#ifndef __SYS_CLASS_H__
+#define __SYS_CLASS_H__
+
+#include "idlib/containers/Hierarchy.h"
+
+#include "gamesys/Event.h"
+
+class idClass;
+class idTypeInfo;
+
 /*
 
 Base class for all game objects.  Provides fast run-time type checking and run-time
 instancing of objects.
 
 */
-
-#ifndef __SYS_CLASS_H__
-#define __SYS_CLASS_H__
-
-class idClass;
-class idTypeInfo;
 
 extern const idEventDef EV_Remove;
 extern const idEventDef EV_SafeRemove;
@@ -61,7 +66,6 @@ public:
 
 	idEventArg()								{ type = D_EVENT_INTEGER; value = 0; };
 	idEventArg( int data )						{ type = D_EVENT_INTEGER; value = data; };
-	idEventArg( long int data )            { type = D_EVENT_INTEGER; value = data; };
 	idEventArg( float data )					{ type = D_EVENT_FLOAT; value = *reinterpret_cast<int *>( &data ); };
 	idEventArg( idVec3 &data )					{ type = D_EVENT_VECTOR; value = reinterpret_cast<intptr_t>( &data ); };
 	idEventArg( const idStr &data )				{ type = D_EVENT_STRING; value = reinterpret_cast<intptr_t>( data.c_str() ); };

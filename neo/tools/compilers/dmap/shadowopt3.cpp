@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/tr_local.h"
 
-#include "dmap.h"
-#include "../../../renderer/tr_local.h"
+#include "tools/compilers/dmap/dmap.h"
 
 /*
 
@@ -62,7 +61,7 @@ If you have questions concerning this license or the applicable additional terms
 	if triangles on both sides have two verts in common
 		continue
 	make a sil edge from one triangle to the other
-		
+
 
 
 
@@ -207,7 +206,7 @@ static bool TriOutsideTri( const shadowTri_t *a, const shadowTri_t *b ) {
 
 static bool TriBehindTri( const shadowTri_t *a, const shadowTri_t *b ) {
 	float	d;
-	
+
 	d = b->plane.Distance( a->v[0] );
 	if ( d > 0 ) {
 		return true;
@@ -269,7 +268,7 @@ static void ClipTriangle_r( const shadowTri_t *tri, int startTri, int skipTri, i
 				// recursively clip these triangles to all subsequent triangles
 				for ( int k = 2 ; k < back->GetNumPoints() ; k++ ) {
 					shadowTri_t	fragment = *tri;
-					
+
 					fragment.v[0] = (*back)[0].ToVec3();
 					fragment.v[1] = (*back)[k-1].ToVec3();
 					fragment.v[2] = (*back)[k].ToVec3();
@@ -328,7 +327,7 @@ static void ClipOccluders( idVec4 *verts, glIndex_t *indexes, int numIndexes,
 
 		idVec3	d1 = tri->v[1] - tri->v[0];
 		idVec3	d2 = tri->v[2] - tri->v[0];
-		
+
 		tri->plane.ToVec4().ToVec3().Cross( d2, d1 );
 		tri->plane.ToVec4().ToVec3().Normalize();
 		tri->plane[3] = - ( tri->v[0] * tri->plane.ToVec4().ToVec3() );
@@ -1045,7 +1044,7 @@ optimizedShadow_t SuperOptimizeOccluders( idVec4 *verts, glIndex_t *indexes, int
 	}
 
 	ret.totalIndexes = 0;
-	
+
 	maxRetIndexes = ret.numFrontCapIndexes + ret.numRearCapIndexes + ret.numSilPlaneIndexes;
 
 	ret.indexes = (glIndex_t *)Mem_Alloc( maxRetIndexes * sizeof( ret.indexes[0] ) );

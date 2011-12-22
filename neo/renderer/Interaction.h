@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,10 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __INTERACTION_H__
 #define __INTERACTION_H__
+
+#include "idlib/bv/Frustum.h"
+#include "renderer/Model.h"
+#include "renderer/tr_local.h"
 
 /*
 ===============================================================================
@@ -61,7 +65,7 @@ typedef struct {
 } srfCullInfo_t;
 
 
-typedef struct {		
+typedef struct {
 	// if lightTris == LIGHT_TRIS_DEFERRED, then the calculation of the
 	// lightTris has been deferred, and must be done if ambientTris is visible
 	srfTriangles_t *		lightTris;
@@ -100,7 +104,7 @@ public:
 	// be present as a surfaceInteraction_t with a NULL ambientTris, but
 	// possibly having a shader to specify the shadow sorting order
 	surfaceInteraction_t *	surfaces;
-	
+
 	// get space from here, if NULL, it is a pre-generated shadow volume from dmap
 	idRenderEntityLocal *	entityDef;
 	idRenderLightLocal *	lightDef;

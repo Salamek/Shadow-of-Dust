@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -55,13 +55,13 @@ public:
 	* @param docManager The material document manager for this view instance.
 	*/
 	virtual void	SetMaterialDocManager(MaterialDocManager* docManager) { materialDocManager = docManager; };
-	
+
 	/**
 	* Called when the selected material has changed.
 	* @param pMaterial The newly selected material.
 	*/
 	virtual void	MV_OnMaterialSelectionChange(MaterialDoc* pMaterial) {};
-	
+
 	/**
 	* Called when the material has changed but not applied.
 	* @param pMaterial The selected material.

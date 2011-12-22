@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,9 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
-#include "sys_local.h"
+#include "sys/platform.h"
+#include "framework/KeyInput.h"
+
+#include "sys/sys_local.h"
 
 const char * sysLanguageNames[] = {
 	"english", "spanish", "italian", "german", "french", "russian",
@@ -60,7 +61,7 @@ double idSysLocal::ClockTicksPerSecond( void ) {
 	return Sys_ClockTicksPerSecond();
 }
 
-cpuid_t idSysLocal::GetProcessorId( void ) {
+int idSysLocal::GetProcessorId( void ) {
 	return Sys_GetProcessorId();
 }
 
@@ -107,7 +108,7 @@ void idSysLocal::DLL_Unload( uintptr_t dllHandle ) {
 void idSysLocal::DLL_GetFileName( const char *baseName, char *dllName, int maxLength ) {
 #ifdef _WIN32
 	idStr::snPrintf( dllName, maxLength, "%s" CPUSTRING ".dll", baseName );
-#elif defined( __linux__ )
+#elif defined( __unix__ )
 	idStr::snPrintf( dllName, maxLength, "%s" CPUSTRING ".so", baseName );
 #elif defined( MACOS_X )
 	idStr::snPrintf( dllName, maxLength, "%s" ".dylib", baseName );
@@ -191,4 +192,3 @@ const char *Sys_TimeStampToStr( ID_TIME_T timeStamp ) {
 
 	return timeString;
 }
-

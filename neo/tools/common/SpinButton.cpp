@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ void SpinButton_SetIncrement ( HWND hWnd, float inc )
 
 void SpinButton_SetRange ( HWND hWnd, float minRange, float maxRange )
 {
-	SendMessage ( hWnd, UDM_SETRANGE32, (LONG)(minRange*100.0f), (LONG)(maxRange*100.0f) );	
+	SendMessage ( hWnd, UDM_SETRANGE32, (LONG)(minRange*100.0f), (LONG)(maxRange*100.0f) );
 }
 
 void SpinButton_HandleNotify ( NMHDR* hdr )
@@ -48,9 +48,9 @@ void SpinButton_HandleNotify ( NMHDR* hdr )
 
 	// Change with 0.1 on each click
 	char strValue[64];
-	float value;				
+	float value;
 	GetWindowText ( (HWND)SendMessage ( hdr->hwndFrom, UDM_GETBUDDY, 0, 0 ), strValue, 63 );
-	
+
 	float inc = (float)GetWindowLong ( hdr->hwndFrom, GWL_USERDATA );
 	if ( inc == 0 )
 	{
@@ -58,18 +58,18 @@ void SpinButton_HandleNotify ( NMHDR* hdr )
 		SetWindowLong ( hdr->hwndFrom, GWL_USERDATA, 100 );
 	}
 	inc /= 100.0f;
-	
+
 	if ( GetAsyncKeyState ( VK_SHIFT ) & 0x8000 )
 	{
 		inc *= 10.0f;
 	}
-	
-	value  = atof(strValue);				
+
+	value  = atof(strValue);
 	value += (udhdr->iDelta)*(inc);
 
 	// Avoid round-off errors
 	value = floor(value*1e3+0.5)/1e3;
-	
+
 	LONG minRange;
 	LONG maxRange;
 	SendMessage ( hdr->hwndFrom, UDM_GETRANGE32, (LONG)&minRange, (LONG)&maxRange );
@@ -84,8 +84,8 @@ void SpinButton_HandleNotify ( NMHDR* hdr )
 		if ( value < minRangef )
 		{
 			value = minRangef;
-		}		
+		}
 	}
-	
+
 	SetWindowText ( (HWND)SendMessage ( hdr->hwndFrom, UDM_GETBUDDY, 0, 0 ), va("%g",value) );
 }

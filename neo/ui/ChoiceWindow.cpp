@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,13 +26,14 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/LangDict.h"
+#include "framework/KeyInput.h"
+#include "ui/DeviceContext.h"
+#include "ui/Window.h"
+#include "ui/UserInterfaceLocal.h"
 
-#include "DeviceContext.h"
-#include "Window.h"
-#include "UserInterfaceLocal.h"
-#include "ChoiceWindow.h"
+#include "ui/ChoiceWindow.h"
 
 /*
 ============
@@ -85,7 +86,7 @@ idChoiceWindow::~idChoiceWindow() {
 
 void idChoiceWindow::RunNamedEvent( const char* eventName ) {
 	idStr event, group;
-	
+
 	if ( !idStr::Cmpn( eventName, "cvar read ", 10 ) ) {
 		event = eventName;
 		group = event.Mid( 10, event.Length() - 10 );
@@ -108,7 +109,7 @@ void idChoiceWindow::UpdateVars( bool read, bool force ) {
 				cvarStr.Set( cvar->GetString() );
 			} else {
 				cvar->SetString( cvarStr.c_str() );
-			}	
+			}
 		}
 		if ( !read && guiStr.NeedsUpdate() ) {
 			guiStr.Set( va( "%i", currentChoice ) );
@@ -199,7 +200,7 @@ const char *idChoiceWindow::HandleEvent(const sysEvent_t *event, bool *updateVis
 	if ( runAction2 ) {
 		RunScript( ON_ACTIONRELEASE );
 	}
-	
+
 	return cmd;
 }
 
@@ -216,7 +217,7 @@ void idChoiceWindow::UpdateChoice() {
 	if ( !updateStr.Num() ) {
 		return;
 	}
-	UpdateVars( true );	
+	UpdateVars( true );
 	updateStr.Update();
 	if ( choiceType == 0 ) {
 		// ChoiceType 0 stores current as an integer in either cvar or gui
@@ -274,7 +275,7 @@ idWinVar *idChoiceWindow::GetWinVarByName(const char *_name, bool fixup, drawWin
 	if ( idStr::Icmp( _name, "updateGroup" ) == 0 ) {
 		return &updateGroup;
 	}
-	
+
 	return idWindow::GetWinVarByName(_name, fixup, owner);
 }
 

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,16 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/hashing/CRC32.h"
+#include "idlib/LangDict.h"
+#include "framework/async/AsyncNetwork.h"
+#include "framework/Console.h"
+#include "framework/Game.h"
+#include "framework/EventLoop.h"
+#include "renderer/ModelManager.h"
 
-#include "Session_local.h"
+#include "framework/Session_local.h"
 
 idCVar	idSessionLocal::com_showAngles( "com_showAngles", "0", CVAR_SYSTEM | CVAR_BOOL, "" );
 idCVar	idSessionLocal::com_minTics( "com_minTics", "1", CVAR_SYSTEM, "" );
@@ -76,6 +82,7 @@ void Session_RescanSI_f( const idCmdArgs &args ) {
 	}
 }
 
+#ifndef	ID_DEDICATED
 /*
 ==================
 Session_Map_f
@@ -127,7 +134,7 @@ Restart the server on a different map in developer mode
 static void Session_DevMap_f( const idCmdArgs &args ) {
 	idStr map, string;
 	findFile_t	ff;
-	idCmdArgs	rl_args;	
+	idCmdArgs	rl_args;
 
 	map = args.Argv(1);
 	if ( !map.Length() ) {
@@ -180,6 +187,7 @@ static void Session_TestMap_f( const idCmdArgs &args ) {
 	sprintf( string, "devmap %s", map.c_str() );
 	cmdSystem->BufferCommandText( CMD_EXEC_NOW, string );
 }
+#endif
 
 /*
 ==================
@@ -201,87 +209,8 @@ static void Sess_WritePrecache_f( const idCmdArgs &args ) {
 	fileSystem->CloseFile( f );
 }
 
-/*
-===============
-idSessionLocal::MaybeWaitOnCDKey
-===============
-*/
-bool idSessionLocal::MaybeWaitOnCDKey( void ) {
-	if ( authEmitTimeout > 0 ) {
-		authWaitBox = true;
-		sessLocal.MessageBox( MSG_WAIT, common->GetLanguageDict()->GetString( "#str_07191" ), NULL, true, NULL, NULL, true );
-		return true;
-	}
-	return false;
-}
 
-/*
-===================
-Session_PromptKey_f
-===================
-*/
-/*
-static void Session_PromptKey_f( const idCmdArgs &args ) {
-	const char	*retkey;
-	bool		valid[ 2 ];
-	static bool recursed = false;
 
-	if ( recursed ) {
-		common->Warning( "promptKey recursed - aborted" );
-		return;
-	}
-	recursed = true;
-
-	do {
-		// in case we're already waiting for an auth to come back to us ( may happen exceptionally )
-		if ( sessLocal.MaybeWaitOnCDKey() ) {
-			if ( sessLocal.CDKeysAreValid( true ) ) {
-				recursed = false;
-				return;
-			}
-		}
-		// the auth server may have replied and set an error message, otherwise use a default
-		const char *prompt_msg = sessLocal.GetAuthMsg();
-		if ( prompt_msg[ 0 ] == '\0' ) {
-			prompt_msg = common->GetLanguageDict()->GetString( "#str_04308" );
-		}
-		retkey = sessLocal.MessageBox( MSG_CDKEY, prompt_msg, common->GetLanguageDict()->GetString( "#str_04305" ), true, NULL, NULL, true );
-		if ( retkey ) {
-			if ( sessLocal.CheckKey( retkey, false, valid ) ) {
-				// if all went right, then we may have sent an auth request to the master ( unless the prompt is used during a net connect )
-				bool canExit = true;
-				if ( sessLocal.MaybeWaitOnCDKey() ) {
-					// wait on auth reply, and got denied, prompt again
-					if ( !sessLocal.CDKeysAreValid( true ) ) {
-						// server says key is invalid - MaybeWaitOnCDKey was interrupted by a CDKeysAuthReply call, which has set the right error message
-						// the invalid keys have also been cleared in the process
-						sessLocal.MessageBox( MSG_OK, sessLocal.GetAuthMsg(), common->GetLanguageDict()->GetString( "#str_04310" ), true, NULL, NULL, true );
-						canExit = false;
-					}
-				}
-				if ( canExit ) {
-					// make sure that's saved on file
-					sessLocal.WriteCDKey();
-					sessLocal.MessageBox( MSG_OK, common->GetLanguageDict()->GetString( "#str_04307" ), common->GetLanguageDict()->GetString( "#str_04305" ), true, NULL, NULL, true );
-					break;
-				}
-			} else {
-				// offline check sees key invalid
-				// build a message about keys being wrong. do not attempt to change the current key state though
-				// ( the keys may be valid, but user would have clicked on the dialog anyway, that kind of thing )
-				idStr msg;
-				idAsyncNetwork::BuildInvalidKeyMsg( msg, valid );
-				sessLocal.MessageBox( MSG_OK, msg, common->GetLanguageDict()->GetString( "#str_04310" ), true, NULL, NULL, true );
-			}
-		} else if ( args.Argc() == 2 && idStr::Icmp( args.Argv(1), "force" ) == 0 ) {
-			// cancelled in force mode
-			cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "quit\n" );
-			cmdSystem->ExecuteCommandBuffer();
-		}
-	} while ( retkey );
-	recursed = false;
-}
-*/
 /*
 ===============================================================================
 
@@ -296,7 +225,7 @@ idSessionLocal::Clear
 ===============
 */
 void idSessionLocal::Clear() {
-	
+
 	insideUpdateScreen = false;
 	insideExecuteMapChange = false;
 
@@ -326,7 +255,7 @@ void idSessionLocal::Clear() {
 	timeDemo = TD_NO;
 	waitingOnBind = false;
 	lastPacifierTime = 0;
-	
+
 	msgRunning = false;
 	guiMsgRestore = NULL;
 	msgIgnoreButtons = false;
@@ -355,10 +284,10 @@ idSessionLocal::idSessionLocal
 idSessionLocal::idSessionLocal() {
 	guiInGame = guiMainMenu = guiIntro \
 		= guiRestartMenu = guiLoading = guiGameOver = guiActive \
-		= guiTest = guiMsg = guiMsgRestore = guiTakeNotes = NULL;	
-	
+		= guiTest = guiMsg = guiMsgRestore = guiTakeNotes = NULL;
+
 	menuSoundWorld = NULL;
-	
+
 	Clear();
 }
 
@@ -428,7 +357,7 @@ void idSessionLocal::Shutdown() {
 		delete menuSoundWorld;
 		menuSoundWorld = NULL;
 	}
-		
+
 	mapSpawnData.serverInfo.Clear();
 	mapSpawnData.syncedCVars.Clear();
 	for ( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
@@ -599,6 +528,7 @@ static void Session_DemoShot_f( const idCmdArgs &args ) {
 	}
 }
 
+#ifndef	ID_DEDICATED
 /*
 ================
 Session_RecordDemo_f
@@ -732,6 +662,7 @@ Session_TimeCmdDemo_f
 static void Session_TimeCmdDemo_f( const idCmdArgs &args ) {
 	sessLocal.TimeCmdDemo( args.Argv(1) );
 }
+#endif
 
 /*
 ================
@@ -746,6 +677,7 @@ static void Session_Disconnect_f( const idCmdArgs &args ) {
 	}
 }
 
+#ifndef	ID_DEDICATED
 #ifdef ID_DEMO_BUILD
 /*
 ================
@@ -778,6 +710,7 @@ static void Session_ExitCmdDemo_f( const idCmdArgs &args ) {
 	common->Printf( "Command demo exited at logIndex %i\n", sessLocal.logIndex );
 	sessLocal.cmdDemoFile = NULL;
 }
+#endif
 
 /*
 ================
@@ -909,7 +842,7 @@ void idSessionLocal::StartPlayingRenderDemo( idStr demoName ) {
 
 	// make sure localSound / GUI intro music shuts up
 	sw->StopAllSounds();
-	sw->PlayShaderDirectly( "", 0 );	
+	sw->PlayShaderDirectly( "", 0 );
 	menuSoundWorld->StopAllSounds();
 	menuSoundWorld->PlayShaderDirectly( "", 0 );
 
@@ -960,12 +893,12 @@ idSessionLocal::TimeRenderDemo
 */
 void idSessionLocal::TimeRenderDemo( const char *demoName, bool twice ) {
 	idStr demo = demoName;
-	
+
 	// no sound in time demos
 	soundSystem->SetMute( true );
 
 	StartPlayingRenderDemo( demo );
-	
+
 	if ( twice && readDemo ) {
 		// cycle through once to precache everything
 		guiLoading->SetStateString( "demo", common->GetLanguageDict()->GetString( "#str_04852" ) );
@@ -979,7 +912,7 @@ void idSessionLocal::TimeRenderDemo( const char *demoName, bool twice ) {
 		guiLoading->SetStateString( "demo", "" );
 		StartPlayingRenderDemo( demo );
 	}
-	
+
 
 	if ( !readDemo ) {
 		return;
@@ -1153,7 +1086,6 @@ void idSessionLocal::StartNewGame( const char *mapName, bool devmap ) {
 	common->Printf( "Dedicated servers cannot start singleplayer games.\n" );
 	return;
 #else
-
 	if ( idAsyncNetwork::server.IsActive() ) {
 		common->Printf("Server running, use si_map / serverMapRestart\n");
 		return;
@@ -1267,7 +1199,7 @@ This should still work after disconnecting from a level
 ==============
 */
 void idSessionLocal::WriteCmdDemo( const char *demoName, bool save ) {
-	
+
 	if ( !demoName[0] ) {
 		common->Printf( "idSessionLocal::WriteCmdDemo: no name specified\n" );
 		return;
@@ -1291,7 +1223,7 @@ void idSessionLocal::WriteCmdDemo( const char *demoName, bool save ) {
 	if ( save ) {
 		cmdDemoFile->Write( &logIndex, sizeof( logIndex ) );
 	}
-	
+
 	SaveCmdDemoToFile( cmdDemoFile );
 
 	if ( save ) {
@@ -1591,7 +1523,7 @@ void idSessionLocal::ExecuteMapChange( bool noFadeWipe ) {
 	if ( !idAsyncNetwork::IsActive() ) {
 		numClients = 1;
 	}
-	
+
 	int start = Sys_Milliseconds();
 
 	common->Printf( "--------- Map Initialization ---------\n" );
@@ -2165,7 +2097,7 @@ bool idSessionLocal::ProcessEvent( const sysEvent_t *event ) {
 			guiTest = NULL;
 			return true;
 		}
-		
+
 		static const char *cmd;
 		cmd = guiTest->HandleEvent( event, com_frameTime );
 		if ( cmd && cmd[0] ) {
@@ -2371,12 +2303,12 @@ void idSessionLocal::Draw() {
 		renderSystem->DrawStretchPic( 0, 0, 640, 480, 0, 0, 1, 1, declManager->FindMaterial( "_white" ) );
 		guiTest->Redraw( com_frameTime );
 	} else if ( guiActive && !guiActive->State().GetBool( "gameDraw" ) ) {
-		
+
 		// draw the frozen gui in the background
 		if ( guiActive == guiMsg && guiMsgRestore ) {
 			guiMsgRestore->Redraw( com_frameTime );
 		}
-		
+
 		// draw the menus full screen
 		if ( guiActive == guiTakeNotes && !com_skipGameDraw.GetBool() ) {
 			game->Draw( GetLocalClientNum() );
@@ -2438,7 +2370,7 @@ void idSessionLocal::Draw() {
 
 	// draw the wipe material on top of this if it hasn't completed yet
 	DrawWipeModel();
-	
+
 	// draw debug graphs
 	DrawCmdGraph();
 
@@ -2550,7 +2482,7 @@ void idSessionLocal::Frame() {
 	if ( com_minTics.GetInteger() > 1 ) {
 		minTic = lastGameTic + com_minTics.GetInteger();
 	}
-	
+
 	if ( readDemo ) {
 		if ( !timeDemo && numDemoFrames != 1 ) {
 			minTic = lastDemoTic + USERCMD_PER_DEMO_FRAME;
@@ -2562,7 +2494,7 @@ void idSessionLocal::Frame() {
 	} else if ( writeDemo ) {
 		minTic = lastGameTic + USERCMD_PER_DEMO_FRAME;		// demos are recorded at 30 hz
 	}
-	
+
 	// fixedTic lets us run a forced number of usercmd each frame without timing
 	if ( com_fixedTic.GetInteger() ) {
 		minTic = latchedTicNumber;
@@ -2590,23 +2522,6 @@ void idSessionLocal::Frame() {
 	}
 #endif
 
-	if ( authEmitTimeout ) {
-		// waiting for a game auth
-		if ( Sys_Milliseconds() > authEmitTimeout ) {
-			// expired with no reply
-			// means that if a firewall is blocking the master, we will let through
-			common->DPrintf( "no reply from auth\n" );
-			if ( authWaitBox ) {
-				// close the wait box
-				StopBox();
-				authWaitBox = false;
-			}
-
-			// maintain this empty as it's set by auth denials
-			authMsg.Empty();
-			authEmitTimeout = 0;
-		}
-	}
 
 	// send frame and mouse events to active guis
 	GuiFrameEvents();
@@ -2739,7 +2654,7 @@ void idSessionLocal::RunGameTic() {
 			logCmd.consistencyHash = LittleLong( logCmd.consistencyHash );
 		}
 	}
-	
+
 	// if we didn't get one from the file, get it locally
 	if ( !cmdDemoFile ) {
 		// get a locally created command
@@ -2869,7 +2784,6 @@ void idSessionLocal::Init() {
 
 	cmdSystem->AddCommand( "rescanSI", Session_RescanSI_f, CMD_FL_SYSTEM, "internal - rescan serverinfo cvars and tell game" );
 
-
 	cmdSystem->AddCommand( "hitch", Session_Hitch_f, CMD_FL_SYSTEM|CMD_FL_CHEAT, "hitches the game" );
 
 	// the same idRenderWorld will be used for all games
@@ -2952,7 +2866,6 @@ doesn't advance and get things out of sync
 void idSessionLocal::TimeHitch( int msec ) {
 	timeHitch += msec;
 }
-
 
 
 /*

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,9 +25,10 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../idlib/precompiled.h"
-#pragma hdrstop
 
+#include "sys/platform.h"
+
+#include "framework/Compressor.h"
 
 /*
 =================================================================================
@@ -1021,7 +1022,7 @@ void idCompressor_Huffman::Swap( huffmanNode_t *node1, huffmanNode_t *node2 ) {
 		if ( par1->left == node1 ) {
 			par1->left = node2;
 		} else {
-	      par1->right = node2;
+		  par1->right = node2;
 		}
 	} else {
 		tree = node2;
@@ -1092,7 +1093,7 @@ void idCompressor_Huffman::Increment( huffmanNode_t *node ) {
 	}
 
 	if ( node->next != NULL && node->next->weight == node->weight ) {
-	    lnode = *node->head;
+		lnode = *node->head;
 		if ( lnode != node->parent ) {
 			Swap( lnode, node );
 		}
@@ -1101,7 +1102,7 @@ void idCompressor_Huffman::Increment( huffmanNode_t *node ) {
 	if ( node->prev && node->prev->weight == node->weight ) {
 		*node->head = node->prev;
 	} else {
-	    *node->head = NULL;
+		*node->head = NULL;
 		Free_ppnode( node->head );
 	}
 	node->weight++;
@@ -1162,7 +1163,7 @@ void idCompressor_Huffman::AddRef( byte ch ) {
 				/* this should never happen */
 				tnode->head = Get_ppnode();
 				*tnode->head = tnode2;
-		    }
+			}
 		} else {
 			/* this should never happen */
 			tnode->head = Get_ppnode();
@@ -1296,7 +1297,7 @@ void idCompressor_Huffman::FinishCompress( void ) {
 	if ( compress == false ) {
 		return;
 	}
-	
+
 	bloc += 7;
 	int str = (bloc>>3);
 	if ( str ) {
@@ -1384,13 +1385,13 @@ public:
 
 	int				Write( const void *inData, int inLength );
 	int				Read( void *outData, int outLength );
-	
+
 private:
 					typedef struct acProbs_s {
 						unsigned int	low;
 						unsigned int	high;
 					} acProbs_t;
-				
+
 					typedef struct acSymbol_s {
 						unsigned int	low;
 						unsigned int	high;
@@ -1466,7 +1467,7 @@ void idCompressor_Arithmetic::UpdateProbabilities( acSymbol_t* symbol ) {
 	int i, x;
 
 	x = symbol->position;
-	
+
 	probabilities[ x ].high++;
 
 	for( i = x + 1; i < (1<<AC_WORD_LENGTH); i++ ) {
@@ -1483,7 +1484,7 @@ idCompressor_Arithmetic::GetCurrentCount
 ================
 */
 int idCompressor_Arithmetic::GetCurrentCount( void ) {
-    return (unsigned int) ( ( ( ( (long) code - low ) + 1 ) * scale - 1 ) / ( ( (long) high - low ) + 1 ) );
+	return (unsigned int) ( ( ( ( (long) code - low ) + 1 ) * scale - 1 ) / ( ( (long) high - low ) + 1 ) );
 }
 
 /*
@@ -1521,10 +1522,10 @@ int idCompressor_Arithmetic::ProbabilityForCount( unsigned int count ) {
 	int j;
 
 	for( j = 0; j < (1<<AC_WORD_LENGTH); j++ ) {
-        if ( count >= probabilities[ j ].low && count < probabilities[ j ].high ) {
+		if ( count >= probabilities[ j ].low && count < probabilities[ j ].high ) {
 			return j;
-        }
-    }
+		}
+	}
 
 	assert( false );
 
@@ -1540,10 +1541,10 @@ idCompressor_Arithmetic::SymbolFromCount
 */
 int idCompressor_Arithmetic::SymbolFromCount( unsigned int count, acSymbol_t* symbol ) {
 	int p = ProbabilityForCount( count );
-    symbol->low = probabilities[ p ].low;
-    symbol->high = probabilities[ p ].high;
+	symbol->low = probabilities[ p ].low;
+	symbol->high = probabilities[ p ].high;
 	symbol->position = p;
-    return p;
+	return p;
 }
 
 /*
@@ -1552,31 +1553,31 @@ idCompressor_Arithmetic::RemoveSymbolFromStream
 ================
 */
 void idCompressor_Arithmetic::RemoveSymbolFromStream( acSymbol_t* symbol ) {
-    long range;
+	long range;
 
 	range	= ( long )( high - low ) + 1;
 	high	= low + ( unsigned short )( ( range * symbol->high ) / scale - 1 );
 	low		= low + ( unsigned short )( ( range * symbol->low ) / scale );
 
-    while( true ) {
+	while( true ) {
 
-        if ( ( high & AC_MSB_MASK ) == ( low & AC_MSB_MASK ) ) {
+		if ( ( high & AC_MSB_MASK ) == ( low & AC_MSB_MASK ) ) {
 
 		} else if( ( low & AC_MSB2_MASK ) == AC_MSB2_MASK && ( high & AC_MSB2_MASK ) == 0 ) {
-            code	^= AC_MSB2_MASK;
-            low		&= AC_MSB2_MASK - 1;
-            high	|= AC_MSB2_MASK;
+			code	^= AC_MSB2_MASK;
+			low		&= AC_MSB2_MASK - 1;
+			high	|= AC_MSB2_MASK;
 		} else {
 			UpdateProbabilities( symbol );
-            return;
+			return;
 		}
 
-        low <<= 1;
-        high <<= 1;
-        high |= 1;
-        code <<= 1;
-        code |= ReadBits( 1 );
-    }
+		low <<= 1;
+		high <<= 1;
+		high |= 1;
+		code <<= 1;
+		code |= ReadBits( 1 );
+	}
 }
 
 /*
@@ -1608,7 +1609,7 @@ idCompressor_Arithmetic::EncodeSymbol
 */
 void idCompressor_Arithmetic::EncodeSymbol( acSymbol_t* symbol ) {
 	unsigned int range;
-	
+
 	// rescale high and low for the new symbol.
 	range	= ( high - low ) + 1;
 	high	= low + ( unsigned short )(( range * symbol->high ) / scale - 1 );
@@ -1619,26 +1620,26 @@ void idCompressor_Arithmetic::EncodeSymbol( acSymbol_t* symbol ) {
 			// the high digits of low and high have converged, and can be written to the stream
 			WriteBits( high >> AC_MSB_SHIFT, 1 );
 
-            while( underflowBits > 0 ) {
+			while( underflowBits > 0 ) {
 
 				WriteBits( ~high >> AC_MSB_SHIFT, 1 );
 
 				underflowBits--;
-            }
-        } else if ( ( low & AC_MSB2_MASK ) && !( high & AC_MSB2_MASK ) ) {
+			}
+		} else if ( ( low & AC_MSB2_MASK ) && !( high & AC_MSB2_MASK ) ) {
 			// underflow is in danger of happening, 2nd digits are converging but 1st digits don't match
 			underflowBits	+= 1;
 			low				&= AC_MSB2_MASK - 1;
 			high			|= AC_MSB2_MASK;
 		} else {
 			UpdateProbabilities( symbol );
-            return;
+			return;
 		}
 
-        low <<= 1;
-        high <<= 1;
-        high |=	1;
-    }
+		low <<= 1;
+		high <<= 1;
+		high |=	1;
+	}
 }
 
 /*

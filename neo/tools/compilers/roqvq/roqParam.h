@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,13 +28,14 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __roqParam_h__
 #define __roqParam_h__
 
-#include "gdefs.h"
-#pragma once
+#include "idlib/containers/StrList.h"
+#include "framework/File.h"
+#include "tools/compilers/roqvq/gdefs.h"
 
 class roqParam
 {
 public:
-	
+
 	const char*		RoqFilename( void );
 	const char*		RoqTempFilename( void );
 	const char*		GetNextImageFilename( void );

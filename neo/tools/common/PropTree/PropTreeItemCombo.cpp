@@ -117,7 +117,7 @@ void CPropTreeItemCombo::OnRefresh()
 void CPropTreeItemCombo::OnCommit()
 {
 	LONG idx;
-	
+
 	// store combo box item data
 	if ((idx = GetCurSel())==CB_ERR)
 		m_lComboData = 0;
@@ -198,7 +198,7 @@ BOOL CPropTreeItemCombo::CreateComboBoxBool()
 LONG CPropTreeItemCombo::FindCBData(LPARAM lParam)
 {
 	LONG idx;
-	
+
 	for (idx = 0; idx < GetCount(); idx++)
 	{
 		if (GetItemData(idx)==(DWORD)lParam)

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -44,7 +44,12 @@ If you have questions concerning this license or the applicable additional terms
 #include <ifaddrs.h>
 #endif
 
-#include "../../idlib/precompiled.h"
+#include "sys/platform.h"
+#include "framework/Common.h"
+#include "framework/CVarSystem.h"
+#include "sys/sys_public.h"
+
+#include "sys/posix/posix_public.h"
 
 idPort clientPort, serverPort;
 
@@ -56,7 +61,7 @@ typedef struct {
 	unsigned int mask;
 } net_interface;
 
-#define 		MAX_INTERFACES	32
+#define			MAX_INTERFACES	32
 int				num_interfaces = 0;
 net_interface	netint[MAX_INTERFACES];
 
@@ -662,8 +667,8 @@ bool idTCP::Init( const char *host, short port ) {
 
 	int status;
 	if ((status = fcntl(fd, F_GETFL, 0)) != -1) {
-	    status |= O_NONBLOCK; /* POSIX */
-	    status = fcntl(fd, F_SETFL, status);
+		status |= O_NONBLOCK; /* POSIX */
+		status = fcntl(fd, F_SETFL, status);
 	}
 	if (status == -1) {
 		common->Printf("ERROR: idTCP::Init: fcntl / O_NONBLOCK: %s\n", strerror(errno));
@@ -763,7 +768,7 @@ int	idTCP::Write(void *data, int size) {
 	if ( ( nbytes = TEMP_FAILURE_RETRY ( write( fd, data, size ) ) ) == -1 ) {
 #else
 	  do {
-	    nbytes = write( fd, data, size );
+		nbytes = write( fd, data, size );
 	  } while ( nbytes == -1 && errno == EINTR );
 	  if ( nbytes == -1 ) {
 #endif

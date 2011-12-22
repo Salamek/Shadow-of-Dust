@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,13 +26,15 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/FileSystem.h"
+#include "framework/DemoFile.h"
+#include "framework/KeyInput.h"
+#include "ui/ListGUILocal.h"
+#include "ui/DeviceContext.h"
+#include "ui/Window.h"
 
-#include "ListGUILocal.h"
-#include "DeviceContext.h"
-#include "Window.h"
-#include "UserInterfaceLocal.h"
+#include "ui/UserInterfaceLocal.h"
 
 extern idCVar r_skipGuiShaders;		// 1 = don't render any gui elements on surfaces
 
@@ -465,8 +467,8 @@ void idUserInterfaceLocal::ReadFromDemoFile( class idDemoFile *f ) {
 	if (desktop == NULL) {
 		f->Log("creating new gui\n");
 		desktop = new idWindow(this);
-	   	desktop->SetFlag( WIN_DESKTOP );
-	   	desktop->SetDC( &uiManagerLocal.dc );
+		desktop->SetFlag( WIN_DESKTOP );
+		desktop->SetDC( &uiManagerLocal.dc );
 		desktop->ReadFromDemoFile(f);
 	} else {
 		f->Log("re-using gui\n");
@@ -561,7 +563,7 @@ bool idUserInterfaceLocal::ReadFromSaveGame( idFile *savefile ) {
 		savefile->Read( &len, sizeof( len ) );
 		value.Fill( ' ', len );
 		savefile->Read( &value[0], len );
-		
+
 		state.Set( key, value );
 	}
 
@@ -634,4 +636,3 @@ void idUserInterfaceLocal::SetCursor( float x, float y ) {
 	cursorX = x;
 	cursorY = y;
 }
-

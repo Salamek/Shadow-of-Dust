@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -345,7 +345,7 @@ int CCamWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 				0,	// clipping precision
 				0,	// output quality
 				FIXED_PITCH | FF_MODERN,	// pitch and family
-				"Lucida Console" 	// pointer to typeface name string
+				"Lucida Console"	// pointer to typeface name string
 				);
 
 	if (!hfont) {
@@ -749,7 +749,7 @@ bool CCamWnd::CullBrush(brush_t *b, bool cubicOnly) {
 	}
 
 	if (g_PrefsDlg.m_bCubicClipping) {
-		
+
 		float distance = g_PrefsDlg.m_nCubicScale * 64;
 
 		idVec3 mid;
@@ -862,11 +862,11 @@ extern void glLabeledPoint(idVec4 &color, idVec3 &point, float size, const char 
 void DrawAxial(face_t *selFace) {
 	if (g_bAxialMode) {
 		idVec3 points[4];
-	
+
 		for (int j = 0; j < selFace->face_winding->GetNumPoints(); j++) {
 			glLabeledPoint(idVec4(1, 1, 1, 1), (*selFace->face_winding)[j].ToVec3(), 3, va("%i", j));
 		}
-		
+
 		ValidateAxialPoints();
 		points[0] = (*selFace->face_winding)[g_axialAnchor].ToVec3();
 		VectorMA (points[0], 1, selFace->plane, points[0]);
@@ -888,7 +888,7 @@ void DrawAxial(face_t *selFace) {
 
 /*
  =======================================================================================================================
-    Cam_Draw
+	Cam_Draw
  =======================================================================================================================
  */
 void CCamWnd::SetProjectionMatrix() {
@@ -1044,9 +1044,9 @@ void CCamWnd::Cam_Draw() {
 			continue;
 		}
 
-        if ( brush->owner->eclass->entityModel ) {
-            continue;
-        }
+		if ( brush->owner->eclass->entityModel ) {
+			continue;
+		}
 
 		for (face = brush->brush_faces; face; face = face->next) {
 			Face_Draw(face);
@@ -1115,7 +1115,7 @@ void CCamWnd::Cam_Draw() {
 	}
 
 	g_splineList->draw (static_cast<bool>(g_qeglobals.d_select_mode == sel_addpoint || g_qeglobals.d_select_mode == sel_editpoint));
-	
+
 	if ( g_qeglobals.selectObject && (g_qeglobals.d_select_mode == sel_addpoint || g_qeglobals.d_select_mode == sel_editpoint) ) {
 		g_qeglobals.selectObject->drawSelection();
 	}
@@ -1626,7 +1626,7 @@ int Brush_ToTris(brush_t *brush, idTriList *tris, idMatList *mats, bool models, 
 		mats->Append(face->d_texture);
 		numSurfaces++;
 	}
-	
+
 	return numSurfaces;
 }
 
@@ -1741,7 +1741,7 @@ void CCamWnd::BuildRendererState() {
 
 			idTriList tris(1024);
 			idMatList mats(1024);
-			
+
 			if (!IsBModel(brush)) {
 				numSurfaces += Brush_ToTris( brush, &tris, &mats, false, false );
 			}
@@ -1866,13 +1866,13 @@ CCamWnd::UpdateCaption
 ========================
 */
 void CCamWnd::UpdateCaption() {
-	
+
 	idStr strCaption;
 
 	if (worldDirty) {
 		strCaption = "*";
 	}
-	// FIXME: 	
+	// FIXME:
 	strCaption += (renderMode) ? "RENDER" : "CAM";
 	if (renderMode) {
 		strCaption += (rebuildMode) ? " (Realtime)" : "";
@@ -2047,7 +2047,7 @@ void CCamWnd::DrawEntityData() {
 
 /*
  =======================================================================================================================
-    Cam_Render
+	Cam_Render
 
 	This used the renderSystem to draw a fully lit view of the world
  =======================================================================================================================
@@ -2089,7 +2089,7 @@ void CCamWnd::Cam_Render() {
 
 	// the editor uses opposite pitch convention
 	refdef.viewaxis = idAngles( -m_Camera.angles.pitch, m_Camera.angles.yaw, m_Camera.angles.roll ).ToMat3();
-	
+
 	refdef.width = SCREEN_WIDTH;
 	refdef.height = SCREEN_HEIGHT;
 	refdef.fov_x = 90;
@@ -2151,7 +2151,7 @@ void CCamWnd::UpdateCameraView() {
 				idAngles ang = v.ToMat3().ToAngles();
 				ang.pitch = -ang.pitch;
 				ang.roll = 0.0f;
-                SetView( ent->origin, ang );
+				SetView( ent->origin, ang );
 				Cam_BuildMatrix();
 				Sys_UpdateWindows( W_CAMERA );
 				return;
@@ -2165,4 +2165,3 @@ void CCamWnd::UpdateCameraView() {
 		saveValid = false;
 	}
 }
-

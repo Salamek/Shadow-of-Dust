@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,6 +29,14 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __DECLPARTICLE_H__
 #define __DECLPARTICLE_H__
 
+#include "idlib/containers/List.h"
+#include "idlib/math/Vector.h"
+#include "idlib/math/Matrix.h"
+#include "idlib/math/Random.h"
+#include "idlib/bv/Bounds.h"
+#include "framework/DeclManager.h"
+#include "framework/DeclTable.h"
+
 /*
 ===============================================================================
 
@@ -44,7 +52,7 @@ public:
 	const idDeclTable *		table;
 	float					from;
 	float					to;
-	
+
 	float					Eval( float frac, idRandom &rand ) const;
 	float					Integrate( float frac, idRandom &rand ) const;
 };
@@ -137,36 +145,36 @@ public:
 	float					particleLife;		// total seconds of life for each particle
 	float					timeOffset;			// time offset from system start for the first particle to spawn
 	float					deadTime;			// time after particleLife before respawning
-	
+
 	//-------------------------------	// standard path parms
-		
+
 	prtDistribution_t		distributionType;
 	float					distributionParms[4];
-	
+
 	prtDirection_t			directionType;
 	float					directionParms[4];
-	
+
 	idParticleParm			speed;
 	float					gravity;				// can be negative to float up
 	bool					worldGravity;			// apply gravity in world space
 	bool					randomDistribution;		// randomly orient the quad on emission ( defaults to true )
 	bool					entityColor;			// force color from render entity ( fadeColor is still valid )
-	
+
 	//------------------------------	// custom path will completely replace the standard path calculations
-	
+
 	prtCustomPth_t			customPathType;		// use custom C code routines for determining the origin
 	float					customPathParms[8];
-	
+
 	//--------------------------------
-	
+
 	idVec3					offset;				// offset from origin to spawn all particles, also applies to customPath
-	
+
 	int						animationFrames;	// if > 1, subdivide the texture S axis into frames and crossfade
 	float					animationRate;		// frames per second
 
 	float					initialAngle;		// in degrees, random angle is used if zero ( default )
 	idParticleParm			rotationSpeed;		// half the particles will have negative rotation speeds
-	
+
 	prtOrientation_t		orientation;	// view, aimed, or axis fixed
 	float					orientationParms[4];
 

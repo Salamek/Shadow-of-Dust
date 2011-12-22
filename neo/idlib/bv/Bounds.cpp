@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,9 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+
+#include "idlib/bv/Bounds.h"
 
 idBounds bounds_zero( vec3_zero, vec3_zero );
 
@@ -133,43 +134,43 @@ idBounds::LineIntersection
 ============
 */
 bool idBounds::LineIntersection( const idVec3 &start, const idVec3 &end ) const {
-    float ld[3];
+	float ld[3];
 	idVec3 center = ( b[0] + b[1] ) * 0.5f;
 	idVec3 extents = b[1] - center;
-    idVec3 lineDir = 0.5f * ( end - start );
-    idVec3 lineCenter = start + lineDir;
-    idVec3 dir = lineCenter - center;
+	idVec3 lineDir = 0.5f * ( end - start );
+	idVec3 lineCenter = start + lineDir;
+	idVec3 dir = lineCenter - center;
 
-    ld[0] = idMath::Fabs( lineDir[0] );
+	ld[0] = idMath::Fabs( lineDir[0] );
 	if ( idMath::Fabs( dir[0] ) > extents[0] + ld[0] ) {
-        return false;
+		return false;
 	}
 
-    ld[1] = idMath::Fabs( lineDir[1] );
+	ld[1] = idMath::Fabs( lineDir[1] );
 	if ( idMath::Fabs( dir[1] ) > extents[1] + ld[1] ) {
-        return false;
+		return false;
 	}
 
-    ld[2] = idMath::Fabs( lineDir[2] );
+	ld[2] = idMath::Fabs( lineDir[2] );
 	if ( idMath::Fabs( dir[2] ) > extents[2] + ld[2] ) {
-        return false;
+		return false;
 	}
 
-    idVec3 cross = lineDir.Cross( dir );
+	idVec3 cross = lineDir.Cross( dir );
 
 	if ( idMath::Fabs( cross[0] ) > extents[1] * ld[2] + extents[2] * ld[1] ) {
-        return false;
+		return false;
 	}
 
 	if ( idMath::Fabs( cross[1] ) > extents[0] * ld[2] + extents[2] * ld[0] ) {
-        return false;
+		return false;
 	}
 
 	if ( idMath::Fabs( cross[2] ) > extents[0] * ld[1] + extents[1] * ld[0] ) {
-        return false;
+		return false;
 	}
 
-    return true;
+	return true;
 }
 
 /*

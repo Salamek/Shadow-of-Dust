@@ -26,8 +26,16 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/CmdArgs.h"
+#include "framework/async/AsyncNetwork.h"
+#include "framework/Licensee.h"
+#include "framework/UsercmdGen.h"
+#include "renderer/tr_local.h"
+#include "sys/win32/rc/CreateResourceIDs.h"
+#include "sys/sys_local.h"
+
+#include "sys/win32/win_local.h"
 
 #include <errno.h>
 #include <float.h>
@@ -35,18 +43,12 @@ If you have questions concerning this license or the applicable additional terms
 #include <direct.h>
 #include <io.h>
 #include <conio.h>
-#include <mapi.h>
 #include <shellapi.h>
 
 #ifndef __MRC__
 #include <sys/types.h>
 #include <sys/stat.h>
 #endif
-
-#include "../sys_local.h"
-#include "win_local.h"
-#include "rc/CreateResourceIDs.h"
-#include "../../renderer/tr_local.h"
 
 idCVar Win32Vars_t::sys_arch( "sys_arch", "", CVAR_SYSTEM | CVAR_INIT, "" );
 idCVar Win32Vars_t::sys_cpustring( "sys_cpustring", "detect", CVAR_SYSTEM | CVAR_INIT, "" );
@@ -91,12 +93,15 @@ Sys_Createthread
 ==================
 */
 void Sys_CreateThread(  xthread_t function, void *parms, xthreadPriority priority, xthreadInfo &info, const char *name, xthreadInfo *threads[MAX_THREADS], int *thread_count ) {
+	DWORD id;
 	HANDLE temp = CreateThread(	NULL,	// LPSECURITY_ATTRIBUTES lpsa,
 									0,		// DWORD cbStack,
-									function,	// LPTHREAD_START_ROUTINE lpStartAddr,
+									(LPTHREAD_START_ROUTINE)function,	// LPTHREAD_START_ROUTINE lpStartAddr,
 									parms,	// LPVOID lpvThreadParm,
 									0,		//   DWORD fdwCreate,
-									&info.threadId);
+									&id);
+
+	info.threadId = id;
 	info.threadHandle = (intptr_t) temp;
 	if (priority == THREAD_HIGHEST) {
 		SetThreadPriority( (HANDLE)info.threadHandle, THREAD_PRIORITY_HIGHEST );		//  we better sleep enough to do this
@@ -677,7 +682,7 @@ Sys_DLL_GetProcAddress
 =====================
 */
 void *Sys_DLL_GetProcAddress( uintptr_t dllHandle, const char *procName ) {
-	return GetProcAddress( (HINSTANCE)dllHandle, procName );
+	return (void *)GetProcAddress( (HINSTANCE)dllHandle, procName );
 }
 
 /*
@@ -1011,10 +1016,6 @@ void Sys_Init( void ) {
 			win32.sys_arch.SetString( "WinXP (NT)" );
 		} else if ( win32.osversion.dwMajorVersion == 6 ) {
 			win32.sys_arch.SetString( "Vista" );
-		} else if ( win32.osversion.dwMajorVersion == 6 && win32.osversion.dwMinorVersion == 0 ) {
-			win32.sys_arch.SetString( "WinVista (NT)" );
-		} else if ( win32.osversion.dwMajorVersion == 6 && win32.osversion.dwMinorVersion == 1 ) {
-			win32.sys_arch.SetString( "Win7 (NT)" );
 		} else {
 			win32.sys_arch.SetString( "Unknown NT variant" );
 		}
@@ -1118,7 +1119,7 @@ void Sys_Init( void ) {
 			common->Printf( "WARNING: unknown sys_cpustring '%s'\n", win32.sys_cpustring.GetString() );
 			id = CPUID_GENERIC;
 		}
-		win32.cpuid = (cpuid_t) id;
+		win32.cpuid = id;
 	}
 
 	common->Printf( "%s\n", win32.sys_cpustring.GetString() );
@@ -1140,7 +1141,7 @@ void Sys_Shutdown( void ) {
 Sys_GetProcessorId
 ================
 */
-cpuid_t Sys_GetProcessorId( void ) {
+int Sys_GetProcessorId( void ) {
 	return win32.cpuid;
 }
 
@@ -1173,8 +1174,6 @@ void Win_Frame( void ) {
 	}
 }
 
-
-
 /*
 ====================
 GetExceptionCodeInfo
@@ -1206,128 +1205,7 @@ const char *GetExceptionCodeInfo( UINT code ) {
 	}
 }
 
-/*
-====================
-EmailCrashReport
-
-  emailer originally from Raven/Quake 4
-====================
-*/
-void EmailCrashReport( LPSTR messageText ) {
-	LPMAPISENDMAIL	MAPISendMail;
-	MapiMessage		message;
-	static int lastEmailTime = 0;
-
-	if ( Sys_Milliseconds() < lastEmailTime + 10000 ) {
-		return;
-	}
-
-	lastEmailTime = Sys_Milliseconds();
-
-	HINSTANCE mapi = LoadLibrary( "MAPI32.DLL" );
-	if( mapi ) {
-		MAPISendMail = ( LPMAPISENDMAIL )GetProcAddress( mapi, "MAPISendMail" );
-		if( MAPISendMail ) {
-			MapiRecipDesc toProgrammers =
-			{
-				0,										// ulReserved
-					MAPI_TO,							// ulRecipClass
-					"DOOM 3 Crash",						// lpszName
-					"SMTP:programmers@idsoftware.com",	// lpszAddress
-					0,									// ulEIDSize
-					0									// lpEntry
-			};
-
-			memset( &message, 0, sizeof( message ) );
-			message.lpszSubject = "DOOM 3 Fatal Error";
-			message.lpszNoteText = messageText;
-			message.nRecipCount = 1;
-			message.lpRecips = &toProgrammers;
-
-			MAPISendMail(
-				0,									// LHANDLE lhSession
-				0,									// ULONG ulUIParam
-				&message,							// lpMapiMessage lpMessage
-				MAPI_DIALOG,						// FLAGS flFlags
-				0									// ULONG ulReserved
-				);
-		}
-		FreeLibrary( mapi );
-	}
-}
-
 int Sys_FPU_PrintStateFlags( char *ptr, int ctrl, int stat, int tags, int inof, int inse, int opof, int opse );
-
-/*
-====================
-_except_handler
-====================
-*/
-EXCEPTION_DISPOSITION __cdecl _except_handler( struct _EXCEPTION_RECORD *ExceptionRecord, void * EstablisherFrame,
-												struct _CONTEXT *ContextRecord, void * DispatcherContext ) {
-
-	static char msg[ 8192 ];
-	char FPUFlags[2048];
-
-	Sys_FPU_PrintStateFlags( FPUFlags, ContextRecord->FloatSave.ControlWord,
-										ContextRecord->FloatSave.StatusWord,
-										ContextRecord->FloatSave.TagWord,
-										ContextRecord->FloatSave.ErrorOffset,
-										ContextRecord->FloatSave.ErrorSelector,
-										ContextRecord->FloatSave.DataOffset,
-										ContextRecord->FloatSave.DataSelector );
-
-
-	sprintf( msg,
-		"Please describe what you were doing when DOOM 3 crashed!\n"
-		"If this text did not pop into your email client please copy and email it to programmers@idsoftware.com\n"
-			"\n"
-			"-= FATAL EXCEPTION =-\n"
-			"\n"
-			"%s\n"
-			"\n"
-			"0x%x at address 0x%08x\n"
-			"\n"
-			"%s\n"
-			"\n"
-			"EAX = 0x%08x EBX = 0x%08x\n"
-			"ECX = 0x%08x EDX = 0x%08x\n"
-			"ESI = 0x%08x EDI = 0x%08x\n"
-			"EIP = 0x%08x ESP = 0x%08x\n"
-			"EBP = 0x%08x EFL = 0x%08x\n"
-			"\n"
-			"CS = 0x%04x\n"
-			"SS = 0x%04x\n"
-			"DS = 0x%04x\n"
-			"ES = 0x%04x\n"
-			"FS = 0x%04x\n"
-			"GS = 0x%04x\n"
-			"\n"
-			"%s\n",
-			com_version.GetString(),
-			ExceptionRecord->ExceptionCode,
-			ExceptionRecord->ExceptionAddress,
-			GetExceptionCodeInfo( ExceptionRecord->ExceptionCode ),
-			ContextRecord->Eax, ContextRecord->Ebx,
-			ContextRecord->Ecx, ContextRecord->Edx,
-			ContextRecord->Esi, ContextRecord->Edi,
-			ContextRecord->Eip, ContextRecord->Esp,
-			ContextRecord->Ebp, ContextRecord->EFlags,
-			ContextRecord->SegCs,
-			ContextRecord->SegSs,
-			ContextRecord->SegDs,
-			ContextRecord->SegEs,
-			ContextRecord->SegFs,
-			ContextRecord->SegGs,
-			FPUFlags
-		);
-
-	EmailCrashReport( msg );
-	common->FatalError( msg );
-
-	// Tell the OS to restart the faulting instruction
-	return ExceptionContinueExecution;
-}
 
 #define TEST_FPU_EXCEPTIONS	/*	FPU_EXCEPTION_INVALID_OPERATION |		*/	\
 							/*	FPU_EXCEPTION_DENORMALIZED_OPERAND |	*/	\
@@ -1349,16 +1227,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	Sys_SetPhysicalWorkMemory( 192 << 20, 1024 << 20 );
 
 	Sys_GetCurrentMemoryStatus( exeLaunchMemoryStats );
-
-#if 0
-	DWORD handler = (DWORD)_except_handler;
-	__asm
-	{                           // Build EXCEPTION_REGISTRATION record:
-		push    handler         // Address of handler function
-		push    FS:[0]          // Address of previous handler
-		mov     FS:[0],ESP      // Install new EXECEPTION_REGISTRATION
-	}
-#endif
 
 	win32.hInstance = hInstance;
 	idStr::Copynz( sys_cmdline, lpCmdLine, sizeof( sys_cmdline ) );

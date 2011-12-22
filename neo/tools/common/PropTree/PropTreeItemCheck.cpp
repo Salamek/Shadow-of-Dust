@@ -77,7 +77,7 @@ void CPropTreeItemCheck::DrawAttribute(CDC* pDC, const RECT& rc)
 void CPropTreeItemCheck::SetCheckState(BOOL state)
  {
 	 checkState = state;
-	
+
 	 SetCheck(checkState ? BST_CHECKED : BST_UNCHECKED);
  }
 

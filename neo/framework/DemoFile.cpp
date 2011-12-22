@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/geometry/JointTransform.h"
+#include "framework/Licensee.h"
+#include "framework/FileSystem.h"
+
+#include "framework/DemoFile.h"
 
 idCVar idDemoFile::com_logDemos( "com_logDemos", "0", CVAR_SYSTEM | CVAR_BOOL, "Write demo.log with debug information in it" );
 idCVar idDemoFile::com_compressDemos( "com_compressDemos", "1", CVAR_SYSTEM | CVAR_INTEGER | CVAR_ARCHIVE, "Compression scheme for demo files\n0: None    (Fast, large files)\n1: LZW     (Fast to compress, Fast to decompress, medium/small files)\n2: LZSS    (Slow to compress, Fast to decompress, small files)\n3: Huffman (Fast to compress, Slow to decompress, medium files)\nSee also: The 'CompressDemo' command" );
@@ -222,11 +226,11 @@ const char *idDemoFile::ReadHashString() {
 	if ( index == -1 ) {
 		// read a new string for the table
 		idStr	*str = new idStr;
-		
+
 		idStr data;
 		ReadString( data );
 		*str = data;
-		
+
 		demoStrings.Append( str );
 
 		return *str;
@@ -262,7 +266,7 @@ void idDemoFile::WriteHashString( const char *str ) {
 	idStr	*copy = new idStr( str );
 //common->Printf( "hash:%i = %s\n", demoStrings.Num(), str );
 	demoStrings.Append( copy );
-	int cmd = -1;	
+	int cmd = -1;
 	WriteInt( cmd );
 	WriteString( str );
 }
@@ -322,7 +326,3 @@ int idDemoFile::Read( void *buffer, int len ) {
 int idDemoFile::Write( const void *buffer, int len ) {
 	return compressor->Write( buffer, len );
 }
-
-
-
-

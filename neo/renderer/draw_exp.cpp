@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "sys/win32/win_local.h"
 
-#include "tr_local.h"
-#include "../sys/win32/win_local.h"
+#include "renderer/tr_local.h"
 
 /*
 
@@ -621,7 +620,7 @@ void R_Exp_Allocate( void ) {
 		sizeof( pixelformats ) / sizeof( pixelformats[0] ), pixelformats, &numFormats );
 #if 0
 	for ( int i = 0 ; i < (int)numFormats ; i++ ) {
-		R_PrintPixelFormat( pixelformats[i] );	
+		R_PrintPixelFormat( pixelformats[i] );
 	}
 #endif
 	common->Printf( "\nshadowPbuffer:\n" );
@@ -1403,21 +1402,21 @@ GL_State( GLS_DEPTHMASK | GLS_DEPTHFUNC_ALWAYS );//!@#
 }
 
 void InvertByTranspose( const float a[16], float r[16] ) {
-    r[ 0] = a[ 0];
-    r[ 1] = a[ 4];
-    r[ 2] = a[ 8];
+	r[ 0] = a[ 0];
+	r[ 1] = a[ 4];
+	r[ 2] = a[ 8];
 	r[ 3] = 0;
-    r[ 4] = a[ 1];
-    r[ 5] = a[ 5];
-    r[ 6] = a[ 9];
+	r[ 4] = a[ 1];
+	r[ 5] = a[ 5];
+	r[ 6] = a[ 9];
 	r[ 7] = 0;
-    r[ 8] = a[ 2];
-    r[ 9] = a[ 6];
-    r[10] = a[10];
+	r[ 8] = a[ 2];
+	r[ 9] = a[ 6];
+	r[10] = a[10];
 	r[11] = 0;
-    r[12] = -(r[ 0]*a[12] + r[ 4]*a[13] + r[ 8]*a[14]);
-    r[13] = -(r[ 1]*a[12] + r[ 5]*a[13] + r[ 9]*a[14]);
-    r[14] = -(r[ 2]*a[12] + r[ 6]*a[13] + r[10]*a[14]);
+	r[12] = -(r[ 0]*a[12] + r[ 4]*a[13] + r[ 8]*a[14]);
+	r[13] = -(r[ 1]*a[12] + r[ 5]*a[13] + r[ 9]*a[14]);
+	r[14] = -(r[ 2]*a[12] + r[ 6]*a[13] + r[10]*a[14]);
 	r[15] = 1;
 }
 
@@ -1600,7 +1599,7 @@ void	RB_Exp_SelectFrustum( viewLight_t *vLight, int side ) {
 	GL_Cull( CT_FRONT_SIDED );
 
 	RB_DrawElementsWithCounters( tri );
-	
+
 	// draw back faces of the light frustum with
 	// depth test greater
 	// stencil test of equal 1
@@ -2013,7 +2012,7 @@ void	RB_shadowResampleAlpha( void ) {
 	// set fragment / vertex program?
 
 	RB_DrawElementsWithCounters( tri );
-	
+
 	// draw back faces of the light frustum with
 	// depth test greater
 	// stencil test of equal 1
@@ -2124,7 +2123,7 @@ void RB_EXP_ReadFloatBuffer( void ) {
 	qglPushMatrix();
 	qglLoadIdentity();
 	qglDisable( GL_TEXTURE_2D );
-    qglOrtho( 0, 1, 0, 1, -1, 1 );
+	qglOrtho( 0, 1, 0, 1, -1, 1 );
 	qglRasterPos2f( 0.01f, 0.01f );
 	qglDrawPixels( glConfig.vidWidth, glConfig.vidHeight, GL_RGBA, GL_FLOAT, buf );
 	qglPopMatrix();
@@ -2399,7 +2398,7 @@ void    RB_Exp_DrawInteractions( void ) {
 	} else {
 		nativeViewBuffer = false;
 	}
-	
+
 	// set up for either point sampled or percentage-closer filtering for the shadow sampling
 	shadowImage[0]->BindFragment();
 	if ( r_sb_linearFilter.GetBool() ) {

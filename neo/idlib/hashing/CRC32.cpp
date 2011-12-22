@@ -1,6 +1,6 @@
+#include "sys/platform.h"
 
-#include "../precompiled.h"
-#pragma hdrstop
+#include "idlib/hashing/CRC32.h"
 
 /*
    CRC-32
@@ -143,7 +143,7 @@ void CRC32_Update( unsigned int &crcvalue, const byte data ) {
 }
 
 void CRC32_UpdateChecksum( unsigned int &crcvalue, const void *data, int length ) {
-	unsigned long crc;
+	unsigned int crc;
 	const unsigned char *buf = (const unsigned char *) data;
 
 	crc = crcvalue;

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,13 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/Session.h"
+#include "renderer/ModelManager.h"
+#include "renderer/RenderWorld_local.h"
+#include "ui/UserInterface.h"
 
-#include "tr_local.h"
+#include "renderer/tr_local.h"
 
 /*
 
@@ -504,7 +507,7 @@ void R_RenderLightFrustum( const renderLight_t &renderLight, idPlane lightFrustu
 	fakeLight.parms = renderLight;
 
 	R_DeriveLightData( &fakeLight );
-	
+
 	R_FreeStaticTriSurf( fakeLight.frustumTris );
 
 	for ( int i = 0 ; i < 6 ; i++ ) {
@@ -575,7 +578,7 @@ void R_CreateLightDefFogPortals( idRenderLightLocal *ldef ) {
 			if ( dp->fogLight ) {
 				continue;
 			}
-			
+
 			if ( WindingCompletelyInsideLight( prt->w, ldef ) ) {
 				dp->fogLight = ldef;
 				dp->nextFoggedPortal = ldef->foggedPortals;
@@ -682,7 +685,7 @@ void R_FreeEntityDefDerivedData( idRenderEntityLocal *def, bool keepDecals, bool
 
 		// put it back on the free list for reuse
 		def->world->areaReferenceAllocator.Free( ref );
-	}	
+	}
 	def->entityRefs = NULL;
 }
 

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,7 +32,9 @@ If you have questions concerning this license or the applicable additional terms
 // device context support for gui stuff
 //
 
-#include "Rectangle.h"
+#include "renderer/Material.h"
+#include "renderer/RenderSystem.h"
+#include "ui/Rectangle.h"
 
 const int VIRTUAL_WIDTH = 640;
 const int VIRTUAL_HEIGHT = 480;
@@ -42,7 +44,7 @@ class idDeviceContext {
 public:
 	idDeviceContext();
 	~idDeviceContext() { }
-	
+
 	void				Init();
 	void				Shutdown();
 	bool				Initialized() { return initialized; }
@@ -150,7 +152,7 @@ private:
 	int					cursor;
 
 	idList<idRectangle>	clipRects;
-	
+
 	static idList<fontInfoEx_t> fonts;
 	idStr fontLang;
 

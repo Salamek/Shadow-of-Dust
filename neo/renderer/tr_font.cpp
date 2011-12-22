@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,13 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
+#include "sys/platform.h"
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
-
-#include "tr_local.h"
+#include "renderer/tr_local.h"
 
 #define FILESIZE_fontInfo_t (20548)
+
 #ifdef BUILD_FREETYPE
 #include "../ft2/fterrors.h"
 #include "../ft2/ftsystem.h"
@@ -326,7 +325,7 @@ bool idRenderSystemLocal::RegisterFont( const char *fontName, fontInfoEx_t &font
 			pointSize = 48;
 		}
 		// we also need to adjust the scale based on point size relative to 48 points as the ui scaling is based on a 48 point font
-		float glyphScale = 1.0f; 		// change the scale to be relative to 1 based on 72 dpi ( so dpi of 144 means a scale of .5 )
+		float glyphScale = 1.0f;		// change the scale to be relative to 1 based on 72 dpi ( so dpi of 144 means a scale of .5 )
 		glyphScale *= 48.0f / pointSize;
 
 		idStr::snPrintf( name, sizeof(name), "%s/fontImage_%i.dat", fontName, pointSize );
@@ -345,7 +344,7 @@ bool idRenderSystemLocal::RegisterFont( const char *fontName, fontInfoEx_t &font
 		idStr::Copynz( outFont->name, name, sizeof( outFont->name ) );
 
 		len = fileSystem->ReadFile( name, NULL, &ftime );
-		 if ( len != FILESIZE_fontInfo_t ) {
+		if ( len != FILESIZE_fontInfo_t ) {
 			common->Warning( "RegisterFont: couldn't find font: '%s'", name );
 			return false;
 		}
@@ -365,7 +364,7 @@ bool idRenderSystemLocal::RegisterFont( const char *fontName, fontInfoEx_t &font
 			outFont->glyphs[i].t			= readFloat();
 			outFont->glyphs[i].s2			= readFloat();
 			outFont->glyphs[i].t2			= readFloat();
-			/*int junk font.glyphs[i].glyph 		=*/ readInt();
+			/* font.glyphs[i].glyph			= */ readInt();
 			//FIXME: the +6, -6 skips the embedded fonts/
 			memcpy( outFont->glyphs[i].shaderName, &fdFile[fdOffset + 6], 32 - 6 );
 			fdOffset += 32;
@@ -403,7 +402,7 @@ bool idRenderSystemLocal::RegisterFont( const char *fontName, fontInfoEx_t &font
 	return true ;
 
 #ifndef BUILD_FREETYPE
-    common->Warning( "RegisterFont: couldn't load FreeType code %s", name );
+	common->Warning( "RegisterFont: couldn't load FreeType code %s", name );
 #else
 
 	if (ftLibrary == NULL) {

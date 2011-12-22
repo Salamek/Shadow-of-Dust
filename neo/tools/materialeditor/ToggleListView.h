@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -52,13 +52,13 @@ public:
 	void				SetToggleIcons(LPCSTR disabled = NULL, LPCSTR on = NULL, LPCSTR off = NULL);
 	void				SetToggleState(int index, int toggleState, bool notify = false);
 	int					GetToggleState(int index);
-	
+
 	//Windows messages
 	afx_msg int			OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void 		OnSize(UINT nType, int cx, int cy);
-	afx_msg void 		MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
-	afx_msg void 		OnNMClick(NMHDR *pNMHDR, LRESULT *pResult);
-	
+	afx_msg void		OnSize(UINT nType, int cx, int cy);
+	afx_msg void		MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
+	afx_msg void		OnNMClick(NMHDR *pNMHDR, LRESULT *pResult);
+
 	DECLARE_MESSAGE_MAP()
 
 
@@ -81,7 +81,5 @@ protected:
 	HICON				onIcon;
 	HICON				offIcon;
 	HICON				disabledIcon;
-	
+
 };
-
-

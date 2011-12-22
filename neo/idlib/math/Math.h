@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ If you have questions concerning this license or the applicable additional terms
 // for FLT_MIN
 #include <float.h>
 #endif
+
 /*
 ===============================================================================
 
@@ -72,7 +73,6 @@ If you have questions concerning this license or the applicable additional terms
 #define FLOAT_IS_IND(x)			((*(const unsigned int *)&x) == 0xffc00000)
 #define	FLOAT_IS_DENORMAL(x)	(((*(const unsigned int *)&x) & 0x7f800000) == 0x00000000 && \
 								 ((*(const unsigned int *)&x) & 0x007fffff) != 0x00000000 )
-
 
 #define IEEE_FLT_MANTISSA_BITS	23
 #define IEEE_FLT_EXPONENT_BITS	8
@@ -182,8 +182,8 @@ public:
 	static float				Rint( float f );			// returns the nearest integer
 	static int					Ftoi( float f );			// float to int conversion
 	static int					FtoiFast( float f );		// fast float to int conversion but uses current FPU round mode (default round nearest)
-	static unsigned int		Ftol( float f );			// float to long conversion
-	static unsigned int		FtolFast( float );			// fast float to long conversion but uses current FPU round mode (default round nearest)
+	static unsigned int			Ftol( float f );			// float to int conversion
+	static unsigned int			FtolFast( float );			// fast float to int conversion but uses current FPU round mode (default round nearest)
 
 	static signed char			ClampChar( int i );
 	static signed short			ClampShort( int i );
@@ -385,7 +385,7 @@ ID_INLINE double idMath::Cos64( float a ) {
 }
 
 ID_INLINE void idMath::SinCos( float a, float &s, float &c ) {
-#ifdef _WIN32
+#ifdef _MSC_VER
 	_asm {
 		fld		a
 		fsincos
@@ -438,7 +438,7 @@ ID_INLINE void idMath::SinCos16( float a, float &s, float &c ) {
 }
 
 ID_INLINE void idMath::SinCos64( float a, double &s, double &c ) {
-#ifdef _WIN32
+#ifdef _MSC_VER
 	_asm {
 		fld		a
 		fsincos
@@ -796,7 +796,7 @@ ID_INLINE int idMath::Ftoi( float f ) {
 }
 
 ID_INLINE int idMath::FtoiFast( float f ) {
-#ifdef _WIN32
+#ifdef _MSC_VER
 	int i;
 	__asm fld		f
 	__asm fistp		i		// use default rouding mode (round nearest)
@@ -828,7 +828,7 @@ ID_INLINE unsigned int idMath::Ftol( float f ) {
 }
 
 ID_INLINE unsigned int idMath::FtolFast( float f ) {
-#ifdef _WIN32
+#ifdef _MSC_VER
 	// FIXME: this overflows on 31bits still .. same as FtoiFast
 	unsigned int i;
 	__asm fld		f

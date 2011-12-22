@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __GAME_ITEM_H__
 #define __GAME_ITEM_H__
 
+#include "physics/Physics_RigidBody.h"
+#include "Entity.h"
 
 /*
 ===============================================================================
@@ -60,9 +62,9 @@ public:
 		EVENT_RESPAWN,
 		EVENT_RESPAWNFX,
 #ifdef CTF
-        EVENT_TAKEFLAG,
-        EVENT_DROPFLAG,
-        EVENT_FLAGRETURN,
+		EVENT_TAKEFLAG,
+		EVENT_DROPFLAG,
+		EVENT_FLAGRETURN,
 		EVENT_FLAGCAPTURE,
 #endif
 		EVENT_MAXEVENTS
@@ -203,12 +205,12 @@ private:
 
 class idItemTeam : public idMoveableItem {
 public:
-    CLASS_PROTOTYPE( idItemTeam );
+	CLASS_PROTOTYPE( idItemTeam );
 
-                            idItemTeam();
+							idItemTeam();
 	virtual					~idItemTeam();
 
-    void                    Spawn();
+	void                    Spawn();
 	virtual bool			Pickup( idPlayer *player );
 	virtual bool			ClientReceiveEvent( int event, int time, const idBitMsg &msg );
 	virtual void			Think(void );
@@ -225,7 +227,7 @@ public:
 	virtual void			ReadFromSnapshot( const idBitMsgDelta &msg );
 
 public:
-    int                     team;
+	int                     team;
 	// TODO : turn this into a state :
 	bool					carried;			// is it beeing carried by a player?
 	bool					dropped;			// was it dropped?
@@ -243,8 +245,8 @@ private:
 	const function_t *		scriptReturned;
 	const function_t *		scriptCaptured;
 
-    renderLight_t           itemGlow;           // Used by flags when they are picked up
-    int                     itemGlowHandle;
+	renderLight_t           itemGlow;           // Used by flags when they are picked up
+	int                     itemGlowHandle;
 
 	int						lastNuggetDrop;
 	const char *			nuggetName;
@@ -252,7 +254,7 @@ private:
 private:
 
 	void					Event_TakeFlag( idPlayer * player );
-    void					Event_DropFlag( bool death );
+	void					Event_DropFlag( bool death );
 	void					Event_FlagReturn( idPlayer * player = NULL );
 	void					Event_FlagCapture( void );
 
@@ -260,7 +262,7 @@ private:
 	function_t *			LoadScript( const char * script );
 
 	void					SpawnNugget( idVec3 pos );
-    void                    UpdateGuis( void );
+	void                    UpdateGuis( void );
 };
 
 #endif

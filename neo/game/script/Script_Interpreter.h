@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,28 +29,34 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __SCRIPT_INTERPRETER_H__
 #define __SCRIPT_INTERPRETER_H__
 
-#define MAX_STACK_DEPTH 	64
+#include "script/Script_Program.h"
+#include "Entity.h"
+#include "Game_local.h"
+
+class idThread;
+
+#define MAX_STACK_DEPTH	64
 #define LOCALSTACK_SIZE 	(6144 * 2)
 
 typedef struct prstack_s {
-	int 				s;
+	int					s;
 	const function_t	*f;
-	int 				stackbase;
+	int					stackbase;
 } prstack_t;
 
 class idInterpreter {
 private:
 	prstack_t			callStack[ MAX_STACK_DEPTH ];
-	int 				callStackDepth;
-	int 				maxStackDepth;
+	int					callStackDepth;
+	int					maxStackDepth;
 
 	byte				localstack[ LOCALSTACK_SIZE ];
-	int 				localstackUsed;
-	int 				localstackBase;
-	int 				maxLocalstackUsed;
+	int					localstackUsed;
+	int					localstackBase;
+	int					maxLocalstackUsed;
 
 	const function_t	*currentFunction;
-	int 				instructionPointer;
+	int					instructionPointer;
 
 	int					popParms;
 	const idEventDef	*multiFrameEvent;
@@ -125,7 +131,7 @@ idInterpreter::PopParms
 ID_INLINE void idInterpreter::PopParms( int numParms ) {
 	// pop our parms off the stack
 	if ( localstackUsed < numParms ) {
-		Error( ( char * )"locals stack underflow\n" );
+		Error( "locals stack underflow\n" );
 	}
 
 	localstackUsed -= numParms;
@@ -138,7 +144,7 @@ idInterpreter::Push
 */
 ID_INLINE void idInterpreter::Push( intptr_t value ) {
 	if ( localstackUsed + sizeof( intptr_t ) > LOCALSTACK_SIZE ) {
-		Error( ( char * )"Push: locals stack overflow\n" );
+		Error( "Push: locals stack overflow\n" );
 	}
 	*( intptr_t * )&localstack[ localstackUsed ]	= value;
 	localstackUsed += sizeof( intptr_t );
@@ -150,15 +156,12 @@ idInterpreter::PushVector
 ====================
 */
 ID_INLINE void idInterpreter::PushVector( const idVec3 &vector ) {
-  if ( localstackUsed + E_EVENT_SIZEOF_VEC > LOCALSTACK_SIZE ) {
-    Error( "Push: locals stack overflow\n" );
-  }
-  *( idVec3 * )&localstack[ localstackUsed ] = vector;
-  localstackUsed += E_EVENT_SIZEOF_VEC;
- }
-
-
-
+	if ( localstackUsed + E_EVENT_SIZEOF_VEC > LOCALSTACK_SIZE ) {
+		Error( "Push: locals stack overflow\n" );
+	}
+	*( idVec3 * )&localstack[ localstackUsed ] = vector;
+	localstackUsed += E_EVENT_SIZEOF_VEC;
+}
 
 /*
 ====================
@@ -167,7 +170,7 @@ idInterpreter::PushString
 */
 ID_INLINE void idInterpreter::PushString( const char *string ) {
 	if ( localstackUsed + MAX_STRING_LEN > LOCALSTACK_SIZE ) {
-		Error( ( char * )"PushString: locals stack overflow\n" );
+		Error( "PushString: locals stack overflow\n" );
 	}
 	idStr::Copynz( ( char * )&localstack[ localstackUsed ], string, MAX_STRING_LEN );
 	localstackUsed += MAX_STRING_LEN;
@@ -249,7 +252,7 @@ idInterpreter::GetEntity
 ================
 */
 ID_INLINE idEntity *idInterpreter::GetEntity( int entnum ) const{
-	//assert( entnum <= MAX_GENTITIES );
+	assert( entnum <= MAX_GENTITIES );
 	if ( ( entnum > 0 ) && ( entnum <= MAX_GENTITIES ) ) {
 		return gameLocal.entities[ entnum - 1 ];
 	}

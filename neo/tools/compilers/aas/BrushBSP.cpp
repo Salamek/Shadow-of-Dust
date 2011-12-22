@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,12 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/FileSystem.h"
 
-#include "Brush.h"
-#include "BrushBSP.h"
-
+#include "tools/compilers/aas/BrushBSP.h"
 
 #define BSP_GRID_SIZE					512.0f
 #define SPLITTER_EPSILON				0.1f
@@ -42,7 +40,6 @@ If you have questions concerning this license or the applicable additional terms
 #define PORTAL_PLANE_DIST_EPSILON		0.01f
 
 //#define OUPUT_BSP_STATS_PER_GRID_CELL
-
 
 //===============================================================
 //
@@ -1179,7 +1176,7 @@ void idBrushBSP::SplitNodePortals( idBrushBSPNode *node ) {
 		}
 		else {
 			common->Error( "idBrushBSP::SplitNodePortals: mislinked portal" );
-		return;
+			return;
 		}
 		nextPortal = p->next[side];
 
@@ -1418,7 +1415,6 @@ void idBrushBSP::FloodThroughPortals_r( idBrushBSPNode *node, int contents, int 
 	idBrushBSPPortal *p;
 	int s;
 
-
 	if ( !node ) {
 		common->Error( "FloodThroughPortals_r: NULL node\n" );
 	}
@@ -1426,7 +1422,6 @@ void idBrushBSP::FloodThroughPortals_r( idBrushBSPNode *node, int contents, int 
 	if ( node->occupied ) {
 		common->Error( "FloodThroughPortals_r: node already occupied\n" );
 	}
-
 	node->occupied = depth;
 
 	for ( p = node->portals; p; p = p->next[s] ) {

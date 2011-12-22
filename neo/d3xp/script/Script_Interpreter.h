@@ -29,28 +29,34 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __SCRIPT_INTERPRETER_H__
 #define __SCRIPT_INTERPRETER_H__
 
-#define MAX_STACK_DEPTH 	64
+#include "script/Script_Program.h"
+#include "Entity.h"
+#include "Game_local.h"
+
+class idThread;
+
+#define MAX_STACK_DEPTH	64
 #define LOCALSTACK_SIZE 	(6144 * 2)
 
 typedef struct prstack_s {
-	int 				s;
+	int					s;
 	const function_t	*f;
-	int 				stackbase;
+	int					stackbase;
 } prstack_t;
 
 class idInterpreter {
 private:
 	prstack_t			callStack[ MAX_STACK_DEPTH ];
-	int 				callStackDepth;
-	int 				maxStackDepth;
+	int					callStackDepth;
+	int					maxStackDepth;
 
 	byte				localstack[ LOCALSTACK_SIZE ];
-	int 				localstackUsed;
-	int 				localstackBase;
-	int 				maxLocalstackUsed;
+	int					localstackUsed;
+	int					localstackBase;
+	int					maxLocalstackUsed;
 
 	const function_t	*currentFunction;
-	int 				instructionPointer;
+	int					instructionPointer;
 
 	int					popParms;
 	const idEventDef	*multiFrameEvent;
@@ -144,22 +150,18 @@ ID_INLINE void idInterpreter::Push( intptr_t value ) {
 	localstackUsed += sizeof( intptr_t );
 }
 
-
-
 /*
 ====================
 idInterpreter::PushVector
 ====================
 */
 ID_INLINE void idInterpreter::PushVector( const idVec3 &vector ) {
-  if ( localstackUsed + E_EVENT_SIZEOF_VEC > LOCALSTACK_SIZE ) {
-    Error( "Push: locals stack overflow\n" );
-  }
-
-  *( idVec3 * )&localstack[ localstackUsed ] = vector;
-  localstackUsed += E_EVENT_SIZEOF_VEC;
+	if ( localstackUsed + E_EVENT_SIZEOF_VEC > LOCALSTACK_SIZE ) {
+		Error( "Push: locals stack overflow\n" );
+	}
+	*( idVec3 * )&localstack[ localstackUsed ] = vector;
+	localstackUsed += E_EVENT_SIZEOF_VEC;
 }
-
 
 /*
 ====================

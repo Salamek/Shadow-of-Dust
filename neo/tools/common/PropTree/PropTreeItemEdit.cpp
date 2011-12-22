@@ -177,9 +177,9 @@ void CPropTreeItemEdit::OnActivate(int activateType, CPoint point)
 		DWORD dwStyle;
 
 		dwStyle = WS_CHILD|ES_AUTOHSCROLL;
-		Create(dwStyle, m_rc, m_pProp->GetCtrlParent(), GetCtrlID());	
+		Create(dwStyle, m_rc, m_pProp->GetCtrlParent(), GetCtrlID());
 	}
-	
+
 	SendMessage(WM_SETFONT, (WPARAM)m_pProp->GetNormalFont()->m_hObject);
 
 	SetPasswordChar((TCHAR)(m_bPassword ? '*' : 0));
@@ -201,12 +201,12 @@ void CPropTreeItemEdit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	if (nChar==VK_RETURN)
 		CommitChanges();
-	
+
 	CEdit::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
 
 void CPropTreeItemEdit::OnKillfocus()
 {
-	CommitChanges();	
+	CommitChanges();
 }

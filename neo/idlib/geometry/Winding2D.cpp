@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,11 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/Lib.h"
+#include "framework/Common.h"
 
-#include "Winding2D.h"
-
+#include "idlib/geometry/Winding2D.h"
 
 /*
 ============
@@ -166,7 +166,7 @@ int idWinding2D::Split( const idVec3 &plane, const float epsilon, idWinding2D **
 	}
 	sides[i] = sides[0];
 	dists[i] = dists[0];
-	
+
 	*front = *back = NULL;
 
 	// if nothing at the front of the clipping plane
@@ -182,10 +182,10 @@ int idWinding2D::Split( const idVec3 &plane, const float epsilon, idWinding2D **
 
 	*front = f = new idWinding2D;
 	*back = b = new idWinding2D;
-		
+
 	for ( i = 0; i < numPoints; i++ ) {
 		p1 = &p[i];
-		
+
 		if ( sides[i] == SIDE_ON ) {
 			f->p[f->numPoints] = *p1;
 			f->numPoints++;
@@ -193,7 +193,7 @@ int idWinding2D::Split( const idVec3 &plane, const float epsilon, idWinding2D **
 			b->numPoints++;
 			continue;
 		}
-	
+
 		if ( sides[i] == SIDE_FRONT ) {
 			f->p[f->numPoints] = *p1;
 			f->numPoints++;
@@ -207,10 +207,10 @@ int idWinding2D::Split( const idVec3 &plane, const float epsilon, idWinding2D **
 		if ( sides[i+1] == SIDE_ON || sides[i+1] == sides[i] ) {
 			continue;
 		}
-			
+
 		// generate a split point
 		p2 = &p[(i+1)%numPoints];
-		
+
 		// always calculate the split going from the same side
 		// or minor epsilon issues can happen
 		if ( sides[i] == SIDE_FRONT ) {
@@ -274,7 +274,7 @@ bool idWinding2D::ClipInPlace( const idVec3 &plane, const float epsilon, const b
 	}
 	sides[i] = sides[0];
 	dists[i] = dists[0];
-	
+
 	// if the winding is on the plane and we should keep it
 	if ( keepOn && !counts[SIDE_FRONT] && !counts[SIDE_BACK] ) {
 		return true;
@@ -296,13 +296,13 @@ bool idWinding2D::ClipInPlace( const idVec3 &plane, const float epsilon, const b
 		if ( newNumPoints+1 > maxpts ) {
 			return true;		// can't split -- fall back to original
 		}
-		
+
 		if ( sides[i] == SIDE_ON ) {
 			newPoints[newNumPoints] = *p1;
 			newNumPoints++;
 			continue;
 		}
-	
+
 		if ( sides[i] == SIDE_FRONT ) {
 			newPoints[newNumPoints] = *p1;
 			newNumPoints++;
@@ -311,14 +311,14 @@ bool idWinding2D::ClipInPlace( const idVec3 &plane, const float epsilon, const b
 		if ( sides[i+1] == SIDE_ON || sides[i+1] == sides[i] ) {
 			continue;
 		}
-			
+
 		if ( newNumPoints+1 > maxpts ) {
 			return true;		// can't split -- fall back to original
 		}
 
 		// generate a split point
 		p2 = &p[(i+1)%numPoints];
-		
+
 		dot = dists[i] / (dists[i] - dists[i+1]);
 		for ( j = 0; j < 2; j++ ) {
 			// avoid round off error when possible

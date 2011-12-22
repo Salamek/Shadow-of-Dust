@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,14 +26,15 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/LangDict.h"
+#include "framework/Session.h"
+#include "sound/sound.h"
+#include "ui/Window.h"
+#include "ui/Winvar.h"
+#include "ui/UserInterfaceLocal.h"
 
-#include "Window.h"
-#include "Winvar.h"
-#include "GuiScript.h"
-#include "UserInterfaceLocal.h"
-
+#include "ui/GuiScript.h"
 
 /*
 =========================
@@ -193,7 +194,7 @@ void Script_Transition(idWindow *window, idList<idGSWinVar> *src) {
 		if (vec4 == NULL) {
 			rect = dynamic_cast<idWinRectangle*>((*src)[0].var);
 			//
-			//  added float variable					
+			//  added float variable
 			if ( NULL == rect ) {
 				val = dynamic_cast<idWinFloat*>((*src)[0].var);
 			}
@@ -203,7 +204,7 @@ void Script_Transition(idWindow *window, idList<idGSWinVar> *src) {
 		idWinVec4 *to = dynamic_cast<idWinVec4*>((*src)[2].var);
 		idWinStr *timeStr = dynamic_cast<idWinStr*>((*src)[3].var);
 		//
-		//  added float variable					
+		//  added float variable
 		if (!((vec4 || rect || val) && from && to && timeStr)) {
 			//
 			common->Warning("Bad transition in gui %s in window %s\n", window->GetGui()->GetSourceFile(), window->GetName());
@@ -219,12 +220,12 @@ void Script_Transition(idWindow *window, idList<idGSWinVar> *src) {
 			ac = atof(*acv);
 			dc = atof(*dcv);
 		}
-				
+
 		if (vec4) {
 			vec4->SetEval(false);
 			window->AddTransition(vec4, *from, *to, time, ac, dc);
 			//
-			//  added float variable					
+			//  added float variable
 		} else if ( val ) {
 			val->SetEval ( false );
 			window->AddTransition(val, *from, *to, time, ac, dc);
@@ -344,7 +345,7 @@ idGuiScript::Parse
 */
 bool idGuiScript::Parse(idParser *src) {
 	int i;
-	
+
 	// first token should be function call
 	// then a potentially variable set of parms
 	// ended with a ;
@@ -355,7 +356,7 @@ bool idGuiScript::Parse(idParser *src) {
 	}
 
 	handler	= NULL;
-	
+
 	for ( i = 0; i < scriptCommandCount ; i++ ) {
 		if ( idStr::Icmp(token, commandList[i].name) == 0 ) {
 			handler = commandList[i].handler;
@@ -374,7 +375,7 @@ bool idGuiScript::Parse(idParser *src) {
 			src->Error( "Unexpected end of file" );
 			return false;
 		}
-		
+
 		if (idStr::Icmp(token, ";") == 0) {
 			break;
 		}
@@ -453,7 +454,7 @@ void idGuiScript::FixupParms(idWindow *win) {
 		}
 		int parmCount = parms.Num();
 		for (int i = 1; i < parmCount; i++) {
-			idWinStr *str = dynamic_cast<idWinStr*>(parms[i].var);		
+			idWinStr *str = dynamic_cast<idWinStr*>(parms[i].var);
 			if (idStr::Icmpn(*str, "gui::", 5) == 0) {
 
 				//  always use a string here, no point using a float if it is one
@@ -477,7 +478,7 @@ void idGuiScript::FixupParms(idWindow *win) {
 				//
 				//  dont include the $ when asking for variable
 				dest = win->GetGui()->GetDesktop()->GetWinVarByName((const char*)(*str) + 1, true);
-				// 					
+				//
 				if (dest) {
 					delete parms[i].var;
 					parms[i].var = dest;
@@ -524,7 +525,7 @@ void idGuiScript::FixupParms(idWindow *win) {
 		}
 
 		//
-		//  support variables as parameters		
+		//  support variables as parameters
 		int c;
 		for ( c = 1; c < 3; c ++ ) {
 			str = dynamic_cast<idWinStr*>(parms[c].var);
@@ -541,7 +542,7 @@ void idGuiScript::FixupParms(idWindow *win) {
 				dest = NULL;
 			}
 
-			if ( dest ) {	
+			if ( dest ) {
 				idWindow* ownerparent;
 				idWindow* destparent;
 				if ( owner ) {
@@ -565,10 +566,10 @@ void idGuiScript::FixupParms(idWindow *win) {
 				}
 			} else {
 				v4->Set(*str);
-			}			
-			
+			}
+
 			delete str;
-		}		
+		}
 		//
 
 	} else {

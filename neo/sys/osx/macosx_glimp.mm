@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,22 +27,20 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 // -*- mode: objc -*-
-#import "../../idlib/precompiled.h"
-
-#import "../../renderer/tr_local.h"
-
-#import "macosx_glimp.h"
-
-#import "macosx_local.h"
-#import "macosx_sys.h"
-#import "macosx_display.h"
-
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 
 #import <mach-o/dyld.h>
 #import <mach/mach.h>
 #import <mach/mach_error.h>
+
+#import "sys/platform.h"
+#import "framework/Licensee.h"
+#import "renderer/tr_local.h"
+#import "sys/osx/macosx_glimp.h"
+#import "sys/osx/macosx_local.h"
+#import "sys/osx/macosx_sys.h"
+#import "sys/osx/macosx_display.h"
 
 static idCVar r_minDisplayRefresh( "r_minDisplayRefresh", "0", CVAR_ARCHIVE | CVAR_INTEGER, "" );
 static idCVar r_maxDisplayRefresh( "r_maxDisplayRefresh", "0", CVAR_ARCHIVE | CVAR_INTEGER, "" );
@@ -72,7 +70,7 @@ static bool isHidden = false;
 CheckErrors
 ============
 */
-void CheckErrors( void ) {		
+void CheckErrors( void ) {
 	GLenum   err;
 
 	err = qglGetError();
@@ -121,7 +119,7 @@ bool GLimp_SetMode(  glimpParms_t parms ) {
 	glConfig.vidHeight = parms.height;
 	glConfig.isFullscreen = parms.fullScreen;
 
-	// draw something to show that GL is alive	
+	// draw something to show that GL is alive
 	qglClearColor( 0.5, 0.5, 0.7, 0 );
 	qglClear( GL_COLOR_BUFFER_BIT );
 	GLimp_SwapBuffers();
@@ -181,7 +179,7 @@ static NSOpenGLPixelFormatAttribute *GetPixelAttributes( unsigned int multisampl
 
 	ADD_ATTR(NSOpenGLPFAScreenMask);
 	ADD_ATTR(CGDisplayIDToOpenGLDisplayMask(Sys_DisplayToUse()));
-	
+
 	// Require hardware acceleration
 	ADD_ATTR(NSOpenGLPFAAccelerated);
 
@@ -215,9 +213,9 @@ static NSOpenGLPixelFormatAttribute *GetPixelAttributes( unsigned int multisampl
 
 	if ( multisamples ) {
 		buffers = 1;
-		ADD_ATTR( NSOpenGLPFASampleBuffers );	
+		ADD_ATTR( NSOpenGLPFASampleBuffers );
 		ADD_ATTR( buffers );
-		ADD_ATTR( NSOpenGLPFASamples );	
+		ADD_ATTR( NSOpenGLPFASamples );
 		ADD_ATTR( multisamples );
 	}
 
@@ -227,7 +225,7 @@ static NSOpenGLPixelFormatAttribute *GetPixelAttributes( unsigned int multisampl
 	return pixelAttributes;
 }
 
-void Sys_UpdateWindowMouseInputRect(void) {		
+void Sys_UpdateWindowMouseInputRect(void) {
 	NSRect           windowRect, screenRect;
 	NSScreen        *screen;
 
@@ -246,7 +244,7 @@ void Sys_UpdateWindowMouseInputRect(void) {
 	*/
 
 	Sys_SetMouseInputRect( CGDisplayBounds( glw_state.display ) );
-}							
+}
 
 // This is needed since CGReleaseAllDisplays() restores the gamma on the displays and we want to fade it up rather than just flickering all the displays
 static void ReleaseAllDisplays() {
@@ -269,8 +267,8 @@ static bool CreateGameWindow(  glimpParms_t parms ) {
 	NSOpenGLPixelFormat				*pixelFormat;
 	CGDisplayErr					err;
 	unsigned int					multisamples;
-	const long 						swap_limit = false;
-	int 							nsOpenGLCPSwapLimit = 203;
+	const long						swap_limit = false;
+	int							nsOpenGLCPSwapLimit = 203;
 
 	glw_state.display = Sys_DisplayToUse();
 	glw_state.desktopMode = (NSDictionary *)CGDisplayCurrentMode( glw_state.display );
@@ -323,7 +321,7 @@ static bool CreateGameWindow(  glimpParms_t parms ) {
 			break;
 		multisamples >>= 1;
 	}
-	cvarSystem->SetCVarInteger( "r_multiSamples", multisamples );			
+	cvarSystem->SetCVarInteger( "r_multiSamples", multisamples );
 
 	if (!pixelFormat) {
 		CGDisplayRestoreColorSyncSettings();
@@ -349,13 +347,13 @@ static bool CreateGameWindow(  glimpParms_t parms ) {
 		[ OSX_GetNSGLContext() setValues: &swap_limit forParameter: (NSOpenGLContextParameter)nsOpenGLCPSwapLimit ];
 	}
 #endif
-	
+
 	if ( !parms.fullScreen ) {
 		NSScreen*		 screen;
 		NSRect           windowRect;
 		int				 displayIndex;
 		int				 displayCount;
-		
+
 		displayIndex = r_screen.GetInteger();
 		displayCount = [[NSScreen screens] count];
 		if ( displayIndex < 0 || displayIndex >= displayCount ) {
@@ -646,8 +644,8 @@ GLimp_SetGamma
 ===============
 */
 void GLimp_SetGamma(unsigned short red[256],
-                    unsigned short green[256],
-                    unsigned short blue[256]) {
+					unsigned short green[256],
+					unsigned short blue[256]) {
 	CGGammaValue redGamma[256], greenGamma[256], blueGamma[256];
 	CGTableCount i;
 	CGDisplayErr err;
@@ -669,7 +667,6 @@ void GLimp_SetGamma(unsigned short red[256],
 }
 
 /*****************************************************************************/
-
 
 static GLuint sGeneratingProgram = 0;
 static int sCurrentPass;
@@ -705,11 +702,11 @@ void glBeginFragmentShaderATI (void) {
 	sConstString[0] = 0;
 	for (i = 0; i < 8; i ++)
 		sConst[i] = 0;
-	
+
 	sOpUsed = 0;
 	sPassString[0][0] = 0;
 	sPassString[1][0] = 0;
-	
+
 	sCurrentPass = 0;
 	sGeneratingProgram = 1;
 }
@@ -718,12 +715,12 @@ void glEndFragmentShaderATI (void) {
 	GLint errPos;
 	int i;
 	char fragString[4096];
-	
+
 	sGeneratingProgram = 0;
 
 	// header
 	strcpy(fragString, "!!ATIfs1.0\n");
-	
+
 	// constants
 	if (sConstString[0] || sConstUsed) {
 		strcat (fragString, "StartConstants;\n");
@@ -791,9 +788,9 @@ char *makeArgStr(GLuint arg) {
 	// Since we return "str", it needs to be static to ensure that it retains
 	// its value outside this routine.
 	static char str[128];
-	
+
 	strcpy (str, "");
-	
+
 	if ( arg >= GL_REG_0_ATI && arg <= GL_REG_5_ATI ) {
 		sprintf(str, "r%d", arg - GL_REG_0_ATI);
 	} else if(arg >= GL_CON_0_ATI && arg <= GL_CON_7_ATI) {
@@ -805,7 +802,7 @@ char *makeArgStr(GLuint arg) {
 	} else if( arg >= GL_TEXTURE0_ARB && arg <= GL_TEXTURE31_ARB ) {
 		sprintf(str, "t%d", arg - GL_TEXTURE0_ARB);
 	} else if( arg == GL_PRIMARY_COLOR_ARB ) {
-		strcpy(str, "color0");	
+		strcpy(str, "color0");
 	} else if(arg == GL_SECONDARY_INTERPOLATOR_ATI) {
 		strcpy(str, "color1");
 	} else if (arg == GL_ZERO) {
@@ -870,9 +867,9 @@ char *makeMaskStr(GLuint mask) {
 	// Since we return "str", it needs to be static to ensure that it retains
 	// its value outside this routine.
 	static char str[128];
-	
+
 	strcpy (str, "");
-	
+
 	switch (mask) {
 		case GL_NONE:
 			str[0] = '\0';
@@ -905,7 +902,7 @@ char *makeMaskStr(GLuint mask) {
 				strcat(str, "b");
 			break;
 	}
-		
+
 	return str;
 }
 
@@ -913,9 +910,9 @@ char *makeDstModStr(GLuint mod) {
 	// Since we return "str", it needs to be static to ensure that it retains
 	// its value outside this routine.
 	static char str[128];
-	
+
 	strcpy (str, "");
-	
+
 	if( mod == GL_NONE) {
 		str[0] = '\0';
 		return str;
@@ -939,7 +936,7 @@ char *makeDstModStr(GLuint mod) {
 	if( mod & GL_HALF_BIT_ATI) {
 		strcat(str, ".half");
 	}
-	
+
 	if( mod & GL_QUARTER_BIT_ATI) {
 		strcat(str, ".quarter");
 	}
@@ -949,15 +946,15 @@ char *makeDstModStr(GLuint mod) {
 	}
 
 	return str;
-}	
+}
 
 char *makeArgModStr(GLuint mod) {
 	// Since we return "str", it needs to be static to ensure that it retains
 	// its value outside this routine.
 	static char str[128];
-	
+
 	strcpy (str, "");
-	
+
 	if( mod == GL_NONE) {
 		str[0] = '\0';
 		return str;
@@ -973,19 +970,19 @@ char *makeArgModStr(GLuint mod) {
 	if( mod & GL_BIAS_BIT_ATI) {
 		strcat(str, ".bias");
 	}
-		
+
 	if( mod & GL_COMP_BIT_ATI) {
 		strcat(str, ".comp");
 	}
-		
+
 	return str;
 }
 
 void glColorFragmentOp1ATI (GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod, GLuint arg1, GLuint arg1Rep, GLuint arg1Mod) {
 	char str[128] = "\0";
-	
+
 	sOpUsed = 1;
-	
+
 	switch(op) {
 		// Unary operators
 		case GL_MOV_ATI:
@@ -1001,12 +998,12 @@ void glColorFragmentOp1ATI (GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod
 	else {
 		strcat(str, ".rgb" );
 	}
-	
+
 	if(dstMod != GL_NONE) {
 		strcat(str, makeDstModStr(dstMod));
 	}
 	strcat(str, ", ");
-	
+
 	strcat(str, makeArgStr(arg1));
 	if(arg1Rep != GL_NONE)  {
 		strcat(str, makeMaskStr(arg1Rep));
@@ -1015,17 +1012,17 @@ void glColorFragmentOp1ATI (GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod
 		strcat(str, makeArgModStr(arg1Mod));
 	}
 	strcat(str, ";\n");
-	
+
 	strcat(sPassString[sCurrentPass], str);
 }
 
 void glColorFragmentOp2ATI (GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod, GLuint arg1, GLuint arg1Rep, GLuint arg1Mod, GLuint arg2, GLuint arg2Rep, GLuint arg2Mod) {
 	char str[128] = "\0";
-	
+
 	if (!sOpUsed)
 		sprintf(str,"\n");
 	sOpUsed = 1;
-		
+
 	switch(op) {
 		// Unary operators - fall back to Op1 routine.
 		case GL_MOV_ATI:
@@ -1062,7 +1059,7 @@ void glColorFragmentOp2ATI (GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod
 		strcat(str, makeDstModStr(dstMod));
 	}
 	strcat(str, ", ");
-	
+
 	strcat(str, makeArgStr(arg1));
 //	if(arg1Rep != GL_NONE)
 		strcat(str, makeMaskStr(arg1Rep));
@@ -1070,23 +1067,23 @@ void glColorFragmentOp2ATI (GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod
 		strcat(str, makeArgModStr(arg1Mod));
 	}
 	strcat(str, ", ");
-	
+
 	strcat(str, makeArgStr(arg2));
 //	if(arg2Rep != GL_NONE)
 		strcat(str, makeMaskStr(arg2Rep));
 	if(arg2Mod != GL_NONE) {
-		strcat(str, makeArgModStr(arg2Mod));			
+		strcat(str, makeArgModStr(arg2Mod));
 	}
 	strcat(str, ";\n");
-	
+
 	strcat(sPassString[sCurrentPass], str);
 }
 
 void glColorFragmentOp3ATI (GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod, GLuint arg1, GLuint arg1Rep, GLuint arg1Mod, GLuint arg2, GLuint arg2Rep, GLuint arg2Mod, GLuint arg3, GLuint arg3Rep, GLuint arg3Mod) {
 	char str[128] = "\0";
-	
+
 	sOpUsed = 1;
-	
+
 	switch(op) {
 		// Unary operators - fall back to Op1 routine.
 		case GL_MOV_ATI:
@@ -1133,7 +1130,7 @@ void glColorFragmentOp3ATI (GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod
 		strcat(str, makeDstModStr(dstMod));
 	}
 	strcat(str, ", ");
-	
+
 	strcat(str, makeArgStr(arg1));
 	if(arg1Rep != GL_NONE)  {
 		strcat(str, makeMaskStr(arg1Rep));
@@ -1142,7 +1139,7 @@ void glColorFragmentOp3ATI (GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod
 		strcat(str, makeArgModStr(arg1Mod));
 	}
 	strcat(str, ", ");
-	
+
 	strcat(str, makeArgStr(arg2));
 	if(arg2Rep != GL_NONE)  {
 		strcat(str, makeMaskStr(arg2Rep));
@@ -1151,7 +1148,7 @@ void glColorFragmentOp3ATI (GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod
 		strcat(str, makeArgModStr(arg2Mod));
 	}
 	strcat(str, ", ");
-		
+
 	strcat(str, makeArgStr(arg3));
 	if(arg3Rep != GL_NONE)  {
 		strcat(str, makeMaskStr(arg3Rep));
@@ -1160,7 +1157,7 @@ void glColorFragmentOp3ATI (GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod
 		strcat(str, makeArgModStr(arg3Mod));
 	}
 	strcat(str, ";\n");
-	
+
 	strcat(sPassString[sCurrentPass], str);
 }
 
@@ -1554,7 +1551,7 @@ NSDictionary *Sys_GetMatchingDisplayMode( glimpParms_t parms ) {
 				continue;
 			}
 		}
-		
+
 		bestModeIndex = modeIndex;
 		if (verbose)
 			common->Printf( " -- OK\n", bestModeIndex);
@@ -1760,7 +1757,7 @@ void Sys_UnfadeScreens() {
 void Sys_UnfadeScreen(CGDirectDisplayID display, glwgamma_t *table) {
 	CGDisplayCount displayIndex;
 	int stepIndex;
-	
+
 	common->Printf( "FIXME: Sys_UnfadeScreen\n" );
 
 	return;

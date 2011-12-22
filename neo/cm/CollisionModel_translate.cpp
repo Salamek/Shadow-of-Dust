@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,10 +34,11 @@ If you have questions concerning this license or the applicable additional terms
 ===============================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/Session.h"
+#include "renderer/RenderWorld.h"
 
-#include "CollisionModel_local.h"
+#include "cm/CollisionModel_local.h"
 
 /*
 ===============================================================================
@@ -759,7 +760,6 @@ void idCollisionModelManagerLocal::SetupTranslationHeartPlanes( cm_traceWork_t *
 idCollisionModelManagerLocal::Translation
 ================
 */
-
 void idCollisionModelManagerLocal::Translation( trace_t *results, const idVec3 &start, const idVec3 &end,
 										const idTraceModel *trm, const idMat3 &trmAxis, int contentMask,
 										cmHandle_t model, const idVec3 &modelOrigin, const idMat3 &modelAxis ) {
@@ -794,7 +794,6 @@ void idCollisionModelManagerLocal::Translation( trace_t *results, const idVec3 &
 		idCollisionModelManagerLocal::ContentsTrm( results, start, trm, trmAxis, contentMask, model, modelOrigin, modelAxis );
 		return;
 	}
-
 
 	idCollisionModelManagerLocal::checkCount++;
 
@@ -1085,7 +1084,7 @@ void idCollisionModelManagerLocal::Translation( trace_t *results, const idVec3 &
 #ifdef _DEBUG
 	// test for collisions
 	if ( cm_debugCollision.GetBool() ) {
-		if ( !idCollisionModelManagerLocal::getContacts ) {
+		if (!idCollisionModelManagerLocal::getContacts ) {
 			// if the trm is stuck in the model
 			if ( idCollisionModelManagerLocal::Contents( results->endpos, trm, trmAxis, -1, model, modelOrigin, modelAxis ) & contentMask ) {
 				trace_t tr;

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,18 +25,22 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../../idlib/precompiled.h"
-#include "../../renderer/tr_local.h"
-#include "local.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
 
+#include <X11/Xlib.h>
 extern "C" {
 #	include "libXNVCtrl/NVCtrlLib.h"
 }
+
+#include "sys/platform.h"
+#include "framework/Licensee.h"
+#include "renderer/tr_local.h"
+
+#include "sys/linux/local.h"
 
 idCVar sys_videoRam( "sys_videoRam", "0", CVAR_SYSTEM | CVAR_ARCHIVE | CVAR_INTEGER, "Texture memory on the video card (in megabytes) - 0: autodetect", 0, 512 );
 
@@ -68,7 +72,7 @@ void GLimp_EnableLogging(bool log) {
 	static bool logging;
 	if (log != logging)
 	{
-		common->DPrintf("GLimp_EnableLogging - not available in this build\n");
+		common->DPrintf("GLimp_EnableLogging - not available\n");
 		logging = log;
 	}
 }
@@ -111,7 +115,7 @@ void GLimp_SaveGamma() {
 	}
 
 	assert( dpy );
-	
+
 	XF86VidModeGetGammaRampSize( dpy, scrnum, &save_rampsize);
 	save_red = (unsigned short *)malloc(save_rampsize*sizeof(unsigned short));
 	save_green = (unsigned short *)malloc(save_rampsize*sizeof(unsigned short));
@@ -129,9 +133,9 @@ save and restore the original gamma of the system
 void GLimp_RestoreGamma() {
 	if (!save_rampsize)
 		return;
-	
+
 	XF86VidModeSetGammaRamp( dpy, scrnum, save_rampsize, save_red, save_green, save_blue);
-	
+
 	free(save_red); free(save_green); free(save_blue);
 	save_rampsize = 0;
 }
@@ -145,9 +149,9 @@ the size of the gamma ramp can not be changed on X (I need to confirm this)
 =================
 */
 void GLimp_SetGamma(unsigned short red[256], unsigned short green[256], unsigned short blue[256]) {
-	if ( dpy ) {		
+	if ( dpy ) {
 		int size;
-		
+
 		GLimp_SaveGamma();
 		XF86VidModeGetGammaRampSize( dpy, scrnum, &size);
 		common->DPrintf("XF86VidModeGetGammaRampSize: %d\n", size);
@@ -166,7 +170,7 @@ void GLimp_SetGamma(unsigned short red[256], unsigned short green[256], unsigned
 				r_f -= (float)r_i;
 				l_red[i] = (int)round((1.0f-r_f)*(float)red[r_i]+r_f*(float)red[r_i+1]);
 				l_green[i] = (int)round((1.0f-r_f)*(float)green[r_i]+r_f*(float)green[r_i+1]);
-				l_blue[i] = (int)round((1.0f-r_f)*(float)blue[r_i]+r_f*(float)blue[r_i+1]);				
+				l_blue[i] = (int)round((1.0f-r_f)*(float)blue[r_i]+r_f*(float)blue[r_i+1]);
 			}
 			l_red[size-1] = red[255]; l_green[size-1] = green[255]; l_blue[size-1] = blue[255];
 			XF86VidModeSetGammaRamp( dpy, scrnum, size, l_red, l_green, l_blue );
@@ -179,22 +183,20 @@ void GLimp_SetGamma(unsigned short red[256], unsigned short green[256], unsigned
 
 void GLimp_Shutdown() {
 	if ( dpy ) {
-		
+
 		Sys_XUninstallGrabs();
-	
+
 		GLimp_RestoreGamma();
 
 		qglXDestroyContext( dpy, ctx );
-		
-		
+
 		XDestroyWindow( dpy, win );
 		if ( vidmode_active ) {
 			XF86VidModeSwitchToMode( dpy, scrnum, vidmodes[0] );
 		}
 
-		XFlush( dpy );
-
 		// FIXME: that's going to crash
+		//XFlush( dpy );
 		//XCloseDisplay( dpy );
 
 		vidmode_active = false;
@@ -219,7 +221,6 @@ void GLX_TestDGA() {
 
 	assert( dpy );
 
-
 	if ( !XF86DGAQueryVersion( dpy, &dga_MajorVersion, &dga_MinorVersion ) ) {
 		// unable to query, probalby not supported
 		common->Printf( "Failed to detect DGA DirectVideo Mouse\n" );
@@ -231,7 +232,7 @@ void GLX_TestDGA() {
 		dga_found = true;
 	}
 #else
-    dga_found = false;
+	dga_found = false;
 #endif
 }
 
@@ -270,7 +271,7 @@ bool GLimp_OpenDisplay( void ) {
 		common->Printf("XInitThreads failed\n");
 		return false;
 	}
-	
+
 	// set up our custom error handler for X failures
 	XSetErrorHandler( &idXErrorHandler );
 
@@ -451,7 +452,7 @@ int GLX_Init(glimpParms_t a) {
 			attrib[ATTR_GREEN_IDX] = 4;
 			attrib[ATTR_BLUE_IDX] = 4;
 		}
-		
+
 		attrib[ATTR_DEPTH_IDX] = tdepthbits;	// default to 24 depth
 		attrib[ATTR_STENCIL_IDX] = tstencilbits;
 
@@ -524,18 +525,18 @@ int GLX_Init(glimpParms_t a) {
 
 	glstring = (const char *) qglGetString(GL_RENDERER);
 	common->Printf("GL_RENDERER: %s\n", glstring);
-	
+
 	glstring = (const char *) qglGetString(GL_EXTENSIONS);
 	common->Printf("GL_EXTENSIONS: %s\n", glstring);
 
 	// FIXME: here, software GL test
 
 	glConfig.isFullscreen = a.fullScreen;
-	
+
 	if ( glConfig.isFullscreen ) {
 		Sys_GrabMouseCursor( true );
 	}
-	
+
 	return true;
 }
 
@@ -559,11 +560,11 @@ bool GLimp_Init( glimpParms_t a ) {
 	if ( !GLimp_OpenDisplay() ) {
 		return false;
 	}
-	
+
 	if (!GLX_Init(a)) {
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -668,7 +669,6 @@ GLExtension_t GLimp_ExtensionPointer( const char *name ) {
 	if ( strstr( name, "wgl" ) == name ) {
 		common->DPrintf( "WARNING: GLimp_ExtensionPointer for '%s'\n", name );
 	}
-	
 #ifdef ID_DEDICATED
 	common->Printf("GLimp_ExtensionPointer %s\n", name);
 	return StubFunction;

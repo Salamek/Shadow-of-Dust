@@ -1,13 +1,13 @@
 
 #include <sys/wait.h>
 
-#include "../sys_public.h"
+#include "sys/sys_public.h"
 
 void	OutputDebugString( const char *text );
 
 // input
-void 	Sys_InitInput( void );
-void 	Sys_ShutdownInput( void );
+void	Sys_InitInput( void );
+void	Sys_ShutdownInput( void );
 
 void	IN_DeactivateMouse( void);
 void	IN_ActivateMouse( void);

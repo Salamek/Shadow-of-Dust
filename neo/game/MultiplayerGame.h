@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,12 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __MULTIPLAYERGAME_H__
 #define	__MULTIPLAYERGAME_H__
+
+#include "idlib/BitMsg.h"
+#include "idlib/Str.h"
+#include "ui/UserInterface.h"
+
+#include "GameBase.h"
 
 /*
 ===============================================================================
@@ -214,7 +220,7 @@ public:
 	void			ProcessVoiceChat( int clientNum, bool team, int index );
 
 	void			Precache( void );
-	
+
 	// throttle UI switch rates
 	void			ThrottleUserInfo( void );
 	void			ToggleSpectate( void );
@@ -312,7 +318,7 @@ private:
 	// updates the passed gui with current score information
 	void			UpdateRankColor( idUserInterface *gui, const char *mask, int i, const idVec3 &vec );
 	void			UpdateScoreboard( idUserInterface *scoreBoard, idPlayer *player );
-	
+
 	void			ClearGuis( void );
 	void			DrawScoreBoard( idPlayer *player );
 	void			UpdateHud( idPlayer *player, idUserInterface *hud );
@@ -368,4 +374,3 @@ ID_INLINE bool idMultiplayerGame::IsInGame( int clientNum ) {
 }
 
 #endif	/* !__MULTIPLAYERGAME_H__ */
-

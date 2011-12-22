@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,16 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __GAME_ENTITY_H__
 #define __GAME_ENTITY_H__
+
+#include "idlib/math/Curve.h"
+#include "framework/DeclParticle.h"
+
+#include "physics/Physics_Static.h"
+#include "physics/Physics.h"
+#include "script/Script_Program.h"
+#include "gamesys/Class.h"
+#include "gamesys/Event.h"
+#include "Game_local.h"
 
 /*
 ===============================================================================
@@ -513,12 +523,12 @@ protected:
 
 private:
 	void					Event_GetJointHandle( const char *jointname );
-	void 					Event_ClearAllJoints( void );
-	void 					Event_ClearJoint( jointHandle_t jointnum );
-	void 					Event_SetJointPos( jointHandle_t jointnum, jointModTransform_t transform_type, const idVec3 &pos );
-	void 					Event_SetJointAngle( jointHandle_t jointnum, jointModTransform_t transform_type, const idAngles &angles );
-	void 					Event_GetJointPos( jointHandle_t jointnum );
-	void 					Event_GetJointAngle( jointHandle_t jointnum );
+	void					Event_ClearAllJoints( void );
+	void					Event_ClearJoint( jointHandle_t jointnum );
+	void					Event_SetJointPos( jointHandle_t jointnum, jointModTransform_t transform_type, const idVec3 &pos );
+	void					Event_SetJointAngle( jointHandle_t jointnum, jointModTransform_t transform_type, const idAngles &angles );
+	void					Event_GetJointPos( jointHandle_t jointnum );
+	void					Event_GetJointAngle( jointHandle_t jointnum );
 };
 
 #endif /* !__GAME_ENTITY_H__ */

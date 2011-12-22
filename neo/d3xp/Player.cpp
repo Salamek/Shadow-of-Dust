@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,14 +26,23 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/LangDict.h"
+#include "framework/async/NetworkSystem.h"
+#include "framework/DeclEntityDef.h"
+#include "renderer/RenderSystem.h"
 
-#include "Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "script/Script_Thread.h"
+#include "ai/AI.h"
+#include "WorldSpawn.h"
+#include "Player.h"
+#include "Camera.h"
+#include "Fx.h"
+#include "Misc.h"
 
-const int ASYNC_PLAYER_INV_AMMO_BITS = idMath::BitsForInteger( 999 );  // 9 bits to cover the range [0, 999]
-const int ASYNC_PLAYER_INV_CLIP_BITS = -7;                // -7 bits to cover the range [-1, 60]
-
+const int ASYNC_PLAYER_INV_AMMO_BITS = idMath::BitsForInteger( 999 );	// 9 bits to cover the range [0, 999]
+const int ASYNC_PLAYER_INV_CLIP_BITS = -7;								// -7 bits to cover the range [-1, 60]
 /*
 ===============================================================================
 
@@ -269,7 +278,7 @@ void idInventory::GetPersistantData( idDict &dict ) {
 	// armor
 	dict.SetInt( "armor", armor );
 
-    // don't bother with powerups, maxhealth, maxarmor, or the clip
+	// don't bother with powerups, maxhealth, maxarmor, or the clip
 
 	// ammo
 	for( i = 0; i < AMMO_NUMTYPES; i++ ) {
@@ -1762,10 +1771,10 @@ void idPlayer::Spawn( void ) {
 		if ( hud ) {
 			hud->Activate( true, gameLocal.time );
 #ifdef CTF
-            if ( gameLocal.mpGame.IsGametypeFlagBased() ) {
-                hud->SetStateInt( "red_team_score", gameLocal.mpGame.GetFlagPoints(0) );
-                hud->SetStateInt( "blue_team_score", gameLocal.mpGame.GetFlagPoints(1) );
-            }
+			if ( gameLocal.mpGame.IsGametypeFlagBased() ) {
+				hud->SetStateInt( "red_team_score", gameLocal.mpGame.GetFlagPoints(0) );
+				hud->SetStateInt( "blue_team_score", gameLocal.mpGame.GetFlagPoints(1) );
+			}
 #endif
 		}
 
@@ -2546,7 +2555,7 @@ void idPlayer::PrepareForRestart( void ) {
 
 #ifdef CTF
 	// Confirm reset hud states
-    DropFlag();
+	DropFlag();
 
 	if ( hud ) {
 		hud->SetStateInt( "red_flagstatus", 0 );
@@ -3101,19 +3110,19 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 	}
 
 #ifdef CTF
-    if ( gameLocal.mpGame.IsGametypeFlagBased() && _hud )
-    {
+	if ( gameLocal.mpGame.IsGametypeFlagBased() && _hud )
+	{
 		_hud->SetStateInt( "red_flagstatus", gameLocal.mpGame.GetFlagStatus( 0 ) );
 		_hud->SetStateInt( "blue_flagstatus", gameLocal.mpGame.GetFlagStatus( 1 ) );
 
 		_hud->SetStateInt( "red_team_score",  gameLocal.mpGame.GetFlagPoints( 0 ) );
 		_hud->SetStateInt( "blue_team_score", gameLocal.mpGame.GetFlagPoints( 1 ) );
 
-        _hud->HandleNamedEvent( "RedFlagStatusChange" );
-        _hud->HandleNamedEvent( "BlueFlagStatusChange" );
-    }
+		_hud->HandleNamedEvent( "RedFlagStatusChange" );
+		_hud->HandleNamedEvent( "BlueFlagStatusChange" );
+	}
 
-    _hud->HandleNamedEvent( "selfTeam" );
+	_hud->HandleNamedEvent( "selfTeam" );
 
 #endif
 
@@ -5017,7 +5026,7 @@ void idPlayer::UpdateWeapon( void ) {
 	} else if ( ActiveGui() ) {
 		// gui handling overrides weapon use
 		Weapon_GUI();
-	} else 	if ( focusCharacter && ( focusCharacter->health > 0 ) ) {
+	} else	if ( focusCharacter && ( focusCharacter->health > 0 ) ) {
 		Weapon_NPC();
 	} else {
 		Weapon_Combat();
@@ -5503,7 +5512,7 @@ void idPlayer::UpdateFocus( void ) {
 			// clamp the mouse to the corner
 			ev = sys->GenerateMouseMoveEvent( -2000, -2000 );
 			command = focusUI->HandleEvent( &ev, gameLocal.time );
- 			HandleGuiCommands( focusGUIent, command );
+			HandleGuiCommands( focusGUIent, command );
 
 			// move to an absolute position
 			ev = sys->GenerateMouseMoveEvent( pt.x * SCREEN_WIDTH, pt.y * SCREEN_HEIGHT );
@@ -5962,7 +5971,7 @@ void idPlayer::AdjustHeartRate( int target, float timeInSecs, float delay, bool 
 		return;
 	}
 
-    lastHeartAdjust = gameLocal.time;
+	lastHeartAdjust = gameLocal.time;
 
 	heartInfo.Init( gameLocal.time + delay * 1000, timeInSecs * 1000, heartRate, target );
 }
@@ -6903,7 +6912,7 @@ void idPlayer::AdjustBodyAngles( void ) {
 		upBlend			= -frac;
 	}
 
-    animator.CurrentAnim( ANIMCHANNEL_TORSO )->SetSyncedAnimWeight( 0, downBlend );
+	animator.CurrentAnim( ANIMCHANNEL_TORSO )->SetSyncedAnimWeight( 0, downBlend );
 	animator.CurrentAnim( ANIMCHANNEL_TORSO )->SetSyncedAnimWeight( 1, forwardBlend );
 	animator.CurrentAnim( ANIMCHANNEL_TORSO )->SetSyncedAnimWeight( 2, upBlend );
 
@@ -7113,7 +7122,7 @@ void idPlayer::Move( void ) {
 
 	if ( AI_JUMP ) {
 		// bounce the view weapon
- 		loggedAccel_t	*acc = &loggedAccel[currentLoggedAccel&(NUM_LOGGED_ACCELS-1)];
+		loggedAccel_t	*acc = &loggedAccel[currentLoggedAccel&(NUM_LOGGED_ACCELS-1)];
 		currentLoggedAccel++;
 		acc->time = gameLocal.time;
 		acc->dir[2] = 200;
@@ -7156,16 +7165,13 @@ void idPlayer::UpdateHud( void ) {
 				inventory.nextItemNum = 1;
 			}
 			int i, count = 5;
-
 #ifdef _D3XP
 			if(gameLocal.isMultiplayer) {
 				count = 3;
 			}
-			
+
 			if (count < c)
-			{
 				c = count;
-			}
 #endif
 			for ( i = 0; i < c; i++ ) { //_D3XP
 				hud->SetStateString( va( "itemtext%i", inventory.nextItemNum ), inventory.pickupItemNames[0].name );
@@ -7174,7 +7180,7 @@ void idPlayer::UpdateHud( void ) {
 				inventory.pickupItemNames.RemoveIndex( 0 );
 				if (inventory.nextItemNum == 1 ) {
 					inventory.onePickupTime = gameLocal.time;
-				} else 	if ( inventory.nextItemNum > count ) { //_D3XP
+				} else	if ( inventory.nextItemNum > count ) { //_D3XP
 					inventory.nextItemNum = 1;
 					inventory.nextItemPickup = inventory.onePickupTime + 2000;
 				} else {
@@ -7423,7 +7429,7 @@ void idPlayer::Think( void ) {
 
 		// service animations
 		if ( !spectating && !af.IsActive() && !gameLocal.inCinematic ) {
-    		UpdateConditions();
+			UpdateConditions();
 			UpdateAnimState();
 			CheckBlink();
 		}
@@ -7520,7 +7526,7 @@ void idPlayer::Think( void ) {
 	if ( !g_stopTime.GetBool() ) {
 		UpdateAnimation();
 
-        Present();
+		Present();
 
 		UpdateDamageEffects();
 
@@ -7895,18 +7901,18 @@ void idPlayer::DamageFeedback( idEntity *victim, idEntity *inflictor, int &damag
 	damage *= PowerUpModifier( BERSERK );
 	if ( damage && ( victim != this ) && ( victim->IsType( idActor::Type ) || victim->IsType( idDamagable::Type ) ) ) {
 
-        idPlayer *victimPlayer = NULL;
+		idPlayer *victimPlayer = NULL;
 
-        /* No damage feedback sound for hitting friendlies in CTF */
+		/* No damage feedback sound for hitting friendlies in CTF */
 		if ( victim->IsType( idPlayer::Type ) ) {
-            victimPlayer = static_cast<idPlayer*>(victim);
+			victimPlayer = static_cast<idPlayer*>(victim);
 		}
 
-        if ( gameLocal.mpGame.IsGametypeFlagBased() && victimPlayer && this->team == victimPlayer->team ) {
+		if ( gameLocal.mpGame.IsGametypeFlagBased() && victimPlayer && this->team == victimPlayer->team ) {
 			/* Do nothing ... */
 		}
 		else {
-        	SetLastHitTime( gameLocal.time );
+			SetLastHitTime( gameLocal.time );
 		}
 	}
 }
@@ -9339,7 +9345,7 @@ void idPlayer::ClientPredictionThink( void ) {
 
 	// service animations
 	if ( !spectating && !af.IsActive() ) {
-    	UpdateConditions();
+		UpdateConditions();
 		UpdateAnimState();
 		CheckBlink();
 	}
@@ -9544,8 +9550,8 @@ void idPlayer::WriteToSnapshot( idBitMsgDelta &msg ) const {
 	msg.WriteBits( isLagged, 1 );
 	msg.WriteBits( isChatting, 1 );
 #ifdef CTF
-    /* Needed for the scoreboard */
-    msg.WriteBits( carryingFlag, 1 );
+	/* Needed for the scoreboard */
+	msg.WriteBits( carryingFlag, 1 );
 #endif
 #ifdef _D3XP
 	msg.WriteBits( enviroSuitLight.GetSpawnId(), 32 );
@@ -10041,9 +10047,9 @@ void idPlayer::DrawPlayerIcons( void ) {
 	}
 
 #ifdef CTF
-    // Never draw icons for hidden players.
-    if ( this->IsHidden() )
-        return;
+	// Never draw icons for hidden players.
+	if ( this->IsHidden() )
+		return;
 #endif
 
 	playerIcon.Draw( this, headJoint );

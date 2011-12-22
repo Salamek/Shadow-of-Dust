@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,13 +26,16 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/math/Interpolate.h"
+#include "framework/Game.h"
+#include "renderer/VertexCache.h"
+#include "renderer/RenderWorld_local.h"
+#include "ui/Window.h"
 
-#include "tr_local.h"
+#include "renderer/tr_local.h"
 
 static const float CHECK_BOUNDS_EPSILON = 1.0f;
-
 
 /*
 ===========================================================================================
@@ -1076,6 +1079,7 @@ bool R_IssueEntityDefCallback( idRenderEntityLocal *def ) {
 
 	if ( !def->parms.hModel ) {
 		common->Error( "R_IssueEntityDefCallback: dynamic entity callback didn't set model" );
+		return false;
 	}
 
 	if ( checkBounds ) {
@@ -1279,8 +1283,6 @@ void R_AddDrawSurf( const srfTriangles_t *tri, const viewEntity_t *space, const 
 		case TG_WOBBLESKY_CUBE:
 			R_WobbleskyTexGen( drawSurf, tr.viewDef->renderView.vieworg );
 			break;
-		default:
-		break;
 	}
 
 	// check for gui surfaces
@@ -1372,7 +1374,7 @@ static void R_AddAmbientDrawsurfs( viewEntity_t *vEntity ) {
 
 		R_GlobalShaderOverride( &shader );
 
-		if ( !shader ) {	
+		if ( !shader ) {
 			continue;
 		}
 		if ( !shader->IsDrawn() ) {

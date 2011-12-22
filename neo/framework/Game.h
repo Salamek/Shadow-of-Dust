@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,20 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __GAME_H__
 #define __GAME_H__
+
+#include "idlib/BitMsg.h"
+#include "idlib/Dict.h"
+#include "framework/UsercmdGen.h"
+#include "renderer/RenderWorld.h"
+#include "sound/sound.h"
+
+class idAASFileManager;
+class idCollisionModelManager;
+class idRenderSystem;
+class idRenderModelManager;
+class idUserInterface;
+class idUserInterfaceManager;
+class idNetworkSystem;
 
 /*
 ===============================================================================
@@ -231,7 +245,7 @@ public:
 
 	// Animation system calls for non-game based skeletal rendering.
 	virtual idRenderModel *		ANIM_GetModelFromEntityDef( const char *classname );
-	virtual const idVec3 		&ANIM_GetModelOffsetFromEntityDef( const char *classname );
+	virtual const idVec3		&ANIM_GetModelOffsetFromEntityDef( const char *classname );
 	virtual idRenderModel *		ANIM_GetModelFromEntityDef( const idDict *args );
 	virtual idRenderModel *		ANIM_GetModelFromName( const char *modelName );
 	virtual const idMD5Anim *	ANIM_GetAnimFromEntityDef( const char *classname, const char *animname );

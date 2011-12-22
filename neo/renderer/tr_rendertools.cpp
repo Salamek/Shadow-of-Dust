@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,13 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/simplex.h"	// line font definition
+#include "renderer/VertexCache.h"
+#include "renderer/Cinematic.h"
+#include "renderer/RenderWorld_local.h"
 
-#include "tr_local.h"
-#include "simplex.h"	// line font definition
+#include "renderer/tr_local.h"
 
 #define MAX_DEBUG_LINES			16384
 
@@ -414,7 +416,7 @@ void RB_ShowIntensity( void ) {
 	GL_State( GLS_DEPTHFUNC_ALWAYS );
 	qglPushMatrix();
 	qglLoadIdentity();
-    qglOrtho( 0, 1, 0, 1, -1, 1 );
+	qglOrtho( 0, 1, 0, 1, -1, 1 );
 	qglRasterPos2f( 0, 0 );
 	qglPopMatrix();
 	qglColor3f( 1, 1, 1 );
@@ -446,7 +448,7 @@ void RB_ShowDepthBuffer( void ) {
 	qglMatrixMode( GL_PROJECTION );
 	qglPushMatrix();
 	qglLoadIdentity();
-    qglOrtho( 0, 1, 0, 1, -1, 1 );
+	qglOrtho( 0, 1, 0, 1, -1, 1 );
 	qglRasterPos2f( 0, 0 );
 	qglPopMatrix();
 	qglMatrixMode( GL_MODELVIEW );
@@ -786,7 +788,7 @@ Debugging tool
 static void RB_ShowSurfaceInfo( drawSurf_t **drawSurfs, int numDrawSurfs ) {
 	modelTrace_t mt;
 	idVec3 start, end;
-	
+
 	if ( !r_showSurfaceInfo.GetBool() ) {
 		return;
 	}
@@ -1197,7 +1199,7 @@ static void RB_ShowNormals( drawSurf_t **drawSurfs, int numDrawSurfs ) {
 			if ( !tri->verts ) {
 				continue;
 			}
-			
+
 			for ( j = 0 ; j < tri->numVerts ; j++ ) {
 				R_LocalPointToGlobal( drawSurf->space->modelMatrix, tri->verts[j].xyz + tri->verts[j].tangents[0] + tri->verts[j].normal * 0.2f, pos );
 				RB_DrawText( va( "%d", j ), pos, 0.01f, colorWhite, backEnd.viewDef->renderView.viewaxis, 1 );
@@ -1213,7 +1215,7 @@ static void RB_ShowNormals( drawSurf_t **drawSurfs, int numDrawSurfs ) {
 	qglEnable( GL_STENCIL_TEST );
 }
 
-#if 0
+
 /*
 =====================
 RB_ShowNormals
@@ -1221,6 +1223,7 @@ RB_ShowNormals
 Debugging tool
 =====================
 */
+#if 0
 static void RB_AltShowNormals( drawSurf_t **drawSurfs, int numDrawSurfs ) {
 	int			i, j, k;
 	drawSurf_t	*drawSurf;
@@ -1289,6 +1292,7 @@ static void RB_AltShowNormals( drawSurf_t **drawSurfs, int numDrawSurfs ) {
 	qglEnable( GL_STENCIL_TEST );
 }
 #endif
+
 
 
 /*
@@ -1770,7 +1774,7 @@ static void RB_DrawText( const char *text, const idVec3 &origin, float scale, co
 		} else {
 			line = 0;
 		}
-		
+
 		org.Zero();
 		len = strlen( text );
 		for ( i = 0; i < len; i++ ) {
@@ -2194,7 +2198,7 @@ void RB_TestGamma( void ) {
 	qglPushMatrix();
 	qglLoadIdentity();
 	qglDisable( GL_TEXTURE_2D );
-    qglOrtho( 0, 1, 0, 1, -1, 1 );
+	qglOrtho( 0, 1, 0, 1, -1, 1 );
 	qglRasterPos2f( 0.01f, 0.01f );
 	qglDrawPixels( G_WIDTH, G_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, image );
 	qglPopMatrix();
@@ -2244,7 +2248,7 @@ static void RB_TestGammaBias( void ) {
 	qglPushMatrix();
 	qglLoadIdentity();
 	qglDisable( GL_TEXTURE_2D );
-    qglOrtho( 0, 1, 0, 1, -1, 1 );
+	qglOrtho( 0, 1, 0, 1, -1, 1 );
 	qglRasterPos2f( 0.01f, 0.01f );
 	qglDrawPixels( G_WIDTH, G_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, image );
 	qglPopMatrix();
@@ -2297,11 +2301,11 @@ void RB_TestImage( void ) {
 	qglColor3f( 1, 1, 1 );
 	qglPushMatrix();
 	qglLoadIdentity();
-    qglOrtho( 0, 1, 0, 1, -1, 1 );
+	qglOrtho( 0, 1, 0, 1, -1, 1 );
 
 	tr.testImage->Bind();
 	qglBegin( GL_QUADS );
-	
+
 	qglTexCoord2f( 0, 1 );
 	qglVertex2f( 0.5 - w, 0 );
 

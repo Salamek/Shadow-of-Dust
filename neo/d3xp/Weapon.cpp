@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,19 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/DeclEntityDef.h"
+#include "framework/DeclSkin.h"
 
-#include "Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "ai/AI.h"
+#include "Player.h"
+#include "Trigger.h"
+#include "SmokeParticles.h"
+#include "WorldSpawn.h"
+#include "Misc.h"
+
+#include "Weapon.h"
 
 /***********************************************************************
 
@@ -2703,10 +2712,10 @@ void idWeapon::ReadFromSnapshot( const idBitMsgDelta &msg ) {
 			idealState = "Fire";
 		}
 
-        // immediately switch back to idle
-        if ( WEAPON_NETFIRING && !isFiring ) {
-            idealState = "Idle";
-        }
+		// immediately switch back to idle
+		if ( WEAPON_NETFIRING && !isFiring ) {
+			idealState = "Idle";
+		}
 
 		WEAPON_NETFIRING = isFiring;
 	}
@@ -3767,9 +3776,9 @@ void idWeapon::Event_Melee( void ) {
 
 #ifdef CTF      /* Code is formed oddly for easy merge */
 
-                if ( gameLocal.mpGame.IsGametypeFlagBased() )
-                { /* Do nothing ... */ }
-                else
+				if ( gameLocal.mpGame.IsGametypeFlagBased() )
+				{ /* Do nothing ... */ }
+				else
 #endif
 				owner->StealWeapon( static_cast< idPlayer * >( ent ) );
 			}

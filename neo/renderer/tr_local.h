@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,8 +29,15 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __TR_LOCAL_H__
 #define __TR_LOCAL_H__
 
-#include "Image.h"
-#include "MegaTexture.h"
+class idScreenRect; // yay for include recursion
+
+#include "renderer/Image.h"
+#include "renderer/Interaction.h"
+#include "renderer/MegaTexture.h"
+#include "renderer/ModelDecal.h"
+#include "renderer/ModelOverlay.h"
+#include "renderer/RenderSystem.h"
+#include "renderer/RenderWorld.h"
 
 class idRenderWorldLocal;
 
@@ -53,7 +60,7 @@ const float FOG_ENTER = (FOG_ENTER_SIZE+1.0f)/(FOG_ENTER_SIZE*2);
 class idScreenRect {
 public:
 	short		x1, y1, x2, y2;							// inclusive pixel bounds inside viewport
-    float       zmin, zmax;								// for depth bounds test
+	float       zmin, zmax;								// for depth bounds test
 
 	void		Clear();								// clear to backwards values
 	void		AddPoint( float x, float y );			// adds a point
@@ -92,11 +99,6 @@ SURFACES
 
 ==============================================================================
 */
-
-#include "ModelDecal.h"
-#include "ModelOverlay.h"
-#include "Interaction.h"
-
 
 // drawSurf_t structures command the back end to render surfaces
 // a given srfTriangles_t may be used with multiple viewEntity_t,
@@ -312,7 +314,7 @@ typedef struct viewLight_s {
 
 	// true if globalLightOrigin is inside the view frustum, even if it may
 	// be obscured by geometry.  This allows us to skip shadows from non-visible objects
-	bool					viewSeesGlobalLightOrigin;	
+	bool					viewSeesGlobalLightOrigin;
 
 	// if !viewInsideLight, the corresponding bit for each of the shadowFrustum
 	// projection planes that the view is on the negative side of will be set,
@@ -628,7 +630,7 @@ typedef struct {
 	int		c_shadowVertexes;
 
 	int		c_vboIndexes;
-	float	c_overDraw;	
+	float	c_overDraw;
 
 	float	maxLightValue;	// for light scale
 	int		msec;			// total msec for backend run
@@ -1056,7 +1058,7 @@ void R_SetColorMappings( void );
 void R_ScreenShot_f( const idCmdArgs &args );
 void R_StencilShot( void );
 
-bool R_CheckExtension(const char *name );
+bool R_CheckExtension( const char *name );
 
 
 /*
@@ -1094,7 +1096,7 @@ void		GLimp_SwapBuffers( void );
 // This will not be called if 'r_drawBuffer GL_FRONT'
 
 void		GLimp_SetGamma( unsigned short red[256],
-						    unsigned short green[256],
+							unsigned short green[256],
 							unsigned short blue[256] );
 // Sets the hardware gamma ramps for gamma and brightness adjustment.
 // These are now taken as 16 bit values, so we can take full advantage
@@ -1675,13 +1677,9 @@ TR_SHADOWBOUNDS
 =============================================================
 */
 idScreenRect R_CalcIntersectionScissor( const idRenderLightLocal * lightDef,
-									    const idRenderEntityLocal * entityDef,
-									    const viewDef_t * viewDef );
+										const idRenderEntityLocal * entityDef,
+										const viewDef_t * viewDef );
 
 //=============================================
-
-#include "RenderWorld_local.h"
-#include "GuiModel.h"
-#include "VertexCache.h"
 
 #endif /* !__TR_LOCAL_H__ */

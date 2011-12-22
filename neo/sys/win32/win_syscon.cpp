@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,15 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/Licensee.h"
+#include "framework/Common.h"
+#include "framework/KeyInput.h"
+#include "framework/EditField.h"
+#include "sys/win32/rc/AFEditor_resource.h"
+#include "sys/win32/rc/doom_resource.h"
+
+#include "sys/win32/win_local.h"
 
 #include <errno.h>
 #include <float.h>
@@ -36,10 +43,6 @@ If you have questions concerning this license or the applicable additional terms
 #include <direct.h>
 #include <io.h>
 #include <conio.h>
-
-#include "win_local.h"
-#include "rc/AFEditor_resource.h"
-#include "rc/doom_resource.h"
 
 #define COPY_ID			1
 #define QUIT_ID			2
@@ -80,7 +83,7 @@ typedef struct {
 	char		consoleText[512], returnedText[512];
 	bool		quitOnClose;
 	int			windowWidth, windowHeight;
-	
+
 	WNDPROC		SysInputLineWndProc;
 
 	idEditField	historyEditLines[COMMAND_HISTORY];
@@ -187,9 +190,9 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 				}
 			}
 			break;
-    }
+	}
 
-    return DefWindowProc( hWnd, uMsg, wParam, lParam );
+	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }
 
 LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -457,14 +460,14 @@ void Sys_ShowConsole( int visLevel, bool quitOnClose ) {
 ** Sys_ConsoleInput
 */
 char *Sys_ConsoleInput( void ) {
-	
+
 	if ( s_wcd.consoleText[0] == 0 ) {
 		return NULL;
 	}
-		
+
 	strcpy( s_wcd.returnedText, s_wcd.consoleText );
 	s_wcd.consoleText[0] = 0;
-	
+
 	return s_wcd.returnedText;
 }
 

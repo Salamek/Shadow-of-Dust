@@ -11,10 +11,10 @@
 +++ loki_setup.zinx/xsu.c	2005-03-16 16:36:17.752988272 -0600
 @@ -37,6 +37,7 @@
  #include "xsu.h"
-
+ 
  static int term = -1;
 +static int term_status = 0;
-
+ 
  static gint
  exec_su_failed (gpointer user_data)
 @@ -79,22 +80,25 @@
@@ -32,7 +32,7 @@
 -      gtk_exit(WEXITSTATUS(status));
 +      /* This is handled at the end of xsu_process */
 +      return;
-     } else if ( WIFSIGNALED(status) ) {
+     } else if ( WIFSIGNALED(status) ) { 
  #ifdef DEBUG
        fprintf(stderr,"Xsu: subprocess %d has died from signal %d\n", pid, WTERMSIG(status));
  #endif
@@ -48,18 +48,18 @@
 -    gtk_main_quit ();
    }
  }
-
+ 
 @@ -135,22 +139,27 @@
  	gchar *buffer;
  	char *argv[6], c;
  	fd_set fds;
 -	struct timeval delay = { 0, 10*1000 }; /* 10 ms wait */
 +	struct timeval delay;
-
+ 
  #ifdef DEBUG
      printf("void xsu_perform()\n");
  #endif
-
+ 
 +	gtk_widget_hide (gtk_xsu_window);
 +
 +	if (password == NULL)
@@ -75,12 +75,12 @@
 -	if (password == NULL)
 -		return;
 +	password_return = g_strdup_printf ("%s\n", password);
-
+ 
 +	/* Technically, we aren't supposed to modify this, but it should
 +	   usually be OK because we're explicitly clearing it afterwards. */
 +	memset (password, 0, strlen (password));
 +	gtk_entry_set_text(GTK_ENTRY(gtk_password_textbox),"");
-
+ 
  /* xsu 0.2.1 *
  	Option to set the DISPLAY environment
 @@ -177,6 +186,9 @@
@@ -92,11 +92,11 @@
 +#endif
  	term = exec_program(su_command, argv);
  	/* We are not a gnome-application anymore but under control of su */
-
+ 
 @@ -231,33 +243,65 @@
  	fprintf(stderr, "Got it!\n");
  #endif
-
+ 
 -	/* Discard any remaining characters on stdin */
 -	for(;;) {
 +	/* Slurp up any extra characters immediately after the password prompt,
@@ -118,14 +118,14 @@
  		} else
  			break;
  	}
-
+ 
 -	password_return = g_strdup_printf ("%s\n", password);
  #ifdef DEBUG
   	fprintf(stderr,"Sending password\n");
  #endif
  /* 0.2.2 *
  	Minor security fix, clear the password from memory
- */
+ */  
 -	memset (password, 0, strlen (password));	
  	if ( write(term, password_return, strlen(password_return)) < 0 ) {
  	    perror("write");
@@ -134,7 +134,7 @@
  	memset (password_return, 0, strlen (password_return));
  	g_free (password_return); password_return = NULL;
 -	g_free (password); password = NULL;
-
+ 
 -	//gtk_main();
 +	/* Eat up any output, and wait for a SIGCHLD saying su exited */
 +	while (term >= 0) {
@@ -151,7 +151,7 @@
 +#endif
 +		}
 +
-+		while (gtk_events_pending ())
++		while (gtk_events_pending ()) 
 +		  gtk_main_iteration ();
 +	}
 +
@@ -166,5 +166,5 @@
 +		gtk_main_quit();
 +	}
  }
-
-
+ 
+ 

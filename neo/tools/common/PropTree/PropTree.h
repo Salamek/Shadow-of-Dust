@@ -87,7 +87,7 @@ void InitPropTree(HINSTANCE hInstance);
 // CPropTree WM_NOTIFY notification structure
 typedef struct _NMPROPTREE
 {
-    NMHDR			hdr;
+	NMHDR			hdr;
 	CPropTreeItem*	pItem;
 } NMPROPTREE, *PNMPROPTREE, FAR *LPNMPROPTREE;
 
@@ -240,7 +240,7 @@ public:
 
 	// Focus on the previous item
 	CPropTreeItem *FocusPrev();
-	
+
 	// Focus on the next item
 	CPropTreeItem *FocusNext();
 

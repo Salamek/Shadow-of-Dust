@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,13 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
 #include "Maya5.0/maya.h"
 //#include "Maya6.0/maya.h"			// must also change include directory in project from "MayaImport\Maya4.5\include" to "MayaImport\Maya6.0\include" (requires MSDev 7.1)
-#include "exporter.h"
-#include "maya_main.h"
+#include "MayaImport/exporter.h"
+#include "MayaImport/maya_main.h"
 
 idStr	errorMessage;
 bool	initialized = false;
@@ -241,11 +240,11 @@ idMat3 ConvertFromIdSpace( const idMat3 &idmat ) {
 	mat[ 0 ][ 0 ] = idmat[ 0 ][ 0 ];
 	mat[ 0 ][ 2 ] = -idmat[ 0 ][ 1 ];
 	mat[ 0 ][ 1 ] = idmat[ 0 ][ 2 ];
-						
+
 	mat[ 1 ][ 0 ] = idmat[ 1 ][ 0 ];
 	mat[ 1 ][ 2 ] = -idmat[ 1 ][ 1 ];
 	mat[ 1 ][ 1 ] = idmat[ 1 ][ 2 ];
-						
+
 	mat[ 2 ][ 0 ] = idmat[ 2 ][ 0 ];
 	mat[ 2 ][ 2 ] = -idmat[ 2 ][ 1 ];
 	mat[ 2 ][ 1 ] = idmat[ 2 ][ 2 ];
@@ -408,7 +407,7 @@ int idTokenizer::SetTokens( const char *buffer ) {
 		if ( !*cmd ) {
 			break;
 		}
-		
+
 		idStr &current = tokens.Alloc();
 		while( *cmd && !isspace( *cmd ) ) {
 			current += *cmd;
@@ -603,7 +602,7 @@ idExportOptions::idExportOptions( const char *commandline, const char *ospath ) 
 			if ( quatPrecision < 0.0f ) {
 				MayaError( "Invalid value for -quatprecision.  Must be >= 0" );
 			}
-		
+
 		} else if ( token == "-jointthreshold" ) {
 			// parse joint threshold
 			token			= tokens.NextToken( "Missing weight for -jointthreshold.  Usage: -jointthreshold [minimum joint weight]" );
@@ -743,7 +742,7 @@ idExportJoint::idExportJoint() {
 	exportNode.SetOwner( this );
 
 	dagnode				= NULL;
-						
+
 	t					= vec3_zero;
 	wm					= mat3_default;
 	bindpos				= vec3_zero;
@@ -764,15 +763,15 @@ idExportJoint &idExportJoint::operator=( const idExportJoint &other ) {
 	index		= other.index;
 	exportNum	= other.exportNum;
 	keep		= other.keep;
-	
+
 	scale		= other.scale;
 	invscale	= other.invscale;
-	
+
 	dagnode		= other.dagnode;
 
 	mayaNode	= other.mayaNode;
 	exportNode	= other.exportNode;
-	
+
 	t			= other.t;
 	idt			= other.idt;
 	wm			= other.wm;
@@ -1042,7 +1041,7 @@ bool idExportModel::WriteMesh( const char *filename, idExportOptions &options ) 
 		WriteFloatString( file, "\nmesh {\n" );
 		WriteFloatString( file, "\t// meshes: %s\n", mesh->name.c_str() );
 		WriteFloatString( file, "\tshader \"%s\"\n", mesh->shader.c_str() );
-		
+
 		WriteFloatString( file, "\n\tnumverts %d\n", mesh->verts.Num() );
 		for( j = 0; j < mesh->verts.Num(); j++ ) {
 			WriteFloatString( file, "\tvert %d ( %f %f ) %d %d\n", j, mesh->verts[ j ].texCoords[ 0 ], mesh->verts[ j ].texCoords[ 1 ],
@@ -1156,7 +1155,7 @@ bool idExportModel::WriteAnim( const char *filename, idExportOptions &options ) 
 	WriteFloatString( file, "numJoints %d\n", jointList.Num() );
 	WriteFloatString( file, "frameRate %d\n", frameRate );
 	WriteFloatString( file, "numAnimatedComponents %d\n", numAnimatedComponents );
-		
+
 	// write out the hierarchy
 	WriteFloatString( file, "\nhierarchy {\n" );
 	for( i = 0; i < jointList.Num(); i++ ) {
@@ -1251,7 +1250,7 @@ bool idExportModel::WriteCamera( const char *filename, idExportOptions &options 
 	WriteFloatString( file, "numFrames %d\n", camera.Num() );
 	WriteFloatString( file, "frameRate %d\n", frameRate );
 	WriteFloatString( file, "numCuts %d\n", cameraCuts.Num() );
-	
+
 	// write out the cuts
 	WriteFloatString( file, "\ncuts {\n" );
 	for( i = 0; i < cameraCuts.Num(); i++ ) {
@@ -1658,7 +1657,7 @@ void idMayaExport::CreateJoints( float scale ) {
 
 			delete parentNode;
 		}
-		
+
 		// create long name
 		parent = joint->mayaNode.GetParent();
 		if ( parent ) {
@@ -1681,7 +1680,7 @@ void idMayaExport::CreateJoints( float scale ) {
 		}
 
 		joint->dagnode->getPath( dagPath );
- 		GetBindPose( dagPath.node( &status ), joint, scale );
+		GetBindPose( dagPath.node( &status ), joint, scale );
 	}
 }
 
@@ -1762,7 +1761,7 @@ bool idMayaExport::RemapParents( idList<idNamePair> &remapjoints ) {
 
 	// force the joint to be kept
 	origin->keep = true;
-	
+
 	// make all root joints children of the origin joint
 	joint = model.exportHead.GetChild();
 	while( joint ) {
@@ -1787,8 +1786,8 @@ MObject idMayaExport::FindShader( MObject& setNode ) {
 	MStatus				status;
 	MFnDependencyNode	fnNode( setNode );
 	MPlug				shaderPlug;
-	
-	shaderPlug = fnNode.findPlug( "surfaceShader" );			
+
+	shaderPlug = fnNode.findPlug( "surfaceShader" );
 	if ( !shaderPlug.isNull() ) {
 		MPlugArray connectedPlugs;
 		bool asSrc = false;
@@ -1800,8 +1799,8 @@ MObject idMayaExport::FindShader( MObject& setNode ) {
 		} else {
 			return connectedPlugs[ 0 ].node();
 		}
-	}			
-	
+	}
+
 	return MObject::kNullObj;
 }
 
@@ -1818,7 +1817,7 @@ void idMayaExport::GetTextureForMesh( idExportMesh *mesh, MFnDagNode &dagNode ) 
 	MDagPath	path;
 	int			i;
 	int			instanceNum;
-	
+
 	status = dagNode.getPath( path );
 	if ( !status ) {
 		return;
@@ -1834,9 +1833,9 @@ void idMayaExport::GetTextureForMesh( idExportMesh *mesh, MFnDagNode &dagNode ) 
 		instanceNum = path.instanceNumber();
 	}
 
-    // Get a list of all sets pertaining to the selected shape and the
-    // members of those sets.
-    //
+	// Get a list of all sets pertaining to the selected shape and the
+	// members of those sets.
+	//
 	MFnMesh fnMesh( path );
 	MObjectArray sets;
 	MObjectArray comps;
@@ -1846,8 +1845,8 @@ void idMayaExport::GetTextureForMesh( idExportMesh *mesh, MFnDagNode &dagNode ) 
 	}
 
 	// Loop through all the sets.  If the set is a polygonal set, find the
-    // shader attached to the and print out the texture file name for the
-    // set along with the polygons in the set.
+	// shader attached to the and print out the texture file name for the
+	// set along with the polygons in the set.
 	//
 	for ( i = 0; i < ( int )sets.length(); i++ ) {
 		MObject set = sets[i];
@@ -1856,20 +1855,20 @@ void idMayaExport::GetTextureForMesh( idExportMesh *mesh, MFnDagNode &dagNode ) 
 		MFnSet fnSet( set, &status );
 		if ( status == MS::kFailure ) {
 			MayaError( "GetTextureForMesh: MFnSet constructor failed (%s)", status.errorString().asChar() );
-            continue;
-        }
+			continue;
+		}
 
-        // Make sure the set is a polygonal set.  If not, continue.
+		// Make sure the set is a polygonal set.  If not, continue.
 		MItMeshPolygon piter(path, comp, &status);
 		if (status == MS::kFailure) {
-            continue;
+			continue;
 		}
 
 		// Find the texture that is applied to this set.  First, get the
 		// shading node connected to the set.  Then, if there is an input
 		// attribute called "color", search upstream from it for a texture
 		// file node.
-        //
+		//
 		MObject shaderNode = FindShader( set );
 		if ( shaderNode == MObject::kNullObj ) {
 			continue;
@@ -1889,21 +1888,21 @@ void idMayaExport::GetTextureForMesh( idExportMesh *mesh, MFnDagNode &dagNode ) 
 		if ( status == MS::kFailure ) {
 			continue;
 		}
-		
+
 		dgIt.disablePruningOnFilter();
 
-        // If no texture file node was found, just continue.
-        //
+		// If no texture file node was found, just continue.
+		//
 		if ( dgIt.isDone() ) {
 			continue;
 		}
-		
-        // Print out the texture node name and texture file that it references.
-        //
+
+		// Print out the texture node name and texture file that it references.
+		//
 		MObject textureNode = dgIt.thisNode();
-        MPlug filenamePlug = MFnDependencyNode( textureNode ).findPlug( "fileTextureName" );
-        MString textureName;
-        filenamePlug.getValue( textureName );
+		MPlug filenamePlug = MFnDependencyNode( textureNode ).findPlug( "fileTextureName" );
+		MString textureName;
+		filenamePlug.getValue( textureName );
 
 		// remove the OS path and save it in the mesh
 		OSPathToRelativePath( textureName.asChar(), mesh->shader, options.game );
@@ -2002,7 +2001,7 @@ idExportMesh *idMayaExport::CopyMesh( MFnSkinCluster &skinCluster, float scale )
 				return NULL;
 			}
 		}
-			
+
 		if ( options.skipmeshes.Find( name ) || options.skipmeshes.Find( altname ) ) {
 			common->Printf( "Skipping mesh '%s' ('%s')\n", name.c_str(), altname.c_str() );
 			return NULL;
@@ -2032,13 +2031,13 @@ idExportMesh *idMayaExport::CopyMesh( MFnSkinCluster &skinCluster, float scale )
 
 		MIntArray vertexList;
 		int p;
-		
+
 		p = fnmesh.numPolygons( &status );
 		mesh->tris.SetNum( p );
 		mesh->uv.SetNum( p );
 
 		MString setName;
-		
+
 		status = fnmesh.getCurrentUVSetName( setName );
 		if ( !status ) {
 			MayaError( "CopyMesh: MFnMesh::getCurrentUVSetName failed (%s)", status.errorString().asChar() );
@@ -2052,12 +2051,12 @@ idExportMesh *idMayaExport::CopyMesh( MFnSkinCluster &skinCluster, float scale )
 
 			for( k = 0; k < 3; k++ ) {
 				mesh->tris[ j ].indexes[ k ] = vertexList[ k ];
-			
+
 				status = fnmesh.getPolygonUV( j, k, uv_u, uv_v, &setName );
 				if ( !status ) {
 					MayaError( "CopyMesh: MFnMesh::getPolygonUV failed (%s)", status.errorString().asChar() );
 				}
-				
+
 				mesh->uv[ j ].uv[ k ][ 0 ] = uv_u;
 				mesh->uv[ j ].uv[ k ][ 1 ] = uv_v;
 			}
@@ -2086,9 +2085,9 @@ void idMayaExport::CreateMesh( float scale ) {
 	count = 0;
 	for ( ; !iter.isDone(); iter.next() ) {
 		MObject object = iter.item();
-		
+
 		count++;
-		
+
 		// For each skinCluster node, get the list of influence objects
 		MFnSkinCluster skinCluster( object, &status );
 		if ( !status ) {
@@ -2109,7 +2108,7 @@ void idMayaExport::CreateMesh( float scale ) {
 		if ( 0 == nInfs ) {
 			MayaError( "Mesh '%s': No influence objects found", mesh->name.c_str() );
 		}
-		
+
 		// loop through the geometries affected by this cluster
 		nGeoms = skinCluster.numOutputConnections();
 		for (size_t ii = 0; ii < nGeoms; ++ii) {
@@ -2183,7 +2182,7 @@ void idMayaExport::CreateMesh( float scale ) {
 					if ( w > options.jointThreshold ) {
 						weight.joint = joints[ jj ];
 						weight.jointWeight = wts[ jj ];
-						
+
 						if ( !options.ignoreScale ) {
 							weight.joint->bindmat.ProjectVector( vert->pos - ( weight.joint->bindpos * weight.joint->invscale ), weight.offset );
 							weight.offset *= weight.joint->scale;
@@ -2367,7 +2366,7 @@ float idMayaExport::GetCameraFov( idExportJoint *joint ) {
 	fov = 90.0f;
 	for( j = 0; j < childCount; j++ ) {
 		MObject childNode = dagnode->child( j );
-		
+
 		n1 = GetObjectType( cameraNode );
 		n2 = GetObjectType( childNode );
 		if ( ( !strcmp( "transform", n1 ) ) && ( !strcmp( "camera", n2 ) ) ) {
@@ -2394,7 +2393,7 @@ void idMayaExport::GetCameraFrame( idExportJoint *camera, idMat3 &align, cameraF
 
 	// get the worldspace positions of the joint
 	GetWorldTransform( camera, pos, axis, 1.0f );
-	
+
 	// convert to id coordinates
 	cam->t	= ConvertToIdSpace( pos ) * align;
 
@@ -2482,7 +2481,7 @@ void idMayaExport::CreateCameraAnim( idMat3 &align ) {
 		}
 	}
 
-    camJoint = model.FindJoint( currentCam );
+	camJoint = model.FindJoint( currentCam );
 	if ( !camJoint ) {
 		MayaError( "Couldn't find camera '%s'", currentCam.c_str() );
 	}
@@ -2564,7 +2563,7 @@ void idMayaExport::GetDefaultPose( idMat3 &align ) {
 
 		// get the worldspace positions of the joint
 		GetWorldTransform( joint, jointpos, jointaxis, options.scale );
-		
+
 		// convert to id coordinates
 		jointaxis	= ConvertToIdSpace( jointaxis ) * align;
 		jointpos	= ConvertToIdSpace( jointpos ) * align;
@@ -2682,7 +2681,7 @@ void idMayaExport::CreateAnimation( idMat3 &align ) {
 
 			// get the worldspace positions of the joint
 			GetWorldTransform( joint, jointpos, jointaxis, options.scale );
-			
+
 			// convert to id coordinates
 			jointaxis	= ConvertToIdSpace( jointaxis ) * align;
 			jointpos	= ConvertToIdSpace( jointpos ) * align;
@@ -2865,7 +2864,7 @@ void idMayaExport::ConvertModel( void ) {
 
 	switch( options.type ) {
 	case WRITE_MESH :
-        common->Printf( "Grabbing default pose:\n" );
+		common->Printf( "Grabbing default pose:\n" );
 		GetDefaultPose( align );
 		common->Printf( "Writing file...\n" );
 		if ( !model.WriteMesh( options.dest, options ) ) {
@@ -2874,7 +2873,7 @@ void idMayaExport::ConvertModel( void ) {
 		break;
 
 	case WRITE_ANIM :
-        common->Printf( "Creating animation frames:\n" );
+		common->Printf( "Creating animation frames:\n" );
 		CreateAnimation( align );
 		common->Printf( "Writing file...\n" );
 		if ( !model.WriteAnim( options.dest, options ) ) {
@@ -2905,7 +2904,7 @@ void idMayaExport::ConvertToMD3( void ) {
 #if 0
 	int					i, j;
 	md3Header_t			*pinmodel;
-    md3Frame_t			*frame;
+	md3Frame_t			*frame;
 	md3Surface_t		*surf;
 	md3Shader_t			*shader;
 	md3Triangle_t		*tri;
@@ -2933,15 +2932,15 @@ void idMayaExport::ConvertToMD3( void ) {
 
 	memcpy (mod->md3[lod], buffer, LittleLong(pinmodel->ofsEnd) );
 
-    LL(mod->md3[lod]->ident);
-    LL(mod->md3[lod]->version);
-    LL(mod->md3[lod]->numFrames);
-    LL(mod->md3[lod]->numTags);
-    LL(mod->md3[lod]->numSurfaces);
-    LL(mod->md3[lod]->ofsFrames);
-    LL(mod->md3[lod]->ofsTags);
-    LL(mod->md3[lod]->ofsSurfaces);
-    LL(mod->md3[lod]->ofsEnd);
+	LL(mod->md3[lod]->ident);
+	LL(mod->md3[lod]->version);
+	LL(mod->md3[lod]->numFrames);
+	LL(mod->md3[lod]->numTags);
+	LL(mod->md3[lod]->numSurfaces);
+	LL(mod->md3[lod]->ofsFrames);
+	LL(mod->md3[lod]->ofsTags);
+	LL(mod->md3[lod]->ofsSurfaces);
+	LL(mod->md3[lod]->ofsEnd);
 
 	if ( mod->md3[lod]->numFrames < 1 ) {
 		common->Printf( "R_LoadMD3: %s has no frames\n", mod_name );
@@ -2949,43 +2948,43 @@ void idMayaExport::ConvertToMD3( void ) {
 	}
 
 	// swap all the frames
-    frame = (md3Frame_t *) ( (byte *)mod->md3[lod] + mod->md3[lod]->ofsFrames );
-    for ( i = 0 ; i < mod->md3[lod]->numFrames ; i++, frame++) {
-    	frame->radius = LittleFloat( frame->radius );
-        for ( j = 0 ; j < 3 ; j++ ) {
-            frame->bounds[0][j] = LittleFloat( frame->bounds[0][j] );
-            frame->bounds[1][j] = LittleFloat( frame->bounds[1][j] );
-	    	frame->localOrigin[j] = LittleFloat( frame->localOrigin[j] );
-        }
+	frame = (md3Frame_t *) ( (byte *)mod->md3[lod] + mod->md3[lod]->ofsFrames );
+	for ( i = 0 ; i < mod->md3[lod]->numFrames ; i++, frame++) {
+		frame->radius = LittleFloat( frame->radius );
+		for ( j = 0 ; j < 3 ; j++ ) {
+			frame->bounds[0][j] = LittleFloat( frame->bounds[0][j] );
+			frame->bounds[1][j] = LittleFloat( frame->bounds[1][j] );
+			frame->localOrigin[j] = LittleFloat( frame->localOrigin[j] );
+		}
 	}
 
 	// swap all the tags
-    tag = (md3Tag_t *) ( (byte *)mod->md3[lod] + mod->md3[lod]->ofsTags );
-    for ( i = 0 ; i < mod->md3[lod]->numTags * mod->md3[lod]->numFrames ; i++, tag++) {
-        for ( j = 0 ; j < 3 ; j++ ) {
+	tag = (md3Tag_t *) ( (byte *)mod->md3[lod] + mod->md3[lod]->ofsTags );
+	for ( i = 0 ; i < mod->md3[lod]->numTags * mod->md3[lod]->numFrames ; i++, tag++) {
+		for ( j = 0 ; j < 3 ; j++ ) {
 			tag->origin[j] = LittleFloat( tag->origin[j] );
 			tag->axis[0][j] = LittleFloat( tag->axis[0][j] );
 			tag->axis[1][j] = LittleFloat( tag->axis[1][j] );
 			tag->axis[2][j] = LittleFloat( tag->axis[2][j] );
-        }
+		}
 	}
 
 	// swap all the surfaces
 	surf = (md3Surface_t *) ( (byte *)mod->md3[lod] + mod->md3[lod]->ofsSurfaces );
 	for ( i = 0 ; i < mod->md3[lod]->numSurfaces ; i++) {
 
-        LL(surf->ident);
-        LL(surf->flags);
-        LL(surf->numFrames);
-        LL(surf->numShaders);
-        LL(surf->numTriangles);
-        LL(surf->ofsTriangles);
-        LL(surf->numVerts);
-        LL(surf->ofsShaders);
-        LL(surf->ofsSt);
-        LL(surf->ofsXyzNormals);
-        LL(surf->ofsEnd);
-		
+		LL(surf->ident);
+		LL(surf->flags);
+		LL(surf->numFrames);
+		LL(surf->numShaders);
+		LL(surf->numTriangles);
+		LL(surf->ofsTriangles);
+		LL(surf->numVerts);
+		LL(surf->ofsShaders);
+		LL(surf->ofsSt);
+		LL(surf->ofsXyzNormals);
+		LL(surf->ofsEnd);
+
 		if ( surf->numVerts > SHADER_MAX_VERTEXES ) {
 			ri.Error (ERR_DROP, "R_LoadMD3: %s has more than %i verts on a surface (%i)",
 				mod_name, SHADER_MAX_VERTEXES, surf->numVerts );
@@ -2994,7 +2993,7 @@ void idMayaExport::ConvertToMD3( void ) {
 			ri.Error (ERR_DROP, "R_LoadMD3: %s has more than %i triangles on a surface (%i)",
 				mod_name, SHADER_MAX_INDEXES / 3, surf->numTriangles );
 		}
-	
+
 		// change to surface identifier
 		surf->ident = SF_MD3;
 
@@ -3008,18 +3007,18 @@ void idMayaExport::ConvertToMD3( void ) {
 			surf->name[j-2] = 0;
 		}
 
-        // register the shaders
-        shader = (md3Shader_t *) ( (byte *)surf + surf->ofsShaders );
-        for ( j = 0 ; j < surf->numShaders ; j++, shader++ ) {
-            shader_t	*sh;
+		// register the shaders
+		shader = (md3Shader_t *) ( (byte *)surf + surf->ofsShaders );
+		for ( j = 0 ; j < surf->numShaders ; j++, shader++ ) {
+			shader_t	*sh;
 
-            sh = R_FindShader( shader->name, LIGHTMAP_NONE, qtrue );
+			sh = R_FindShader( shader->name, LIGHTMAP_NONE, qtrue );
 			if ( sh->defaultShader ) {
 				shader->shaderIndex = 0;
 			} else {
 				shader->shaderIndex = sh->index;
 			}
-        }
+		}
 
 		// swap all the triangles
 		tri = (md3Triangle_t *) ( (byte *)surf + surf->ofsTriangles );
@@ -3030,22 +3029,22 @@ void idMayaExport::ConvertToMD3( void ) {
 		}
 
 		// swap all the ST
-        st = (md3St_t *) ( (byte *)surf + surf->ofsSt );
-        for ( j = 0 ; j < surf->numVerts ; j++, st++ ) {
-            st->st[0] = LittleFloat( st->st[0] );
-            st->st[1] = LittleFloat( st->st[1] );
-        }
+		st = (md3St_t *) ( (byte *)surf + surf->ofsSt );
+		for ( j = 0 ; j < surf->numVerts ; j++, st++ ) {
+			st->st[0] = LittleFloat( st->st[0] );
+			st->st[1] = LittleFloat( st->st[1] );
+		}
 
 		// swap all the XyzNormals
-        xyz = (md3XyzNormal_t *) ( (byte *)surf + surf->ofsXyzNormals );
-        for ( j = 0 ; j < surf->numVerts * surf->numFrames ; j++, xyz++ )
+		xyz = (md3XyzNormal_t *) ( (byte *)surf + surf->ofsXyzNormals );
+		for ( j = 0 ; j < surf->numVerts * surf->numFrames ; j++, xyz++ )
 		{
-            xyz->xyz[0] = LittleShort( xyz->xyz[0] );
-            xyz->xyz[1] = LittleShort( xyz->xyz[1] );
-            xyz->xyz[2] = LittleShort( xyz->xyz[2] );
+			xyz->xyz[0] = LittleShort( xyz->xyz[0] );
+			xyz->xyz[1] = LittleShort( xyz->xyz[1] );
+			xyz->xyz[2] = LittleShort( xyz->xyz[2] );
 
-            xyz->normal = LittleShort( xyz->normal );
-        }
+			xyz->normal = LittleShort( xyz->normal );
+		}
 
 
 		// find the next surface
@@ -3084,7 +3083,7 @@ Maya_ConvertModel
 ===============
 */
 const char *Maya_ConvertModel( const char *ospath, const char *commandline ) {
-	
+
 	errorMessage = "Ok";
 
 	try {
@@ -3093,7 +3092,7 @@ const char *Maya_ConvertModel( const char *ospath, const char *commandline ) {
 
 		exportM.ConvertModel();
 	}
-	
+
 	catch( idException &exception ) {
 		errorMessage = exception.error;
 	}

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -50,14 +50,14 @@ void CFindTextureDlg::updateTextures(const char *p)
 {
   if (isOpen())
   {
-    if (g_bFindActive)
-    {
-      setFindStr(p);
-    }
-    else
-    {
-      setReplaceStr(p);
-    }
+	if (g_bFindActive)
+	{
+	  setFindStr(p);
+	}
+	else
+	{
+	  setReplaceStr(p);
+	}
   }
 }
 
@@ -118,18 +118,18 @@ void CFindTextureDlg::show()
 {
   if (g_dlgFind.GetSafeHwnd() == NULL || IsWindow(g_dlgFind.GetSafeHwnd()) == FALSE)
   {
-    g_dlgFind.Create(IDD_DIALOG_FINDREPLACE);
-    g_dlgFind.ShowWindow(SW_SHOW);
+	g_dlgFind.Create(IDD_DIALOG_FINDREPLACE);
+	g_dlgFind.ShowWindow(SW_SHOW);
   }
   else
   {
-    g_dlgFind.ShowWindow(SW_SHOW);
+	g_dlgFind.ShowWindow(SW_SHOW);
   }
   CRect rct;
   LONG lSize = sizeof(rct);
   if (LoadRegistryInfo("Radiant::TextureFindWindow", &rct, &lSize))
-    g_dlgFind.SetWindowPos(NULL, rct.left, rct.top, 0,0, SWP_NOSIZE | SWP_SHOWWINDOW);
-}		
+	g_dlgFind.SetWindowPos(NULL, rct.left, rct.top, 0,0, SWP_NOSIZE | SWP_SHOWWINDOW);
+}
 
 
 bool CFindTextureDlg::isOpen()
@@ -142,8 +142,8 @@ void CFindTextureDlg::setFindStr(const char * p)
   g_dlgFind.UpdateData(TRUE);
   if (g_dlgFind.m_bLive)
   {
-    g_dlgFind.m_strFind = p;
-    g_dlgFind.UpdateData(FALSE);
+	g_dlgFind.m_strFind = p;
+	g_dlgFind.UpdateData(FALSE);
   }
 }
 
@@ -152,8 +152,8 @@ void CFindTextureDlg::setReplaceStr(const char * p)
   g_dlgFind.UpdateData(TRUE);
   if (g_dlgFind.m_bLive)
   {
-    g_dlgFind.m_strReplace = p;
-    g_dlgFind.UpdateData(FALSE);
+	g_dlgFind.m_strReplace = p;
+	g_dlgFind.UpdateData(FALSE);
   }
 }
 

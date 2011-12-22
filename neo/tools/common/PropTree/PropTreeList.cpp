@@ -618,7 +618,7 @@ void CPropTreeList::CheckVisibleFocus()
 	ASSERT(m_pProp!=NULL);
 
 	CPropTreeItem* pItem;
-	
+
 	if ((pItem = m_pProp->GetFocusedItem())==NULL)
 		return;
 

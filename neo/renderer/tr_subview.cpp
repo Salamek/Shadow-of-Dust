@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,9 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
-#include "tr_local.h"
-
+#include "renderer/tr_local.h"
 
 typedef struct {
 	idVec3		origin;
@@ -149,7 +147,6 @@ bool R_PreciseCullSurface( const drawSurf_t *drawSurf, idBounds &ndcBounds ) {
 	}
 
 	// backface and frustum cull
-
 	R_GlobalPointToLocal( drawSurf->space->modelMatrix, tr.viewDef->renderView.vieworg, localView );
 
 	for ( i = 0; i < tri->numIndexes; i += 3 ) {
@@ -257,7 +254,7 @@ static viewDef_t *R_MirrorViewBySurface( drawSurf_t *drawSurf ) {
 	parms->clipPlanes[0] = -camera.axis[0];
 
 	parms->clipPlanes[0][3] = -( camera.origin * parms->clipPlanes[0].Normal() );
-	
+
 	return parms;
 }
 
@@ -507,8 +504,6 @@ bool	R_GenerateSurfaceSubview( drawSurf_t *drawSurf ) {
 			case DI_XRAY_RENDER:
 				R_XrayRender( drawSurf, const_cast<textureStage_t *>(&stage->texture), scissor );
 				break;
-			default:
-			break;
 			}
 		}
 		return true;

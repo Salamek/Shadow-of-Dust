@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,14 +26,17 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/containers/VectorSet.h"
+#include "framework/DemoFile.h"
+#include "renderer/tr_local.h"
+#include "renderer/Model_local.h"
+#include "renderer/Model_ase.h"
+#include "renderer/Model_lwo.h"
+#include "renderer/Model_ma.h"
+#include "renderer/VertexCache.h"
 
-#include "tr_local.h"
-#include "Model_local.h"
-#include "Model_ase.h"
-#include "Model_lwo.h"
-#include "Model_ma.h"
+#include "renderer/Model.h"
 
 idCVar idRenderModelStatic::r_mergeModelSurfaces( "r_mergeModelSurfaces", "1", CVAR_BOOL|CVAR_RENDERER, "combine model surfaces with the same material" );
 idCVar idRenderModelStatic::r_slopVertex( "r_slopVertex", "0.01", CVAR_RENDERER, "merge xyz coordinates this far apart" );
@@ -88,7 +91,7 @@ void idRenderModelStatic::Print() const {
 
 		srfTriangles_t *tri = surf->geometry;
 		const idMaterial *material = surf->shader;
-		
+
 		if ( !tri ) {
 			common->Printf( "%2i: %s, NULL surface geometry\n", i, material->GetName() );
 			continue;
@@ -100,7 +103,7 @@ void idRenderModelStatic::Print() const {
 		} else {
 			common->Printf( "\n" );
 		}
-	}	
+	}
 }
 
 /*
@@ -1140,17 +1143,17 @@ bool idRenderModelStatic::ConvertLWOToModelSurfaces( const struct st_lwObject *l
 		int offset = 0;
 		for( lwVMap *vm = layer->vmap; vm; vm = vm->next ) {
 			if ( vm->type == LWID_('T','X','U','V') ) {
-	  			vm->offset = offset;
-		  		for ( k = 0; k < vm->nverts; k++ ) {
-		  		   	tvList[k + offset].x = vm->val[k][0];
+				vm->offset = offset;
+				for ( k = 0; k < vm->nverts; k++ ) {
+					tvList[k + offset].x = vm->val[k][0];
 					tvList[k + offset].y = 1.0f - vm->val[k][1];	// invert the t
-		  		}
-			  	offset += vm->nverts;
+				}
+				offset += vm->nverts;
 			}
 		}
 	} else {
 		common->Warning( "ConvertLWOToModelSurfaces: model \'%s\' has bad or missing uv data", name.c_str() );
-	  	numTVertexes = 1;
+		numTVertexes = 1;
 		tvList = (idVec2 *)Mem_ClearedAlloc( numTVertexes * sizeof( tvList[0] ) );
 	}
 
@@ -1435,7 +1438,7 @@ struct aseModel_s *idRenderModelStatic::ConvertLWOToASE( const struct st_lwObjec
 		mesh->numTVertexes = 0;
 
 		if ( layer->nvmaps ) {
-		  	for( lwVMap *vm = layer->vmap; vm; vm = vm->next ) {
+			for( lwVMap *vm = layer->vmap; vm; vm = vm->next ) {
 				if ( vm->type == LWID_('T','X','U','V') ) {
 					mesh->numTVertexes += vm->nverts;
 				}
@@ -1443,23 +1446,23 @@ struct aseModel_s *idRenderModelStatic::ConvertLWOToASE( const struct st_lwObjec
 		}
 
 		if ( mesh->numTVertexes ) {
-		  	mesh->tvertexes = (idVec2 *)Mem_Alloc( mesh->numTVertexes * sizeof( mesh->tvertexes[0] ) );
-		  	int offset = 0;
-		  	for( lwVMap *vm = layer->vmap; vm; vm = vm->next ) {
+			mesh->tvertexes = (idVec2 *)Mem_Alloc( mesh->numTVertexes * sizeof( mesh->tvertexes[0] ) );
+			int offset = 0;
+			for( lwVMap *vm = layer->vmap; vm; vm = vm->next ) {
 				if ( vm->type == LWID_('T','X','U','V') ) {
-	  				vm->offset = offset;
-		  			for ( k = 0; k < vm->nverts; k++ ) {
-		  		   		mesh->tvertexes[k + offset].x = vm->val[k][0];
+					vm->offset = offset;
+					for ( k = 0; k < vm->nverts; k++ ) {
+						mesh->tvertexes[k + offset].x = vm->val[k][0];
 						mesh->tvertexes[k + offset].y = 1.0f - vm->val[k][1];	// invert the t
-		  		   	}
-			  		offset += vm->nverts;
+					}
+					offset += vm->nverts;
 				}
-		  	}
-	  	} else {
+			}
+		} else {
 			common->Warning( "ConvertLWOToASE: model \'%s\' has bad or missing uv data", fileName );
-	  		mesh->numTVertexes = 1;
-	  		mesh->tvertexes = (idVec2 *)Mem_ClearedAlloc( mesh->numTVertexes * sizeof( mesh->tvertexes[0] ) );
-	  	}
+			mesh->numTVertexes = 1;
+			mesh->tvertexes = (idVec2 *)Mem_ClearedAlloc( mesh->numTVertexes * sizeof( mesh->tvertexes[0] ) );
+		}
 
 		mesh->normalsParsed = true;
 		mesh->colorsParsed = true;	// because we are falling back to the surface color
@@ -1477,7 +1480,7 @@ struct aseModel_s *idRenderModelStatic::ConvertLWOToASE( const struct st_lwObjec
 				common->Warning( "ConvertLWOToASE: model %s has too many verts for a poly! Make sure you triplet it down", fileName );
 				continue;
 			}
-	
+
 			mesh->faces[faceIndex].faceNormal.x = poly->norm[0];
 			mesh->faces[faceIndex].faceNormal.y = poly->norm[2];
 			mesh->faces[faceIndex].faceNormal.z = poly->norm[1];
@@ -1554,7 +1557,7 @@ bool idRenderModelStatic::ConvertMAToModelSurfaces (const struct maModel_s *ma )
 	maObject_t *	object;
 	maMesh_t *		mesh;
 	maMaterial_t *	material;
-	
+
 	const idMaterial *im1, *im2;
 	srfTriangles_t *tri;
 	int				objectNum;
@@ -1660,7 +1663,7 @@ bool idRenderModelStatic::ConvertMAToModelSurfaces (const struct maModel_s *ma )
 		}
 
 		bool normalsParsed = mesh->normalsParsed;
-		
+
 		// completely ignore any explict normals on surfaces with a renderbump command
 		// which will guarantee the best contours and least vertexes.
 		const char *rb = im1->GetRenderBump();
@@ -1990,7 +1993,7 @@ bool idRenderModelStatic::LoadFLT( const char *fileName ) {
 	// find the island above sea level
 	int	minX, maxX, minY, maxY;
 	{
-		int	i;	
+		int	i;
 		for ( minX = 0 ; minX < size ; minX++ ) {
 			for ( i = 0 ; i < size ; i++ ) {
 				if ( data[i*size + minX] > 1.0 ) {
@@ -2157,19 +2160,19 @@ void idRenderModelStatic::ReadFromDemoFile( class idDemoFile *f ) {
 
 	int i, j, numSurfaces;
 	f->ReadInt( numSurfaces );
-	
+
 	for ( i = 0 ; i < numSurfaces ; i++ ) {
 		modelSurface_t	surf;
-		
+
 		surf.shader = declManager->FindMaterial( f->ReadHashString() );
-		
+
 		srfTriangles_t	*tri = R_AllocStaticTriSurf();
-		
+
 		f->ReadInt( tri->numIndexes );
 		R_AllocStaticTriSurfIndexes( tri, tri->numIndexes );
 		for ( j = 0; j < tri->numIndexes; ++j )
 			f->ReadInt( (int&)tri->indexes[j] );
-		
+
 		f->ReadInt( tri->numVerts );
 		R_AllocStaticTriSurfVerts( tri, tri->numVerts );
 		for ( j = 0; j < tri->numVerts; ++j ) {
@@ -2183,9 +2186,9 @@ void idRenderModelStatic::ReadFromDemoFile( class idDemoFile *f ) {
 			f->ReadUnsignedChar( tri->verts[j].color[2] );
 			f->ReadUnsignedChar( tri->verts[j].color[3] );
 		}
-		
+
 		surf.geometry = tri;
-		
+
 		this->AddSurface( surf );
 	}
 	this->FinishSurfaces();
@@ -2211,9 +2214,9 @@ void idRenderModelStatic::WriteToDemoFile( class idDemoFile *f ) {
 
 	for ( i = 0 ; i < surfaces.Num() ; i++ ) {
 		const modelSurface_t	*surf = &surfaces[i];
-		
+
 		f->WriteHashString( surf->shader->GetName() );
-		
+
 		srfTriangles_t *tri = surf->geometry;
 		f->WriteInt( tri->numIndexes );
 		for ( j = 0; j < tri->numIndexes; ++j )

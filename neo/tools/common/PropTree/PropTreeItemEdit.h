@@ -57,7 +57,7 @@ public:
 	// Called to activate the item
 	virtual void OnActivate(int activateType, CPoint point);
 
-	
+
 	enum ValueFormat
 	{
 		ValueFormatText,
@@ -67,7 +67,7 @@ public:
 
 	// Set to specifify format of SetItemValue/GetItemValue
 	void SetValueFormat(ValueFormat nFormat);
-		
+
 	// Set to TRUE for to use a password edit control
 	void SetAsPassword(BOOL bPassword);
 

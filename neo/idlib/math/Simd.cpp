@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,22 +26,35 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../precompiled.h"
-#pragma hdrstop
+#if MACOS_X
+#include <stdlib.h>
+#include <unistd.h>			// this is for sleep()
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <mach/mach_time.h>
+#endif
 
-#include "Simd_Generic.h"
-#include "Simd_MMX.h"
-#include "Simd_3DNow.h"
-#include "Simd_SSE.h"
-#include "Simd_SSE2.h"
-#include "Simd_SSE3.h"
-#include "Simd_AltiVec.h"
+#include "sys/platform.h"
+#include "idlib/geometry/DrawVert.h"
+#include "idlib/geometry/JointTransform.h"
+#include "idlib/math/Simd_Generic.h"
+#include "idlib/math/Simd_MMX.h"
+#include "idlib/math/Simd_3DNow.h"
+#include "idlib/math/Simd_SSE.h"
+#include "idlib/math/Simd_SSE2.h"
+#include "idlib/math/Simd_SSE3.h"
+#include "idlib/math/Simd_AltiVec.h"
+#include "idlib/math/Plane.h"
+#include "idlib/bv/Bounds.h"
+#include "idlib/Lib.h"
+#include "framework/Common.h"
+#include "renderer/Model.h"
 
+#include "idlib/math/Simd.h"
 
 idSIMDProcessor	*	processor = NULL;			// pointer to SIMD processor
 idSIMDProcessor *	generic = NULL;				// pointer to generic SIMD implementation
 idSIMDProcessor *	SIMDProcessor = NULL;
-
 
 /*
 ================
@@ -61,7 +74,7 @@ idSIMD::InitProcessor
 ============
 */
 void idSIMD::InitProcessor( const char *module, bool forceGeneric ) {
-	cpuid_t cpuid;
+	int cpuid;
 	idSIMDProcessor *newProcessor;
 
 	cpuid = idLib::sys->GetProcessorId();
@@ -141,7 +154,7 @@ idSIMDProcessor *p_simd;
 idSIMDProcessor *p_generic;
 long baseClocks = 0;
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 
 #define TIME_TYPE int
 
@@ -169,12 +182,6 @@ long saved_ebx = 0;
 
 #elif MACOS_X
 
-#include <stdlib.h>
-#include <unistd.h>			// this is for sleep()
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <mach/mach_time.h>
-
 double ticksPerNanosecond;
 
 #define TIME_TYPE uint64_t
@@ -182,23 +189,23 @@ double ticksPerNanosecond;
 #ifdef __MWERKS__ //time_in_millisec is missing
 /*
 
-    .text
+	.text
 	.align 2
 	.globl _GetTB
 _GetTB:
 
 loop:
-	        mftbu   r4	;  load from TBU
-	        mftb    r5	;  load from TBL
-	        mftbu   r6	;  load from TBU
-	        cmpw    r6, r4	;  see if old == new
-	        bne     loop	;  if not, carry occured, therefore loop
+			mftbu   r4	;  load from TBU
+			mftb    r5	;  load from TBL
+			mftbu   r6	;  load from TBU
+			cmpw    r6, r4	;  see if old == new
+			bne     loop	;  if not, carry occured, therefore loop
 
-	        stw     r4, 0(r3)
-	        stw     r5, 4(r3)
+			stw     r4, 0(r3)
+			stw     r5, 4(r3)
 
 done:
-	        blr		;  return
+			blr		;  return
 
 */
 typedef struct {
@@ -220,8 +227,8 @@ loop:
 	cmpw	r6,r5		// see if old TBU == new TBU
 	bne-	loop		// loop if carry occurred (predict branch not taken)
 
-	stw  	r4,4(r3)	// store TBL in the low 32 bits of the return value
-	stw  	r5,0(r3)	// store TBU in the high 32 bits of the return value
+	stw	r4,4(r3)	// store TBL in the low 32 bits of the return value
+	stw	r5,0(r3)	// store TBU in the high 32 bits of the return value
 
 	blr
 }
@@ -315,7 +322,7 @@ PrintClocks
 void PrintClocks( const char *string, int dataCount, int clocks, int otherClocks = 0 ) {
 	int i;
 
-	idLib::common->Printf("%s\n", string );
+	idLib::common->Printf( string );
 	for ( i = idStr::LengthWithoutColors(string); i < 48; i++ ) {
 		idLib::common->Printf(" ");
 	}
@@ -4105,7 +4112,7 @@ void idSIMD::Test_f( const idCmdArgs &args ) {
 	p_generic = generic;
 
 	if ( idStr::Length( args.Argv( 1 ) ) != 0 ) {
-		cpuid_t cpuid = idLib::sys->GetProcessorId();
+		int cpuid = idLib::sys->GetProcessorId();
 		idStr argString = args.Args();
 
 		argString.Replace( " ", "" );

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ void ConsoleView::AddText( const char *msg ) {
 	}
 	editConsole.SetSel( len, len );
 	editConsole.ReplaceSel( work );
-	
+
 	//Hack: scrolls down a bit
 	editConsole.LineScroll(100);
 }
@@ -114,14 +114,14 @@ void ConsoleView::ExecuteCommand ( const idStr& cmd ) {
 		editInput.GetWindowText(str);
 	}
 
-	if ( str != "" ) {			
+	if ( str != "" ) {
 		editInput.SetWindowText("");
-		common->Printf("%s\n", str.GetBuffer(0));		
+		common->Printf("%s\n", str.GetBuffer(0));
 
 		//avoid adding multiple identical commands in a row
 		int index = consoleHistory.Num ();
 
-		if ( index == 0 || str.GetBuffer(0) != consoleHistory[index-1]) {					
+		if ( index == 0 || str.GetBuffer(0) != consoleHistory[index-1]) {
 			//keep the history to 16 commands, removing the oldest command
 			if ( consoleHistory.Num () > 16 ) {
 				consoleHistory.RemoveIndex ( 0 );
@@ -213,19 +213,19 @@ BOOL ConsoleView::PreTranslateMessage(MSG* pMsg) {
 			common->Printf ( "----------------\n" );
 		}
 		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_NEXT) {
-			editConsole.LineScroll ( 10 );	
+			editConsole.LineScroll ( 10 );
 		}
 
 		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_PRIOR ) {
-			editConsole.LineScroll ( -10 );	
+			editConsole.LineScroll ( -10 );
 		}
 
 		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_HOME ) {
-			editConsole.LineScroll ( -editConsole.GetLineCount() );	
+			editConsole.LineScroll ( -editConsole.GetLineCount() );
 		}
 
 		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_END ) {
-			editConsole.LineScroll ( editConsole.GetLineCount() );	
+			editConsole.LineScroll ( editConsole.GetLineCount() );
 		}
 	}
 
@@ -246,7 +246,7 @@ void ConsoleView::DoDataExchange(CDataExchange* pDX) {
 * Transfers data to and from the controls in the console.
 */
 void ConsoleView::OnInitialUpdate() {
-	
+
 	CFormView::OnInitialUpdate();
 
 	CRect rect;

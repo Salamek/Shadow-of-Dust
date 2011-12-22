@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "gamesys/SysCvar.h"
+#include "script/Script_Compiler.h"
+#include "script/Script_Thread.h"
 
-#include "../Game_local.h"
+#include "script/Script_Interpreter.h"
 
 /*
 ================
@@ -170,7 +172,7 @@ void idInterpreter::Reset( void ) {
 	currentFunction = 0;
 	NextInstruction( 0 );
 
-	threadDying 	= false;
+	threadDying		= false;
 	doneProcessing	= true;
 }
 
@@ -389,7 +391,7 @@ idInterpreter::StackTrace
 */
 void idInterpreter::StackTrace( void ) const {
 	const function_t	*f;
-	int 				i;
+	int					i;
 	int					top;
 
 	if ( callStackDepth == 0 ) {
@@ -552,7 +554,7 @@ NOTE: If this is called from within a event called by this interpreter, the func
 ====================
 */
 void idInterpreter::EnterFunction( const function_t *func, bool clearStack ) {
-	int 		c;
+	int			c;
 	prstack_t	*stack;
 
 	if ( clearStack ) {
@@ -587,7 +589,7 @@ void idInterpreter::EnterFunction( const function_t *func, bool clearStack ) {
 			gameLocal.Printf( "%d: call '%s' from '%s'(line %d)%s\n", gameLocal.time, func->Name(), currentFunction->Name(),
 				gameLocal.program.GetStatement( instructionPointer ).linenumber, clearStack ? " clear stack" : "" );
 		} else {
-            gameLocal.Printf( "%d: call '%s'%s\n", gameLocal.time, func->Name(), clearStack ? " clear stack" : "" );
+			gameLocal.Printf( "%d: call '%s'%s\n", gameLocal.time, func->Name(), clearStack ? " clear stack" : "" );
 		}
 	}
 
@@ -681,12 +683,12 @@ idInterpreter::CallEvent
 ================
 */
 void idInterpreter::CallEvent( const function_t *func, int argsize ) {
-	int 				i;
+	int					i;
 	int					j;
 	varEval_t			var;
-	int 				pos;
-	int 				start;
-	intptr_t					data[ D_EVENT_MAXARGS ];
+	int					pos;
+	int					start;
+	intptr_t			data[ D_EVENT_MAXARGS ];
 	const idEventDef	*evdef;
 	const char			*format;
 
@@ -852,12 +854,12 @@ idInterpreter::CallSysEvent
 ================
 */
 void idInterpreter::CallSysEvent( const function_t *func, int argsize ) {
-	int 				i;
+	int					i;
 	int					j;
 	varEval_t			source;
-	int 				pos;
-	int 				start;
-	intptr_t					data[ D_EVENT_MAXARGS ];
+	int					pos;
+	int					start;
+	intptr_t			data[ D_EVENT_MAXARGS ];
 	const idEventDef	*evdef;
 	const char			*format;
 
@@ -939,7 +941,7 @@ bool idInterpreter::Execute( void ) {
 	varEval_t	var_c;
 	varEval_t	var;
 	statement_t	*st;
-	int 		runaway;
+	int			runaway;
 	idThread	*newThread;
 	float		floatVal;
 	idScriptObject *obj;
@@ -1808,9 +1810,6 @@ bool idInterpreter::Execute( void ) {
 
 		case OP_PUSH_V:
 			var_a = GetVariable( st->a );
-			//Push( *reinterpret_cast<int *>( &var_a.vectorPtr->x ) );
-			//Push( *reinterpret_cast<int *>( &var_a.vectorPtr->y ) );
-			//Push( *reinterpret_cast<int *>( &var_a.vectorPtr->z ) );
 			PushVector(*var_a.vectorPtr);
 			break;
 

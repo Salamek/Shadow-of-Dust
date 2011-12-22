@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ static INT_PTR CALLBACK GEOptionsDlg_GeneralProc ( HWND hwnd, UINT msg, WPARAM w
 			ColorButton_SetColor ( GetDlgItem ( hwnd, IDC_GUIED_SELECTIONCOLOR ),
 									RGB(gApp.GetOptions().GetSelectionColor()[0]*255,
 										gApp.GetOptions().GetSelectionColor()[1]*255,
-										gApp.GetOptions().GetSelectionColor()[2]*255) );					
+										gApp.GetOptions().GetSelectionColor()[2]*255) );
 			CheckDlgButton ( hwnd, IDC_GUIED_IGNOREDESKTOP, gApp.GetOptions().GetIgnoreDesktopSelect()?BST_CHECKED:BST_UNCHECKED );
 			break;
 
@@ -76,13 +76,13 @@ static INT_PTR CALLBACK GEOptionsDlg_GeneralProc ( HWND hwnd, UINT msg, WPARAM w
 			break;
 
 		case WM_DRAWITEM:
-			ColorButton_DrawItem ( GetDlgItem ( hwnd, wParam ), (LPDRAWITEMSTRUCT)lParam );			
+			ColorButton_DrawItem ( GetDlgItem ( hwnd, wParam ), (LPDRAWITEMSTRUCT)lParam );
 			return TRUE;
-	
+
 		case WM_NOTIFY:
 			switch (((NMHDR FAR *) lParam)->code)
-			{					
-				case PSN_APPLY:									
+			{
+				case PSN_APPLY:
 					gApp.GetOptions().SetLastOptionsPage ( PropSheet_HwndToIndex ( GetParent ( hwnd ), PropSheet_GetCurrentPageHwnd ( GetParent ( hwnd ) ) ) );
 					gApp.GetOptions().SetSelectionColor ( ColorButton_GetColor ( GetDlgItem ( hwnd, IDC_GUIED_SELECTIONCOLOR ) ) );
 					gApp.GetOptions().SetIgnoreDesktopSelect ( IsDlgButtonChecked ( hwnd, IDC_GUIED_IGNOREDESKTOP ) != 0 );
@@ -90,7 +90,7 @@ static INT_PTR CALLBACK GEOptionsDlg_GeneralProc ( HWND hwnd, UINT msg, WPARAM w
 			}
 			break;
 	}
-	
+
 	return FALSE;
 }
 
@@ -113,18 +113,18 @@ static INT_PTR CALLBACK GEOptionsDlg_GridProc ( HWND hwnd, UINT msg, WPARAM wPar
 			CheckDlgButton ( hwnd, IDC_GUIED_GRIDVISIBLE, gApp.GetOptions().GetGridVisible()?BST_CHECKED:BST_UNCHECKED );
 			CheckDlgButton ( hwnd, IDC_GUIED_GRIDSNAP, gApp.GetOptions().GetGridSnap()?BST_CHECKED:BST_UNCHECKED );
 			return TRUE;
-	
+
 		case WM_DRAWITEM:
-			ColorButton_DrawItem ( GetDlgItem ( hwnd, wParam ), (LPDRAWITEMSTRUCT)lParam );			
+			ColorButton_DrawItem ( GetDlgItem ( hwnd, wParam ), (LPDRAWITEMSTRUCT)lParam );
 			return TRUE;
-		
+
 		case WM_NOTIFY:
 			switch (((NMHDR FAR *) lParam)->code)
 			{
 				case PSN_APPLY:
 				{
 					char temp[32];
-					
+
 					// Copy the dialog control data back to the options
 					GetWindowText ( GetDlgItem ( hwnd, IDC_GUIED_SPACINGWIDTH ), temp, 32 );
 					gApp.GetOptions().SetGridWidth(atol(temp));
@@ -137,7 +137,7 @@ static INT_PTR CALLBACK GEOptionsDlg_GridProc ( HWND hwnd, UINT msg, WPARAM wPar
 				}
 			}
 			break;
-		
+
 		case WM_COMMAND:
 			switch ( LOWORD ( wParam ) )
 			{
@@ -159,7 +159,7 @@ static INT_PTR CALLBACK GEOptionsDlg_GridProc ( HWND hwnd, UINT msg, WPARAM wPar
 				}
 			}
 			return TRUE;
-	}	
+	}
 
 	return FALSE;
 }
@@ -175,7 +175,7 @@ bool GEOptionsDlg_DoModal ( HWND parent )
 {
 	PROPSHEETHEADER propsh;
 	PROPSHEETPAGE	propsp[2];
-	
+
 	propsp[0].dwSize		= sizeof(PROPSHEETPAGE);
 	propsp[0].dwFlags		= PSP_USETITLE;
 	propsp[0].hInstance		= win32.hInstance;
@@ -199,12 +199,12 @@ bool GEOptionsDlg_DoModal ( HWND parent )
 	propsh.pszCaption		= "Options";
 	propsh.nPages			= 2;
 	propsh.ppsp				= (LPCPROPSHEETPAGE)&propsp;
-	
+
 	if ( PropertySheet ( &propsh ) )
 	{
 		gApp.GetOptions().Save ( );
 		return true;
 	}
-	
+
 	return false;
 }

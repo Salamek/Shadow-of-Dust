@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -92,8 +92,16 @@ If you have questions concerning this license or the applicable additional terms
 //#define ID_DEMO_BUILD
 
 // don't define ID_ALLOW_TOOLS when we don't want tool code in the executable.
-#if defined( _WIN32 ) && !defined( ID_DEDICATED ) && !defined( ID_DEMO_BUILD )
+#if defined( _WIN32 ) && defined(_MFC_VER) && !defined( ID_DEDICATED ) && !defined( ID_DEMO_BUILD )
 	#define	ID_ALLOW_TOOLS
+#endif
+
+#ifndef ID_ENFORCE_KEY
+#	if !defined( ID_DEDICATED ) && !defined( ID_DEMO_BUILD )
+#		define ID_ENFORCE_KEY 1
+#	else
+#		define ID_ENFORCE_KEY 0
+#	endif
 #endif
 
 #ifndef ID_OPENAL
@@ -105,31 +113,37 @@ If you have questions concerning this license or the applicable additional terms
 #endif
 
 #ifndef ID_OPENAL_EAX
-#  define ID_OPENAL_EAX 0	
+#	define ID_OPENAL_EAX 0
 #endif
 
-
 // async network
+
 /*
-DOOM III gold:  33
-1.1 beta patch:  34
-1.1 patch:    35
-1.2 XP:      36-39
-1.3 patch:    40
-1.3.1:      41
+DOOM III gold:	33
+1.1 beta patch:	34
+1.1 patch:		35
+1.2 XP:			36-39
+1.3 patch:		40
+1.3.1:			41
 */
-#define ASYNC_PROTOCOL_MINOR  (41)
-#define ASYNC_PROTOCOL_VERSION  (( ASYNC_PROTOCOL_MAJOR << 16 ) + ASYNC_PROTOCOL_MINOR)
-#define MAX_ASYNC_CLIENTS    (32)
-#define MAX_USERCMD_BACKUP    (256)
-#define MAX_USERCMD_DUPLICATION  (25)
-#define MAX_USERCMD_RELAY    (10)
+#define ASYNC_PROTOCOL_MINOR	(41)
+#define ASYNC_PROTOCOL_VERSION	(( ASYNC_PROTOCOL_MAJOR << 16 ) + ASYNC_PROTOCOL_MINOR)
+
+#define MAX_ASYNC_CLIENTS		(32)
+
+#define MAX_USERCMD_BACKUP		(256)
+#define MAX_USERCMD_DUPLICATION	(25)
+#define MAX_USERCMD_RELAY		(10)
+
 // index 0 is hardcoded to be the idnet master
 // which leaves 4 to user customization
-#define MAX_MASTER_SERVERS    (5)
-#define MAX_NICKLEN        (32)
+#define MAX_MASTER_SERVERS		(5)
+
+#define MAX_NICKLEN				(32)
+
 // max number of servers that will be scanned for at a single IP address
-#define MAX_SERVER_PORTS    (8)
+#define MAX_SERVER_PORTS		(8)
+
 // special game init ids
-#define GAME_INIT_ID_INVALID  (-1)
-#define GAME_INIT_ID_MAP_LOAD  (-2)
+#define GAME_INIT_ID_INVALID	(-1)
+#define GAME_INIT_ID_MAP_LOAD	(-2)

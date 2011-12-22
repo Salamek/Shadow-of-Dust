@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,9 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
-#include "tr_local.h"
+#include "renderer/tr_local.h"
 
 // tr_stencilShadow.c -- creaton of stencil shadow volumes
 
@@ -425,12 +424,12 @@ static int R_ChopWinding( clipTri_t clipTris[2], int inNum, const idPlane &plane
 			|| (sides[i] == SIDE_BACK && sides[i+1] == SIDE_FRONT) ) {
 			// generate a split point
 			p2 = &in->verts[i+1];
-			
+
 			dot = dists[i] / (dists[i]-dists[i+1]);
 			for ( j=0 ; j<3 ; j++ ) {
 				mid[j] = (*p1)[j] + dot*((*p2)[j]-(*p1)[j]);
 			}
-				
+
 			out->verts[out->numVerts] = mid;
 
 			// set the edge flag
@@ -810,7 +809,7 @@ need to be added.
 */
 static void R_CreateShadowVolumeInFrustum( const idRenderEntityLocal *ent,
 										  const srfTriangles_t *tri,
-										  const idRenderLightLocal *light,									
+										  const idRenderLightLocal *light,
 										  const idVec3 lightOrigin,
 										  const idPlane frustum[6],
 										  const idPlane &farPlane,
@@ -924,7 +923,7 @@ static void R_CreateShadowVolumeInFrustum( const idRenderEntityLocal *ent,
 	// to remove internal sil edges and optimize the caps
 	if ( callOptimizer ) {
 		optimizedShadow_t opt;
-		
+
 		// project all of the vertexes to the shadow plane, generating
 		// an equal number of back vertexes
 //		R_ProjectPointsToFarPlane( ent, light, farPlane, firstShadowVert, numShadowVerts );
@@ -1162,7 +1161,7 @@ void R_MakeShadowFrustums( idRenderLightLocal *light ) {
 #endif
 		return;
 	}
-	
+
 	// projected light
 
 	light->numShadowFrustums = 1;
@@ -1180,7 +1179,7 @@ void R_MakeShadowFrustums( idRenderLightLocal *light ) {
 		plane.SetNormal( -light->frustum[i].Normal() );
 		plane.SetDist( -light->frustum[i].Dist() );
 	}
-	
+
 	frust->numPlanes = 6;
 
 	frust->makeClippedPlanes = true;

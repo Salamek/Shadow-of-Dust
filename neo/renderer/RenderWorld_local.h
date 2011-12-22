@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,9 +29,14 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __RENDERWORLDLOCAL_H__
 #define __RENDERWORLDLOCAL_H__
 
+#include "idlib/geometry/Winding.h"
+#include "renderer/RenderWorld.h"
+#include "renderer/tr_local.h"
+
+class idRenderLightLocal;
+
 // assume any lightDef or entityDef index above this is an internal error
 const int LUDICROUS_INDEX	= 10000;
-
 
 typedef struct portal_s {
 	int						intoArea;		// area this portal leads to
@@ -232,7 +237,7 @@ public:
 	void					WriteRenderEntity( qhandle_t handle, const renderEntity_t *ent );
 	void					ReadRenderEntity();
 	void					ReadRenderLight();
-	
+
 
 	//--------------------------
 	// RenderWorld.cpp

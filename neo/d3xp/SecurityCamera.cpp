@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,24 +25,23 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-/*
 
-  SecurityCamera.cpp
+#include "sys/platform.h"
+#include "gamesys/SysCvar.h"
+#include "physics/Physics_RigidBody.h"
+#include "Entity.h"
+#include "Light.h"
+#include "Player.h"
+#include "Fx.h"
 
-  Security camera that triggers targets when player is in view
-
-*/
-
-#include "../idlib/precompiled.h"
-#pragma hdrstop
-
-#include "Game_local.h"
-
+#include "SecurityCamera.h"
 
 /***********************************************************************
 
   idSecurityCamera
-	
+
+  Security camera that triggers targets when player is in view
+
 ***********************************************************************/
 
 const idEventDef EV_SecurityCam_ReverseSweep( "<reverseSweep>" );
@@ -71,7 +70,7 @@ void idSecurityCamera::Save( idSaveGame *savefile ) const {
 	savefile->WriteBool( flipAxis );
 	savefile->WriteFloat( scanDist );
 	savefile->WriteFloat( scanFov );
-							
+
 	savefile->WriteFloat( sweepStart );
 	savefile->WriteFloat( sweepEnd );
 	savefile->WriteBool( negativeSweep );
@@ -81,7 +80,7 @@ void idSecurityCamera::Save( idSaveGame *savefile ) const {
 	savefile->WriteFloat( scanFovCos );
 
 	savefile->WriteVec3( viewOffset );
-							
+
 	savefile->WriteInt( pvsArea );
 	savefile->WriteStaticObject( physicsObj );
 	savefile->WriteTraceModel( trm );
@@ -99,7 +98,7 @@ void idSecurityCamera::Restore( idRestoreGame *savefile ) {
 	savefile->ReadBool( flipAxis );
 	savefile->ReadFloat( scanDist );
 	savefile->ReadFloat( scanFov );
-							
+
 	savefile->ReadFloat( sweepStart );
 	savefile->ReadFloat( sweepEnd );
 	savefile->ReadBool( negativeSweep );
@@ -109,7 +108,7 @@ void idSecurityCamera::Restore( idRestoreGame *savefile ) {
 	savefile->ReadFloat( scanFovCos );
 
 	savefile->ReadVec3( viewOffset );
-							
+
 	savefile->ReadInt( pvsArea );
 	savefile->ReadStaticObject( physicsObj );
 	savefile->ReadTraceModel( trm );
@@ -190,24 +189,24 @@ void idSecurityCamera::Event_AddLight( void ) {
 	float	radius;
 	idVec3	lightOffset;
 	idLight	*spotLight;
-	
+
 	dir = GetAxis();
 	dir.NormalVectors( right, up );
 	target = GetPhysics()->GetOrigin() + dir * scanDist;
-		
+
 	radius = tan( scanFov * idMath::PI / 360.0f );
 	up = dir + up * radius;
 	up.Normalize();
 	up = GetPhysics()->GetOrigin() + up * scanDist;
 	up -= target;
-	
+
 	right = dir + right * radius;
 	right.Normalize();
 	right = GetPhysics()->GetOrigin() + right * scanDist;
 	right -= target;
 
 	spawnArgs.GetVector( "lightOffset", "0 0 0", lightOffset );
-	
+
 	args.Set( "origin", ( GetPhysics()->GetOrigin() + lightOffset ).ToString() );
 	args.Set( "light_target", target.ToString() );
 	args.Set( "light_right", right.ToString() );
@@ -393,7 +392,7 @@ void idSecurityCamera::Think( void ) {
 
 				SetAlertMode(LOSINGINTEREST);
 				CancelEvents( &EV_SecurityCam_Alert );
-				
+
 				sightResume = spawnArgs.GetFloat( "sightResume", "1.5" );
 				PostEventSec( &EV_SecurityCam_ContinueSweep, sightResume );
 			}
@@ -446,7 +445,7 @@ void idSecurityCamera::StartSweep( void ) {
 	sweepStart = gameLocal.time;
 	speed = SEC2MS( SweepSpeed() );
 	sweepEnd = sweepStart + speed;
-   	PostEventMS( &EV_SecurityCam_Pause, speed );
+	PostEventMS( &EV_SecurityCam_Pause, speed );
 	StartSound( "snd_moving", SND_CHANNEL_BODY, 0, false, NULL );
 }
 
@@ -463,7 +462,7 @@ void idSecurityCamera::Event_ContinueSweep( void ) {
 	sweepStart = f;
 	speed = MS2SEC( SweepSpeed() );
 	sweepEnd = sweepStart + speed;
-   	PostEventMS( &EV_SecurityCam_Pause, speed * (1.0 - pct));
+	PostEventMS( &EV_SecurityCam_Pause, speed * (1.0 - pct));
 	StartSound( "snd_moving", SND_CHANNEL_BODY, 0, false, NULL );
 	SetAlertMode(SCANNING);
 	sweeping = true;
@@ -510,7 +509,7 @@ void idSecurityCamera::Event_Pause( void ) {
 	sweeping = false;
 	StopSound( SND_CHANNEL_ANY, false );
 	StartSound( "snd_stop", SND_CHANNEL_BODY, 0, false, NULL );
-   	PostEventSec( &EV_SecurityCam_ReverseSweep, sweepWait );
+	PostEventSec( &EV_SecurityCam_ReverseSweep, sweepWait );
 }
 
 /*

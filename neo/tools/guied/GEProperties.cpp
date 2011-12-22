@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ bool rvGEProperties::Create ( HWND parent, bool visible )
 							NULL,
 							win32.hInstance,
 							this );
-							
+
 	if ( !mWnd )
 	{
 		return false;
@@ -89,7 +89,7 @@ bool rvGEProperties::Create ( HWND parent, bool visible )
 	{
 		RECT rParent;
 		RECT rClient;
-		
+
 		GetWindowRect ( parent, &rParent );
 		GetWindowRect ( mWnd, &rClient );
 		SetWindowPos ( mWnd, NULL,
@@ -98,10 +98,10 @@ bool rvGEProperties::Create ( HWND parent, bool visible )
 					0,0,
 					SWP_NOZORDER|SWP_NOSIZE );
 	}
-				 	
+
 	Show ( visible );
-	
-	return true;	
+
+	return true;
 }
 
 /*
@@ -130,7 +130,7 @@ void rvGEProperties::Update ( void )
 
 	if ( mWorkspace && mWorkspace->GetSelectionMgr ( ).Num ( ) == 1 )
 	{
-		mWrapper = rvGEWindowWrapper::GetWrapper ( mWorkspace->GetSelectionMgr()[0] );	
+		mWrapper = rvGEWindowWrapper::GetWrapper ( mWorkspace->GetSelectionMgr()[0] );
 	}
 	else
 	{
@@ -138,7 +138,7 @@ void rvGEProperties::Update ( void )
 	}
 
 	ShowWindow ( mGrid.GetWindow ( ), mWrapper?SW_SHOW:SW_HIDE );
-		
+
 	mGrid.RemoveAllItems ( );
 
 	if ( mWrapper )
@@ -151,7 +151,7 @@ void rvGEProperties::Update ( void )
 			temp.StripQuotes ( );
 			mGrid.AddItem ( kv->GetKey(), temp );
 		}
-	}	
+	}
 }
 
 /*
@@ -163,9 +163,9 @@ Add a state modifier for the given key / value pair
 */
 bool rvGEProperties::AddModifier ( const char* name, const char* value )
 {
-	idDict tempstate;	
+	idDict tempstate;
 	idStr  tempvalue;
-	
+
 	tempvalue = value;
 	if ( !mWrapper->VerfiyStateKey ( name, tempvalue ) )
 	{
@@ -178,16 +178,16 @@ bool rvGEProperties::AddModifier ( const char* name, const char* value )
 			return false;
 		}
 	}
-	
+
 	tempstate = mWrapper->GetStateDict ( );
-	
+
 	tempstate.Set ( name, tempvalue );
-	
-	mWorkspace->GetModifierStack().Append ( new rvGEStateModifier ( "Property Change", mWrapper->GetWindow(), tempstate ) );		
+
+	mWorkspace->GetModifierStack().Append ( new rvGEStateModifier ( "Property Change", mWrapper->GetWindow(), tempstate ) );
 	mWorkspace->SetModified ( true );
-	gApp.GetNavigator().Update ( );	
-	
-	return true;	
+	gApp.GetNavigator().Update ( );
+
+	return true;
 }
 
 /*
@@ -207,7 +207,7 @@ LRESULT CALLBACK rvGEProperties::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, L
 	}
 
 	switch ( msg )
-	{				
+	{
 		case WM_ACTIVATE:
 			common->ActivateTool( LOWORD( wParam ) != WA_INACTIVE );
 			break;
@@ -223,7 +223,7 @@ LRESULT CALLBACK rvGEProperties::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, L
 				{
 					case PGN_ITEMCHANGED:
 						return (int)kv->AddModifier ( nmpg->mName, nmpg->mValue );
-/*						
+/*
 					case NM_KEYDOWN:
 					{
 						NMKEY* nmkey = (NMKEY*)hdr;
@@ -233,7 +233,7 @@ LRESULT CALLBACK rvGEProperties::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, L
 							if ( sel != -1 )
 							{
 								const char* prop;
-								
+
 								prop = kv->mGrid.GetItemName(sel);
 								if ( !idStr::Icmp ( prop, "rect" )		||
 									 !idStr::Icmp ( prop, "visible" )	||
@@ -263,7 +263,7 @@ LRESULT CALLBACK rvGEProperties::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, L
 			}
 			break;
 		}
-	
+
 		case WM_CREATE:
 		{
 			LPCREATESTRUCT	cs;
@@ -273,11 +273,11 @@ LRESULT CALLBACK rvGEProperties::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, L
 			kv = (rvGEProperties*) cs->lpCreateParams;
 			SetWindowLong ( hWnd, GWL_USERDATA, (LONG)kv );
 
-			kv->mGrid.Create ( hWnd, 999, PGS_ALLOWINSERT );					
-			
+			kv->mGrid.Create ( hWnd, 999, PGS_ALLOWINSERT );
+
 			kv->SetWorkspace ( NULL );
 			kv->Update ( );
-			
+
 			break;
 		}
 
@@ -292,11 +292,11 @@ LRESULT CALLBACK rvGEProperties::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, L
 			kv->mGrid.Move ( 0, 0, LOWORD(lParam), HIWORD(lParam), TRUE );
 			break;
 
-		case WM_CLOSE:		
+		case WM_CLOSE:
 			gApp.GetOptions().SetPropertiesVisible ( false );
 			kv->Show ( false );
 			return 0;
-			
+
 		case WM_NCACTIVATE:
 			return gApp.ToolWindowActivate ( hWnd, msg, wParam, lParam );
 
@@ -304,8 +304,6 @@ LRESULT CALLBACK rvGEProperties::WndProc ( HWND hWnd, UINT msg, WPARAM wParam, L
 			gApp.GetOptions().SetWindowPlacement ( "properties", hWnd );
 			break;
 	}
-		
+
 	return DefWindowProc ( hWnd, msg, wParam, lParam );
 }
-
-

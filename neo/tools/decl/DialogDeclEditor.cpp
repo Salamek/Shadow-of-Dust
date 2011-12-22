@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -288,7 +288,7 @@ BOOL DialogDeclEditor::OnInitDialog()  {
 	UpdateStatusBar();
 
 	return FALSE; // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 
@@ -552,9 +552,9 @@ LRESULT DialogDeclEditor::OnFindDialogMessage( WPARAM wParam, LPARAM lParam ) {
 	}
 
 	if ( findDlg->IsTerminating() ) {
-        findDlg = NULL;
-        return 0;
-    }
+		findDlg = NULL;
+		return 0;
+	}
 
 	if( findDlg->FindNext() ) {
 		findStr = findDlg->GetFindString();
@@ -563,7 +563,7 @@ LRESULT DialogDeclEditor::OnFindDialogMessage( WPARAM wParam, LPARAM lParam ) {
 		searchForward = findDlg->SearchDown() != FALSE;
 
 		OnEditFindNext();
-    }
+	}
 
 	if ( findDlg->ReplaceCurrent() ) {
 		long selStart, selEnd;

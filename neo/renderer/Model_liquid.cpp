@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/tr_local.h"
 
-#include "tr_local.h"
-#include "Model_local.h"
+#include "renderer/Model_local.h"
 
 #define LIQUID_MAX_SKIP_FRAMES	5
 #define LIQUID_MAX_TYPES		3
@@ -50,7 +49,7 @@ idRenderModelLiquid::idRenderModelLiquid() {
 	drop_height = 4;
 	drop_radius = 4;
 	drop_delay	= 1000;
-    shader		= declManager->FindMaterial( NULL );
+	shader		= declManager->FindMaterial( NULL );
 	update_tics	= 33;  // ~30 hz
 	time		= 0;
 	seed		= 0;
@@ -179,7 +178,8 @@ idRenderModelLiquid::IntersectBounds
 void idRenderModelLiquid::IntersectBounds( const idBounds &bounds, float displacement ) {
 	int		cx, cy;
 	int		left,top,right,bottom;
-	float	/*up,*/ down;
+	//float	up;
+	float	down;
 	float	*pos;
 
 	left	= ( int )( bounds[ 0 ].x / scale_x );
@@ -495,7 +495,7 @@ idRenderModel *idRenderModelLiquid::InstantiateDynamicModel( const struct render
 
 		frames = LIQUID_MAX_SKIP_FRAMES;
 	}
-	
+
 	while( frames > 0 ) {
 		Update();
 		frames--;

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,11 +25,15 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../../idlib/precompiled.h"
-#include "posix_public.h"
 
 #include <string.h>
+#include <unistd.h>
 #include <errno.h>
+
+#include "sys/platform.h"
+#include "framework/Common.h"
+
+#include "sys/posix/posix_public.h"
 
 const int siglist[] = {
 	SIGHUP,
@@ -72,7 +76,7 @@ Posix_ClearSigs
 void Posix_ClearSigs( ) {
 	struct sigaction action;
 	int i;
-	
+
 	/* Set up the structure */
 	action.sa_handler = SIG_DFL;
 	sigemptyset( &action.sa_mask );
@@ -94,25 +98,25 @@ sig_handler
 */
 static void sig_handler( int signum, siginfo_t *info, void *context ) {
 	static bool double_fault = false;
-	
+
 	if ( double_fault ) {
 		Sys_Printf( "double fault %s, bailing out\n", strsignal( signum ) );
-		Posix_Exit( signum );
+		_exit( signum );
 	}
-	
+
 	double_fault = true;
-	
+
 	// NOTE: see sigaction man page, could verbose the whole siginfo_t and print human readable si_code
-	Sys_Printf( "signal caught: %s\nsi_code %d\n", strsignal( signum ), info->si_code );	
-	
+	Sys_Printf( "signal caught: %s\nsi_code %d\n", strsignal( signum ), info->si_code );
+
 	if ( fatalError[ 0 ] ) {
 		Sys_Printf( "Was in fatal error shutdown: %s\n", fatalError );
 	}
-	
+
 	Sys_Printf( "Trying to exit gracefully..\n" );
-	
+
 	Posix_SetExit( signum );
-	
+
 	common->Quit();
 }
 
@@ -126,7 +130,7 @@ void Posix_InitSigs( ) {
 	int i;
 
 	fatalError[0] = '\0';
-	
+
 	/* Set up the structure */
 	action.sa_sigaction = sig_handler;
 	sigemptyset( &action.sa_mask );
@@ -149,7 +153,7 @@ void Posix_InitSigs( ) {
 	// if the process is backgrounded (running non interactively)
 	// then SIGTTIN or SIGTOU could be emitted, if not caught, turns into a SIGSTP
 	signal( SIGTTIN, SIG_IGN );
-	signal( SIGTTOU, SIG_IGN );	
+	signal( SIGTTOU, SIG_IGN );
 }
 
 /*

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,16 +25,15 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
-#include "../../ui/EditWindow.h"
-#include "../../ui/ListWindow.h"
-#include "../../ui/BindWindow.h"
-#include "../../ui/RenderWindow.h"
-#include "../../ui/ChoiceWindow.h"
+#include "ui/EditWindow.h"
+#include "ui/ListWindow.h"
+#include "ui/BindWindow.h"
+#include "ui/RenderWindow.h"
+#include "ui/ChoiceWindow.h"
 
-#include "GEWindowWrapper.h"
+#include "tools/guied/GEWindowWrapper.h"
 
 static rvGEWindowWrapper stub_wrap( NULL, rvGEWindowWrapper::WT_UNKNOWN );
 

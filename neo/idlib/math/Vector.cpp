@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/math/Angles.h"
+#include "idlib/math/Matrix.h"
+#include "idlib/Str.h"
+
+#include "idlib/math/Vector.h"
 
 idVec2 vec2_origin( 0.0f, 0.0f );
 idVec3 vec3_origin( 0.0f, 0.0f, 0.0f );
@@ -35,7 +39,6 @@ idVec4 vec4_origin( 0.0f, 0.0f, 0.0f, 0.0f );
 idVec5 vec5_origin( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 idVec6 vec6_origin( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 idVec6 vec6_infinity( idMath::INFINITY, idMath::INFINITY, idMath::INFINITY, idMath::INFINITY, idMath::INFINITY, idMath::INFINITY );
-
 
 //===============================================================
 //
@@ -83,7 +86,7 @@ idVec3::ToYaw
 */
 float idVec3::ToYaw( void ) const {
 	float yaw;
-	
+
 	if ( ( y == 0.0f ) && ( x == 0.0f ) ) {
 		yaw = 0.0f;
 	} else {
@@ -104,7 +107,7 @@ idVec3::ToPitch
 float idVec3::ToPitch( void ) const {
 	float	forward;
 	float	pitch;
-	
+
 	if ( ( x == 0.0f ) && ( y == 0.0f ) ) {
 		if ( z > 0.0f ) {
 			pitch = 90.0f;
@@ -131,7 +134,7 @@ idAngles idVec3::ToAngles( void ) const {
 	float forward;
 	float yaw;
 	float pitch;
-	
+
 	if ( ( x == 0.0f ) && ( y == 0.0f ) ) {
 		yaw = 0.0f;
 		if ( z > 0.0f ) {
@@ -164,7 +167,7 @@ idPolar3 idVec3::ToPolar( void ) const {
 	float forward;
 	float yaw;
 	float pitch;
-	
+
 	if ( ( x == 0.0f ) && ( y == 0.0f ) ) {
 		yaw = 0.0f;
 		if ( z > 0.0f ) {

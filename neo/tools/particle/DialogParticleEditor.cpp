@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -553,7 +553,7 @@ idDeclParticle *CDialogParticleEditor::GetCurParticle() {
 }
 
 void CDialogParticleEditor::UpdateParticleData() {
-	
+
 	listStages.ResetContent();
 	idDeclParticle *idp = GetCurParticle();
 	if ( idp == NULL ) {
@@ -572,7 +572,7 @@ void CDialogParticleEditor::UpdateParticleData() {
 		wnd->SetWindowText( va( "Particle file: %s", idp->GetFileName() ) );
 	}
 
-	SetParticleView();	
+	SetParticleView();
 }
 
 void CDialogParticleEditor::OnCbnSelchangeComboParticles() {
@@ -822,14 +822,14 @@ void CDialogParticleEditor::OnBnClickedEntityColor() {
 
 
 void CDialogParticleEditor::AddStage() {
-	
+
 	idDeclParticle *idp = GetCurParticle();
 	if ( idp == NULL ) {
 		return;
 	}
 
 	idParticleStage *stage = new idParticleStage;
-	
+
 	if ((GetAsyncKeyState(VK_CONTROL) & 0x8000)) {
 		idParticleStage *source = GetCurStage();
 		if ( source == NULL ) {
@@ -1021,7 +1021,7 @@ void CDialogParticleEditor::CurStageToDlgVars() {
 	initialAngle = va( "%.3f", ps->initialAngle );
 	boundsExpansion = va( "%.3f", ps->boundsExpansion );
 	randomDistribution = ps->randomDistribution;
-	entityColor = ps->entityColor;	
+	entityColor = ps->entityColor;
 	UpdateData( FALSE );
 }
 
@@ -1205,14 +1205,14 @@ void CDialogParticleEditor::SetVectorControlUpdate( idQuat rotation ) {
 }
 
 BOOL CDialogParticleEditor::OnInitDialog() {
-	
+
 	com_editors |= EDITOR_PARTICLE;
 
 	particleMode = ( cvarSystem->GetCVarInteger( "g_editEntityMode" ) == 4 );
 	mapModified = false;
 
 	CDialog::OnInitDialog();
-	
+
 	sliderBunching.SetRange( 0, 20 );
 	sliderBunching.SetValueRange( 0.0f, 1.0f );
 	sliderFadeIn.SetRange( 0, 20 );
@@ -1243,7 +1243,7 @@ BOOL CDialogParticleEditor::OnInitDialog() {
 	sliderAspectTo.SetValueRange( 0.0f, 128.0f );
 	sliderFadeFraction.SetRange( 0, 20 );
 	sliderFadeFraction.SetValueRange( 0.0f, 1.0f );
-	
+
 	EnumParticles();
 	SetParticleView();
 
@@ -1258,7 +1258,7 @@ BOOL CDialogParticleEditor::OnInitDialog() {
 		}
 		wnd = wnd->GetWindow( GW_HWNDNEXT );
 	}
-	
+
 	wnd = GetDlgItem( IDC_BUTTON_SAVE_PARTICLEENTITIES );
 	if ( wnd ) {
 		wnd->EnableWindow( FALSE );
@@ -1438,7 +1438,7 @@ void CDialogParticleEditor::OnBtnDrop()
 	if ( !gameEdit->PlayerIsValid() ) {
 		return;
 	}
-	
+
 	gameEdit->PlayerGetViewAngles( viewAngles );
 	gameEdit->PlayerGetEyePosition( org );
 

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,16 +26,15 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
-
+#include "sys/platform.h"
+#include "framework/KeyInput.h"
 // included for image uploading for player stat graph
-#include "../renderer/Image.h"
+#include "renderer/Image.h"
+#include "ui/DeviceContext.h"
+#include "ui/Window.h"
+#include "ui/UserInterfaceLocal.h"
 
-#include "DeviceContext.h"
-#include "Window.h"
-#include "UserInterfaceLocal.h"
-#include "MarkerWindow.h"
+#include "ui/MarkerWindow.h"
 
 class idImage;
 void idMarkerWindow::CommonInit() {
@@ -338,7 +337,7 @@ void idMarkerWindow::Activate(bool activate, idStr &act) {
 			}
 			const shaderStage_t *stage = background->GetStage(0);
 			if (stage) {
-				stage->texture.image->UploadScratch((byte*)imageBuff, 512, 64);			
+				stage->texture.image->UploadScratch((byte*)imageBuff, 512, 64);
 			}
 			Mem_Free(imageBuff);
 		}

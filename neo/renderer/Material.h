@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,10 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __MATERIAL_H__
 #define __MATERIAL_H__
+
+#include "idlib/containers/List.h"
+#include "idlib/Lexer.h"
+#include "framework/DeclManager.h"
 
 /*
 ===============================================================================
@@ -137,7 +141,7 @@ typedef enum {
 } expRegister_t;
 
 typedef struct {
-	expOpType_t		opType;	
+	expOpType_t		opType;
 	int				a, b, c;
 } expOp_t;
 
@@ -300,7 +304,7 @@ const int MAX_SURFACE_TYPES		= 1 << NUM_SURFACE_BITS;
 
 typedef enum {
 	SURFTYPE_NONE,					// default type
-    SURFTYPE_METAL,
+	SURFTYPE_METAL,
 	SURFTYPE_STONE,
 	SURFTYPE_FLESH,
 	SURFTYPE_WOOD,
@@ -633,9 +637,9 @@ private:
 	float				polygonOffset;
 
 	int					contentFlags;		// content flags
-	int					surfaceFlags;		// surface flags	
+	int					surfaceFlags;		// surface flags
 	mutable int			materialFlags;		// material flags
-	
+
 	decalInfo_t			decalInfo;
 
 
@@ -649,7 +653,7 @@ private:
 	materialCoverage_t	coverage;
 	cullType_t			cullType;			// CT_FRONT_SIDED, CT_BACK_SIDED, or CT_TWO_SIDED
 	bool				shouldCreateBackSides;
-	
+
 	bool				fogLight;
 	bool				blendLight;
 	bool				ambientLight;
@@ -659,7 +663,7 @@ private:
 
 	int					numOps;
 	expOp_t *			ops;				// evaluate to make expressionRegisters
-																										
+
 	int					numRegisters;																			//
 	float *				expressionRegisters;
 
@@ -667,7 +671,7 @@ private:
 
 	int					numStages;
 	int					numAmbientStages;
-																										
+
 	shaderStage_t *		stages;
 
 	struct mtrParsingData_s	*pd;			// only used during parsing

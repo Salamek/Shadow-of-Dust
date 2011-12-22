@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,9 +26,16 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/containers/List.h"
+#include "idlib/math/Math.h"
+#include "idlib/math/Angles.h"
+#include "idlib/math/Quat.h"
+#include "idlib/math/Rotation.h"
+#include "idlib/Str.h"
+#include "framework/Common.h"
 
+#include "idlib/math/Matrix.h"
 
 //===============================================================
 //
@@ -184,11 +191,11 @@ idQuat idMat3::ToQuat( void ) const {
 	float		trace;
 	float		s;
 	float		t;
-	int     	i;
+	int	i;
 	int			j;
 	int			k;
 
-	static int 	next[ 3 ] = { 1, 2, 0 };
+	static int	next[ 3 ] = { 1, 2, 0 };
 
 	trace = mat[ 0 ][ 0 ] + mat[ 1 ][ 1 ] + mat[ 2 ][ 2 ];
 
@@ -248,10 +255,10 @@ idRotation idMat3::ToRotation( void ) const {
 	float		trace;
 	float		s;
 	float		t;
-	int     	i;
+	int	i;
 	int			j;
 	int			k;
-	static int 	next[ 3 ] = { 1, 2, 0 };
+	static int	next[ 3 ] = { 1, 2, 0 };
 
 	trace = mat[ 0 ][ 0 ] + mat[ 1 ][ 1 ] + mat[ 2 ][ 2 ];
 	if ( trace > 0.0f ) {
@@ -633,7 +640,7 @@ idMat4 idMat4::Transpose( void ) const {
 	for( i = 0; i < 4; i++ ) {
 		for( j = 0; j < 4; j++ ) {
 			transpose[ i ][ j ] = mat[ j ][ i ];
-        }
+		}
 	}
 	return transpose;
 }
@@ -652,7 +659,7 @@ idMat4 &idMat4::TransposeSelf( void ) {
 			temp = mat[ i ][ j ];
 			mat[ i ][ j ] = mat[ j ][ i ];
 			mat[ j ][ i ] = temp;
-        }
+		}
 	}
 	return *this;
 }
@@ -1068,7 +1075,7 @@ idMat5 idMat5::Transpose( void ) const {
 	for( i = 0; i < 5; i++ ) {
 		for( j = 0; j < 5; j++ ) {
 			transpose[ i ][ j ] = mat[ j ][ i ];
-        }
+		}
 	}
 	return transpose;
 }
@@ -1087,7 +1094,7 @@ idMat5 &idMat5::TransposeSelf( void ) {
 			temp = mat[ i ][ j ];
 			mat[ i ][ j ] = mat[ j ][ i ];
 			mat[ j ][ i ] = temp;
-        }
+		}
 	}
 	return *this;
 }
@@ -1761,7 +1768,7 @@ idMat6 idMat6::Transpose( void ) const {
 	for( i = 0; i < 6; i++ ) {
 		for( j = 0; j < 6; j++ ) {
 			transpose[ i ][ j ] = mat[ j ][ i ];
-        }
+		}
 	}
 	return transpose;
 }
@@ -1780,7 +1787,7 @@ idMat6 &idMat6::TransposeSelf( void ) {
 			temp = mat[ i ][ j ];
 			mat[ i ][ j ] = mat[ j ][ i ];
 			mat[ j ][ i ] = temp;
-        }
+		}
 	}
 	return *this;
 }
@@ -3490,9 +3497,9 @@ idMatX::Update_RowColumn
 
   Updates the matrix to obtain the matrix:
 
-      [ 0  a  0 ]
+	  [ 0  a  0 ]
   A + [ d  b  e ]
-      [ 0  c  0 ]
+	  [ 0  c  0 ]
 
   where: a = v[0,r-1], b = v[r], c = v[r+1,numRows-1], d = w[0,r-1], w[r] = 0.0f, e = w[r+1,numColumns-1]
 ============
@@ -3518,9 +3525,9 @@ idMatX::Update_RowColumnSymmetric
 
   Updates the matrix to obtain the matrix:
 
-      [ 0  a  0 ]
+	  [ 0  a  0 ]
   A + [ a  b  c ]
-      [ 0  c  0 ]
+	  [ 0  c  0 ]
 
   where: a = v[0,r-1], b = v[r], c = v[r+1,numRows-1]
 ============
@@ -3743,9 +3750,9 @@ idMatX::Inverse_UpdateRowColumn
 
   Updates the in-place inverse to obtain the inverse for the matrix:
 
-      [ 0  a  0 ]
+	  [ 0  a  0 ]
   A + [ d  b  e ]
-      [ 0  c  0 ]
+	  [ 0  c  0 ]
 
   where: a = v[0,r-1], b = v[r], c = v[r+1,numRows-1], d = w[0,r-1], w[r] = 0.0f, e = w[r+1,numColumns-1]
 ============
@@ -4012,9 +4019,9 @@ idMatX::LU_UpdateRowColumn
 
   Updates the in-place LU factorization to obtain the factors for the matrix:
 
-       [ 0  a  0 ]
+	   [ 0  a  0 ]
   LU + [ d  b  e ]
-       [ 0  c  0 ]
+	   [ 0  c  0 ]
 
   where: a = v[0,r-1], b = v[r], c = v[r+1,numRows-1], d = w[0,r-1], w[r] = 0.0f, e = w[r+1,numColumns-1]
 ============
@@ -4588,9 +4595,9 @@ idMatX::QR_UpdateRowColumn
 
   Updates the unpacked QR factorization to obtain the factors for the matrix:
 
-       [ 0  a  0 ]
+	   [ 0  a  0 ]
   QR + [ d  b  e ]
-       [ 0  c  0 ]
+	   [ 0  c  0 ]
 
   where: a = v[0,r-1], b = v[r], c = v[r+1,numRows-1], d = w[0,r-1], w[r] = 0.0f, e = w[r+1,numColumns-1]
 ============
@@ -5382,9 +5389,9 @@ idMatX::Cholesky_UpdateRowColumn
 
   Updates the in-place Cholesky factorization to obtain the factors for the matrix:
 
-        [ 0  a  0 ]
+		[ 0  a  0 ]
   LL' + [ a  b  c ]
-        [ 0  c  0 ]
+		[ 0  c  0 ]
 
   where: a = v[0,r-1], b = v[r], c = v[r+1,numRows-1]
 ============
@@ -5760,8 +5767,8 @@ bool idMatX::LDLT_Factor( void ) {
 		sum = (*this)[i][i];
 		for ( j = 0; j < i; j++ ) {
 			d = (*this)[i][j];
-		    v[j] = (*this)[j][j] * d;
-		    sum -= v[j] * d;
+			v[j] = (*this)[j][j] * d;
+			sum -= v[j] * d;
 		}
 
 		if ( sum == 0.0f ) {
@@ -5772,11 +5779,11 @@ bool idMatX::LDLT_Factor( void ) {
 		d = 1.0f / sum;
 
 		for ( j = i + 1; j < numRows; j++ ) {
-		    sum = (*this)[j][i];
+			sum = (*this)[j][i];
 			for ( k = 0; k < i; k++ ) {
 				sum -= (*this)[j][k] * v[k];
 			}
-		    (*this)[j][i] = sum * d;
+			(*this)[j][i] = sum * d;
 		}
 	}
 
@@ -5836,9 +5843,9 @@ idMatX::LDLT_UpdateRowColumn
 
   Updates the in-place LDL' factorization to obtain the factors for the matrix:
 
-         [ 0  a  0 ]
+		 [ 0  a  0 ]
   LDL' + [ a  b  c ]
-         [ 0  c  0 ]
+		 [ 0  c  0 ]
 
   where: a = v[0,r-1], b = v[r], c = v[r+1,numRows-1]
 ============
@@ -6390,7 +6397,7 @@ void idMatX::HouseholderReduction( idVecX &diag, idVecX &subd ) {
 						(*this)[i1][i2] -= f * subd[i2] + g * (*this)[i0][i2];
 					}
 				}
-            }
+			}
 		} else {
 			subd[i0] = (*this)[i0][i3];
 		}
@@ -6439,7 +6446,7 @@ idMatX::QL
 ============
 */
 bool idMatX::QL( idVecX &diag, idVecX &subd ) {
-    const int maxIter = 32;
+	const int maxIter = 32;
 	int i0, i1, i2, i3;
 	float a, b, f, g, r, p, s, c;
 
@@ -7063,7 +7070,7 @@ idMatX::Eigen_Solve
 ============
 */
 bool idMatX::Eigen_Solve( idVecX &realEigenValues, idVecX &imaginaryEigenValues ) {
-    idMatX H;
+	idMatX H;
 
 	assert( numRows == numColumns );
 
@@ -7072,11 +7079,11 @@ bool idMatX::Eigen_Solve( idVecX &realEigenValues, idVecX &imaginaryEigenValues 
 
 	H = *this;
 
-    // reduce to Hessenberg form
-    HessenbergReduction( H );
+	// reduce to Hessenberg form
+	HessenbergReduction( H );
 
-    // reduce Hessenberg to real Schur form
-    return HessenbergToRealSchur( H, realEigenValues, imaginaryEigenValues );
+	// reduce Hessenberg to real Schur form
+	return HessenbergToRealSchur( H, realEigenValues, imaginaryEigenValues );
 }
 
 /*

@@ -4,17 +4,17 @@ Index: framework/FileSystem.cpp
 +++ framework/FileSystem.cpp	(working copy)
 @@ -159,7 +159,7 @@
  };
-
+ 
  // 3 search patch (fs_savepath fs_basepath fs_cdpath)
--// .jpg then .tga for
+-// .jpg then .tga for 
 +// often .jpg and .tga patterns
  #define MAX_CACHED_DIRS 6
-
+ 
  class idDEntry : public idStrList {
 @@ -173,6 +173,11 @@
  	void Init(const char *directory, const char *extension, const idStrList &list );
  };
-
+ 
 +typedef struct {
 +	idStr path;
 +	idStr OSpath;
@@ -26,21 +26,21 @@ Index: framework/FileSystem.cpp
 @@ -227,11 +232,14 @@
  	int					numServerPaks;
  	int					serverPaks[MAX_SEARCH_PATHS];
-
+ 
 -	idDEntry			dir_cache[MAX_CACHED_DIRS]; // fifo
 +	idDEntry		dir_cache[MAX_CACHED_DIRS]; // fifo
  	int					dir_cache_index;
  	int					dir_cache_count;
 +	
 +	idList<casematch_t> dir_case; // match directories in a case insensitive way
-
+ 
  private:
 +	const char *	CaseSearch(const char *in_dir);
  	void				ReplaceSeparators( idStr &path, char sep = PATHSEPERATOR_CHAR );
  	long				HashFileName( const char *fname ) const;
  	bool				FilenameCompare( const char *s1, const char *s2 );
 @@ -1118,6 +1126,89 @@
-
+ 
  /*
  ===============
 +idFileSystem_local::CaseSearch
@@ -127,11 +127,11 @@ Index: framework/FileSystem.cpp
 +/*
 +===============
  idFileSystem_local::ListOSFiles
-
+ 
   call to the OS for a listing of files in an OS directory
 @@ -1156,10 +1247,19 @@
  	ret = Sys_ListFiles( directory, extension, list );
-
+ 
  	if ( ret == -1 ) {
 -		return -1;
 +		// try a case insensitive directory walk
@@ -145,14 +145,14 @@ Index: framework/FileSystem.cpp
 +			return -1;
 +		}
  	}
-
+ 
 -	// push a new entry
 +	// push a new entry - (if case matched we are caching with the requested directory name)
  	dir_cache[dir_cache_index].Init( directory, extension, list );
  	dir_cache_index = (++dir_cache_index) % MAX_CACHED_DIRS;
  	if ( dir_cache_count < MAX_CACHED_DIRS ) {
 @@ -1633,6 +1733,11 @@
-
+ 
  	dir_cache_index = 0;
  	dir_cache_count = 0;
 +	for ( int i = 0 ; i < MAX_CACHED_DIRS ; i++ ) {
@@ -160,7 +160,7 @@ Index: framework/FileSystem.cpp
 +	}
 +	
 +	dir_case.Clear();
-
+ 
  	// free everything
  	for ( sp = searchPaths; sp; sp = next ) {
 Index: sys/linux/ChangeLog
@@ -170,10 +170,10 @@ Index: sys/linux/ChangeLog
 @@ -81,6 +81,31 @@
  renderer TODO:
  	- bring up logging capability on *nix (implies non-implicit GL dependency mode)
-
+ 
 +case insensitive directory walk - NOTES:
 +
-+wrote the base stuff. keeps a list of attempted/not found dirs.
++wrote the base stuff. keeps a list of attempted/not found dirs. 
 +with the case sensitive match if exists
 +dumb lookup currently, probably a bit expensive in CPU and mem
 +hash table would speed this up
@@ -197,17 +197,17 @@ Index: sys/linux/ChangeLog
 +(i.e. last directory of the path is cased)
 +
  idBoneController
-
+ 
  2003-05-09 TTimo <ttimo@idsoftware.com>
 Index: sys/sys_public.h
 ===================================================================
 --- sys/sys_public.h	(revision 528)
 +++ sys/sys_public.h	(working copy)
 @@ -137,6 +137,7 @@
-
+ 
  // use fs_debug to verbose Sys_ListFiles
  // returns -1 if directory was not found (the list is cleared)
 +// if there is a / passed as extension, return directories
  int				Sys_ListFiles( const char *directory, const char *extension, idStrList &list);
-
+ 
  // For the mac, we need to explicitly flush vertex buffer areas before using them

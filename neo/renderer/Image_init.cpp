@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/async/AsyncNetwork.h"
+#include "framework/Session.h"
+#include "renderer/tr_local.h"
 
-#include "tr_local.h"
+#include "renderer/Image.h"
 
 const char *imageFilter[] = {
 	"GL_LINEAR_MIPMAP_NEAREST",
@@ -137,7 +139,7 @@ static void R_RampImage( idImage *image ) {
 		data[x][0] =
 		data[x][1] =
 		data[x][2] =
-		data[x][3] = x;			
+		data[x][3] = x;
 	}
 
 	image->GenerateImage( (byte *)data, 256, 1,
@@ -215,7 +217,7 @@ static void R_Specular2DTableImage( idImage *image ) {
 }
 
 
-#if 0
+
 /*
 ================
 R_AlphaRampImage
@@ -223,6 +225,7 @@ R_AlphaRampImage
 Creates a 0-255 ramp image
 ================
 */
+#if 0
 static void R_AlphaRampImage( idImage *image ) {
 	int		x;
 	byte	data[256][4];
@@ -231,14 +234,15 @@ static void R_AlphaRampImage( idImage *image ) {
 		data[x][0] =
 		data[x][1] =
 		data[x][2] = 255;
-		data[x][3] = x;			
+		data[x][3] = x;
 	}
 
 	image->GenerateImage( (byte *)data, 256, 1,
 		TF_NEAREST, false, TR_CLAMP, TD_HIGH_QUALITY );
 }
-
 #endif
+
+
 
 /*
 ==================
@@ -449,6 +453,7 @@ static void R_AmbientNormalImage( idImage *image ) {
 	image->GenerateCubeImage( pics, 2, TF_DEFAULT, true, TD_HIGH_QUALITY );
 }
 
+
 #if 0
 static void CreateSquareLight( void ) {
 	byte		*buffer;
@@ -497,9 +502,6 @@ static void CreateSquareLight( void ) {
 	R_StaticFree( buffer );
 }
 
-#endif
-
-#if 0
 static void CreateFlashOff( void ) {
 	byte		*buffer;
 	int			x, y;
@@ -527,6 +529,7 @@ static void CreateFlashOff( void ) {
 }
 #endif
 
+
 /*
 ===============
 CreatePitFogImage
@@ -544,7 +547,7 @@ void CreatePitFogImage( void ) {
 		if ( i > 14 ) {
 			a = 0;
 		} else
-#endif		
+#endif
 		{
 			a = i * 255 / 15;
 			if ( a > 255 ) {
@@ -608,37 +611,37 @@ static void getCubeVector(int i, int cubesize, int x, int y, float *vector) {
 
   switch (i) {
   case 0:
-    vector[0] = 1.0;
-    vector[1] = -tc;
-    vector[2] = -sc;
-    break;
+	vector[0] = 1.0;
+	vector[1] = -tc;
+	vector[2] = -sc;
+	break;
   case 1:
-    vector[0] = -1.0;
-    vector[1] = -tc;
-    vector[2] = sc;
-    break;
+	vector[0] = -1.0;
+	vector[1] = -tc;
+	vector[2] = sc;
+	break;
   case 2:
-    vector[0] = sc;
-    vector[1] = 1.0;
-    vector[2] = tc;
-    break;
+	vector[0] = sc;
+	vector[1] = 1.0;
+	vector[2] = tc;
+	break;
   case 3:
-    vector[0] = sc;
-    vector[1] = -1.0;
-    vector[2] = -tc;
-    break;
+	vector[0] = sc;
+	vector[1] = -1.0;
+	vector[2] = -tc;
+	break;
   case 4:
-    vector[0] = sc;
-    vector[1] = -tc;
-    vector[2] = 1.0;
-    break;
+	vector[0] = sc;
+	vector[1] = -tc;
+	vector[2] = 1.0;
+	break;
   case 5:
-    vector[0] = -sc;
-    vector[1] = -tc;
-    vector[2] = -1.0;
-    break;
-    default:
-		common->Error ("getCubeVector: invalid cube map face index");
+	vector[0] = -sc;
+	vector[1] = -tc;
+	vector[2] = -1.0;
+	break;
+  default:
+	common->Error ("getCubeVector: invalid cube map face index");
 	return;
   }
 
@@ -654,7 +657,7 @@ static void getCubeVector(int i, int cubesize, int x, int y, float *vector) {
  * access the cube map.
  */
 static void makeNormalizeVectorCubeMap( idImage *image ) {
-	float vector[3] = {};
+	float vector[3] = { };
 	int i, x, y;
 	byte	*pixels[6];
 	int		size;
@@ -894,7 +897,7 @@ void R_QuadraticImage( idImage *image ) {
 			d = idMath::Fabs( d );
 			d -= 0.5;
 			d /= QUADRATIC_WIDTH/2;
-		
+
 			d = 1.0 - d;
 			d = d * d;
 
@@ -992,8 +995,6 @@ static const filterName_t textureFilters[] = {
 		case TT_CUBIC:
 			texEnum = GL_TEXTURE_CUBE_MAP_EXT;
 			break;
-		default:
-		break;
 		}
 
 		// make sure we don't start a background load
@@ -1007,7 +1008,7 @@ static const filterName_t textureFilters[] = {
 		}
 		if ( glConfig.anisotropicAvailable ) {
 			qglTexParameterf(texEnum, GL_TEXTURE_MAX_ANISOTROPY_EXT, globalImages->textureAnisotropy );
-		}	
+		}
 		if ( glConfig.textureLODBiasAvailable ) {
 			qglTexParameterf(texEnum, GL_TEXTURE_LOD_BIAS_EXT, globalImages->textureLODBias );
 		}
@@ -1583,7 +1584,7 @@ idImage	*idImageManager::ImageFromFile( const char *_name, textureFilter_t filte
 	image->type = TT_2D;
 	image->cubeFiles = cubeMap;
 	image->filter = filter;
-	
+
 	image->levelLoadReferenced = true;
 
 	// also create a shrunken version if we are going to dynamically cache the full size image

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -107,7 +107,7 @@ END_MESSAGE_MAP()
 // CEntKeyFindReplace message handlers
 
 void CEntKeyFindReplace::OnCancel()
-{	
+{
 	CDialog::OnCancel();
 }
 
@@ -149,7 +149,7 @@ void CEntKeyFindReplace::OnFind()
 		ErrorBox("Empty FIND fields!");
 	}
 	else
-	{	
+	{
 //		if (m_strFindKey.IsEmpty() && m_bSelectAllMatchingEnts)
 //		{
 //			if (GetYesNo("Warning! Having a blank FIND <key> and ticking \"Select all matching ents\" can take a LONG time to do (and is probably a wrong choice anyway?)\n\nProceed?"))
@@ -185,7 +185,7 @@ void CEntKeyFindReplace::OnKeycopy()
 
 	m_strReplaceKey = m_strFindKey;
 
-	UpdateData(DATA_TO_DIALOG);	
+	UpdateData(DATA_TO_DIALOG);
 }
 
 void CEntKeyFindReplace::OnValuecopy()
@@ -194,6 +194,5 @@ void CEntKeyFindReplace::OnValuecopy()
 
 	m_strReplaceValue = m_strFindValue;
 
-	UpdateData(DATA_TO_DIALOG);	
+	UpdateData(DATA_TO_DIALOG);
 }
-

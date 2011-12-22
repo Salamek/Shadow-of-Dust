@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/Lexer.h"
+#include "idlib/Lib.h"
+#include "framework/CVarSystem.h"
+
+#include "idlib/CmdArgs.h"
 
 /*
 ============
@@ -155,7 +159,7 @@ void idCmdArgs::TokenizeString( const char *text, bool keepAsStrings ) {
 
 		len = token.Length();
 
-		if ( static_cast<size_t>(totalLen + len + 1) > sizeof( tokenized ) ) {
+		if ( totalLen + len + 1 > sizeof( tokenized ) ) {
 			return;			// this is usually something malicious
 		}
 
@@ -195,4 +199,3 @@ const char **idCmdArgs::GetArgs( int *_argc ) {
 	*_argc = argc;
 	return (const char **)&argv[0];
 }
-

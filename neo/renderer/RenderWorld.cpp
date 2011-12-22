@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,13 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/Session.h"
+#include "framework/DeclSkin.h"
+#include "renderer/GuiModel.h"
+#include "renderer/RenderWorld_local.h"
 
-#include "tr_local.h"
+#include "renderer/tr_local.h"
 
 /*
 ===================
@@ -188,7 +191,7 @@ qhandle_t idRenderWorldLocal::AddEntityDef( const renderEntity_t *re ){
 	}
 
 	UpdateEntityDef( entityHandle, re );
-	
+
 	return entityHandle;
 }
 
@@ -861,7 +864,7 @@ int idRenderWorldLocal::PointInArea( const idVec3 &point ) const {
 	areaNode_t	*node;
 	int			nodeNum;
 	float		d;
-	
+
 	node = areaNodes;
 	if ( !node ) {
 		return -1;
@@ -885,7 +888,7 @@ int idRenderWorldLocal::PointInArea( const idVec3 &point ) const {
 		}
 		node = areaNodes + nodeNum;
 	}
-	
+
 	return -1;
 }
 
@@ -985,7 +988,7 @@ guiPoint_t	idRenderWorldLocal::GuiTrace( qhandle_t entityHandle, const idVec3 st
 		return pt;
 	}
 
-	idRenderEntityLocal *def = entityDefs[entityHandle];	
+	idRenderEntityLocal *def = entityDefs[entityHandle];
 	if ( !def ) {
 		common->Printf( "idRenderWorld::GuiTrace: handle %i is NULL\n", entityHandle );
 		return pt;
@@ -999,7 +1002,6 @@ guiPoint_t	idRenderWorldLocal::GuiTrace( qhandle_t entityHandle, const idVec3 st
 	// transform the points into local space
 	R_GlobalPointToLocal( def->modelMatrix, start, localStart );
 	R_GlobalPointToLocal( def->modelMatrix, end, localEnd );
-
 
 	for ( j = 0 ; j < model->NumSurfaces() ; j++ ) {
 		const modelSurface_t *surf = model->Surface( j );
@@ -1606,30 +1608,30 @@ void idRenderWorldLocal::PushVolumeIntoTree_r( idRenderEntityLocal *def, idRende
 		D0 = points[i+0] * norm + plane3;
 		D1 = points[i+1] * norm + plane3;
 		if ( !front && D0 >= 0.0f ) {
-		    front = true;
+			front = true;
 		} else if ( !back && D0 <= 0.0f ) {
-		    back = true;
+			back = true;
 		}
 		D2 = points[i+1] * norm + plane3;
 		if ( !front && D1 >= 0.0f ) {
-		    front = true;
+			front = true;
 		} else if ( !back && D1 <= 0.0f ) {
-		    back = true;
+			back = true;
 		}
 		D3 = points[i+1] * norm + plane3;
 		if ( !front && D2 >= 0.0f ) {
-		    front = true;
+			front = true;
 		} else if ( !back && D2 <= 0.0f ) {
-		    back = true;
+			back = true;
 		}
-		
+
 		if ( !front && D3 >= 0.0f ) {
-		    front = true;
+			front = true;
 		} else if ( !back && D3 <= 0.0f ) {
-		    back = true;
+			back = true;
 		}
 		if ( back && front ) {
-		    break;
+			break;
 		}
 	}
 	if(!(back && front)) {
@@ -1644,7 +1646,7 @@ void idRenderWorldLocal::PushVolumeIntoTree_r( idRenderEntityLocal *def, idRende
 			if ( back && front ) {
 				break;
 			}
-		}	
+		}
 	}
 #else
 	for ( i = 0 ; i < numPoints ; i++ ) {
@@ -1652,12 +1654,12 @@ void idRenderWorldLocal::PushVolumeIntoTree_r( idRenderEntityLocal *def, idRende
 
 		d = points[i] * node->plane.Normal() + node->plane[3];
 		if ( d >= 0.0f ) {
-		    front = true;
+			front = true;
 		} else if ( d <= 0.0f ) {
-		    back = true;
+			back = true;
 		}
 		if ( back && front ) {
-		    break;
+			break;
 		}
 	}
 #endif
@@ -2102,7 +2104,7 @@ bool R_GlobalShaderOverride( const idMaterial **shader ) {
 		*shader = declManager->FindMaterial( r_materialOverride.GetString() );
 		return true;
 	}
-	
+
 	return false;
 }
 

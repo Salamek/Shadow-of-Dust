@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,15 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/RenderSystem.h"
 
-#include "Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "Player.h"
+#include "Fx.h"
+#include "SmokeParticles.h"
 
+#include "Item.h"
 
 /*
 ===============================================================================
@@ -302,7 +306,7 @@ void idItem::Spawn( void ) {
 	if ( spawnArgs.GetBool( "spin" ) || (gameLocal.isMultiplayer && !this->IsType( idItemTeam::Type ) ) ) {
 		spin = true;
 		BecomeActive( TH_THINK );
-    }
+	}
 #else
 	if ( spawnArgs.GetBool( "spin" ) || gameLocal.isMultiplayer ) {
 		spin = true;
@@ -677,12 +681,12 @@ idItemTeam::idItemTeam
 ===============
 */
 idItemTeam::idItemTeam() {
-    team		   = -1;
+	team		   = -1;
 	carried		   = false;
 	dropped		   = false;
 	lastDrop	   = 0;
 
-    itemGlowHandle = -1;
+	itemGlowHandle = -1;
 
 	skinDefault	= NULL;
 	skinCarried	= NULL;
@@ -710,7 +714,7 @@ idItemTeam::Spawn
 ===============
 */
 void idItemTeam::Spawn( void ) {
-    team					= spawnArgs.GetInt( "team" );
+	team					= spawnArgs.GetInt( "team" );
 	returnOrigin			= GetPhysics()->GetOrigin() + idVec3( 0, 0, 20 );
 	returnAxis				= GetPhysics()->GetAxis();
 
@@ -829,18 +833,18 @@ idItemTeam::Pickup
 ===============
 */
 bool idItemTeam::Pickup( idPlayer *player ) {
-    if ( !gameLocal.mpGame.IsGametypeFlagBased() ) /* CTF */
-        return false;
+	if ( !gameLocal.mpGame.IsGametypeFlagBased() ) /* CTF */
+		return false;
 
-    if ( gameLocal.mpGame.GetGameState() == idMultiplayerGame::WARMUP ||
-         gameLocal.mpGame.GetGameState() == idMultiplayerGame::COUNTDOWN )
-        return false;
+	if ( gameLocal.mpGame.GetGameState() == idMultiplayerGame::WARMUP ||
+		 gameLocal.mpGame.GetGameState() == idMultiplayerGame::COUNTDOWN )
+		return false;
 
 	// wait 2 seconds after drop before beeing picked up again
 	if ( lastDrop != 0 && (gameLocal.time - lastDrop) < spawnArgs.GetInt("pickupDelay", "500") )
 		return false;
 
-    if ( carried == false && player->team != this->team ) {
+	if ( carried == false && player->team != this->team ) {
 
 		PostEventMS( &EV_TakeFlag, 0, player );
 
@@ -864,7 +868,7 @@ idItemTeam::ClientReceiveEvent
 ===============
 */
 bool idItemTeam::ClientReceiveEvent( int event, int time, const idBitMsg &msg ) {
-    gameLocal.DPrintf("ClientRecieveEvent: %i\n", event );
+	gameLocal.DPrintf("ClientRecieveEvent: %i\n", event );
 
 	switch ( event ) {
 		case EVENT_TAKEFLAG: {
@@ -905,7 +909,7 @@ bool idItemTeam::ClientReceiveEvent( int event, int time, const idBitMsg &msg ) 
 		return true;
 	};
 
-    return false;
+	return false;
 }
 
 /*
@@ -995,7 +999,7 @@ idItemTeam::Event_TakeFlag
 ================
 */
 void idItemTeam::Event_TakeFlag( idPlayer * player ) {
-    gameLocal.DPrintf("Event_TakeFlag()!\n");
+	gameLocal.DPrintf("Event_TakeFlag()!\n");
 
 	if ( gameLocal.isServer ) {
 		idBitMsg msg;
@@ -1044,14 +1048,14 @@ void idItemTeam::Event_TakeFlag( idPlayer * player ) {
 	SetSkin( skinCarried );
 
 	UpdateVisuals();
-    UpdateGuis();
+	UpdateGuis();
 
-    if ( gameLocal.isServer ) {
-        if ( team == 0 )
-            gameLocal.mpGame.player_red_flag = player->entityNumber;
-        else
-            gameLocal.mpGame.player_blue_flag = player->entityNumber;
-    }
+	if ( gameLocal.isServer ) {
+		if ( team == 0 )
+			gameLocal.mpGame.player_red_flag = player->entityNumber;
+		else
+			gameLocal.mpGame.player_blue_flag = player->entityNumber;
+	}
 }
 
 /*
@@ -1060,7 +1064,7 @@ idItemTeam::Event_DropFlag
 ================
 */
 void idItemTeam::Event_DropFlag( bool death ) {
-    gameLocal.DPrintf("Event_DropFlag()!\n");
+	gameLocal.DPrintf("Event_DropFlag()!\n");
 
 	if ( gameLocal.isServer ) {
 		idBitMsg msg;
@@ -1118,16 +1122,16 @@ void idItemTeam::Event_DropFlag( bool death ) {
 
 	SetSkin( skinDefault );
 	UpdateVisuals();
-    UpdateGuis();
+	UpdateGuis();
 
 
-    if ( gameLocal.isServer ) {
-        if ( team == 0 )
-            gameLocal.mpGame.player_red_flag = -1;
-        else
-            gameLocal.mpGame.player_blue_flag = -1;
+	if ( gameLocal.isServer ) {
+		if ( team == 0 )
+			gameLocal.mpGame.player_red_flag = -1;
+		else
+			gameLocal.mpGame.player_blue_flag = -1;
 
-    }
+	}
 }
 
 /*
@@ -1136,7 +1140,7 @@ idItemTeam::Event_FlagReturn
 ================
 */
 void idItemTeam::Event_FlagReturn( idPlayer * player ) {
-    gameLocal.DPrintf("Event_FlagReturn()!\n");
+	gameLocal.DPrintf("Event_FlagReturn()!\n");
 
 	if ( gameLocal.isServer ) {
 		ServerSendEvent( EVENT_FLAGRETURN, NULL, false, -1 );
@@ -1166,15 +1170,15 @@ void idItemTeam::Event_FlagReturn( idPlayer * player ) {
 	}
 
 	UpdateVisuals();
-    UpdateGuis();
+	UpdateGuis();
 //	Present();
 
-    if ( gameLocal.isServer ) {
-        if ( team == 0 )
-            gameLocal.mpGame.player_red_flag = -1;
-        else
-            gameLocal.mpGame.player_blue_flag = -1;
-    }
+	if ( gameLocal.isServer ) {
+		if ( team == 0 )
+			gameLocal.mpGame.player_red_flag = -1;
+		else
+			gameLocal.mpGame.player_blue_flag = -1;
+	}
 }
 
 /*
@@ -1215,15 +1219,15 @@ void idItemTeam::Event_FlagCapture( void ) {
 	}
 
 	UpdateVisuals();
-    UpdateGuis();
+	UpdateGuis();
 
 
-    if ( gameLocal.isServer ) {
-        if ( team == 0 )
-            gameLocal.mpGame.player_red_flag = -1;
-        else
-            gameLocal.mpGame.player_blue_flag = -1;
-    }
+	if ( gameLocal.isServer ) {
+		if ( team == 0 )
+			gameLocal.mpGame.player_red_flag = -1;
+		else
+			gameLocal.mpGame.player_blue_flag = -1;
+	}
 
 }
 
@@ -1287,15 +1291,15 @@ void idItemTeam::ReadFromSnapshot( const idBitMsgDelta &msg ) {
 
 	ReadBindFromSnapshot( msg );
 
-    if ( msg.HasChanged() )
-    {
-        UpdateGuis();
+	if ( msg.HasChanged() )
+	{
+		UpdateGuis();
 
-        if ( carried == true )
-            SetSkin( skinCarried );
-        else
-            SetSkin( skinDefault );
-    }
+		if ( carried == true )
+			SetSkin( skinCarried );
+		else
+			SetSkin( skinDefault );
+	}
 
 	idMoveableItem::ReadFromSnapshot( msg );
 }
@@ -1308,7 +1312,7 @@ Update all client's huds wrt the flag status.
 ================
 */
 void idItemTeam::UpdateGuis( void ) {
-    idPlayer *player;
+	idPlayer *player;
 
 	for ( int i = 0; i < gameLocal.numClients; i++ ) {
 		player = static_cast<idPlayer *>( gameLocal.entities[ i ] );
@@ -1316,13 +1320,13 @@ void idItemTeam::UpdateGuis( void ) {
 		if ( player == NULL || player->hud == NULL )
 			continue;
 
-        player->hud->SetStateInt( "red_flagstatus", gameLocal.mpGame.GetFlagStatus( 0 ) );
-        player->hud->SetStateInt( "blue_flagstatus", gameLocal.mpGame.GetFlagStatus( 1 ) );
+		player->hud->SetStateInt( "red_flagstatus", gameLocal.mpGame.GetFlagStatus( 0 ) );
+		player->hud->SetStateInt( "blue_flagstatus", gameLocal.mpGame.GetFlagStatus( 1 ) );
 
-        player->hud->SetStateInt( "red_team_score",  gameLocal.mpGame.GetFlagPoints( 0 ) );
-        player->hud->SetStateInt( "blue_team_score", gameLocal.mpGame.GetFlagPoints( 1 ) );
+		player->hud->SetStateInt( "red_team_score",  gameLocal.mpGame.GetFlagPoints( 0 ) );
+		player->hud->SetStateInt( "blue_team_score", gameLocal.mpGame.GetFlagPoints( 1 ) );
 
-    }
+	}
 
 }
 
@@ -1479,7 +1483,7 @@ void idObjective::Event_Trigger( idEntity *activator ) {
 		//Pickup( player );
 
 		if ( spawnArgs.GetString( "inv_objective", NULL ) ) {
-	 		if ( player && player->hud ) {
+			if ( player && player->hud ) {
 				idStr shotName = gameLocal.GetMapName();
 				shotName.StripFileExtension();
 				shotName += "/";
@@ -1641,7 +1645,7 @@ idMoveableItem::Save
 ================
 */
 void idMoveableItem::Save( idSaveGame *savefile ) const {
-   	savefile->WriteStaticObject( physicsObj );
+	savefile->WriteStaticObject( physicsObj );
 
 	savefile->WriteClipModel( trigger );
 
@@ -2115,7 +2119,7 @@ void idObjectiveComplete::Event_Trigger( idEntity *activator ) {
 		RemoveItem( player );
 
 		if ( spawnArgs.GetString( "inv_objective", NULL ) ) {
-	 		if ( player->hud ) {
+			if ( player->hud ) {
 				player->hud->SetStateString( "objective", "2");
 
 				player->hud->SetStateString( "objectivetext", spawnArgs.GetString( "objectivetext" ) );

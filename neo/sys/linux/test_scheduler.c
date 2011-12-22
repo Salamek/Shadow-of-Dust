@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ Sys_Milliseconds
 unsigned long sys_timeBase = 0;
 /* current time in ms, using sys_timeBase as origin
    NOTE: sys_timeBase*1000 + curtime -> ms since the Epoch
-     0x7fffffff ms - ~24 days
+	 0x7fffffff ms - ~24 days
 		 or is it 48 days? the specs say int, but maybe it's casted from unsigned int?
 */
 int Sys_Milliseconds(void)
@@ -73,7 +73,7 @@ int main(int argc, void *argv[]) {
 	int stats[STAT_BUF];
 
 	struct sched_param parm;
-	
+
 	Sys_Milliseconds(); // init
 
 	// set schedule policy to see if that affects usleep
@@ -84,13 +84,13 @@ int main(int argc, void *argv[]) {
 	} else {
 		printf("sched_setscheduler SCHED_RR ok\n");
 	}
-	
+
 	// now run the test
 	for( i = start ; i >= min ; i -= dec ) {
 		printf( "sleep %d ms", i );
 		for( j = 0 ; j < STAT_BUF ; j++ ) {
 			now = Sys_Milliseconds();
-			usleep(i*1000);			
+			usleep(i*1000);
 			stats[j] = Sys_Milliseconds() - now;
 		}
 		for( j = 0; j < STAT_BUF; j++) {

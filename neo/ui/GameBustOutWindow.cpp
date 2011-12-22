@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,16 +25,16 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../idlib/precompiled.h"
-#pragma hdrstop
 
-#include "../framework/Session_local.h"
-#include "../renderer/Image.h"
+#include "sys/platform.h"
+#include "framework/Session_local.h"
+#include "renderer/Image.h"
+#include "sound/sound.h"
+#include "ui/DeviceContext.h"
+#include "ui/Window.h"
+#include "ui/UserInterfaceLocal.h"
 
-#include "DeviceContext.h"
-#include "Window.h"
-#include "UserInterfaceLocal.h"
-#include "GameBustOutWindow.h"
+#include "ui/GameBustOutWindow.h"
 
 #define BALL_RADIUS		12.f
 #define BALL_SPEED		250.f
@@ -44,7 +44,7 @@ If you have questions concerning this license or the applicable additional terms
 
 /*
 *****************************************************************************
-* BOEntity	
+* BOEntity
 ****************************************************************************
 */
 BOEntity::BOEntity(idGameBustOutWindow* _game) {
@@ -163,7 +163,7 @@ BOEntity::Update
 ======================
 */
 void BOEntity::Update( float timeslice, int guiTime ) {
-	
+
 	if ( !visible ) {
 		return;
 	}
@@ -729,13 +729,13 @@ idWinVar *idGameBustOutWindow::GetWinVarByName(const char *_name, bool winLookup
 
 	if ( idStr::Icmp(_name, "gamerunning") == 0 ) {
 		retVar = &gamerunning;
-	} else 	if ( idStr::Icmp(_name, "onFire") == 0 ) {
+	} else	if ( idStr::Icmp(_name, "onFire") == 0 ) {
 		retVar = &onFire;
-	} else 	if ( idStr::Icmp(_name, "onContinue") == 0 ) {
+	} else	if ( idStr::Icmp(_name, "onContinue") == 0 ) {
 		retVar = &onContinue;
-	} else 	if ( idStr::Icmp(_name, "onNewGame") == 0 ) {
+	} else	if ( idStr::Icmp(_name, "onNewGame") == 0 ) {
 		retVar = &onNewGame;
-	} else 	if ( idStr::Icmp(_name, "onNewLevel") == 0 ) {
+	} else	if ( idStr::Icmp(_name, "onNewLevel") == 0 ) {
 		retVar = &onNewLevel;
 	}
 
@@ -1160,7 +1160,7 @@ void idGameBustOutWindow::UpdateBall( void ) {
 			if ( ball->velocity.y > 0 ) {
 				idVec2	paddleVec( paddleVelocity*2, 0 );
 				float	centerX;
-				
+
 				if ( bigPaddleTime > gui->GetTime() ) {
 					centerX = paddle->x + 80.f;
 				} else {

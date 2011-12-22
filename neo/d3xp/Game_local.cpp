@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,15 +26,35 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/LangDict.h"
+#include "idlib/Timer.h"
+#include "framework/async/NetworkSystem.h"
+#include "framework/BuildVersion.h"
+#include "framework/DeclEntityDef.h"
+#include "framework/FileSystem.h"
+#include "renderer/ModelManager.h"
+
+#include "gamesys/SysCvar.h"
+#include "gamesys/SysCmds.h"
+#include "script/Script_Thread.h"
+#include "ai/AI.h"
+#include "anim/Anim_Testmodel.h"
+#include "Camera.h"
+#include "SmokeParticles.h"
+#include "Player.h"
+#include "WorldSpawn.h"
+#include "Misc.h"
+#include "Trigger.h"
 
 #include "Game_local.h"
 
-const int NUM_RENDER_PORTAL_BITS  = idMath::BitsForInteger( PS_BLOCK_ALL );
-const float DEFAULT_GRAVITY      = 1066.0f;
+const int NUM_RENDER_PORTAL_BITS	= idMath::BitsForInteger( PS_BLOCK_ALL );
+
+const float DEFAULT_GRAVITY			= 1066.0f;
 const idVec3 DEFAULT_GRAVITY_VEC3( 0, 0, -DEFAULT_GRAVITY );
-const int  CINEMATIC_SKIP_DELAY  = SEC2MS( 2.0f );
+
+const int	CINEMATIC_SKIP_DELAY	= SEC2MS( 2.0f );
 
 #ifdef GAME_DLL
 
@@ -1209,7 +1229,7 @@ bool idGameLocal::NextMap( void ) {
 	int					i;
 
 	if ( !g_mapCycle.GetString()[0] ) {
-		Printf("%s", common->GetLanguageDict()->GetString( "#str_04294" ) );
+		Printf( common->GetLanguageDict()->GetString( "#str_04294" ) );
 		return false;
 	}
 	if ( fileSystem->ReadFile( g_mapCycle.GetString(), NULL, NULL ) < 0 ) {
@@ -2245,7 +2265,7 @@ bool idGameLocal::InPlayerPVS( idEntity *ent ) const {
 	if ( playerPVS.i == -1 ) {
 		return false;
 	}
-    return pvs.InCurrentPVS( playerPVS, ent->GetPVSAreas(), ent->GetNumPVSAreas() );
+	return pvs.InCurrentPVS( playerPVS, ent->GetPVSAreas(), ent->GetNumPVSAreas() );
 }
 
 /*
@@ -2259,7 +2279,7 @@ bool idGameLocal::InPlayerConnectedArea( idEntity *ent ) const {
 	if ( playerConnectedAreas.i == -1 ) {
 		return false;
 	}
-    return pvs.InCurrentPVS( playerConnectedAreas, ent->GetPVSAreas(), ent->GetNumPVSAreas() );
+	return pvs.InCurrentPVS( playerConnectedAreas, ent->GetPVSAreas(), ent->GetNumPVSAreas() );
 }
 
 /*
@@ -2274,7 +2294,7 @@ void idGameLocal::UpdateGravity( void ) {
 		if ( g_gravity.GetFloat() == 0.0f ) {
 			g_gravity.SetFloat( 1.0f );
 		}
-        gravity.Set( 0, 0, -g_gravity.GetFloat() );
+		gravity.Set( 0, 0, -g_gravity.GetFloat() );
 
 		// update all physics objects
 		for( ent = spawnedEntities.Next(); ent != NULL; ent = ent->spawnNode.Next() ) {
@@ -2649,7 +2669,7 @@ void idGameLocal::CalcFov( float base_fov, float &fov_x, float &fov_y ) const {
 	float	ratio_y;
 
 	if ( !sys->FPU_StackIsEmpty() ) {
-		Printf("%s\n", sys->FPU_GetState() );
+		Printf( sys->FPU_GetState() );
 		Error( "idGameLocal::CalcFov: FPU stack not empty" );
 	}
 
@@ -2661,7 +2681,7 @@ void idGameLocal::CalcFov( float base_fov, float &fov_x, float &fov_y ) const {
 	// FIXME: somehow, this is happening occasionally
 	assert( fov_y > 0 );
 	if ( fov_y <= 0 ) {
-		Printf("%s\n", sys->FPU_GetState() );
+		Printf( sys->FPU_GetState() );
 		Error( "idGameLocal::CalcFov: bad result" );
 	}
 
@@ -2698,7 +2718,7 @@ void idGameLocal::CalcFov( float base_fov, float &fov_x, float &fov_y ) const {
 	// FIXME: somehow, this is happening occasionally
 	assert( ( fov_x > 0 ) && ( fov_y > 0 ) );
 	if ( ( fov_y <= 0 ) || ( fov_x <= 0 ) ) {
-		Printf("%s\n", sys->FPU_GetState() );
+		Printf( sys->FPU_GetState() );
 		Error( "idGameLocal::CalcFov: bad result" );
 	}
 }
@@ -3109,7 +3129,7 @@ idGameLocal::AddAASObstacle
 aasHandle_t idGameLocal::AddAASObstacle( const idBounds &bounds ) {
 	int i;
 	aasHandle_t obstacle;
-	aasHandle_t check;
+	aasHandle_t check id_attribute((unused));
 
 	if ( !aasList.Num() ) {
 		return -1;
@@ -3580,7 +3600,7 @@ int idGameLocal::GetTargets( const idDict &args, idList< idEntityPtr<idEntity> >
 			ent = FindEntity( arg->GetValue() );
 			if ( ent ) {
 				idEntityPtr<idEntity> &entityPtr = list.Alloc();
-                entityPtr = ent;
+				entityPtr = ent;
 			}
 		}
 	}
@@ -3849,7 +3869,7 @@ void idGameLocal::RadiusDamage( const idVec3 &origin, idEntity *inflictor, idEnt
 	idEntity *	entityList[ MAX_GENTITIES ];
 	int			numListedEntities;
 	idBounds	bounds;
-	idVec3 		v, damagePoint, dir;
+	idVec3		v, damagePoint, dir;
 	int			i, e, damage, radius, push;
 
 	const idDict *damageDef = FindEntityDefDict( damageDefName, false );
@@ -4986,4 +5006,3 @@ idGameLocal::GetMapLoadingGUI
 ===============
 */
 void idGameLocal::GetMapLoadingGUI( char gui[ MAX_STRING_CHARS ] ) { }
-

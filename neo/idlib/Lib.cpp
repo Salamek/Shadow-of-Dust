@@ -26,14 +26,20 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "precompiled.h"
-#pragma hdrstop
-
 #if defined( MACOS_X )
 #include <signal.h>
 #include <sys/types.h>
 #include <unistd.h>
 #endif
+
+#include "sys/platform.h"
+#include "idlib/math/Vector.h"
+#include "idlib/math/Polynomial.h"
+#include "idlib/Str.h"
+#include "idlib/Dict.h"
+#include "framework/Common.h"
+
+#include "idlib/Lib.h"
 
 /*
 ===============================================================================
@@ -582,7 +588,7 @@ int		IntForSixtets( byte *in ) {
 
 void AssertFailed( const char *file, int line, const char *expression ) {
 	idLib::sys->DebugPrintf( "\n\nASSERTION FAILED!\n%s(%d): '%s'\n", file, line, expression );
-#ifdef _WIN32
+#ifdef _MSC_VER
 	__asm int 0x03
 #elif defined( __GNUC__ )
 	__builtin_trap();

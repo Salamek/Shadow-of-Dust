@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -211,7 +211,7 @@ bool Entity_NameIsUnique(const char *name) {
 
 /*
  =======================================================================================================================
-    Map_Free
+	Map_Free
  =======================================================================================================================
  */
 void Map_Free(void) {
@@ -418,7 +418,7 @@ entity_t *EntityFromMapEntity(idMapEntity *mapent, CWaitDlg *dlg) {
 extern entity_t *Entity_PostParse(entity_t *ent, brush_t *pList);
  /*
  =======================================================================================================================
-    Map_LoadFile
+	Map_LoadFile
  =======================================================================================================================
  */
 void Map_LoadFile(const char *filename) {
@@ -518,7 +518,7 @@ void Map_LoadFile(const char *filename) {
 	ent = AngledEntity();
 
 	g_pParentWnd->GetCamera()->Camera().angles[PITCH] = 0;
-	
+
 	if (ent) {
 		GetVectorForKey(ent, "origin", g_pParentWnd->GetCamera()->Camera().origin);
 		GetVectorForKey(ent, "origin", g_pParentWnd->GetXYWnd()->GetOrigin());
@@ -619,7 +619,7 @@ idMapEntity *EntityToMapEntity(entity_t *e, bool use_region, CWaitDlg *dlg) {
 	long lastUpdate = 0;
 	if ( !EntityHasModel( e ) ) {
 		for ( brush_t *b = e->brushes.onext; b != &e->brushes; b = b->onext ) {
-			count++;					
+			count++;
 			if ( e->eclass->fixedsize && !b->entityModel ) {
 				continue;
 			}
@@ -639,7 +639,7 @@ idMapEntity *EntityToMapEntity(entity_t *e, bool use_region, CWaitDlg *dlg) {
 				if ( prim ) {
 					mapent->AddPrimitive( prim );
 				}
-	 		}
+			}
 		 }
 	}
 	return mapent;
@@ -647,7 +647,7 @@ idMapEntity *EntityToMapEntity(entity_t *e, bool use_region, CWaitDlg *dlg) {
 
 /*
  =======================================================================================================================
-    Map_SaveFile
+	Map_SaveFile
  =======================================================================================================================
  */
 bool Map_SaveFile(const char *filename, bool use_region, bool autosave) {
@@ -769,7 +769,7 @@ bool Map_SaveFile(const char *filename, bool use_region, bool autosave) {
 			if (use_region && !idStr::Icmp(ValueForKey(e, "classname"), "info_player_start")) {
 				continue;
 			}
-		
+
 			idStr classname = e->epairs.GetString("classname");
 			sprintf(status, "Saving entity %i (%s)...", count, classname.c_str());
 			dlg.SetText(status);
@@ -801,7 +801,7 @@ bool Map_SaveFile(const char *filename, bool use_region, bool autosave) {
 
 /*
  =======================================================================================================================
-    Map_New
+	Map_New
  =======================================================================================================================
  */
 void Map_New(void) {
@@ -840,7 +840,7 @@ brush_t *region_sides[6];
 
 /*
  =======================================================================================================================
-    AddRegionBrushes a regioned map will have temp walls put up at the region boundary
+	AddRegionBrushes a regioned map will have temp walls put up at the region boundary
  =======================================================================================================================
  */
 void AddRegionBrushes(void) {
@@ -943,7 +943,7 @@ bool Map_IsBrushFiltered(brush_t *b) {
 
 /*
  =======================================================================================================================
-    Map_RegionOff Other filtering options may still be on
+	Map_RegionOff Other filtering options may still be on
  =======================================================================================================================
  */
 void Map_RegionOff(void) {
@@ -997,7 +997,7 @@ void Map_ApplyRegion(void) {
 
 /*
  =======================================================================================================================
-    Map_RegionSelectedBrushes
+	Map_RegionSelectedBrushes
  =======================================================================================================================
  */
 void Map_RegionSelectedBrushes(void) {
@@ -1032,7 +1032,7 @@ void Map_RegionSelectedBrushes(void) {
 
 /*
  =======================================================================================================================
-    Map_RegionXY
+	Map_RegionXY
  =======================================================================================================================
  */
 void Map_RegionXY(void) {
@@ -1061,7 +1061,7 @@ void Map_RegionXY(void) {
 
 /*
  =======================================================================================================================
-    Map_RegionTallBrush
+	Map_RegionTallBrush
  =======================================================================================================================
  */
 void Map_RegionTallBrush(void) {
@@ -1086,7 +1086,7 @@ void Map_RegionTallBrush(void) {
 
 /*
  =======================================================================================================================
-    Map_RegionBrush
+	Map_RegionBrush
  =======================================================================================================================
  */
 void Map_RegionBrush(void) {
@@ -1132,7 +1132,7 @@ void UniqueTargetName(idStr &rStr) {
 			}
 		}
 	}
-	
+
 	sprintf(rStr, "t%i", maxtarg + 1);
 }
 
@@ -1284,7 +1284,7 @@ void Map_ImportBuffer(char *buf, bool renameEntities) {
 					{
 						LPCSTR psNewTargetName = RemappedNames.GetString( cstrTargetNameOld );
 						if (psNewTargetName && psNewTargetName[0])
-						{								
+						{
 							SetKeyValue(pEntNew, "target", psNewTargetName);
 						}
 					}

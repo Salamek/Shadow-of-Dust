@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,14 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/geometry/JointTransform.h"
+#include "idlib/geometry/TraceModel.h"
+#include "framework/Common.h"
+#include "framework/File.h"
+#include "renderer/Material.h"
+
+#include "framework/DeclAF.h"
 
 /*
 ===============================================================================
@@ -312,7 +318,7 @@ bool idDeclAF::WriteBody( idFile *f, const idDeclAF_Body &body ) const {
 	f->WriteFloatString( "\tmod %s\n", JointModToString( body.jointMod ) );
 	switch( body.modelType ) {
 		case TRM_BOX: {
-	        f->WriteFloatString( "\tmodel box( " );
+			f->WriteFloatString( "\tmodel box( " );
 			body.v1.Write( f );
 			f->WriteFloatString( ", " );
 			body.v2.Write( f );
@@ -320,7 +326,7 @@ bool idDeclAF::WriteBody( idFile *f, const idDeclAF_Body &body ) const {
 			break;
 		}
 		case TRM_OCTAHEDRON: {
-	        f->WriteFloatString( "\tmodel octahedron( " );
+			f->WriteFloatString( "\tmodel octahedron( " );
 			body.v1.Write( f );
 			f->WriteFloatString( ", " );
 			body.v2.Write( f );
@@ -328,7 +334,7 @@ bool idDeclAF::WriteBody( idFile *f, const idDeclAF_Body &body ) const {
 			break;
 		}
 		case TRM_DODECAHEDRON: {
-	        f->WriteFloatString( "\tmodel dodecahedron( " );
+			f->WriteFloatString( "\tmodel dodecahedron( " );
 			body.v1.Write( f );
 			f->WriteFloatString( ", " );
 			body.v2.Write( f );
@@ -336,15 +342,15 @@ bool idDeclAF::WriteBody( idFile *f, const idDeclAF_Body &body ) const {
 			break;
 		}
 		case TRM_CYLINDER: {
-	        f->WriteFloatString( "\tmodel cylinder( " );
+			f->WriteFloatString( "\tmodel cylinder( " );
 			body.v1.Write( f );
 			f->WriteFloatString( ", " );
 			body.v2.Write( f );
 			f->WriteFloatString( ", %d )\n", body.numSides );
 			break;
-		}	
+		}
 		case TRM_CONE: {
-	        f->WriteFloatString( "\tmodel cone( " );
+			f->WriteFloatString( "\tmodel cone( " );
 			body.v1.Write( f );
 			f->WriteFloatString( ", " );
 			body.v2.Write( f );
@@ -352,7 +358,7 @@ bool idDeclAF::WriteBody( idFile *f, const idDeclAF_Body &body ) const {
 			break;
 		}
 		case TRM_BONE: {
-	        f->WriteFloatString( "\tmodel bone( " );
+			f->WriteFloatString( "\tmodel bone( " );
 			body.v1.Write( f );
 			f->WriteFloatString( ", " );
 			body.v2.Write( f );

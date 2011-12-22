@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,10 +33,13 @@ Vagary specific AI code
 
 ***********************************************************************/
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "script/Script_Thread.h"
 
-#include "../Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "Moveable.h"
+
+#include "ai/AI.h"
 
 class idAI_Vagary : public idAI {
 public:
@@ -111,7 +114,7 @@ void idAI_Vagary::Event_ChooseObjectToThrow( const idVec3 &mins, const idVec3 &m
 		if ( PredictTrajectory( entPhys->GetOrigin() + offsetVec, enemyEyePos, speed, entPhys->GetGravity(),
 			entPhys->GetClipModel(), entPhys->GetClipMask(), MAX_WORLD_SIZE, NULL, enemyEnt, ai_debugTrajectory.GetBool() ? 4000 : 0, vel ) ) {
 			idThread::ReturnEntity( ent );
-            return;
+			return;
 		}
 	}
 

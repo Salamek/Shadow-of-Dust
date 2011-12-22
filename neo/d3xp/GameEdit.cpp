@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,17 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "gamesys/SysCvar.h"
+#include "physics/Physics_Monster.h"
+#include "ai/AI.h"
+#include "Player.h"
+#include "Light.h"
+#include "WorldSpawn.h"
+#include "Sound.h"
+#include "Misc.h"
 
-#include "Game_local.h"
-
+#include "GameEdit.h"
 
 /*
 ===============================================================================
@@ -176,7 +182,7 @@ void idDragEntity::Update( idPlayer *player ) {
 	player->GetViewPos( viewPoint, viewAxis );
 
 	// if no entity selected for dragging
-    if ( !dragEnt.GetEntity() ) {
+	if ( !dragEnt.GetEntity() ) {
 
 		if ( player->usercmd.buttons & BUTTON_ATTACK ) {
 
@@ -470,7 +476,7 @@ idEditEntities::RemoveSelectedEntity
 ==============
 */
 void idEditEntities::RemoveSelectedEntity( idEntity *ent ) {
-    if ( selectedEntities.Find( ent ) ) {
+	if ( selectedEntities.Find( ent ) ) {
 		selectedEntities.Remove( ent );
 	}
 }
@@ -876,7 +882,7 @@ void idGameEdit::EntityChangeSpawnArgs( idEntity *ent, const idDict *newArgs ) {
 	if ( ent ) {
 		for ( int i = 0 ; i < newArgs->GetNumKeyVals () ; i ++ ) {
 			const idKeyValue *kv = newArgs->GetKeyVal( i );
-	
+
 			if ( kv->GetValue().Length() > 0 ) {
 				ent->spawnArgs.Set ( kv->GetKey() ,kv->GetValue() );
 			} else {

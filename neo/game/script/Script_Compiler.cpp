@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,13 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/Timer.h"
 
-#include "../Game_local.h"
+#include "script/Script_Thread.h"
+#include "Game_local.h"
+
+#include "script/Script_Compiler.h"
 
 #define FUNCTION_PRIORITY	2
 #define INT_PRIORITY		2
@@ -85,7 +88,7 @@ const opcode_t idCompiler::opcodes[] = {
 	{ "!=", "NE_F", 5, false, &def_float, &def_float, &def_float },
 	{ "!=", "NE_V", 5, false, &def_vector, &def_vector, &def_float },
 	{ "!=", "NE_S", 5, false, &def_string, &def_string, &def_float },
-    { "!=", "NE_E", 5, false, &def_entity, &def_entity, &def_float },
+	{ "!=", "NE_E", 5, false, &def_entity, &def_entity, &def_float },
 	{ "!=", "NE_EO", 5, false, &def_entity, &def_object, &def_float },
 	{ "!=", "NE_OE", 5, false, &def_object, &def_entity, &def_float },
 	{ "!=", "NE_OO", 5, false, &def_object, &def_object, &def_float },
@@ -208,7 +211,7 @@ idCompiler::idCompiler()
 */
 idCompiler::idCompiler() {
 	const char	**ptr;
-	int	id;
+	int		id;
 
 	// make sure we have the right # of opcodes in the table
 	assert( ( sizeof( opcodes ) / sizeof( opcodes[ 0 ] ) ) == ( NUM_OPCODES + 1 ) );
@@ -534,7 +537,7 @@ idVarDef *idCompiler::OptimizeOpcode( const opcode_t *op, idVarDef *var_a, idVar
 		case OP_UDIV_F:		c._float = Divide( *var_b->value.floatPtr, *var_a->value.floatPtr ); type = &type_float; break;
 		case OP_UMOD_F:		c._float = ( int ) *var_b->value.floatPtr % ( int )*var_a->value.floatPtr; type = &type_float; break;
 		case OP_UOR_F:		c._float = ( int )*var_b->value.floatPtr | ( int )*var_a->value.floatPtr; type = &type_float; break;
-		case OP_UAND_F: 	c._float = ( int )*var_b->value.floatPtr & ( int )*var_a->value.floatPtr; type = &type_float; break;
+		case OP_UAND_F:		c._float = ( int )*var_b->value.floatPtr & ( int )*var_a->value.floatPtr; type = &type_float; break;
 		case OP_UINC_F:		c._float = *var_a->value.floatPtr + 1; type = &type_float; break;
 		case OP_UDEC_F:		c._float = *var_a->value.floatPtr - 1; type = &type_float; break;
 		case OP_COMP_F:		c._float = ( float )~( int )*var_a->value.floatPtr; type = &type_float; break;
@@ -586,7 +589,7 @@ idVarDef *idCompiler::EmitOpcode( const opcode_t *op, idVarDef *var_a, idVarDef 
 
 	statement = gameLocal.program.AllocStatement();
 	statement->linenumber	= currentLineNumber;
-	statement->file 		= currentFileNumber;
+	statement->file			= currentFileNumber;
 
 	if ( ( op->type_c == &def_void ) || op->rightAssociative ) {
 		// ifs, gotos, and assignments don't need vars allocated
@@ -935,8 +938,8 @@ idVarDef *idCompiler::EmitFunctionParms( int op, idVarDef *func, int startarg, i
 	const idTypeDef	*funcArg;
 	idVarDef		*returnDef;
 	idTypeDef		*returnType;
-	int 			arg;
-	int 			size;
+	int				arg;
+	int				size;
 	int				resultOp;
 
 	type = func->TypeDef();
@@ -960,9 +963,7 @@ idVarDef *idCompiler::EmitFunctionParms( int op, idVarDef *func, int startarg, i
 				Error( "type mismatch on parm %i of call to '%s'", arg + 1, func->Name() );
 			}
 
-			//if ( funcArg->Type() == ev_object ) {
-			if ( funcArg->Type() == ev_object or funcArg->Type() == ev_entity) {
-				//size += sizeof(int);
+			if ( funcArg->Type() == ev_object ) {
 				size += type_object.Size();
 			} else {
 				size += funcArg->Size();
@@ -1129,7 +1130,7 @@ idVarDef *idCompiler::ParseEventCall( idVarDef *object, idVarDef *funcDef ) {
 	} else {
 		EmitPush( object, object->TypeDef() );
 	}
-	//return EmitFunctionParms( OP_EVENTCALL, funcDef, 0, sizeof(int), NULL );
+
 	return EmitFunctionParms( OP_EVENTCALL, funcDef, 0, type_object.Size(), NULL );
 }
 
@@ -1201,7 +1202,7 @@ idVarDef *idCompiler::LookupDef( const char *name, const idVarDef *baseobj ) {
 					type_c = field->TypeDef()->ReturnType()->Type();
 				} else {
 					type_c = field->TypeDef()->FieldType()->Type();	// field access gets type from field
-	                if ( CheckToken( "++" ) ) {
+					if ( CheckToken( "++" ) ) {
 						if ( type_c != ev_float ) {
 							Error( "Invalid type for ++" );
 						}
@@ -1305,7 +1306,7 @@ idCompiler::GetTerm
 */
 idVarDef *idCompiler::GetTerm( void ) {
 	idVarDef	*e;
-	int 		op;
+	int			op;
 
 	if ( !immediateType && CheckToken( "~" ) ) {
 		e = GetExpression( TILDE_PRIORITY );
@@ -1465,14 +1466,14 @@ idCompiler::GetExpression
 ==============
 */
 idVarDef *idCompiler::GetExpression( int priority ) {
-	const opcode_t		*op;
-	const opcode_t		*oldop;
+	const opcode_t	*op;
+	const opcode_t	*oldop;
 	idVarDef		*e;
 	idVarDef		*e2;
 	const idVarDef	*oldtype;
-	etype_t 		type_a;
-	etype_t 		type_b;
-	etype_t 		type_c;
+	etype_t			type_a;
+	etype_t			type_b;
+	etype_t			type_c;
 
 	if ( priority == 0 ) {
 		return GetTerm();
@@ -1677,8 +1678,8 @@ idCompiler::ParseReturnStatement
 */
 void idCompiler::ParseReturnStatement( void ) {
 	idVarDef	*e;
-	etype_t 	type_a;
-	etype_t 	type_b;
+	etype_t		type_a;
+	etype_t		type_b;
 	const opcode_t	*op;
 
 	if ( CheckToken( ";" ) ) {
@@ -1750,7 +1751,7 @@ void idCompiler::ParseWhileStatement( void ) {
 		EmitOpcode( OP_GOTO, JumpTo( patch2 ), 0 );
 	} else {
 		patch1 = gameLocal.program.NumStatements();
-        EmitOpcode( OP_IFNOT, e, 0 );
+		EmitOpcode( OP_IFNOT, e, 0 );
 		ParseStatement();
 		EmitOpcode( OP_GOTO, JumpTo( patch2 ), 0 );
 		gameLocal.program.GetStatement( patch1 ).b = JumpFrom( patch1 );
@@ -2115,8 +2116,8 @@ void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 	idTypeDef		*type;
 	idVarDef		*def;
 	idVarDef		*oldscope;
-	int 			i;
-	int 			numParms;
+	int				i;
+	int				numParms;
 	const idTypeDef	*parmType;
 	function_t		*func;
 	statement_t		*pos;
@@ -2153,12 +2154,9 @@ void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 	// calculate stack space used by parms
 	numParms = type->NumParameters();
 	func->parmSize.SetNum( numParms );
-	//
 	for( i = 0; i < numParms; i++ ) {
 		parmType = type->GetParmType( i );
-		//if ( parmType->Inherits( &type_object ) ) {
-		if ( parmType->Inherits( &type_object ) or parmType->Type() == ev_entity) {
-			//func->parmSize[ i ] = type_object.Size();
+		if ( parmType->Inherits( &type_object ) ) {
 			func->parmSize[ i ] = type_object.Size();
 		} else {
 			func->parmSize[ i ] = parmType->Size();
@@ -2206,20 +2204,6 @@ void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 		ParseStatement();
 	}
 
-	// Allocate stack variables, now that they should have settled into their final types.
-	for (int i = 0; i < func->stackVars.Num(); i++) {
-		func->stackVars[ i ]->value.stackOffset = func->locals;
-		if ( func->stackVars[ i ]->TypeDef()->Inherits( &type_object ) || func->stackVars[ i ]->Type() == ev_entity) {
-			// objects/enties only have their entity number on the stack, as an int
-			func->locals += sizeof(int);
-		} else {
-			func->locals += func->stackVars[ i ]->TypeDef()->Size();
-		}
-	}
-	// And now that the stack variables are sorted out, deal with all those copies we have been deferring.
-	for (int i = 0; i < func->deferredCopies.Num(); i++) {
-		func->deferredCopies[ i ]->value = func->deferredCopies[ i ]->copyOf->value;
-	}
 	// check if we should call the super class destructor
 	if ( oldscope->TypeDef()->Inherits( &type_object ) && !idStr::Icmp( name, "destroy" ) ) {
 		idTypeDef *superClass;
@@ -2415,7 +2399,7 @@ void idCompiler::ParseEventDef( idTypeDef *returnType, const char *name ) {
 	const idTypeDef	*expectedType;
 	idTypeDef		*argType;
 	idTypeDef		*type;
-	int 			i;
+	int				i;
 	int				num;
 	const char		*format;
 	const idEventDef *ev;
@@ -2499,7 +2483,7 @@ Called at the outer layer and when a local statement is hit
 ================
 */
 void idCompiler::ParseDefs( void ) {
-	idStr 		name;
+	idStr		name;
 	idTypeDef	*type;
 	idVarDef	*def;
 	idVarDef	*oldscope;

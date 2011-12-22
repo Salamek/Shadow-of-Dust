@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,13 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/DeclEntityDef.h"
+#include "renderer/ModelManager.h"
 
-#include "Game_local.h"
+#include "Fx.h"
 
+#include "BrittleFracture.h"
 
 CLASS_DECLARATION( idEntity, idBrittleFracture )
 	EVENT( EV_Activate, idBrittleFracture::Event_Activate )
@@ -105,7 +107,7 @@ void idBrittleFracture::Save( idSaveGame *savefile ) const {
 	entityFlags_s flags = fl;
 	LittleBitField( &flags, sizeof( flags ) );
 	savefile->Write( &flags, sizeof( flags ) );
-	
+
 	// setttings
 	savefile->WriteMaterial( material );
 	savefile->WriteMaterial( decalMaterial );
@@ -416,7 +418,7 @@ bool idBrittleFracture::UpdateRenderEntity( renderEntity_s *renderEntity, const 
 		}
 		packedColor = PackColor( idVec4( renderEntity->shaderParms[ SHADERPARM_RED ] * fade,
 										renderEntity->shaderParms[ SHADERPARM_GREEN ] * fade,
-                                        renderEntity->shaderParms[ SHADERPARM_BLUE ] * fade,
+										renderEntity->shaderParms[ SHADERPARM_BLUE ] * fade,
 										fade ) );
 
 		const idWinding &winding = shards[i]->winding;
@@ -946,7 +948,7 @@ void idBrittleFracture::DropFloatingIslands( const idVec3 &point, const idVec3 &
 			continue;
 		}
 
-        queueStart = 0;
+		queueStart = 0;
 		queueEnd = 1;
 		queue[0] = shards[i];
 		shards[i]->islandNum = numIslands+1;

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ void StageView::MV_OnMaterialSelectionChange(MaterialDoc* pMaterial) {
 
 	currentMaterial = pMaterial;
 
-	RefreshStageList();	
+	RefreshStageList();
 }
 
 /**
@@ -265,7 +265,7 @@ bool StageView::CanRename() {
 * Rebuilds the list of stages based on the currently selected material
 */
 void StageView::RefreshStageList() {
-	
+
 	CListCtrl& list = GetListCtrl();
 
 	POSITION pos = list.GetFirstSelectedItemPosition();
@@ -777,12 +777,12 @@ void StageView::DropItemOnList() {
 
 	//Move the stage data
 	MaterialDoc* material = materialDocManager->GetCurrentMaterialDoc();
-	
+
 	internalChange = true;
 	toStage = dropIndex-1;
 	material->MoveStage(dragIndex-1, dropIndex-1);
 	internalChange = false;
-		
+
 	if(dragIndex < dropIndex) {
 		dropIndex++;
 	}
@@ -822,7 +822,3 @@ void StageView::DropItemOnList() {
 	}
 	m_propView->SetPropertyListType(type, toStage);
 }
-
-
-
-

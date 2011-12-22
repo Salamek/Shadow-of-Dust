@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,14 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/FileSystem.h"
+#include "framework/async/NetworkSystem.h"
+#include "renderer/RenderSystem.h"
+
+#include "gamesys/SysCmds.h"
+#include "Entity.h"
+#include "Player.h"
 
 #include "Game_local.h"
 
@@ -566,7 +572,7 @@ void idGameLocal::ServerWriteSnapshot( int clientNum, int sequence, idBitMsg &ms
 	} else {
 		spectated = player;
 	}
-	
+
 	// free too old snapshots
 	FreeSnapshotsOlderThanSequence( clientNum, sequence - 64 );
 
@@ -714,7 +720,7 @@ void idGameLocal::NetworkEventWarning( const entityNetEvent_t *event, const char
 	va_end( argptr );
 	idStr::Append( buf, sizeof(buf), "\n" );
 
-	common->DWarning("%s", buf );
+	common->DWarning( buf );
 }
 
 /*
@@ -735,7 +741,7 @@ void idGameLocal::ServerProcessEntityNetworkEventQueue( void ) {
 		}
 
 		idEntityPtr< idEntity > entPtr;
-			
+
 		if( !entPtr.SetSpawnId( event->spawnId ) ) {
 			NetworkEventWarning( event, "Entity does not exist any longer, or has not been spawned yet." );
 		} else {
@@ -750,7 +756,7 @@ void idGameLocal::ServerProcessEntityNetworkEventQueue( void ) {
 			}
 		}
 
-		entityNetEvent_t* freedEvent = eventQueue.Dequeue();
+		entityNetEvent_t* freedEvent id_attribute((unused)) = eventQueue.Dequeue();
 		assert( freedEvent == event );
 		eventQueue.Free( event );
 	}
@@ -1262,7 +1268,7 @@ void idGameLocal::ClientProcessEntityNetworkEventQueue( void ) {
 		}
 
 		idEntityPtr< idEntity > entPtr;
-			
+
 		if( !entPtr.SetSpawnId( event->spawnId ) ) {
 			if( !gameLocal.entities[ event->spawnId & ( ( 1 << GENTITYNUM_BITS ) - 1 ) ] ) {
 				// if new entity exists in this position, silently ignore
@@ -1280,7 +1286,7 @@ void idGameLocal::ClientProcessEntityNetworkEventQueue( void ) {
 			}
 		}
 
-		entityNetEvent_t* freedEvent = eventQueue.Dequeue();
+		entityNetEvent_t* freedEvent id_attribute((unused)) = eventQueue.Dequeue();
 		assert( freedEvent == event );
 		eventQueue.Free( event );
 	}
@@ -1528,7 +1534,7 @@ idGameLocal::Tokenize
 void idGameLocal::Tokenize( idStrList &out, const char *in ) {
 	char buf[ MAX_STRING_CHARS ];
 	char *token, *next;
-	
+
 	idStr::Copynz( buf, in, MAX_STRING_CHARS );
 	token = buf;
 	next = strchr( token, ';' );
@@ -1543,7 +1549,7 @@ void idGameLocal::Tokenize( idStrList &out, const char *in ) {
 			next = strchr( token, ';' );
 		} else {
 			token = NULL;
-		}		
+		}
 	}
 }
 
@@ -1580,7 +1586,7 @@ bool idGameLocal::DownloadRequest( const char *IP, const char *guid, const char 
 				reply += ";";
 			}
 			if ( pakList[ i ][ 0 ] == '\0' ) {
- 				if ( i == 0 ) {
+				if ( i == 0 ) {
 					// pak 0 will always miss when client doesn't ask for game bin
 					common->DPrintf( "no game pak request\n" );
 				} else {
@@ -1602,7 +1608,7 @@ bool idGameLocal::DownloadRequest( const char *IP, const char *guid, const char 
 				common->DPrintf( "download for %s: %s\n", IP, url.c_str() );
 			}
 		}
-		
+
 		idStr::Copynz( urls, reply, MAX_STRING_CHARS );
 		return true;
 	}
@@ -1693,7 +1699,7 @@ entityNetEvent_t* idEventQueue::RemoveLast( void ) {
 	if ( !end ) {
 		start = NULL;
 	} else {
-		end->next = NULL;		
+		end->next = NULL;
 	}
 
 	event->next = NULL;

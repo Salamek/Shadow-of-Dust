@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ const char *GetKeyString(entity_t *ent, int iIndex)
 //
 //	assert(0);
 //	return NULL;
-	
+
 	if ( iIndex < GetNumKeys(ent) )
 	{
 		return ent->epairs.GetKeyVal(iIndex)->GetKey().c_str();
@@ -159,9 +159,9 @@ void SetKeyMat3(entity_t *ent, const char *key, idMat3 m) {
 	}
 
 	idStr str;
-	
+
 	sprintf(str, "%g %g %g %g %g %g %g %g %g",m[0][0],m[0][1],m[0][2],m[1][0],m[1][1],m[1][2],m[2][0],m[2][1],m[2][2]);
-	
+
 	ent->epairs.Set(key, str);
 	GetVectorForKey(ent, "origin", ent->origin);
 }
@@ -290,7 +290,7 @@ bool GetMatrixForKey(entity_t *ent, const char *key, idMat3 &mat) {
 
 /*
  =======================================================================================================================
-    Entity_FreeEpairs Frees the entity epairs.
+	Entity_FreeEpairs Frees the entity epairs.
  =======================================================================================================================
  */
 void Entity_FreeEpairs(entity_t *e) {
@@ -299,7 +299,7 @@ void Entity_FreeEpairs(entity_t *e) {
 
 /*
  =======================================================================================================================
-    Entity_AddToList
+	Entity_AddToList
  =======================================================================================================================
  */
 void Entity_AddToList(entity_t *e, entity_t *list) {
@@ -315,7 +315,7 @@ void Entity_AddToList(entity_t *e, entity_t *list) {
 
 /*
  =======================================================================================================================
-    Entity_RemoveFromList
+	Entity_RemoveFromList
  =======================================================================================================================
  */
 void Entity_RemoveFromList(entity_t *e) {
@@ -330,7 +330,7 @@ void Entity_RemoveFromList(entity_t *e) {
 
 /*
  =======================================================================================================================
-    Entity_Free Frees the entity and any brushes is has. The entity is removed from the global entities list.
+	Entity_Free Frees the entity and any brushes is has. The entity is removed from the global entities list.
  =======================================================================================================================
  */
 void Entity_Free( entity_t *e ) {
@@ -351,7 +351,7 @@ void Entity_Free( entity_t *e ) {
 
 /*
  =======================================================================================================================
-    Entity_MemorySize
+	Entity_MemorySize
  =======================================================================================================================
  */
 
@@ -370,7 +370,7 @@ int Entity_MemorySize( entity_t *e )
 
 /*
  =======================================================================================================================
-    ParseEpair
+	ParseEpair
  =======================================================================================================================
  */
 
@@ -428,7 +428,7 @@ void ParseEpair(idDict *dict) {
 	idStr key = token;
 	GetToken(false);
 	idStr val = token;
-	
+
 	if (key.Length() > 0) {
 		dict->Set(key, val);
 	}
@@ -458,7 +458,7 @@ bool EntityHasModel(entity_t *ent) {
  */
 entity_t *Entity_New() {
 	entity_t *ent = new entity_t;
-	
+
 	ent->prev = ent->next = NULL;
 	ent->brushes.prev = ent->brushes.next = NULL;
 	ent->brushes.oprev = ent->brushes.onext = NULL;
@@ -481,7 +481,7 @@ entity_t *Entity_New() {
 }
 
 void Entity_UpdateCurveData( entity_t *ent ) {
-	
+
 	if ( ent == NULL || ent->curve == NULL ) {
 		return;
 	}
@@ -595,11 +595,11 @@ entity_t *Entity_PostParse(entity_t *ent, brush_t *pList) {
 	}
 
 	idStr str;
-	
+
 	if (e->defArgs.GetString("model", "", str) && e->entityModel == NULL) {
 		e->entityModel = gameEdit->ANIM_GetModelFromEntityDef( &e->defArgs );
 	}
-	
+
 	ent->eclass = e;
 
 	bool hasModel = EntityHasModel(ent);
@@ -681,7 +681,7 @@ entity_t *Entity_PostParse(entity_t *ent, brush_t *pList) {
 			bool		convertAngles = GetFloatForKey(ent, "angle", &yaw);
 			extern void Brush_Rotate(brush_t *b, idMat3 matrix, idVec3 origin, bool bBuild);
 			extern void Brush_Rotate(brush_t *b, idVec3 rot, idVec3 origin, bool bBuild);
-			
+
 			if (convertAngles) {
 				idVec3	rot(0, 0, yaw);
 				Brush_Rotate(b, rot, ent->origin, false);
@@ -790,8 +790,8 @@ entity_t *Entity_PostParse(entity_t *ent, brush_t *pList) {
 
 /*
  =======================================================================================================================
-    Entity_Parse If onlypairs is set, the classname info will not be looked up, and the entity will not be added to the
-    global list. Used for parsing the project.
+	Entity_Parse If onlypairs is set, the classname info will not be looked up, and the entity will not be added to the
+	global list. Used for parsing the project.
  =======================================================================================================================
  */
 entity_t *Entity_Parse(bool onlypairs, brush_t *pList) {
@@ -860,7 +860,7 @@ void VectorMidpoint(idVec3 va, idVec3 vb, idVec3 &out) {
 
 /*
  =======================================================================================================================
-    Entity_Write
+	Entity_Write
  =======================================================================================================================
  */
 void Entity_Write(entity_t *e, FILE *f, bool use_region) {
@@ -984,7 +984,7 @@ void Entity_WriteSelected(entity_t *e, FILE *f) {
 	}
 
 	fprintf(f, "{\n");
-	
+
 	count = e->epairs.GetNumKeyVals();
 	for (int j = 0; j < count; j++) {
 		fprintf(f, "\"%s\" \"%s\"\n", e->epairs.GetKeyVal(j)->GetKey().c_str(), e->epairs.GetKeyVal(j)->GetValue().c_str());
@@ -1122,8 +1122,8 @@ void Entity_Name(entity_t *e, bool force) {
 
 /*
  =======================================================================================================================
-    Entity_Create Creates a new entity out of the selected_brushes list. If the entity class is fixed size, the brushes
-    are only used to find a midpoint. Otherwise, the brushes have their ownership transfered to the new entity.
+	Entity_Create Creates a new entity out of the selected_brushes list. If the entity class is fixed size, the brushes
+	are only used to find a midpoint. Otherwise, the brushes have their ownership transfered to the new entity.
  =======================================================================================================================
  */
 entity_t *Entity_Create(eclass_t *c, bool forceFixed) {
@@ -1230,7 +1230,7 @@ void Brush_MakeDirty(brush_t *b) {
 }
 /*
  =======================================================================================================================
-    Entity_LinkBrush
+	Entity_LinkBrush
  =======================================================================================================================
  */
 void Entity_LinkBrush(entity_t *e, brush_t *b) {
@@ -1250,7 +1250,7 @@ void Entity_LinkBrush(entity_t *e, brush_t *b) {
 
 /*
  =======================================================================================================================
-    Entity_UnlinkBrush
+	Entity_UnlinkBrush
  =======================================================================================================================
  */
 void Entity_UnlinkBrush(brush_t *b) {
@@ -1267,7 +1267,7 @@ void Entity_UnlinkBrush(brush_t *b) {
 
 /*
  =======================================================================================================================
-    Entity_Clone
+	Entity_Clone
  =======================================================================================================================
  */
 entity_t *Entity_Clone(entity_t *e) {
@@ -1398,4 +1398,3 @@ void Entity_UpdateSoundEmitter( entity_t *ent ) {
 	}
 
 }
-

@@ -64,7 +64,7 @@ public:
 protected:
 	BOOL checkState;
 	CRect checkRect;
-	
+
 // Operations
 public:
 
@@ -82,9 +82,9 @@ protected:
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-	
+
 public:
-	
+
 	afx_msg void OnBnKillfocus();
 	afx_msg void OnBnClicked();
 };

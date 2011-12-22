@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,16 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __SESSIONLOCAL_H__
 #define __SESSIONLOCAL_H__
+
+#include "idlib/containers/StrList.h"
+#include "idlib/Dict.h"
+#include "framework/Session.h"
+#include "framework/UsercmdGen.h"
+#include "framework/KeyInput.h"
+#include "framework/DeclEntityDef.h"
+#include "renderer/RenderSystem.h"
+#include "renderer/RenderWorld.h"
+#include "ui/ListGUI.h"
 
 /*
 
@@ -113,7 +123,7 @@ public:
 	virtual void		SetPlayingSoundWorld();
 
 	virtual void		TimeHitch( int msec );
-	
+
 	virtual int			GetSaveGameVersion( void );
 
 	virtual const char *GetCurrentMapName();
@@ -232,14 +242,14 @@ public:
 	idUserInterface *	guiGameOver;
 	idUserInterface *	guiTest;
 	idUserInterface *	guiTakeNotes;
-	
+
 	idUserInterface *	guiMsg;
 	idUserInterface *	guiMsgRestore;				// store the calling GUI for restore
 	idStr				msgFireBack[ 2 ];
 	bool				msgRunning;
 	int					msgRetIndex;
 	bool				msgIgnoreButtons;
-	
+
 	bool				waitingOnBind;
 
 	const idMaterial *	whiteMaterial;
@@ -278,7 +288,7 @@ public:
 
 	void				AdvanceRenderDemo( bool singleFrameOnly );
 	void				RunGameTic();
-	
+
 	void				FinishCmdLoad();
 	void				LoadLoadingGui(const char *mapName);
 
@@ -322,11 +332,11 @@ public:
 	void				SetModsMenuGuiVars( void );
 	void				SetMainMenuSkin( void );
 	void				SetPbMenuGuiVars( void );
-	
+
 private:
 	bool				BoxDialogSanityCheck( void );
 	void				EmitGameAuth( void );
-	
+
 	typedef enum {
 		CDKEY_UNKNOWN,	// need to perform checks on the key
 		CDKEY_INVALID,	// that key is wrong

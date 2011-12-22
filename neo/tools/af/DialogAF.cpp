@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -235,7 +235,7 @@ BOOL DialogAF::OnInitDialog()  {
 	CDialog::OnInitDialog();
 
 	com_editors |= EDITOR_AF;
-	
+
 	// initialize list with articulated figure files
 	InitAFList();
 
@@ -270,7 +270,7 @@ BOOL DialogAF::OnInitDialog()  {
 	GetDlgItem( IDC_BUTTON_AF_SAVE )->EnableWindow( false );
 
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 

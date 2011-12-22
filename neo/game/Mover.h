@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,9 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __GAME_MOVER_H__
 #define __GAME_MOVER_H__
+
+#include "physics/Physics_Parametric.h"
+#include "Entity.h"
 
 extern const idEventDef EV_TeamBlocked;
 extern const idEventDef EV_PartBlocked;
@@ -157,7 +160,7 @@ private:
 	void					VectorForDir( float dir, idVec3 &vec );
 	idCurve_Spline<idVec3> *GetSpline( idEntity *splineEntity ) const;
 
-	void					Event_SetCallback( void );	
+	void					Event_SetCallback( void );
 	void					Event_TeamBlocked( idEntity *blockedPart, idEntity *blockingEntity );
 	void					Event_StopMoving( void );
 	void					Event_StopRotating( void );
@@ -479,7 +482,7 @@ public:
 							idMover_Periodic( void );
 
 	void					Spawn( void );
-	
+
 	void					Save( idSaveGame *savefile ) const;
 	void					Restore( idRestoreGame *savefile );
 

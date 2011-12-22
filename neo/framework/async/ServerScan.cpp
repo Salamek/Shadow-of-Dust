@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,16 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/LangDict.h"
+#include "framework/async/AsyncNetwork.h"
+#include "framework/Licensee.h"
+#include "framework/Common.h"
+#include "framework/CVarSystem.h"
+#include "framework/DeclManager.h"
+#include "framework/DeclEntityDef.h"
+
+#include "framework/async/ServerScan.h"
 
 idCVar gui_filter_password( "gui_filter_password", "0", CVAR_GUI | CVAR_INTEGER | CVAR_ARCHIVE, "Password filter" );
 idCVar gui_filter_players( "gui_filter_players", "0", CVAR_GUI | CVAR_INTEGER | CVAR_ARCHIVE, "Players filter" );
@@ -108,7 +116,7 @@ void idServerScan::Shutdown( ) {
 idServerScan::SetupLANScan
 ================
 */
-void idServerScan::SetupLANScan( ) {	
+void idServerScan::SetupLANScan( ) {
 	Clear();
 	GUIUpdateSelected();
 	scan_state = LAN_SCAN;
@@ -134,7 +142,7 @@ int idServerScan::InfoResponse( networkServer_t &server ) {
 		return false;
 	}
 
-	if ( scan_state == NET_SCAN ) {	
+	if ( scan_state == NET_SCAN ) {
 		const idKeyValue *info = net_info.FindKey( serv.c_str() );
 		if ( !info ) {
 			common->DPrintf( "idServerScan::InfoResponse NET_SCAN: reply from unknown %s\n", serv.c_str() );
@@ -188,11 +196,11 @@ idServerScan::AddServer
 */
 void idServerScan::AddServer( int id, const char *srv ) {
 	inServer_t s;
-	
+
 	incoming_net = true;
 	incoming_lastTime = Sys_Milliseconds() + INCOMING_TIMEOUT;
 	s.id = id;
-	
+
 	// using IPs, not hosts
 	if ( !Sys_StringToNetAdr( srv, &s.adr, false ) ) {
 		common->DPrintf( "idServerScan::AddServer: failed to parse server %s\n", srv );
@@ -201,7 +209,7 @@ void idServerScan::AddServer( int id, const char *srv ) {
 	if ( !s.adr.port ) {
 		s.adr.port = PORT_SERVER;
 	}
-	
+
 	net_servers.Append( s );
 }
 
@@ -267,7 +275,7 @@ void idServerScan::NetScan( ) {
 
 	scan_state = NET_SCAN;
 	challenge++;
-	
+
 	idList<networkServer_t>::Clear();
 	m_sortedServers.Clear();
 	cur_info = 0;
@@ -275,7 +283,7 @@ void idServerScan::NetScan( ) {
 	listGUI->Clear();
 	GUIUpdateSelected();
 	common->DPrintf( "NetScan with challenge %d\n", challenge );
-	
+
 	while ( cur_info < Min( net_servers.Num(), MAX_PINGREQUESTS ) ) {
 		netadr_t serv = net_servers[ cur_info ].adr;
 		EmitGetInfo( serv );
@@ -294,7 +302,7 @@ void idServerScan::RunFrame( ) {
 	if ( scan_state == IDLE ) {
 		return;
 	}
-	
+
 	if ( scan_state == WAIT_ON_INIT ) {
 		if ( Sys_Milliseconds() >= endWaitTime ) {
 				scan_state = IDLE;
@@ -302,9 +310,9 @@ void idServerScan::RunFrame( ) {
 			}
 		return;
 	}
-	
+
 	int timeout_limit = Sys_Milliseconds() - REPLY_TIMEOUT;
-	
+
 	if ( scan_state == LAN_SCAN ) {
 		if ( timeout_limit > lan_pingtime ) {
 			common->Printf( "Scanned for servers on the LAN\n" );
@@ -312,9 +320,9 @@ void idServerScan::RunFrame( ) {
 		}
 		return;
 	}
-	
+
 	// if scan_state == NET_SCAN
-	
+
 	// check for timeouts
 	int i = 0;
 	while ( i < net_info.GetNumKeyVals() ) {
@@ -325,7 +333,7 @@ void idServerScan::RunFrame( ) {
 			i++;
 		}
 	}
-			
+
 	// possibly send more queries
 	while ( cur_info < net_servers.Num() && net_info.GetNumKeyVals() < MAX_PINGREQUESTS ) {
 		netadr_t serv = net_servers[ cur_info ].adr;
@@ -334,7 +342,7 @@ void idServerScan::RunFrame( ) {
 		net_info.SetInt( Sys_NetAdrToString( serv ), cur_info );
 		cur_info++;
 	}
-	
+
 	// update state
 	if ( ( !incoming_net || ( incoming_useTimeout && Sys_Milliseconds() > incoming_lastTime ) ) && net_info.GetNumKeyVals() == 0 ) {
 		EndServers();
@@ -636,4 +644,3 @@ void idServerScan::SetSorting( serverSort_t sort ) {
 	// trigger a redraw
 	ApplyFilter();
 }
-

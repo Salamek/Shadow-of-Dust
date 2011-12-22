@@ -27,11 +27,11 @@ ul
 		<div class="Section1">
 			<p class="MsoNormal" align="center" style='text-align:center'><b><span style='font-size:18.0pt'>Material Types</span></b></p>
 			<p class="MsoNormal">&nbsp;</p>
-			<p class="MsoNormal" align="right" style='text-align:right'>Version 1.00 – Friday
+			<p class="MsoNormal" align="right" style='text-align:right'>Version 1.00 – Friday 
 				13<sup>th</sup> June 2003 – John J Scott</p>
 			<p class="MsoNormal">&nbsp;</p>
-			<p class="MsoNormal">Materials are defined by .mtt files in the base/materials/
-				folder. The name of the file is the name of the material (eg.
+			<p class="MsoNormal">Materials are defined by .mtt files in the base/materials/ 
+				folder. The name of the file is the name of the material (eg. 
 				“materials/sand.mtt” is called “sand”).</p>
 			<p class="MsoNormal">&nbsp;</p>
 			<p class="MsoNormal">A .mtt file looks like this –</p>
@@ -46,7 +46,7 @@ rgb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
 r,g,b</span></p>
 			<p class="MsoNormal"><span style='color:blue'>}</span></p>
 			<p class="MsoNormal">&nbsp;</p>
-			<p class="MsoNormal">The r, g and b components are defined as 0 to 255. (eg.
+			<p class="MsoNormal">The r, g and b components are defined as 0 to 255. (eg. 
 				255,0,0 would be bright red)</p>
 			<p class="MsoNormal">&nbsp;</p>
 			<p class="MsoNormal">The material type can be defined in the material in 2 ways –</p>
@@ -55,7 +55,7 @@ r,g,b</span></p>
 					The keyword “materialType”</li>
 			</ol>
 			<p class="MsoNormal">&nbsp;</p>
-			<p class="MsoNormal">The following material would have the material type of
+			<p class="MsoNormal">The following material would have the material type of 
 				“concrete”</p>
 			<p class="MsoNormal">&nbsp;</p>
 			<p class="MsoNormal"><span style='color:blue'>textures/wall/texture</span></p>
@@ -72,10 +72,10 @@ r,g,b</span></p>
 			<p class="MsoNormal"><span style='color:blue'>&nbsp;</span></p>
 			<ol style='margin-top:0cm' start="2" type="1">
 				<li class="MsoNormal" style='color:black'>
-					The keyword “materialImage” can be used to specify an image to indirect into.
-					The rgb values in the material image are compared with the rgb values defined
-					in the .mtt files to define the material type. Eg. A window frame would have
-					material type wood wherever the frame was, and material type glass wherever the
+					The keyword “materialImage” can be used to specify an image to indirect into. 
+					The rgb values in the material image are compared with the rgb values defined 
+					in the .mtt files to define the material type. Eg. A window frame would have 
+					material type wood wherever the frame was, and material type glass wherever the 
 					glass was.
 				</li>
 			</ol>
@@ -185,21 +185,21 @@ are –</span></p>
 			<p class="MsoNormal"><span style='color:black'>Notes -</span></p>
 			<ol style='margin-top:0cm' start="1" type="1">
 				<li class="MsoNormal" style='color:black'>
-					There are no limits to the dimensions of the material type image. However,
-					using half the width and height would be a good balance of accuracy vs. memory.
-					If more accuracy is required, go up to the same size. There is no gain (and
-					hence no point) in going larger than the material the hit image will be applied
+					There are no limits to the dimensions of the material type image. However, 
+					using half the width and height would be a good balance of accuracy vs. memory. 
+					If more accuracy is required, go up to the same size. There is no gain (and 
+					hence no point) in going larger than the material the hit image will be applied 
 					to.</li>
 				<li class="MsoNormal" style='color:black'>
-					If the exact rgb values are used, loading up the hit images will be quick. It
+					If the exact rgb values are used, loading up the hit images will be quick. It 
 					will check for the nearest match, but this takes a little longer.</li>
 				<li class="MsoNormal" style='color:black'>
-					Generally, use a realistic colour for the material type. This way, the diffuse
-					map will work naturally as a quick and dirty starting point. For example, flesh
-					is pink so that any pink found on a hit material image will return a material
+					Generally, use a realistic colour for the material type. This way, the diffuse 
+					map will work naturally as a quick and dirty starting point. For example, flesh 
+					is pink so that any pink found on a hit material image will return a material 
 					type of flesh.</li>
 				<li class="MsoNormal" style='color:black'>
-					Try to keep a good separation of material type rgb values. Having two very
+					Try to keep a good separation of material type rgb values. Having two very 
 					close together makes the hit images harder to edit.</li>
 			</ol>
 			<p class="MsoNormal"><span style='color:black'>&nbsp;</span></p>

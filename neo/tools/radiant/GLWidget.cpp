@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -133,7 +133,7 @@ END_MESSAGE_MAP()
 BOOL idGLWidget::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: Add your specialized code here and/or call the base class
-	
+
 	return CWnd::PreCreateWindow(cs);
 }
 
@@ -161,7 +161,7 @@ void idGLWidget::OnPaint()
 		initialized = true;
 	}
 	CPaintDC dc(this); // device context for painting
-	
+
 	CRect rect;
 	GetClientRect(rect);
 
@@ -402,7 +402,7 @@ void idGLDrawableMaterial::draw(int x, int y, int w, int h) {
 			tris->verts[0].xyz.z = yOffset + 0 - height / 2;
 			tris->verts[0].st.x = 1;
 			tris->verts[0].st.y = 1;
-			
+
 			tris->verts[1].xyz.x = 64;
 			tris->verts[1].xyz.y = -xOffset + width / 2;
 			tris->verts[1].xyz.z = yOffset + height / 2;
@@ -426,7 +426,7 @@ void idGLDrawableMaterial::draw(int x, int y, int w, int h) {
 			AddTris(tris, mat);
 
 			worldModel->FinishSurfaces();
-			
+
 			renderEntity_t worldEntity;
 
 			memset( &worldEntity, 0, sizeof( worldEntity ) );
@@ -443,7 +443,7 @@ void idGLDrawableMaterial::draw(int x, int y, int w, int h) {
 
 			worldDirty = false;
 		}
-		
+
 		renderView_t	refdef;
 		// render it
 		renderSystem->BeginFrame(w, h);
@@ -671,7 +671,7 @@ void idGLDrawableModel::draw(int x, int y, int w, int h) {
 
 		worldDirty = false;
 	}
-		
+
 	renderView_t	refdef;
 	// render it
 	renderSystem->BeginFrame(w, h);
@@ -899,7 +899,7 @@ void idGLConsoleWidget::OnLButtonDown(UINT nFlags, CPoint point) {
 BOOL idGLWidget::OnEraseBkgnd(CDC* pDC)
 {
 	return FALSE;
-	
+
 	//return CWnd::OnEraseBkgnd(pDC);
 }
 
@@ -922,7 +922,7 @@ void idGLDrawableWorld::AddTris(srfTriangles_t *tris, const idMaterial *mat) {
 }
 
 void idGLDrawableWorld::draw(int x, int y, int w, int h) {
-	
+
 }
 
 void idGLDrawableWorld::InitWorld() {

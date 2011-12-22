@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/ModelManager.h"
 
-#include "dmap.h"
+#include "tools/compilers/dmap/dmap.h"
 
 /*
 
@@ -53,9 +53,9 @@ If you have questions concerning this license or the applicable additional terms
 
   A case that causes recursive overflow with point to triangle fixing:
 
-               A
+			   A
 	C            D
-	           B
+			   B
 
   Triangle ABC tests against point D and splits into triangles ADC and DBC
   Triangle DBC then tests against point A again and splits into ABC and ADB
@@ -316,9 +316,9 @@ static mapTri_t *FixTriangleAgainstHashVert( const mapTri_t *a, const hashVert_t
 	if ( a->hashVert[0] == hv || a->hashVert[1] == hv || a->hashVert[2] == hv ) {
 		return NULL;
 	}
-	
+
 	split.Clear();
-	
+
 	// we probably should find the edge that the vertex is closest to.
 	// it is possible to be < 1 unit away from multiple
 	// edges, but we only want to split by one of them
@@ -615,7 +615,7 @@ void	FixGlobalTjunctions( uEntity_t *e ) {
 				} else {
 					axis.Identity();
 				}
-			}		
+			}
 
 			idVec3	origin = entity->mapEntity->epairs.GetVector( "origin" );
 

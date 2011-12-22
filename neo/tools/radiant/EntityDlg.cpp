@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -563,7 +563,7 @@ BOOL CEntityDlg::PreTranslateMessage(MSG* pMsg)
 			}
 		}
 	}
-	
+
 	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RIGHT && pMsg->hwnd == slFrameSlider.GetSafeHwnd()) {
 		int pos = slFrameSlider.GetPos() + 1;
 		pos = (pos % slFrameSlider.GetRangeMax());
@@ -590,7 +590,7 @@ BOOL CEntityDlg::PreTranslateMessage(MSG* pMsg)
 
 /*
  =======================================================================================================================
-    AddProp
+	AddProp
  =======================================================================================================================
  */
 void CEntityDlg::AddProp() {
@@ -659,7 +659,7 @@ const char *CEntityDlg::AngleKey() {
 	if (editEntity == NULL) {
 		return "";
 	}
-	
+
 	if (editEntity->eclass->nShowFlags & ECLASS_MOVER) {
 		return "movedir";
 	}
@@ -967,7 +967,7 @@ void CEntityDlg::CreateEntity() {
 		MessageBox("You must have a selected class to create an entity", "info", 0);
 		return;
 	}
-	
+
 	CString str;
 	comboClass.GetLBText(index, str);
 
@@ -1079,7 +1079,7 @@ void CEntityDlg::OnNMReleasedcaptureSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		return;
 	}
-	
+
 	UpdateFromAnimationFrame ();
 
 	*pResult = 0;
@@ -1119,7 +1119,7 @@ void CEntityDlg::OnCbnAnimationChange ()
 
 			editEntity->epairs.Set("anim" , animName.GetBuffer(0));
 			SetKeyValPairs(false/*don't update anims combo box :)*/ );
-			
+
 			//update the slider
 			currentAnimation = gameEdit->ANIM_GetAnimFromEntityDef(editEntity->eclass->name , animName.GetBuffer(0));
 			currentAnimationFrame = 0;
@@ -1136,7 +1136,7 @@ void CEntityDlg::OnCbnAnimationChange ()
 }
 
 void CEntityDlg::OnBnClickedStartAnimation()
-{	
+{
 	if (!editEntity) {
 		return;
 	}
@@ -1154,12 +1154,12 @@ void CEntityDlg::OnTimer(UINT nIDEvent)
 		OnBnClickedStopAnimation ();
 		return;
 	}
-	
+
 	if ( currentAnimation ) {
 		currentAnimationFrame = ( (currentAnimationFrame++) % gameEdit->ANIM_GetNumFrames( currentAnimation ) );
 		editEntity->epairs.SetInt ( "frame" , currentAnimationFrame );
 		slFrameSlider.SetPos ( currentAnimationFrame );
-		UpdateFromAnimationFrame (false/*don't update key/value display*/);		
+		UpdateFromAnimationFrame (false/*don't update key/value display*/);
 
 		Sys_UpdateWindows ( W_CAMERA | W_XY );
 	}
@@ -1187,7 +1187,7 @@ void CEntityDlg::AddCurvePoints() {
 	} else {
 		start = editEntity->origin;
 	}
-	
+
 	editEntity->curve->AddValue( editEntity->curve->GetNumValues() * 100, start );
 
 	if ( g_qeglobals.d_select_mode == sel_editpoint ) {
@@ -1319,7 +1319,7 @@ void CEntityDlg::DeleteCurvePoint() {
 
 
 void CEntityDlg::UpdateEntityCurve() {
-	
+
 	if ( editEntity == NULL ) {
 		return;
 	}
@@ -1374,4 +1374,3 @@ void CEntityDlg::SelectCurvePointByRay(const idVec3 &org, const idVec3 &dir, int
 	assert ( besti < editEntity->curve->GetNumValues() );
 	g_qeglobals.d_move_points[ g_qeglobals.d_num_move_points++ ] = editEntity->curve->GetValueAddress( besti );
 }
-

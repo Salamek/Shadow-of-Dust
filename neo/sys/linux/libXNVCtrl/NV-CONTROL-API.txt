@@ -228,7 +228,7 @@
                        field.
         attribute - the attribute to query.
         value - the returned attribute value.
-
+    
     This function can cause the following X protocol errors:
 
         BadValue - The screen does not exist.
@@ -265,7 +265,7 @@
         BadValue - The screen does not exist.
         BadMatch - The NVIDIA driver is not present on that screen.
         BadAlloc - Insufficient resources to fulfill the request.
-
+        
     See NVCtrl.h (distributed in the src/libXNVCtrl/ directory of
     the nvidia-settings source package) for a list of possible string
     attributes.

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,10 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __MATH_CURVE_H__
 #define __MATH_CURVE_H__
+
+#include "idlib/containers/List.h"
+#include "idlib/math/Math.h"
+#include "idlib/math/Matrix.h"
 
 /*
 ===============================================================================
@@ -72,7 +76,7 @@ protected:
 
 	idList<float>		times;			// knots
 	idList<type>		values;			// knot values
-	
+
 	mutable int			currentIndex;	// cached index for fast lookup
 	mutable bool		changed;		// set whenever the curve changes
 
@@ -592,7 +596,7 @@ ID_INLINE void idCurve_Bezier<type>::Basis( const int order, const float t, floa
 
 	c = (float *) _alloca16( (d+1) * sizeof( float ) );
 	s = (float) ( t - this->times[0] ) / ( this->times[this->times.Num()-1] - this->times[0] );
-    o = 1.0f - s;
+	o = 1.0f - s;
 	ps = s;
 	po = o;
 
@@ -1972,7 +1976,7 @@ ID_INLINE float idCurve_BSpline<type>::BasisSecondDerivative( const int index, c
 
 template< class type >
 class idCurve_UniformCubicBSpline : public idCurve_BSpline<type> {
-	
+
 public:
 						idCurve_UniformCubicBSpline( void );
 
@@ -2141,7 +2145,7 @@ ID_INLINE void idCurve_UniformCubicBSpline<type>::BasisSecondDerivative( const i
 
 template< class type >
 class idCurve_NonUniformBSpline : public idCurve_BSpline<type> {
-	
+
 public:
 						idCurve_NonUniformBSpline( void );
 
@@ -2260,11 +2264,11 @@ idCurve_NonUniformBSpline::Basis
 */
 template< class type >
 ID_INLINE void idCurve_NonUniformBSpline<type>::Basis( const int index, const int order, const float t, float *bvals ) const {
-    int r, s, i;
-    float omega;
+	int r, s, i;
+	float omega;
 
-    bvals[order-1] = 1.0f;
-    for ( r = 2; r <= order; r++ ) {
+	bvals[order-1] = 1.0f;
+	for ( r = 2; r <= order; r++ ) {
 		i = index - r + 1;
 		bvals[order - r] = 0.0f;
 		for ( s = order - r + 1; s < order; s++ ) {
@@ -2273,7 +2277,7 @@ ID_INLINE void idCurve_NonUniformBSpline<type>::Basis( const int index, const in
 			bvals[s - 1] += ( 1.0f - omega ) * bvals[s];
 			bvals[s] *= omega;
 		}
-    }
+	}
 }
 
 /*
@@ -2327,7 +2331,7 @@ ID_INLINE void idCurve_NonUniformBSpline<type>::BasisSecondDerivative( const int
 
 template< class type >
 class idCurve_NURBS : public idCurve_NonUniformBSpline<type> {
-	
+
 public:
 						idCurve_NURBS( void );
 

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -91,13 +91,13 @@ void CRotateDlg::OnApply()
   UpdateData(TRUE);
 	float f = atof(m_strX);
   if (f != 0.0)
-    Select_RotateAxis(0,f);
+	Select_RotateAxis(0,f);
 	f = atof(m_strY);
   if (f != 0.0)
-    Select_RotateAxis(1,f);
+	Select_RotateAxis(1,f);
 	f = atof(m_strZ);
   if (f != 0.0)
-    Select_RotateAxis(2,f);
+	Select_RotateAxis(2,f);
 }
 
 BOOL CRotateDlg::OnInitDialog()
@@ -107,7 +107,7 @@ BOOL CRotateDlg::OnInitDialog()
 	m_wndSpin2.SetRange(0, 359);
 	m_wndSpin3.SetRange(0, 359);
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CRotateDlg::OnDeltaposSpin1(NMHDR* pNMHDR, LRESULT* pResult)

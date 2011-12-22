@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,10 +29,14 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __ASYNCNETWORK_H__
 #define __ASYNCNETWORK_H__
 
-#include "MsgChannel.h"
-#include "AsyncServer.h"
-#include "ServerScan.h"
-#include "AsyncClient.h"
+#include "idlib/BitMsg.h"
+#include "framework/async/MsgChannel.h"
+#include "framework/async/AsyncClient.h"
+#include "framework/async/AsyncServer.h"
+#include "framework/Compressor.h"
+#include "framework/Licensee.h"
+#include "framework/CVarSystem.h"
+#include "framework/UsercmdGen.h"
 
 /*
 ===============================================================================
@@ -127,14 +131,14 @@ public:
 	static bool				GetMasterAddress( int index, netadr_t &adr );
 							// get the hardcoded idnet master, equivalent to GetMasterAddress( 0, .. )
 	static netadr_t			GetMasterAddress( void );
-	
+
 	static void				GetNETServers( );
-	
+
 	static void				ExecuteSessionCommand( const char *sessCmd );
 
 	static idAsyncServer	server;
 	static idAsyncClient	client;
-	
+
 	static idCVar			verbose;						// verbose output
 	static idCVar			allowCheats;					// allow cheats
 	static idCVar			serverDedicated;				// if set run a dedicated server

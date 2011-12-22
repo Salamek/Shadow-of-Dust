@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,17 +26,18 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/ModelManager.h"
+#include "renderer/tr_local.h"
+
+#include "tools/compilers/compiler_public.h"
 
 #ifdef WIN32
 #include <windows.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "../../../sys/win32/win_local.h"
+#include "sys/win32/win_local.h"
 #endif
-
-#include "../../../renderer/tr_local.h"
 
 /*
 
@@ -99,7 +100,7 @@ typedef struct {
 	float	traceDist;
 	srfTriangles_t	*mesh;			// high poly mesh
 	idRenderModel	*highModel;
-	triHash_t	*hash;	
+	triHash_t	*hash;
 } renderBump_t;
 
 static int rayNumber;		// for avoiding retests of bins and faces
@@ -606,7 +607,7 @@ static float TriTextureArea( const float a[2], const float b[2], const float c[2
 	d2[0] = c[0] - a[0];
 	d2[1] = c[1] - a[1];
 	d2[2] = 0;
-	
+
 	cross = d1.Cross( d2 );
 	area = 0.5 * cross.Length();
 
@@ -636,7 +637,7 @@ static void RasterizeTriangle( const srfTriangles_t *lowMesh, const idVec3 *lowM
 	byte	*localDest, *globalDest, *colorDest;
 	float	edge[3][3];
 	idVec3	sampledNormal;
-	byte	sampledColor[4] = {};
+	byte	sampledColor[4] = { };
 	idVec3	point, normal, traceNormal, tangents[2];
 	float	baseArea, totalArea;
 	int		r, g, b;
@@ -682,7 +683,7 @@ static void RasterizeTriangle( const srfTriangles_t *lowMesh, const idVec3 *lowM
 	// calculate edge vectors
 	for ( i = 0 ; i < 3 ; i++ ) {
 		float	*v1, *v2;
-		
+
 		v1 = verts[i];
 		v2 = verts[(i+1)%3];
 
@@ -1419,10 +1420,10 @@ void RenderBumpFlat_f( const idCmdArgs &args ) {
 
 	qglEnable( GL_CULL_FACE );
 	qglCullFace( GL_FRONT );
-	qglDisable( GL_STENCIL_TEST );	
-	qglDisable( GL_SCISSOR_TEST );	
-	qglDisable( GL_ALPHA_TEST );	
-	qglDisable( GL_BLEND );	
+	qglDisable( GL_STENCIL_TEST );
+	qglDisable( GL_SCISSOR_TEST );
+	qglDisable( GL_ALPHA_TEST );
+	qglDisable( GL_BLEND );
 	qglEnable( GL_DEPTH_TEST );
 	qglDisable( GL_TEXTURE_2D );
 	qglDepthMask( GL_TRUE );
@@ -1547,9 +1548,9 @@ void RenderBumpFlat_f( const idCmdArgs &args ) {
 			qglFlush();
 			GLimp_SwapBuffers();
 			qglReadPixels( 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer );
-			
+
 			c = width * height;
-			
+
 			if ( colorPass ) {
 				// add to the sum buffer
 				for ( i = 0 ; i < c ; i++ ) {

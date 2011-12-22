@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,9 +28,11 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __CHOICEWINDOW_H
 #define __CHOICEWINDOW_H
 
-#include "Window.h"
+#include "idlib/containers/StrList.h"
+#include "ui/Window.h"
 
 class idUserInterfaceLocal;
+
 class idChoiceWindow : public idWindow {
 public:
 						idChoiceWindow(idUserInterfaceLocal *gui);
@@ -38,21 +40,21 @@ public:
 	virtual				~idChoiceWindow();
 
 	virtual const char	*HandleEvent(const sysEvent_t *event, bool *updateVisuals);
-	virtual void 		PostParse();
-	virtual void 		Draw(int time, float x, float y);
+	virtual void		PostParse();
+	virtual void		Draw(int time, float x, float y);
 	virtual void		Activate( bool activate, idStr &act );
 	virtual size_t		Allocated(){return idWindow::Allocated();};
 
 	virtual idWinVar	*GetWinVarByName(const char *_name, bool winLookup = false, drawWin_t** owner = NULL);
 
 	void				RunNamedEvent( const char* eventName );
-	
+
 private:
 	virtual bool		ParseInternalVar(const char *name, idParser *src);
 	void				CommonInit();
 	void				UpdateChoice();
 	void				ValidateChoice();
-	
+
 	void				InitVars();
 						// true: read the updated cvar from cvar system, gui from dict
 						// false: write to the cvar system, to the gui dict
@@ -60,7 +62,7 @@ private:
 	void				UpdateVars( bool read, bool force = false );
 
 	void				UpdateChoicesAndVals( void );
-	
+
 	int					currentChoice;
 	int					choiceType;
 	idStr				latchedChoices;

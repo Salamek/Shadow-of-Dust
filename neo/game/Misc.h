@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,6 +29,9 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __GAME_MISC_H__
 #define __GAME_MISC_H__
 
+#include "physics/Physics_Parametric.h"
+#include "physics/Force_Field.h"
+#include "physics/Force_Spring.h"
 
 /*
 ===============================================================================
@@ -97,7 +100,7 @@ private:
   Bind to a mover to have the mover activate a trigger as it moves.
   When target by triggers, activating the trigger will toggle the
   activator on and off. Check "start_off" to have it spawn disabled.
-	
+
 ===============================================================================
 */
 
@@ -283,7 +286,7 @@ private:
 
 	void					PlayNextAnim( void );
 
-	void					Event_Activate( idEntity *activator );	
+	void					Event_Activate( idEntity *activator );
 	void					Event_Start( void );
 	void					Event_StartRagdoll( void );
 	void					Event_AnimDone( int animIndex );
@@ -477,7 +480,7 @@ public:
 	void				Save( idSaveGame *savefile ) const;
 	void				Restore( idRestoreGame *savefile );
 
-	void				Event_Activate( idEntity *activator );	
+	void				Event_Activate( idEntity *activator );
 
 private:
 	qhandle_t			portal;
@@ -597,7 +600,7 @@ private:
 class idEarthQuake : public idEntity {
 public:
 	CLASS_PROTOTYPE( idEarthQuake );
-			
+
 						idEarthQuake();
 
 	void				Spawn( void );
@@ -632,7 +635,7 @@ private:
 class idFuncPortal : public idEntity {
 public:
 	CLASS_PROTOTYPE( idFuncPortal );
-			
+
 						idFuncPortal();
 
 	void				Spawn( void );
@@ -658,7 +661,7 @@ private:
 class idFuncAASPortal : public idEntity {
 public:
 	CLASS_PROTOTYPE( idFuncAASPortal );
-			
+
 						idFuncAASPortal();
 
 	void				Spawn( void );
@@ -683,7 +686,7 @@ private:
 class idFuncAASObstacle : public idEntity {
 public:
 	CLASS_PROTOTYPE( idFuncAASObstacle );
-			
+
 						idFuncAASObstacle();
 
 	void				Spawn( void );
@@ -735,7 +738,7 @@ private:
 class idPhantomObjects : public idEntity {
 public:
 	CLASS_PROTOTYPE( idPhantomObjects );
-			
+
 						idPhantomObjects();
 
 	void				Spawn( void );

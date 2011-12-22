@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,20 +25,19 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
+
+#include "sys/platform.h"
+#include "gamesys/SysCvar.h"
+#include "script/Script_Thread.h"
+
+#include "Class.h"
+
 /*
 
 Base class for all C++ objects.  Provides fast run-time type checking and run-time
 instancing of objects.
 
 */
-
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
-
-#include "../Game_local.h"
-
-#include "TypeInfo.h"
-
 
 /***********************************************************************
 
@@ -394,7 +393,7 @@ void idClass::Init( void ) {
 	// is a subclass of another
 	num = 0;
 	for( c = classHierarchy.GetNext(); c != NULL; c = c->node.GetNext(), num++ ) {
-        c->typeNum = num;
+		c->typeNum = num;
 		c->lastChild += num;
 	}
 
@@ -504,7 +503,7 @@ void idClass::operator delete( void *ptr ) {
 		p = ( ( int * )ptr ) - 1;
 		memused -= *p;
 		numobjects--;
-        Mem_Free( p );
+		Mem_Free( p );
 	}
 }
 
@@ -515,7 +514,7 @@ void idClass::operator delete( void *ptr, int, int, char *, int ) {
 		p = ( ( int * )ptr ) - 1;
 		memused -= *p;
 		numobjects--;
-        Mem_Free( p );
+		Mem_Free( p );
 	}
 }
 
@@ -629,9 +628,9 @@ bool idClass::PostEventArgs( const idEventDef *ev, int time, int numargs, ... ) 
 	idTypeInfo	*c;
 	idEvent		*event;
 	va_list		args;
-	
+
 	assert( ev );
-	
+
 	if ( !idEvent::initialized ) {
 		return false;
 	}
@@ -830,7 +829,7 @@ bool idClass::ProcessEventArgs( const idEventDef *ev, int numargs, ... ) {
 	int			num;
 	intptr_t	data[ D_EVENT_MAXARGS ];
 	va_list		args;
-	
+
 	assert( ev );
 	assert( idEvent::initialized );
 

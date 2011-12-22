@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,17 +25,20 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
+
+#include "sys/platform.h"
+#include "script/Script_Program.h"
+#include "Entity.h"
+#include "Game_local.h"
+
+#include "Event.h"
+
 /*
 sys_event.cpp
 
 Event are used for scheduling tasks and for linking script commands.
 
 */
-
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
-
-#include "../Game_local.h"
 
 #define MAX_EVENTSPERFRAME			4096
 //#define CREATE_EVENT_CODE
@@ -70,7 +73,7 @@ idEventDef::idEventDef( const char *command, const char *formatspec, char return
 	if ( !formatspec ) {
 		formatspec = "";
 	}
-	
+
 	this->name = command;
 	this->formatspec = formatspec;
 	this->returnType = returnType;
@@ -599,7 +602,7 @@ void idEvent::Shutdown( void ) {
 	}
 
 	ClearEventList();
-	
+
 	eventDataAllocator.Shutdown();
 
 	// say it is now shutdown
@@ -613,8 +616,7 @@ idEvent::Save
 */
 void idEvent::Save( idSaveGame *savefile ) {
 	char *str;
-	int i;
-	size_t size;
+	int i, size;
 	idEvent	*event;
 	byte *dataPtr;
 	bool validTrace;
@@ -678,8 +680,7 @@ idEvent::Restore
 */
 void idEvent::Restore( idRestoreGame *savefile ) {
 	char    *str;
-	int		num, argsize, i, j;
-	size_t size;
+	int		num, argsize, i, j, size;
 	idStr	name;
 	byte *dataPtr;
 	idEvent	*event;
@@ -716,10 +717,9 @@ void idEvent::Restore( idRestoreGame *savefile ) {
 
 		// read the args
 		savefile->ReadInt( argsize );
-		//WE DONT NEED THIS MESS AROUND, NO SAVING SYSTEM FOR FUTURE ANYWAY
-		/*if ( argsize != event->eventdef->GetArgSize() ) {
+		if ( argsize != event->eventdef->GetArgSize() ) {
 			savefile->Error( "idEvent::Restore: arg size (%zd) doesn't match saved arg size(%d) on event '%s'", event->eventdef->GetArgSize(), argsize, event->eventdef->GetName() );
-		}*/
+		}
 		if ( argsize ) {
 			event->data = eventDataAllocator.Alloc( argsize );
 			format = event->eventdef->GetArgFormat();
@@ -844,7 +844,7 @@ void CreateEventCallbackHandler( void ) {
 				argString[ k ] = j & ( 1 << k ) ? 'f' : 'i';
 			}
 			argString[ i ] = '\0';
-			
+
 			string1.Empty();
 			string2.Empty();
 

@@ -11,7 +11,7 @@ Kernel 2.4, 2.6 is recommended
 glibc 2.2.4 and up
 
 3D card:
-  NV10 or R200 minimum hardware
+  NV10 or R200 minimum hardware 
   OpenGL hardware acceleration
   64 MB VRAM
 

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,8 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __SLIDERWINDOW_H__
 #define __SLIDERWINDOW_H__
+
+#include "ui/Window.h"
 
 class idUserInterfaceLocal;
 
@@ -57,7 +59,7 @@ public:
 	virtual void		SetBuddy(idWindow *buddy);
 
 	void				RunNamedEvent( const char* eventName );
-	
+
 private:
 	virtual bool		ParseInternalVar(const char *name, idParser *src);
 	void				CommonInit();
@@ -66,7 +68,7 @@ private:
 						// false: write to the cvar system
 						// force == true overrides liveUpdate 0
 	void				UpdateCvar( bool read, bool force = false );
-	
+
 	idWinFloat			value;
 	float				low;
 	float				high;
@@ -81,13 +83,12 @@ private:
 	bool				scrollbar;
 	idWindow *			buddyWin;
 	idStr				thumbShader;
-	
+
 	idWinStr			cvarStr;
 	idCVar *			cvar;
 	bool				cvar_init;
 	idWinBool			liveUpdate;
-	idWinStr			cvarGroup;	
+	idWinStr			cvarGroup;
 };
 
 #endif /* !__SLIDERWINDOW_H__ */
-

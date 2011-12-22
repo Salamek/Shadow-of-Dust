@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,9 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/math/Vector.h"
+#include "framework/Common.h"
+#include "renderer/ModelManager.h"
 
+#include "framework/DeclFX.h"
 
 /*
 =================
@@ -337,7 +340,7 @@ void idDeclFX::ParseSingleFXAction( idLexer &src, idFXSingleAction& FXAction ) {
 			declManager->FindMaterial( FXAction.data );
 			continue;
 		}
-	
+
 		if ( !token.Icmp( "model" ) ) {
 			src.ReadToken( &token );
 			FXAction.data = token;
@@ -418,7 +421,7 @@ bool idDeclFX::Parse( const char *text, const int textLength ) {
 
 	// scan through, identifying each individual parameter
 	while( 1 ) {
-		
+
 		if ( !src.ReadToken( &token ) ) {
 			break;
 		}

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,13 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __SESSION_H__
 #define __SESSION_H__
+
+struct sysEvent_t;
+struct backgroundDownload_t;
+class idDemoFile;
+class idRenderWorld;
+class idSoundWorld;
+class idUserInterface;
 
 /*
 ===============================================================================
@@ -53,7 +60,6 @@ typedef enum {
 	MSG_OKCANCEL,
 	MSG_YESNO,
 	MSG_PROMPT,
-	MSG_CDKEY,
 	MSG_INFO,
 	MSG_WAIT
 } msgBoxType_t;
@@ -118,6 +124,7 @@ public:
 	// this is used by the sound system when an OnDemand sound is loaded, so the game action
 	// doesn't advance and get things out of sync
 	virtual void	TimeHitch( int msec ) = 0;
+
 
 	virtual const char *GetCurrentMapName( void ) = 0;
 

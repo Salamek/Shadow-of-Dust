@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,10 +25,10 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../../../idlib/precompiled.h"
-#pragma hdrstop
 
-#include "roq.h"
+#include "sys/platform.h"
+
+#include "tools/compilers/roqvq/roq.h"
 
 void R_LoadImage( const char *name, byte **pic, int *width, int *height, ID_TIME_T *timestamp, bool makePowerOf2 );
 
@@ -102,4 +102,3 @@ NSBitmapImageRep &NSBitmapImageRep::operator=( const NSBitmapImageRep &a ) {
 
 	return *this;
 }
-

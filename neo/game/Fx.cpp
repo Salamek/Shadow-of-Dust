@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,15 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/ModelManager.h"
 
-#include "Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "Player.h"
+#include "Projectile.h"
+#include "WorldSpawn.h"
+
+#include "Fx.h"
 
 /*
 ===============================================================================
@@ -43,7 +48,7 @@ const idEventDef EV_Fx_KillFx( "_killfx" );
 const idEventDef EV_Fx_Action( "_fxAction", "e" );		// implemented by subclasses
 
 CLASS_DECLARATION( idEntity, idEntityFx )
-EVENT( EV_Activate,	   	idEntityFx::Event_Trigger )
+EVENT( EV_Activate,		idEntityFx::Event_Trigger )
 EVENT( EV_Fx_KillFx,	idEntityFx::Event_ClearFx )
 END_CLASS
 
@@ -217,7 +222,7 @@ void idEntityFx::CleanUp( void ) {
 	for( int i = 0; i < fxEffect->events.Num(); i++ ) {
 		const idFXSingleAction& fxaction = fxEffect->events[i];
 		idFXLocalAction& laction = actions[i];
-		CleanUpSingleAction( fxaction, laction );		
+		CleanUpSingleAction( fxaction, laction );
 	}
 }
 
@@ -319,7 +324,7 @@ void idEntityFx::ApplyFade( const idFXSingleAction& fxaction, idFXLocalAction& l
 			laction.renderEntity.shaderParms[SHADERPARM_RED] = (fxaction.fadeInTime) ? fadePct : 1.0f - fadePct;
 			laction.renderEntity.shaderParms[SHADERPARM_GREEN] = (fxaction.fadeInTime) ? fadePct : 1.0f - fadePct;
 			laction.renderEntity.shaderParms[SHADERPARM_BLUE] = (fxaction.fadeInTime) ? fadePct : 1.0f - fadePct;
-	
+
 			gameRenderWorld->UpdateEntityDef( laction.modelDefHandle, &laction.renderEntity );
 		}
 		if ( laction.lightDefHandle != -1 ) {
@@ -770,7 +775,7 @@ void idEntityFx::ClientPredictionThink( void ) {
 ===============================================================================
 
   idTeleporter
-	
+
 ===============================================================================
 */
 

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,11 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/VertexCache.h"
+#include "renderer/tr_local.h"
 
-#include "tr_local.h"
-#include "Model_local.h"
+#include "renderer/Model_local.h"
 
 // decalFade	filter 5 0.1
 // polygonOffset
@@ -156,16 +156,16 @@ bool idRenderModelDecal::CreateProjectionInfo( decalProjectionInfo_t &info, cons
 	texArea = ( d0[3] * d1[4] ) - ( d0[4] * d1[3] );
 	inva = 1.0f / texArea;
 
-    temp[0] = ( d0[0] * d1[4] - d0[4] * d1[0] ) * inva;
-    temp[1] = ( d0[1] * d1[4] - d0[4] * d1[1] ) * inva;
-    temp[2] = ( d0[2] * d1[4] - d0[4] * d1[2] ) * inva;
+	temp[0] = ( d0[0] * d1[4] - d0[4] * d1[0] ) * inva;
+	temp[1] = ( d0[1] * d1[4] - d0[4] * d1[1] ) * inva;
+	temp[2] = ( d0[2] * d1[4] - d0[4] * d1[2] ) * inva;
 	len = temp.Normalize();
 	info.textureAxis[0].Normal() = temp * ( 1.0f / len );
 	info.textureAxis[0][3] = winding[0].s - ( winding[0].ToVec3() * info.textureAxis[0].Normal() );
 
-    temp[0] = ( d0[3] * d1[0] - d0[0] * d1[3] ) * inva;
-    temp[1] = ( d0[3] * d1[1] - d0[1] * d1[3] ) * inva;
-    temp[2] = ( d0[3] * d1[2] - d0[2] * d1[3] ) * inva;
+	temp[0] = ( d0[3] * d1[0] - d0[0] * d1[3] ) * inva;
+	temp[1] = ( d0[3] * d1[1] - d0[1] * d1[3] ) * inva;
+	temp[2] = ( d0[3] * d1[2] - d0[2] * d1[3] ) * inva;
 	len = temp.Normalize();
 	info.textureAxis[1].Normal() = temp * ( 1.0f / len );
 	info.textureAxis[1][3] = winding[0].t - ( winding[0].ToVec3() * info.textureAxis[1].Normal() );
@@ -350,14 +350,12 @@ void idRenderModelDecal::CreateDecal( const idRenderModel *model, const decalPro
 			} else {
 				for ( int j = 0; j < 3; j++ ) {
 					idVec3 dir;
-					float scale = 0.0f;
+					float scale;
 
 					fw[j] = stri->verts[stri->indexes[index+j]].xyz;
 					dir = fw[j].ToVec3() - localInfo.projectionOrigin;
 					if (!localInfo.boundingPlanes[NUM_DECAL_BOUNDING_PLANES - 1].RayIntersection( fw[j].ToVec3(), dir, scale ))
-					{
 						scale = 0.0f;
-					}
 					dir = fw[j].ToVec3() + scale * dir;
 					fw[j].s = localInfo.textureAxis[0].Distance( dir );
 					fw[j].t = localInfo.textureAxis[1].Distance( dir );

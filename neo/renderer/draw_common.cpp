@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,10 +25,11 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../idlib/precompiled.h"
-#pragma hdrstop
 
-#include "tr_local.h"
+#include "sys/platform.h"
+#include "renderer/VertexCache.h"
+
+#include "renderer/tr_local.h"
 
 /*
 =====================
@@ -361,7 +362,7 @@ void RB_T_FillDepthBuffer( const drawSurf_t *surf ) {
 	// update the clip plane if needed
 	if ( backEnd.viewDef->numClipPlanes && surf->space != backEnd.currentSpace ) {
 		GL_SelectTexture( 1 );
-		
+
 		idPlane	plane;
 
 		R_GlobalPlaneToLocal( surf->space->modelMatrix, backEnd.viewDef->clipPlanes[0], plane );
@@ -394,7 +395,7 @@ void RB_T_FillDepthBuffer( const drawSurf_t *surf ) {
 	regs = surf->shaderRegisters;
 
 	// if all stages of a material have been conditioned off, don't do anything
-	for ( stage = 0; stage < shader->GetNumStages() ; stage++ ) {		
+	for ( stage = 0; stage < shader->GetNumStages() ; stage++ ) {
 		pStage = shader->GetStage(stage);
 		// check the stage enable condition
 		if ( regs[ pStage->conditionRegister ] != 0 ) {
@@ -444,7 +445,7 @@ void RB_T_FillDepthBuffer( const drawSurf_t *surf ) {
 
 		qglEnable( GL_ALPHA_TEST );
 		// perforated surfaces may have multiple alpha tested stages
-		for ( stage = 0; stage < shader->GetNumStages() ; stage++ ) {		
+		for ( stage = 0; stage < shader->GetNumStages() ; stage++ ) {
 			pStage = shader->GetStage(stage);
 
 			if ( !pStage->hasAlphaTest ) {
@@ -745,7 +746,7 @@ void RB_STD_T_RenderShaderPasses( const drawSurf_t *surf ) {
 		qglEnable( GL_POLYGON_OFFSET_FILL );
 		qglPolygonOffset( r_offsetFactor.GetFloat(), r_offsetUnits.GetFloat() * shader->GetPolygonOffset() );
 	}
-	
+
 	if ( surf->space->weaponDepthHack ) {
 		RB_EnterWeaponDepthHack();
 	}
@@ -758,7 +759,7 @@ void RB_STD_T_RenderShaderPasses( const drawSurf_t *surf ) {
 	qglVertexPointer( 3, GL_FLOAT, sizeof( idDrawVert ), ac->xyz.ToFloatPtr() );
 	qglTexCoordPointer( 2, GL_FLOAT, sizeof( idDrawVert ), reinterpret_cast<void *>(&ac->st) );
 
-	for ( stage = 0; stage < shader->GetNumStages() ; stage++ ) {		
+	for ( stage = 0; stage < shader->GetNumStages() ; stage++ ) {
 		pStage = shader->GetStage(stage);
 
 		// check the enable condition
@@ -803,7 +804,7 @@ void RB_STD_T_RenderShaderPasses( const drawSurf_t *surf ) {
 			qglEnableClientState( GL_NORMAL_ARRAY );
 
 			GL_State( pStage->drawStateBits );
-			
+
 			qglBindProgramARB( GL_VERTEX_PROGRAM_ARB, newStage->vertexProgram );
 			qglEnable( GL_VERTEX_PROGRAM_ARB );
 
@@ -934,14 +935,14 @@ void RB_STD_T_RenderShaderPasses( const drawSurf_t *surf ) {
 
 		// set the state
 		GL_State( pStage->drawStateBits );
-		
+
 		RB_PrepareStageTexturing( pStage, surf, ac );
 
 		// draw it
 		RB_DrawElementsWithCounters( tri );
 
 		RB_FinishStageTexturing( pStage, surf, ac );
-		
+
 		if ( pStage->vertexColor != SVC_IGNORE ) {
 			qglDisableClientState( GL_COLOR_ARRAY );
 
@@ -1147,19 +1148,12 @@ static void RB_T_Shadow( const drawSurf_t *surf ) {
 	if ( !external ) {
 		// "preload" the stencil buffer with the number of volumes
 		// that get clipped by the near or far clip plane
-		//qglStencilOp( GL_KEEP, tr.stencilDecr, tr.stencilDecr );
-		//GL_Cull( CT_FRONT_SIDED );
-		//RB_DrawShadowElementsWithCounters( tri, numIndexes );
-		//qglStencilOp( GL_KEEP, tr.stencilIncr, tr.stencilIncr );
-		//GL_Cull( CT_BACK_SIDED );
-		//RB_DrawShadowElementsWithCounters( tri, numIndexes );
-		qglStencilOp( GL_KEEP, tr.stencilIncr, GL_KEEP );
+		qglStencilOp( GL_KEEP, tr.stencilDecr, tr.stencilDecr );
+		GL_Cull( CT_FRONT_SIDED );
+		RB_DrawShadowElementsWithCounters( tri, numIndexes );
+		qglStencilOp( GL_KEEP, tr.stencilIncr, tr.stencilIncr );
 		GL_Cull( CT_BACK_SIDED );
 		RB_DrawShadowElementsWithCounters( tri, numIndexes );
-		GL_Cull( CT_FRONT_SIDED );
-		qglStencilOp( GL_KEEP, tr.stencilDecr, GL_KEEP );
-		RB_DrawShadowElementsWithCounters( tri, numIndexes );
-		return;
 	}
 
 	// traditional depth-pass stencil shadows
@@ -1629,7 +1623,7 @@ void RB_STD_LightScale( void ) {
 	qglMatrixMode( GL_PROJECTION );
 	qglPushMatrix();
 	qglLoadIdentity();
-    qglOrtho( 0, 1, 0, 1, -1, 1 );
+	qglOrtho( 0, 1, 0, 1, -1, 1 );
 
 	GL_State( GLS_SRCBLEND_DST_COLOR | GLS_DSTBLEND_SRC_COLOR );
 	GL_Cull( CT_TWO_SIDED );	// so mirror views also get it
@@ -1648,10 +1642,10 @@ void RB_STD_LightScale( void ) {
 		v = v * f * 2;
 
 		qglBegin( GL_QUADS );
-		qglVertex2f( 0,0 );	
+		qglVertex2f( 0,0 );
 		qglVertex2f( 0,1 );
-		qglVertex2f( 1,1 );	
-		qglVertex2f( 1,0 );	
+		qglVertex2f( 1,1 );
+		qglVertex2f( 1,0 );
 		qglEnd();
 	}
 
@@ -1708,8 +1702,6 @@ void	RB_STD_DrawView( void ) {
 	case BE_R200:
 		RB_R200_DrawInteractions();
 		break;
-	default:
-	break;
 	}
 
 	// disable stencil shadow test

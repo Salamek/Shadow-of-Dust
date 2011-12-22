@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,15 +25,12 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
-#include "tr_local.h"
-
+#include "renderer/tr_local.h"
 
 frameData_t		*frameData;
 backEndState_t	backEnd;
-
 
 /*
 ======================
@@ -238,7 +235,7 @@ This routine is responsible for setting the most commonly changed state
 */
 void GL_State( int stateBits ) {
 	int	diff;
-	
+
 	if ( !r_useStateCaching.GetBool() || backEnd.glState.forceGlState ) {
 		// make sure everything is set all the time, so we
 		// can see if our delta checking is screwing up
@@ -427,10 +424,10 @@ void RB_SetGL2D( void ) {
 		qglScissor( 0, 0, glConfig.vidWidth, glConfig.vidHeight );
 	}
 	qglMatrixMode( GL_PROJECTION );
-    qglLoadIdentity();
+	qglLoadIdentity();
 	qglOrtho( 0, 640, 480, 0, 0, 1 );		// always assume 640x480 virtual coordinates
 	qglMatrixMode( GL_MODELVIEW );
-    qglLoadIdentity();
+	qglLoadIdentity();
 
 	GL_State( GLS_DEPTHFUNC_ALWAYS |
 			  GLS_SRCBLEND_SRC_ALPHA |
@@ -557,11 +554,11 @@ const void	RB_SwapBuffers( const void *data ) {
 		qglFinish();
 	}
 
-    RB_LogComment( "***************** RB_SwapBuffers *****************\n\n\n" );
+	RB_LogComment( "***************** RB_SwapBuffers *****************\n\n\n" );
 
 	// don't flip if drawing to front buffer
 	if ( !r_frontBuffer.GetBool() ) {
-	    GLimp_SwapBuffers();
+		GLimp_SwapBuffers();
 	}
 }
 
@@ -581,7 +578,7 @@ const void	RB_CopyRender( const void *data ) {
 		return;
 	}
 
-    RB_LogComment( "***************** RB_CopyRender *****************\n" );
+	RB_LogComment( "***************** RB_CopyRender *****************\n" );
 
 	if (cmd->image) {
 		cmd->image->CopyFramebuffer( cmd->x, cmd->y, cmd->imageWidth, cmd->imageHeight, false );

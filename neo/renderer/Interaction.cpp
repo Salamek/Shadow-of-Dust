@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/tr_local.h"
+#include "renderer/RenderWorld_local.h"
+#include "renderer/VertexCache.h"
 
-#include "tr_local.h"
+#include "renderer/Interaction.h"
 
 /*
 ===========================================================================
@@ -213,7 +215,7 @@ static int R_ChopWinding( clipTri_t clipTris[2], int inNum, const idPlane plane 
 	out->numVerts = 0;
 	for ( i = 0 ; i < in->numVerts ; i++ ) {
 		idVec3 &p1 = in->verts[i];
-		
+
 		if ( sides[i] == SIDE_FRONT ) {
 			out->verts[out->numVerts] = p1;
 			out->numVerts++;
@@ -222,15 +224,15 @@ static int R_ChopWinding( clipTri_t clipTris[2], int inNum, const idPlane plane 
 		if ( sides[i+1] == sides[i] ) {
 			continue;
 		}
-			
+
 		// generate a split point
 		idVec3 &p2 = in->verts[i+1];
-		
+
 		dot = dists[i] / ( dists[i] - dists[i+1] );
 		for ( j = 0; j < 3; j++ ) {
 			mid[j] = p1[j] + dot * ( p2[j] - p1[j] );
 		}
-			
+
 		out->verts[out->numVerts] = mid;
 
 		out->numVerts++;
@@ -610,7 +612,7 @@ void idInteraction::UnlinkAndFree( void ) {
 	}
 
 	// put it back on the free list
-	renderWorld->interactionAllocator.Free(this);
+	renderWorld->interactionAllocator.Free( this );
 }
 
 /*
@@ -858,7 +860,7 @@ void idInteraction::CreateInteraction( const idRenderModel *model ) {
 	for ( int c = 0 ; c < model->NumSurfaces() ; c++ ) {
 		const modelSurface_t	*surf;
 		srfTriangles_t	*tri;
-	
+
 		surf = model->Surface( c );
 
 		tri = surf->geometry;
@@ -1175,7 +1177,7 @@ void idInteraction::AddActiveInteraction( void ) {
 		// the shadows will always have to be added, unless we can tell they
 		// are from a surface in an unconnected area
 		if ( shadowTris ) {
-			
+
 			// check for view specific shadow suppression (player shadows, etc)
 			if ( !r_skipSuppress.GetBool() ) {
 				if ( entityDef->parms.suppressShadowInViewID &&

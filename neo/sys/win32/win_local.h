@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,8 +29,24 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __WIN_LOCAL_H__
 #define __WIN_LOCAL_H__
 
-#include <windows.h>
-#include "../../renderer/wglext.h"		// windows OpenGL extensions
+#if defined(_MFC_VER) && !defined(_D3SDK) && !defined(GAME_DLL)
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// prevent auto literal to string conversion
+#include "tools/comafx/StdAfx.h"
+#endif
+
+#define WIN32_LEAN_AND_MEAN
+#include <winsock2.h>
+#include <mmsystem.h>
+#include <mmreg.h>
+
+#define DIRECTINPUT_VERSION  0x0800			// was 0x0700 with the old mssdk
+#include <dinput.h>
+
+#include <GL/gl.h>
+
+#include "framework/CVarSystem.h"
+#include "renderer/wglext.h"		// windows OpenGL extensions
+#include "sys/sys_public.h"
 
 // WGL_ARB_extensions_string
 extern	PFNWGLGETEXTENSIONSSTRINGARBPROC wglGetExtensionsStringARB;
@@ -70,7 +86,7 @@ char	*Sys_GetCurrentUser( void );
 
 void	Win_SetErrorText( const char *text );
 
-cpuid_t	Sys_GetCPUId( void );
+int		Sys_GetCPUId( void );
 
 int		MapKey (int key);
 
@@ -97,7 +113,7 @@ LONG WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 void Conbuf_AppendText( const char *msg );
 
-typedef struct {
+struct Win32Vars_t {
 	HWND			hWnd;
 	HINSTANCE		hInstance;
 
@@ -108,7 +124,7 @@ typedef struct {
 
 	OSVERSIONINFOEX	osversion;
 
-	cpuid_t			cpuid;
+	int				cpuid;
 
 	// when we get a windows message, we store the time off so keyboard processing
 	// can know the exact time of an event (not really needed now that we use async direct input)
@@ -120,7 +136,7 @@ typedef struct {
 
 	HDC				hDC;							// handle to device context
 	HGLRC			hGLRC;						// handle to GL rendering context
-	PIXELFORMATDESCRIPTOR pfd;		
+	PIXELFORMATDESCRIPTOR pfd;
 	int				pixelformat;
 
 	HINSTANCE		hinstOpenGL;	// HINSTANCE for the OpenGL library
@@ -168,7 +184,7 @@ typedef struct {
 	int				wglErrors;
 	// SMP acceleration vars
 
-} Win32Vars_t;
+};
 
 extern Win32Vars_t	win32;
 

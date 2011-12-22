@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "renderer/ModelManager.h"
 
-#include "dmap.h"
-
+#include "tools/compilers/dmap/dmap.h"
 
 #define	 TEXTURE_OFFSET_EQUAL_EPSILON	0.005
 #define	 TEXTURE_VECTOR_EQUAL_EPSILON	0.001
@@ -125,16 +124,16 @@ static void TexVecForTri( textureVectors_t *texVec, mapTri_t *tri ) {
 	area = d0[3] * d1[4] - d0[4] * d1[3];
 	inva = 1.0 / area;
 
-    temp[0] = (d0[0] * d1[4] - d0[4] * d1[0]) * inva;
-    temp[1] = (d0[1] * d1[4] - d0[4] * d1[1]) * inva;
-    temp[2] = (d0[2] * d1[4] - d0[4] * d1[2]) * inva;
+	temp[0] = (d0[0] * d1[4] - d0[4] * d1[0]) * inva;
+	temp[1] = (d0[1] * d1[4] - d0[4] * d1[1]) * inva;
+	temp[2] = (d0[2] * d1[4] - d0[4] * d1[2]) * inva;
 	temp.Normalize();
 	texVec->v[0].ToVec3() = temp;
 	texVec->v[0][3] = tri->v[0].xyz * texVec->v[0].ToVec3() - tri->v[0].st[0];
 
-    temp[0] = (d0[3] * d1[0] - d0[0] * d1[3]) * inva;
-    temp[1] = (d0[3] * d1[1] - d0[1] * d1[3]) * inva;
-    temp[2] = (d0[3] * d1[2] - d0[2] * d1[3]) * inva;
+	temp[0] = (d0[3] * d1[0] - d0[0] * d1[3]) * inva;
+	temp[1] = (d0[3] * d1[1] - d0[1] * d1[3]) * inva;
+	temp[2] = (d0[3] * d1[2] - d0[2] * d1[3]) * inva;
 	temp.Normalize();
 	texVec->v[1].ToVec3() = temp;
 	texVec->v[1][3] = tri->v[0].xyz * texVec->v[0].ToVec3() - tri->v[0].st[1];
@@ -176,7 +175,7 @@ mapTri_t *TriListForSide( const side_t *s, const idWinding *w ) {
 		triList = NULL;
 		for ( i = 2 ; i < w->GetNumPoints() ; i++ ) {
 			tri = AllocTri();
-			tri->material = si;	
+			tri->material = si;
 			tri->next = triList;
 			triList = tri;
 
@@ -198,7 +197,7 @@ mapTri_t *TriListForSide( const side_t *s, const idWinding *w ) {
 #else
 				VectorCopy( *vec, dv->xyz );
 #endif
-				
+
 				// calculate texture s/t from brush primitive texture matrix
 				dv->st[0] = DotProduct( dv->xyz, s->texVec.v[0] ) + s->texVec.v[0][3];
 				dv->st[1] = DotProduct( dv->xyz, s->texVec.v[1] ) + s->texVec.v[1][3];
@@ -218,7 +217,7 @@ mapTri_t *TriListForSide( const side_t *s, const idWinding *w ) {
 			idVec3	midPoint;
 
 			tri = AllocTri();
-			tri->material = si;	
+			tri->material = si;
 			tri->next = triList;
 			triList = tri;
 
@@ -235,7 +234,7 @@ mapTri_t *TriListForSide( const side_t *s, const idWinding *w ) {
 				dv = tri->v + j;
 
 				VectorCopy( *vec, dv->xyz );
-				
+
 				// calculate texture s/t from brush primitive texture matrix
 				dv->st[0] = DotProduct( dv->xyz, s->texVec.v[0] ) + s->texVec.v[0][3];
 				dv->st[1] = DotProduct( dv->xyz, s->texVec.v[1] ) + s->texVec.v[1][3];
@@ -653,7 +652,7 @@ void PutPrimitivesInAreas( uEntity_t *e ) {
 				} else {
 					axis.Identity();
 				}
-			}		
+			}
 
 			idVec3	origin = entity->mapEntity->epairs.GetVector( "origin" );
 
@@ -1002,7 +1001,7 @@ void Prelight( uEntity_t *e ) {
 	if ( dmapGlobals.entityNum != 0 ) {
 		return;
 	}
-	
+
 	if ( dmapGlobals.shadowOptLevel > 0 ) {
 		common->Printf( "----- BuildLightShadows -----\n" );
 		start = Sys_Milliseconds();
@@ -1041,6 +1040,3 @@ void Prelight( uEntity_t *e ) {
 	}
 
 }
-
-
-

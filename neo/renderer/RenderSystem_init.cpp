@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,14 +26,23 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/LangDict.h"
+#include "framework/Licensee.h"
+#include "framework/Console.h"
+#include "framework/Session.h"
+#include "renderer/VertexCache.h"
+#include "renderer/ModelManager.h"
+#include "renderer/RenderWorld_local.h"
+#include "renderer/GuiModel.h"
+#include "sound/sound.h"
+#include "ui/UserInterface.h"
 
-#include "tr_local.h"
+#include "renderer/tr_local.h"
 
 // Vista OpenGL wrapper check
 #ifdef _WIN32
-#include "../sys/win32/win_local.h"
+#include "sys/win32/win_local.h"
 #endif
 
 // functions that are not called every frame
@@ -524,14 +533,14 @@ static void R_CheckPortableExtensions( void ) {
 	// check for minimum set
 	if ( !glConfig.multitextureAvailable || !glConfig.textureEnvCombineAvailable || !glConfig.cubeMapAvailable
 		|| !glConfig.envDot3Available ) {
-			common->Error(common->GetLanguageDict()->GetString( "#str_06780" ) );
+			common->Error( common->GetLanguageDict()->GetString( "#str_06780" ) );
 	}
 
- 	// GL_EXT_depth_bounds_test
- 	glConfig.depthBoundsTestAvailable = R_CheckExtension( "EXT_depth_bounds_test" );
- 	if ( glConfig.depthBoundsTestAvailable ) {
- 		qglDepthBoundsEXT = (PFNGLDEPTHBOUNDSEXTPROC)GLimp_ExtensionPointer( "glDepthBoundsEXT" );
- 	}
+	// GL_EXT_depth_bounds_test
+	glConfig.depthBoundsTestAvailable = R_CheckExtension( "EXT_depth_bounds_test" );
+	if ( glConfig.depthBoundsTestAvailable ) {
+		qglDepthBoundsEXT = (PFNGLDEPTHBOUNDSEXTPROC)GLimp_ExtensionPointer( "glDepthBoundsEXT" );
+	}
 
 }
 
@@ -547,21 +556,20 @@ will be used instead.
 ====================
 */
 typedef struct vidmode_s {
-    const char *description;
-    int         width, height;
+	const char *description;
+	int         width, height;
 } vidmode_t;
 
 vidmode_t r_vidModes[] = {
-    { "Mode  0: 320x240",		320,	240 },
-    { "Mode  1: 400x300",		400,	300 },
-    { "Mode  2: 512x384",		512,	384 },
-    { "Mode  3: 640x480",		640,	480 },
-    { "Mode  4: 800x600",		800,	600 },
-    { "Mode  5: 1024x768",		1024,	768 },
-    { "Mode  6: 1152x864",		1152,	864 },
-    { "Mode  7: 1280x1024",		1280,	1024 },
-    { "Mode  8: 1600x1200",		1600,	1200 },
-    { "Mode  9: 1920x1200",		1920,	1200 },
+	{ "Mode  0: 320x240",		320,	240 },
+	{ "Mode  1: 400x300",		400,	300 },
+	{ "Mode  2: 512x384",		512,	384 },
+	{ "Mode  3: 640x480",		640,	480 },
+	{ "Mode  4: 800x600",		800,	600 },
+	{ "Mode  5: 1024x768",		1024,	768 },
+	{ "Mode  6: 1152x864",		1152,	864 },
+	{ "Mode  7: 1280x1024",		1280,	1024 },
+	{ "Mode  8: 1600x1200",		1600,	1200 },
 };
 static int	s_numVidModes = ( sizeof( r_vidModes ) / sizeof( r_vidModes[0] ) );
 
@@ -572,8 +580,8 @@ static bool R_GetModeInfo( int *width, int *height, int mode ) {
 #endif
 	vidmode_t	*vm;
 
-    if ( mode < -1 ) {
-        return false;
+	if ( mode < -1 ) {
+		return false;
 	}
 	if ( mode >= s_numVidModes ) {
 		return false;
@@ -594,7 +602,7 @@ static bool R_GetModeInfo( int *width, int *height, int mode ) {
 		*height = vm->height;
 	}
 
-    return true;
+	return true;
 }
 
 
@@ -736,8 +744,8 @@ GL_CheckErrors
 ==================
 */
 void GL_CheckErrors( void ) {
-    int		err;
-    char	s[64];
+	int		err;
+	char	s[64];
 	int		i;
 
 	// check for up to 10 errors pending
@@ -786,7 +794,7 @@ Reload the material displayed by r_showSurfaceInfo
 static void R_ReloadSurface_f( const idCmdArgs &args ) {
 	modelTrace_t mt;
 	idVec3 start, end;
-	
+
 	// start far enough away that we don't hit the player model
 	start = tr.primaryView->renderView.vieworg + tr.primaryView->renderView.viewaxis[0] * 16;
 	end = start + tr.primaryView->renderView.viewaxis[0] * 1000.0f;
@@ -1439,7 +1447,7 @@ void R_StencilShot( void ) {
 	fileSystem->WriteFile( "screenshots/stencilShot.tga", buffer, c, "fs_savepath" );
 
 	Mem_Free( buffer );
-	Mem_Free( byteBuffer );	
+	Mem_Free( byteBuffer );
 }
 
 /*
@@ -1831,7 +1839,7 @@ static void GfxInfo_f( const idCmdArgs &args ) {
 		common->Printf( "glFinish not forced\n" );
 	}
 
-#ifdef _WIN32	
+#ifdef _WIN32
 // WGL_EXT_swap_interval
 typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval);
 extern	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
@@ -1842,7 +1850,7 @@ extern	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
 		common->Printf( "swapInterval not forced\n" );
 	}
 #endif
-	
+
 	bool tss = glConfig.twoSidedStencilAvailable || glConfig.atiTwoSidedStencilAvailable;
 
 	if ( !r_useTwoSidedStencil.GetBool() && tss ) {
@@ -2113,7 +2121,7 @@ void idRenderSystemLocal::Clear( void ) {
 idRenderSystemLocal::Init
 ===============
 */
-void idRenderSystemLocal::Init( void ) {	
+void idRenderSystemLocal::Init( void ) {
 
 	common->Printf( "------- Initializing renderSystem --------\n" );
 
@@ -2170,7 +2178,7 @@ void idRenderSystemLocal::Init( void ) {
 idRenderSystemLocal::Shutdown
 ===============
 */
-void idRenderSystemLocal::Shutdown( void ) {	
+void idRenderSystemLocal::Shutdown( void ) {
 	common->Printf( "idRenderSystem::Shutdown()\n" );
 
 	R_DoneFreeType( );
@@ -2314,4 +2322,3 @@ void idRenderSystemLocal::GetCardCaps( bool &oldCard, bool &nv10or20 ) {
 	nv10or20 = ( tr.backEndRenderer == BE_NV10 || tr.backEndRenderer == BE_NV20 );
 	oldCard = ( tr.backEndRenderer == BE_ARB || tr.backEndRenderer == BE_R200 || tr.backEndRenderer == BE_NV10 || tr.backEndRenderer == BE_NV20 );
 }
-

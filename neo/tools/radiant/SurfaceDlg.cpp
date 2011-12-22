@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -187,7 +187,7 @@ void CSurfaceDlg::SetTexMods() {
 
 	if (selFace) {
 		float rot;
-		Face_GetScale_BrushPrimit(selFace, &m_horzScale, &m_vertScale, &rot);	
+		Face_GetScale_BrushPrimit(selFace, &m_horzScale, &m_vertScale, &rot);
 	} else {
 		m_horzScale = 1.0f;
 		m_vertScale = 1.0f;
@@ -309,7 +309,7 @@ void DoSurface (void) {
 		g_dlgSurface.SetTexMods ();
 		g_dlgSurface.ShowWindow(SW_SHOW);
 	}
-}		
+}
 
 bool ByeByeSurfaceDialog() {
 	if (g_surfwin) {
@@ -522,13 +522,13 @@ void CSurfaceDlg::OnChangeEditHorz()
 	// send this notification unless you override the CDialog::OnInitDialog()
 	// function and call CRichEditCtrl().SetEventMask()
 	// with the ENM_CHANGE flag ORed into the mask.
-	
+
 	// TODO: Add your control notification handler code here
 	UpdateData(TRUE);
 	// turn any patches in explicit subdivides
 	Patch_SubdivideSelected( ( m_subdivide != FALSE ), m_nHorz, m_nVert );
 	Sys_UpdateWindows(W_CAMERA | W_XY);
-		
+
 }
 
 void CSurfaceDlg::OnChangeEditVert()
@@ -537,13 +537,13 @@ void CSurfaceDlg::OnChangeEditVert()
 	// send this notification unless you override the CDialog::OnInitDialog()
 	// function and call CRichEditCtrl().SetEventMask()
 	// with the ENM_CHANGE flag ORed into the mask.
-	
+
 	// TODO: Add your control notification handler code here
 	UpdateData(TRUE);
 	// turn any patches in explicit subdivides
 	Patch_SubdivideSelected( ( m_subdivide != FALSE ), m_nHorz, m_nVert );
 	Sys_UpdateWindows(W_CAMERA | W_XY);
-	
+
 }
 
 BOOL CSurfaceDlg::PreTranslateMessage(MSG* pMsg)
@@ -570,7 +570,7 @@ BOOL CSurfaceDlg::PreTranslateMessage(MSG* pMsg)
 
 void CSurfaceDlg::OnSetfocusHscale()
 {
-	focusControl = &m_wndHScale;	
+	focusControl = &m_wndHScale;
 }
 
 void CSurfaceDlg::OnKillfocusHscale()
@@ -585,7 +585,7 @@ void CSurfaceDlg::OnKillfocusVscale()
 
 void CSurfaceDlg::OnSetfocusVscale()
 {
-	focusControl = &m_wndVScale;	
+	focusControl = &m_wndVScale;
 }
 
 void CSurfaceDlg::OnKillfocusEditWidth()
@@ -595,7 +595,7 @@ void CSurfaceDlg::OnKillfocusEditWidth()
 
 void CSurfaceDlg::OnSetfocusEditWidth()
 {
-	focusControl = &m_wndWidth;	
+	focusControl = &m_wndWidth;
 }
 
 void CSurfaceDlg::OnKillfocusEditHeight()
@@ -605,7 +605,7 @@ void CSurfaceDlg::OnKillfocusEditHeight()
 
 void CSurfaceDlg::OnSetfocusEditHeight()
 {
-	focusControl = &m_wndHeight;	
+	focusControl = &m_wndHeight;
 }
 
 void CSurfaceDlg::OnBtnFlipx()

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,11 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/Unzip.h"
+#include "framework/FileSystem.h"
 
-#include "Unzip.h"
+#include "framework/File.h"
 
 #define	MAX_PRINT_MSG		4096
 
@@ -266,10 +267,10 @@ int idFile::Printf( const char *fmt, ... ) {
 	va_end( argptr );
 
 	// so notepad formats the lines correctly
-  	idStr	work( buf );
- 	work.Replace( "\n", "\r\n" );
+	idStr	work( buf );
+	work.Replace( "\n", "\r\n" );
 
-  	return Write( work.c_str(), work.Length() );
+	return Write( work.c_str(), work.Length() );
 }
 
 /*
@@ -395,7 +396,7 @@ int idFile::ReadBool( bool &value ) {
 int idFile::ReadString( idStr &string ) {
 	int len;
 	int result = 0;
-	
+
 	ReadInt( len );
 	if ( len >= 0 ) {
 		string.Fill( ' ', len );
@@ -544,10 +545,10 @@ int idFile::WriteBool( const bool value ) {
  */
 int idFile::WriteString( const char *value ) {
 	int len;
-	
+
 	len = strlen( value );
 	WriteInt( len );
-    return Write( value, len );
+	return Write( value, len );
 }
 
 /*
@@ -737,7 +738,7 @@ int idFile_Memory::Write( const void *buffer, int len ) {
 			memcpy( newPtr, filePtr, allocated );
 		}
 		allocated += extra;
-		curPtr = newPtr + ( curPtr - filePtr );		
+		curPtr = newPtr + ( curPtr - filePtr );
 		if ( filePtr ) {
 			Mem_Free( filePtr );
 		}

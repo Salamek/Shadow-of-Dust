@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,16 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/LangDict.h"
+#include "framework/async/AsyncNetwork.h"
+#include "framework/FileSystem.h"
+#include "framework/Console.h"
+#include "framework/Game.h"
+#include "sound/sound.h"
+#include "ui/UserInterface.h"
 
-#include "Session_local.h"
+#include "framework/Session_local.h"
 
 idCVar	idSessionLocal::gui_configServerRate( "gui_configServerRate", "0", CVAR_GUI | CVAR_ARCHIVE | CVAR_ROM | CVAR_INTEGER, "" );
 
@@ -87,7 +93,6 @@ idSessionLocal::SetGUI
 =================
 */
 void idSessionLocal::SetGUI( idUserInterface *gui, HandleGuiCommand_t handle ) {
-
 	guiActive = gui;
 	guiHandle = handle;
 	if ( guiMsgRestore ) {
@@ -155,7 +160,7 @@ void idSessionLocal::GetSaveGameList( idStrList &fileList, idList<fileTIME_T> &f
 	} else {
 		files = fileSystem->ListFiles( "savegames", ".save" );
 	}
-	
+
 	fileList = files->GetList();
 	fileSystem->FreeFileList( files );
 
@@ -361,7 +366,7 @@ bool idSessionLocal::HandleSaveGameMenuCommand( idCmdArgs &args, int &icmd ) {
 				} else {
 					file = fileSystem->OpenFileRead( saveFileName );
 				}
-				
+
 				if ( file != NULL ) {
 					fileSystem->CloseFile( file );
 
@@ -573,7 +578,7 @@ void idSessionLocal::HandleMainMenuCommands( const char *menuCommand ) {
 		if ( game ) {
 			game->HandleMainMenuCommands( cmd, guiActive );
 		}
-		
+
 		if ( !idStr::Icmp( cmd, "startGame" ) ) {
 			cvarSystem->SetCVarInteger( "g_skill", guiMainMenu->State().GetInt( "skill" ) );
 			if ( icmd < args.Argc() ) {
@@ -905,7 +910,7 @@ void idSessionLocal::HandleMainMenuCommands( const char *menuCommand ) {
 				}
 			}
 			if ( !vcmd.Icmp( "drivar" ) ) {
-				cmdSystem->BufferCommandText( CMD_EXEC_NOW, "s_restart\n" );				
+				cmdSystem->BufferCommandText( CMD_EXEC_NOW, "s_restart\n" );
 			}
 			continue;
 		}
@@ -991,16 +996,10 @@ void idSessionLocal::HandleMainMenuCommands( const char *menuCommand ) {
 			guiMainMenu->SetKeyBindingNames();
 			continue;
 		}
-		
+
 		if ( !idStr::Icmp( cmd, "systemCvars" ) ) {
 			guiActive->HandleNamedEvent( "cvar read render" );
 			guiActive->HandleNamedEvent( "cvar read sound" );
-			continue;
-		}
-
-		if ( !idStr::Icmp( cmd, "SetCDKey" ) ) {
-			// we can't do this from inside the HandleMainMenuCommands code, otherwise the message box stuff gets confused
-			cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "promptKey\n" );
 			continue;
 		}
 
@@ -1013,7 +1012,6 @@ void idSessionLocal::HandleMainMenuCommands( const char *menuCommand ) {
 			idAsyncNetwork::client.SendVersionCheck( true );
 			continue;
 		}
-
 
 		// triggered from mainmenu or mpmain
 		if ( !idStr::Icmp( cmd, "punkbuster" ) ) {
@@ -1229,9 +1227,9 @@ idSessionLocal::MessageBox
 =================
 */
 const char* idSessionLocal::MessageBox( msgBoxType_t type, const char *message, const char *title, bool wait, const char *fire_yes, const char *fire_no, bool network ) {
-	
+
 	common->DPrintf( "MessageBox: %s - %s\n", title ? title : "", message ? message : "" );
-	
+
 	if ( !BoxDialogSanityCheck() ) {
 		return NULL;
 	}
@@ -1247,7 +1245,6 @@ const char* idSessionLocal::MessageBox( msgBoxType_t type, const char *message, 
 	}
 
 	guiMsg->SetStateString( "visible_entry", "0" );
-	guiMsg->SetStateString( "visible_cdkey", "0" );
 	switch ( type ) {
 		case MSG_INFO:
 			guiMsg->SetStateString( "mid", "" );
@@ -1287,34 +1284,8 @@ const char* idSessionLocal::MessageBox( msgBoxType_t type, const char *message, 
 			guiMsg->SetStateString( "visible_mid", "0" );
 			guiMsg->SetStateString( "visible_left", "1" );
 			guiMsg->SetStateString( "visible_right", "1" );
-			guiMsg->SetStateString( "visible_entry", "1" );			
+			guiMsg->SetStateString( "visible_entry", "1" );
 			guiMsg->HandleNamedEvent( "Prompt" );
-			break;
-		case MSG_CDKEY:
-			guiMsg->SetStateString( "left", common->GetLanguageDict()->GetString( "#str_04339" ) );
-			guiMsg->SetStateString( "right", common->GetLanguageDict()->GetString( "#str_04340" ) );
-			guiMsg->SetStateString( "visible_msgbox", "0" );
-			guiMsg->SetStateString( "visible_cdkey", "1" );
-			guiMsg->SetStateString( "visible_hasxp", fileSystem->HasD3XP() ? "1" : "0" );
-			// the current cdkey / xpkey values may have bad/random data in them
-			// it's best to avoid printing them completely, unless the key is good
-			if ( cdkey_state == CDKEY_OK ) {
-				guiMsg->SetStateString( "str_cdkey", cdkey );
-				guiMsg->SetStateString( "visible_cdchk", "0" );
-			} else {
-				guiMsg->SetStateString( "str_cdkey", "" );
-				guiMsg->SetStateString( "visible_cdchk", "1" );
-			}
-			guiMsg->SetStateString( "str_cdchk", "" );
-			if ( xpkey_state == CDKEY_OK ) {
-				guiMsg->SetStateString( "str_xpkey", xpkey );
-				guiMsg->SetStateString( "visible_xpchk", "0" );
-			} else {
-				guiMsg->SetStateString( "str_xpkey", "" );
-				guiMsg->SetStateString( "visible_xpchk", "1" );
-			}
-			guiMsg->SetStateString( "str_xpchk", "" );
-			guiMsg->HandleNamedEvent( "CDKey" );
 			break;
 		case MSG_WAIT:
 			break;
@@ -1329,7 +1300,7 @@ const char* idSessionLocal::MessageBox( msgBoxType_t type, const char *message, 
 	guiActive->Activate( true, com_frameTime );
 	msgRunning = true;
 	msgRetIndex = -1;
-	
+
 	if ( wait ) {
 		// play one frame ignoring events so we don't get confused by parasite button releases
 		msgIgnoreButtons = true;
@@ -1345,20 +1316,6 @@ const char* idSessionLocal::MessageBox( msgBoxType_t type, const char *message, 
 		if ( type == MSG_PROMPT ) {
 			if ( msgRetIndex == 0 ) {
 				guiMsg->State().GetString( "str_entry", "", msgFireBack[ 0 ] );
-				return msgFireBack[ 0 ].c_str();
-			} else {
-				return NULL;
-			}
-		} else if ( type == MSG_CDKEY ) {
-			if ( msgRetIndex == 0 ) {
-				// the visible_ values distinguish looking at a valid key, or editing it
-				sprintf( msgFireBack[ 0 ], "%1s;%16s;%2s;%1s;%16s;%2s",
-						 guiMsg->State().GetString( "visible_cdchk" ),
-						 guiMsg->State().GetString( "str_cdkey" ),
-						 guiMsg->State().GetString( "str_cdchk" ),
-						 guiMsg->State().GetString( "visible_xpchk" ),						
-						 guiMsg->State().GetString( "str_xpkey" ),
-						 guiMsg->State().GetString( "str_xpchk" ) );
 				return msgFireBack[ 0 ].c_str();
 			} else {
 				return NULL;
@@ -1389,7 +1346,6 @@ void idSessionLocal::DownloadProgressBox( backgroundDownload_t *bgl, const char 
 	guiMsg->SetStateString( "visible_waitbox", "0" );
 
 	guiMsg->SetStateString( "visible_entry", "0" );
-	guiMsg->SetStateString( "visible_cdkey", "0" );
 
 	guiMsg->SetStateString( "mid", "Cancel" );
 	guiMsg->SetStateString( "visible_mid", "1" );
@@ -1591,7 +1547,7 @@ void idSessionLocal::HandleNoteCommands( const char *menuCommand ) {
 			}
 
 			sprintf( str, "recordViewNotes \"%s\" \"%s\" \"%s\"\n", workName.c_str(), noteNum.c_str(), guiTakeNotes->State().GetString( "note" ) );
-			
+
 			cmdSystem->BufferCommandText( CMD_EXEC_NOW, str );
 			cmdSystem->ExecuteCommandBuffer();
 
@@ -1616,4 +1572,3 @@ void idSessionLocal::HandleNoteCommands( const char *menuCommand ) {
 		cvarSystem->SetCVarBool( "con_noPrint", bCon );
 	}
 }
-

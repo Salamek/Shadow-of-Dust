@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,8 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __STR_H__
 #define __STR_H__
+
+#include "idlib/CmdArgs.h"
 
 /*
 ===============================================================================
@@ -325,7 +327,7 @@ protected:
 	void				EnsureAlloced( int amount, bool keepold = true );	// ensure string data buffer is large anough
 };
 
-const char *					va( const char *fmt, ... ) id_attribute((format(printf,1,2)));
+char *					va( const char *fmt, ... ) id_attribute((format(printf,1,2)));
 
 
 ID_INLINE void idStr::EnsureAlloced( int amount, bool keepold ) {

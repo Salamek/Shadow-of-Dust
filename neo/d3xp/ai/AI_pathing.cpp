@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,15 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/containers/Queue.h"
+#include "idlib/geometry/Winding2D.h"
 
-#include "../Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "Moveable.h"
+#include "WorldSpawn.h"
+
+#include "ai/AI.h"
 
 /*
 ===============================================================================
@@ -52,10 +57,10 @@ If you have questions concerning this license or the applicable additional terms
 const float MAX_OBSTACLE_RADIUS			= 256.0f;
 const float PUSH_OUTSIDE_OBSTACLES		= 0.5f;
 const float CLIP_BOUNDS_EPSILON			= 10.0f;
-const int 	MAX_AAS_WALL_EDGES			= 256;
-const int 	MAX_OBSTACLES				= 256;
+const int	MAX_AAS_WALL_EDGES			= 256;
+const int	MAX_OBSTACLES				= 256;
 const int	MAX_PATH_NODES				= 256;
-const int 	MAX_OBSTACLE_PATH			= 64;
+const int	MAX_OBSTACLE_PATH			= 64;
 
 typedef struct obstacle_s {
 	idVec2				bounds[2];
@@ -184,12 +189,10 @@ void GetPointOutsideObstacles( const obstacle_t *obstacles, const int numObstacl
 			break;
 		}
 	}
-	
+
 	if (i == 0)
-	{
 		return;
-	}
-	
+
 	newPoint = point - ( bestd + PUSH_OUTSIDE_OBSTACLES ) * bestPlane.ToVec2();
 	if ( PointInsideObstacle( obstacles, numObstacles, newPoint ) == -1 ) {
 		point = newPoint;
@@ -431,7 +434,7 @@ int GetObstacles( const idPhysics *physics, const idAAS *aas, const idEntity *ig
 		nextEdgeNormal.Zero();
 		nextVerts[0] = nextVerts[1] = 0;
 		for ( i = 0; i < numWallEdges && numObstacles < MAX_OBSTACLES; i++ ) {
-            aas->GetEdge( wallEdges[i], start, end );
+			aas->GetEdge( wallEdges[i], start, end );
 			aas->GetEdgeVertexNumbers( wallEdges[i], verts );
 			edgeDir = end.ToVec2() - start.ToVec2();
 			edgeDir.Normalize();
@@ -1331,8 +1334,6 @@ static int Ballistics( const idVec3 &start, const idVec3 &end, float speed, floa
 	return n;
 }
 
-
-#if 0
 /*
 =====================
 HeightForTrajectory
@@ -1340,16 +1341,16 @@ HeightForTrajectory
 Returns the maximum hieght of a given trajectory
 =====================
 */
+#if 0
 static float HeightForTrajectory( const idVec3 &start, float zVel, float gravity ) {
 	float maxHeight, t;
 
 	t = zVel / gravity;
 	// maximum height of projectile
 	maxHeight = start.z - 0.5f * gravity * ( t * t );
-	
+
 	return maxHeight;
 }
-
 #endif
 
 /*

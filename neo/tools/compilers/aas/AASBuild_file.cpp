@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,9 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
-#include "AASBuild_local.h"
+#include "tools/compilers/aas/AASBuild_local.h"
 
 #define VERTEX_HASH_BOXSIZE				(1<<6)	// must be power of 2
 #define VERTEX_HASH_SIZE				(VERTEX_HASH_BOXSIZE*VERTEX_HASH_BOXSIZE)
@@ -117,7 +116,7 @@ idAASBuild::GetVertex
 bool idAASBuild::GetVertex( const idVec3 &v, int *vertexNum ) {
 	int i, hashKey, vn;
 	aasVertex_t vert, *p;
-	
+
 	for (i = 0; i < 3; i++) {
 		if ( idMath::Fabs(v[i] - idMath::Rint(v[i])) < INTEGRAL_EPSILON ) {
 			vert[i] = idMath::Rint(v[i]);

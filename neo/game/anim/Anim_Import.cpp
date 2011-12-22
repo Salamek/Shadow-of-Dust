@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +26,14 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/Licensee.h"
+#include "MayaImport/maya_main.h"
 
-#include "../Game_local.h"
-#include "../../MayaImport/maya_main.h"
+#include "gamesys/SysCvar.h"
+#include "Game_local.h"
+
+#include "anim/Anim.h"
 
 /***********************************************************************
 
@@ -409,7 +412,7 @@ int idModelExport::ParseExportSection( idParser &parser ) {
 			return 0;
 		}
 
-        parser.ReadToken( &token );
+		parser.ReadToken( &token );
 		if ( token.Icmp( g_exportMask.GetString() ) ) {
 			parser.SkipBracedSection();
 			return 0;

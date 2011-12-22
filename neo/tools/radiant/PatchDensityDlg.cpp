@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ void CPatchDensityDlg::OnOK()
   if (nWidth >= 0 && nWidth <= 6 && nHeight >= 0 && nHeight <= 6)
   {
 	  Patch_GenericMesh(g_nXLat[nWidth], g_nXLat[nHeight], g_pParentWnd->ActiveXY()->GetViewType());
-    Sys_UpdateWindows(W_ALL);
+	Sys_UpdateWindows(W_ALL);
   }
 
   CDialog::OnOK();
@@ -92,5 +92,5 @@ BOOL CPatchDensityDlg::OnInitDialog()
   m_wndWidth.SetCurSel(0);
   m_wndHeight.SetCurSel(0);
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }

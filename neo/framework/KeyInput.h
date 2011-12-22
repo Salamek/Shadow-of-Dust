@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,10 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __KEYINPUT_H__
 #define __KEYINPUT_H__
+
+#include "idlib/CmdArgs.h"
+
+class idFile;
 
 /*
 ===============================================================================
@@ -115,7 +119,7 @@ typedef enum {
 	K_KP_STAR,
 	K_KP_EQUALS,
 
-	K_MASCULINE_ORDINATOR = 186,	
+	K_MASCULINE_ORDINATOR = 186,
 	// K_MOUSE enums must be contiguous (no char codes in the middle)
 	K_MOUSE1 = 187,
 	K_MOUSE2,

@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __MATH_PLUECKER_H__
 #define __MATH_PLUECKER_H__
 
+#include "idlib/math/Vector.h"
+
 /*
 ===============================================================================
 
@@ -38,7 +40,7 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 class idPluecker {
-public:	
+public:
 					idPluecker( void );
 					explicit idPluecker( const float *a );
 					explicit idPluecker( const idVec3 &start, const idVec3 &end );
@@ -62,7 +64,7 @@ public:
 	bool			operator==(	const idPluecker &a ) const;					// exact compare, no epsilon
 	bool			operator!=(	const idPluecker &a ) const;					// exact compare, no epsilon
 
-	void 			Set( const float a1, const float a2, const float a3, const float a4, const float a5, const float a6 );
+	void			Set( const float a1, const float a2, const float a3, const float a4, const float a5, const float a6 );
 	void			Zero( void );
 
 	void			FromLine( const idVec3 &start, const idVec3 &end );			// pluecker from line
@@ -201,7 +203,7 @@ ID_INLINE bool idPluecker::Compare( const idPluecker &a, const float epsilon ) c
 	if ( idMath::Fabs( p[0] - a[0] ) > epsilon ) {
 		return false;
 	}
-			
+
 	if ( idMath::Fabs( p[1] - a[1] ) > epsilon ) {
 		return false;
 	}

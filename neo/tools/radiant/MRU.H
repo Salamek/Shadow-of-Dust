@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -52,14 +52,14 @@ typedef MRUMENU FAR * LPMRUMENU;
 
 #ifdef __cplusplus
 LPMRUMENU       CreateMruMenu  (WORD wNbLruShowInit=NBMRUMENUSHOW,
-                                WORD wNbLruMenuInit=NBMRUMENU,
-                                WORD wMaxSizeLruItemInit=MAXSIZEMRUITEM,
-                                WORD wIdMruInit=IDMRU);
+								WORD wNbLruMenuInit=NBMRUMENU,
+								WORD wMaxSizeLruItemInit=MAXSIZEMRUITEM,
+								WORD wIdMruInit=IDMRU);
 #else
 LPMRUMENU       CreateMruMenu  (WORD wNbLruShowInit,
-                                WORD wNbLruMenuInit,
-                                WORD wMaxSizeLruItemInit,
-                                WORD wIdMruInit);
+								WORD wNbLruMenuInit,
+								WORD wMaxSizeLruItemInit,
+								WORD wIdMruInit);
 #endif
 
 LPMRUMENU       CreateMruMenuDefault();
@@ -67,9 +67,9 @@ void            DeleteMruMenu  (LPMRUMENU lpMruMenu);
 
 void            SetNbLruShow   (LPMRUMENU lpMruMenu,WORD wNbLruShowInit);
 BOOL            SetMenuItem    (LPMRUMENU lpMruMenu,WORD wItem,
-                                LPSTR lpItem);
+								LPSTR lpItem);
 BOOL            GetMenuItem    (LPMRUMENU lpMruMenu,WORD wItem,
-                                BOOL fIDMBased,LPSTR lpItem,UINT uiSize);
+								BOOL fIDMBased,LPSTR lpItem,UINT uiSize);
 BOOL            DelMenuItem    (LPMRUMENU lpMruMenu,WORD wItem,BOOL fIDMBased);
 void            AddNewItem     (LPMRUMENU lpMruMenu,LPSTR lpItem);
 void            PlaceMenuMRUItem(LPMRUMENU lpMruMenu,HMENU hMenu,UINT uiItem);

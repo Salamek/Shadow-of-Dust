@@ -26,8 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/Common.h"
+
+#include "idlib/Heap.h"
 
 #ifndef USE_LIBC_MALLOC
 	#define USE_LIBC_MALLOC		0
@@ -334,7 +336,7 @@ void *idHeap::Allocate16( const dword bytes ) {
 		}
 	}
 	alignedPtr = (byte *) ( ( ( (intptr_t) ptr ) + 15) & ~15 );
-	if ( alignedPtr - ptr < (int)sizeof(intptr_t) ) {
+	if ( alignedPtr - ptr < sizeof(intptr_t) ) {
 		alignedPtr += 16;
 	}
 	*((intptr_t *)(alignedPtr - sizeof(intptr_t))) = (intptr_t) ptr;
@@ -1353,7 +1355,7 @@ typedef struct allocInfo_s {
 typedef enum {
 	MEMSORT_SIZE,
 	MEMSORT_LOCATION,
-	MEMSORT_NUMALLOCS
+	MEMSORT_NUMALLOCS,
 } memorySortType_t;
 
 void Mem_DumpCompressed( const char *fileName, memorySortType_t memSort, int numFrames ) {
@@ -1380,7 +1382,6 @@ void Mem_DumpCompressed( const char *fileName, memorySortType_t memSort, int num
 			if ( a->lineNumber != b->lineNumber ) {
 				continue;
 			}
-
 			if ( j < MAX_CALLSTACK_DEPTH ) {
 				continue;
 			}
@@ -1465,8 +1466,6 @@ void Mem_DumpCompressed( const char *fileName, memorySortType_t memSort, int num
 							a->lineNumber );
 		::free( a );
 	}
-
-	idLib::sys->ShutdownSymbols();
 
 	fprintf( f, "%8d total memory blocks allocated\r\n", numBlocks );
 	fprintf( f, "%8d KB memory allocated\r\n", ( totalSize >> 10 ) );

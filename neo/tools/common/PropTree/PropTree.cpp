@@ -42,7 +42,7 @@ HINSTANCE ghInst;
 	if (dwReason == DLL_PROCESS_ATTACH)
 	{
 		TRACE0("PROPTREE.DLL Initializing!\n");
-		
+
 		if (!AfxInitExtensionModule(PropTreeDLL, hInstance))
 			return 0;
 
@@ -360,7 +360,7 @@ void CPropTree::SetOriginOffset(LONG nOffset)
 	m_Origin.y = nOffset;
 }
 
-	
+
 void CPropTree::UpdatedItems()
 {
 	if (!IsWindow(m_hWnd))
@@ -399,7 +399,7 @@ void CPropTree::SetColumn(LONG nColumn)
 	CRect rc;
 
 	GetClientRect(rc);
-	
+
 	if (rc.IsRectEmpty())
 		nColumn = __max(PROPTREEITEM_EXPANDCOLUMN, nColumn);
 	else
@@ -762,7 +762,7 @@ CPropTreeItem* CPropTree::FocusPrev()
 
 	if (pNext)
 		SetFocusedItem(pNext);
-	
+
 	if (m_pFocus)
 	{
 		SelectItems(NULL, FALSE);
@@ -893,7 +893,7 @@ LRESULT CPropTree::SendNotify(UINT nNotifyCode, CPropTreeItem* pItem)
 		lpnm->code = nNotifyCode;
 		lpnm->hwndFrom = m_hWnd;
 		lpnm->idFrom = id;
-	
+
 		return GetParent()->SendMessage(WM_NOTIFY, (WPARAM)id, (LPARAM)lpnm);
 	}
 
@@ -911,8 +911,8 @@ void CPropTree::OnEnable(BOOL bEnable)
 void CPropTree::OnSysColorChange()
 {
 	CWnd::OnSysColorChange();
-	
-	Invalidate();	
+
+	Invalidate();
 }
 
 

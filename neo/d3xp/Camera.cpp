@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "gamesys/SysCvar.h"
+#include "script/Script_Thread.h"
+#include "Player.h"
 
-#include "Game_local.h"
+#include "Camera.h"
 
 /*
 ===============================================================================
@@ -193,7 +195,7 @@ idCameraView::GetViewParms
 */
 void idCameraView::GetViewParms( renderView_t *view ) {
 	assert( view );
-	
+
 	if (view == NULL) {
 		return;
 	}
@@ -215,7 +217,7 @@ void idCameraView::GetViewParms( renderView_t *view ) {
 	} else {
 		view->viewaxis = ent->GetPhysics()->GetAxis();
 	}
-	
+
 	gameLocal.CalcFov( fov, view->fov_x, view->fov_y );
 }
 
@@ -519,7 +521,7 @@ void idCameraAnim::Think( void ) {
 			frameTime	= ( gameLocal.time - starttime ) * frameRate;
 			frame		= frameTime / 1000;
 		}
-		
+
 		if ( frame > camera.Num() + cameraCuts.Num() - 2 ) {
 			if ( cycle > 0 ) {
 				cycle--;
@@ -656,7 +658,7 @@ void idCameraAnim::GetViewParms( renderView_t *view ) {
 
 	// setup the pvs for this frame
 	UpdatePVSAreas( view->vieworg );
-	
+
 #if 0
 	static int lastFrame = 0;
 	static idVec3 lastFrameVec( 0.0f, 0.0f, 0.0f );

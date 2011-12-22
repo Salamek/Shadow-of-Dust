@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,14 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/math/Vector.h"
+#include "idlib/Lib.h"
+#include "framework/CVarSystem.h"
+#include "framework/KeyInput.h"
+#include "framework/async/AsyncNetwork.h"
 
-#include "Session_local.h"
+#include "framework/UsercmdGen.h"
 
 /*
 ================
@@ -309,7 +313,7 @@ const int MAX_CHAT_BUFFER = 127;
 class idUsercmdGenLocal : public idUsercmdGen {
 public:
 					idUsercmdGenLocal( void );
-	
+
 	void			Init( void );
 
 	void			InitForNewMap( void );
@@ -526,7 +530,7 @@ Moves the local angle positions
 */
 void idUsercmdGenLocal::AdjustAngles( void ) {
 	float	speed;
-	
+
 	if ( toggled_run.on ^ ( in_alwaysRun.GetBool() && idAsyncNetwork::IsActive() ) ) {
 		speed = idMath::M_MS2SEC * USERCMD_MSEC * in_angleSpeedKey.GetFloat();
 	} else {
@@ -587,7 +591,7 @@ void idUsercmdGenLocal::MouseMove( void ) {
 
 	history[historyCounter&7][0] = mouseDx;
 	history[historyCounter&7][1] = mouseDy;
-	
+
 	// allow mouse movement to be smoothed together
 	int smooth = m_smooth.GetInteger();
 	if ( smooth < 1 ) {
@@ -764,7 +768,7 @@ void idUsercmdGenLocal::MakeCurrent( void ) {
 	int		i;
 
 	oldAngles = viewangles;
-	
+
 	if ( !Inhibited() ) {
 		// update toggled key states
 		toggled_crouch.SetKeyState( ButtonState( UB_DOWN ), in_toggleCrouch.GetBool() );
@@ -966,7 +970,7 @@ void idUsercmdGenLocal::Mouse( void ) {
 
 	if ( numEvents ) {
 		//
-	    // Study each of the buffer elements and process them.
+		// Study each of the buffer elements and process them.
 		//
 		for( i = 0; i < numEvents; i++ ) {
 			int action, value;
@@ -1015,7 +1019,7 @@ void idUsercmdGenLocal::Keyboard( void ) {
 
 	if ( numEvents ) {
 		//
-	    // Study each of the buffer elements and process them.
+		// Study each of the buffer elements and process them.
 		//
 		int key;
 		bool state;

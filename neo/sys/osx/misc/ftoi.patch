@@ -14,8 +14,8 @@ Index: neo/idlib/math/Math.h
 +#elif 0
 +	float c;
 +    // c = __fsels( f, -0x1.0p+52, 0x1.0p+52 );
-+	__asm__ ("fsel %0,%1,%2,%3"
-+			 /* outputs:  */ : "=f" (c)
++	__asm__ ("fsel %0,%1,%2,%3" 
++			 /* outputs:  */ : "=f" (c) 
 +			 /* inputs:   */ : "f" (f), "f" (-0x1.0p+52), "f" (0x1.0p+52));
 +    float result = (f - c) + c;
 +    if( f < result ) result -= 1.0;
@@ -29,15 +29,15 @@ Index: neo/idlib/precompiled.h
 --- neo/idlib/precompiled.h	(revision 1760)
 +++ neo/idlib/precompiled.h	(working copy)
 @@ -47,6 +47,10 @@
-
+ 
  #endif /* _WIN32 */
-
+ 
 +#if defined( MACOS_X )
 +#include <ppc_intrinsics.h>
 +#endif
 +
  //-----------------------------------------------------
-
+ 
  #if !defined( _DEBUG ) && !defined( NDEBUG )
 Index: neo/TestSIMD/math/Math.h
 ===================================================================
@@ -50,7 +50,7 @@ Index: neo/TestSIMD/math/Math.h
 +	static unsigned int			FtouiFast( float f );		// fast float to unsigned int conversion
  	static unsigned long		Ftol( float f );			// float to long conversion
  	static unsigned long		FtolFast( float );			// fast float to long conversion but rounds to nearest
-
+ 
 @@ -673,11 +674,31 @@
  	__asm fld		f
  	__asm fistp		i
@@ -68,7 +68,7 @@ Index: neo/TestSIMD/math/Math.h
  	return (int) f;
  #endif
  }
-
+ 
 +ID_INLINE unsigned int idMath::FtouiFast( float f ) {
 +#ifdef _WIN32
 +	int i;
@@ -121,7 +121,7 @@ Index: neo/TestSIMD/math/Simd.cpp
 +	}
 +	PrintClocks( "    idMath::FtouiFast()", NUMTESTS, bestClocks );
  }
-
+ 
  /*
 @@ -3903,7 +3932,7 @@
  	p_generic = generic;
@@ -134,7 +134,7 @@ Index: neo/TestSIMD/math/Simd.cpp
  	best = 0;
 @@ -3967,8 +3996,9 @@
  	idLib::common->Printf( "using %s for SIMD processing\n", p_simd->GetName() );
-
+ 
  	GetBaseClocks();
 -#if 1
  	TestMath();

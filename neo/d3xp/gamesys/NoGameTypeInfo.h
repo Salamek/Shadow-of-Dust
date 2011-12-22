@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -67,11 +67,12 @@ typedef struct {
 	const classVariableInfo_t * variables;
 } classTypeInfo_t;
 
-static const enumTypeInfo_t enumTypeInfo[] = {
+
+static enumTypeInfo_t enumTypeInfo[] = {
 	{ NULL, NULL }
 };
 
-static const classTypeInfo_t classTypeInfo[] = {
+static classTypeInfo_t classTypeInfo[] = {
 	{ NULL, NULL, 0, NULL }
 };
 

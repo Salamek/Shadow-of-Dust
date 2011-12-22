@@ -495,13 +495,13 @@ LONG CPropTreeItem::DrawItem(CDC* pDC, const RECT& rc, LONG x, LONG y)
 		{
 			HGDIOBJ oPen = pDC->SelectObject(GetStockObject(NULL_PEN));
 			HGDIOBJ oBrush = pDC->SelectObject(GetSysColorBrush(COLOR_HIGHLIGHT));
-			
+
 			CRect dr;
 			dr = drc;
 			dr.left = PROPTREEITEM_EXPANDCOLUMN;
-			
+
 			pDC->Rectangle(&dr);
-			
+
 			pDC->SelectObject(oPen);
 			pDC->SelectObject(oBrush);
 
@@ -558,7 +558,7 @@ LONG CPropTreeItem::DrawItem(CDC* pDC, const RECT& rc, LONG x, LONG y)
 		// create clip region
 		hRgn = CreateRectRgn(m_rc.left, m_rc.top, m_rc.right, m_rc.bottom);
 		SelectClipRgn(pDC->m_hDC, hRgn);
-		
+
 		DrawAttribute(pDC, m_rc);
 
 		SelectClipRgn(pDC->m_hDC, NULL);

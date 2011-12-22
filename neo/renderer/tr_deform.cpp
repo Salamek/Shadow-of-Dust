@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,11 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/containers/BinSearch.h"
+#include "renderer/VertexCache.h"
 
-#include "tr_local.h"
+#include "renderer/tr_local.h"
 
 
 /*
@@ -257,7 +258,7 @@ static int edgeVerts[6][2] = {
 			*av2 = *(idDrawVert *)&tri->verts[i2];
 
 			l = 0.5 * lengths[j];
-			
+
 			// cross this with the view direction to get minor axis
 			idVec3	dir = mid[j] - localView;
 			minor.Cross( major, dir );
@@ -390,7 +391,7 @@ static void R_FlareDeform( drawSurf_t *surf ) {
 	newTri->numVerts = 4;
 	newTri->numIndexes = 2*3;
 	newTri->indexes = (glIndex_t *)R_FrameAlloc( newTri->numIndexes * sizeof( newTri->indexes[0] ) );
-	
+
 	idDrawVert *ac = (idDrawVert *)_alloca16( newTri->numVerts * sizeof( idDrawVert ) );
 
 	// find the plane
@@ -528,7 +529,7 @@ static void R_FlareDeform( drawSurf_t *surf ) {
 	newTri->numVerts = 16;
 	newTri->numIndexes = 18*3;
 	newTri->indexes = (glIndex_t *)R_FrameAlloc( newTri->numIndexes * sizeof( newTri->indexes[0] ) );
-	
+
 	idDrawVert *ac = (idDrawVert *)_alloca16( newTri->numVerts * sizeof( idDrawVert ) );
 
 	// find the plane
@@ -536,7 +537,7 @@ static void R_FlareDeform( drawSurf_t *surf ) {
 		common->Warning( "R_FlareDeform: plane.FromPoints failed" );
 		return;
 	}
-	
+
 	// if viewer is behind the plane, draw nothing
 	R_GlobalPointToLocal( surf->space->modelMatrix, tr.viewDef->renderView.vieworg, localViewer );
 	float distFromPlane = localViewer * plane.Normal() + plane[3];
@@ -1196,7 +1197,7 @@ static void R_ParticleDeform( drawSurf_t *surf, bool useArea ) {
 				// don't increment the verts
 				tri->numVerts += stage->CreateParticle( &g, tri->verts + tri->numVerts );
 			}
-	
+
 			if ( tri->numVerts > 0 ) {
 				// build the index list
 				int	indexes = 0;

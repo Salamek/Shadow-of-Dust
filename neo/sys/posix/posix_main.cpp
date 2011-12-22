@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,8 +25,6 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../../idlib/precompiled.h"
-#include "../sys_local.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -42,7 +40,13 @@ If you have questions concerning this license or the applicable additional terms
 #include <signal.h>
 #include <fcntl.h>
 
-#include "posix_public.h"
+#include "sys/platform.h"
+#include "idlib/containers/StrList.h"
+#include "framework/KeyInput.h"
+#include "framework/EditField.h"
+#include "sys/sys_local.h"
+
+#include "sys/posix/posix_public.h"
 
 #define					MAX_OSPATH 256
 #define					COMMAND_HISTORY 64
@@ -162,7 +166,7 @@ Sys_Milliseconds
 unsigned long sys_timeBase = 0;
 /* current time in ms, using sys_timeBase as origin
    NOTE: sys_timeBase*1000 + curtime -> ms since the Epoch
-     0x7fffffff ms - ~24 days
+	 0x7fffffff ms - ~24 days
 		 or is it 48 days? the specs say int, but maybe it's casted from unsigned int?
 */
 int Sys_Milliseconds( void ) {
@@ -337,15 +341,11 @@ Posix_Cwd
 const char *Posix_Cwd( void ) {
 	static char cwd[MAX_OSPATH];
 
-	
 	if (getcwd( cwd, sizeof( cwd ) - 1 ))
-	{
 		cwd[MAX_OSPATH-1] = 0;
-	}
 	else
-	{
 		cwd[0] = 0;
-	}
+
 	return cwd;
 }
 
@@ -595,10 +595,10 @@ void Posix_InitConsoleInput( void ) {
 		/*
 		  ECHO: don't echo input characters
 		  ICANON: enable canonical mode.  This  enables  the  special
-		  	characters  EOF,  EOL,  EOL2, ERASE, KILL, REPRINT,
-		  	STATUS, and WERASE, and buffers by lines.
+			characters  EOF,  EOL,  EOL2, ERASE, KILL, REPRINT,
+			STATUS, and WERASE, and buffers by lines.
 		  ISIG: when any of the characters  INTR,  QUIT,  SUSP,  or
-		  	DSUSP are received, generate the corresponding signal
+			DSUSP are received, generate the corresponding signal
 		*/
 		tc.c_lflag &= ~(ECHO | ICANON);
 		/*
@@ -691,19 +691,14 @@ void tty_Show() {
 		char *buf = input_field.GetBuffer();
 		size_t len = strlen(buf);
 		if ( len < 1 )
-		{
 			return;
-		}
-		
+
 		len = write( STDOUT_FILENO, buf, len );
 		if ( len < 1 )
-		{
 			return;
-		}
-		
+
 		len -= input_field.GetCursor();
-		while ( len > 0 ) 
-		{
+		while ( len > 0 ) {
 			tty_Left();
 			len--;
 		}
@@ -711,11 +706,11 @@ void tty_Show() {
 }
 
 void tty_FlushIn() {
-	char key;
-	while ( ( key = getchar() ) != EOF ) {
-		Sys_Printf( "'%d' ", key );
-	}
-	Sys_Printf( "\n" );
+  char key;
+  while ( ( key = getchar() ) != EOF ) {
+	  Sys_Printf( "'%d' ", key );
+  }
+  Sys_Printf( "\n" );
 }
 
 /*

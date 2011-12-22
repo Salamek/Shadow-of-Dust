@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -68,15 +68,15 @@ void CWaveOpen::OnFileNameChange()
   CWnd *pWnd = GetDlgItem(IDC_BTN_PLAY);
   if (pWnd == NULL)
   {
-    return;
+	return;
   }
   if (str.Find(".wav") >= 0)
   {
-    pWnd->EnableWindow(TRUE);
+	pWnd->EnableWindow(TRUE);
   }
   else
   {
-    pWnd->EnableWindow(FALSE);
+	pWnd->EnableWindow(FALSE);
   }
 }
 
@@ -86,20 +86,20 @@ void CWaveOpen::OnBtnPlay()
   CString str = GetPathName();
   if (str.GetLength() > 0)
   {
-    sndPlaySound(str, SND_FILENAME | SND_ASYNC);
+	sndPlaySound(str, SND_FILENAME | SND_ASYNC);
   }
 }
 
 BOOL CWaveOpen::OnInitDialog()
 {
 	CFileDialog::OnInitDialog();
-	
+
   CWnd *pWnd = GetDlgItem(IDC_BTN_PLAY);
   if (pWnd != NULL)
   {
-    pWnd->EnableWindow(FALSE);
+	pWnd->EnableWindow(FALSE);
   }
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }

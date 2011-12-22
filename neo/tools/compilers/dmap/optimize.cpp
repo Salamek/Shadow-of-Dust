@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,16 +26,16 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
 //#pragma optimize( "", off )
 
-#include "dmap.h"
 #ifdef WIN32
 #include <windows.h>
 #include <GL/gl.h>
 #endif
+
+#include "tools/compilers/dmap/dmap.h"
 
 /*
 
@@ -206,7 +206,7 @@ static optVertex_t *FindOptVertex( idDrawVert *v, optimizeGroup_t *opt ) {
 		common->Error( "MAX_OPT_VERTEXES" );
 		return NULL;
 	}
-	
+
 	numOptVerts++;
 
 	vert = &optVerts[i];
@@ -1058,8 +1058,8 @@ static void CreateOptTri( optVertex_t *first, optEdge_t *e1, optEdge_t *e2, optI
 	LinkTriToEdge( optTri, opposite );
 }
 
-#if 0
 // debugging tool
+#if 0
 static void ReportNearbyVertexes( const optVertex_t *v, const optIsland_t *island ) {
 	const optVertex_t	*ov;
 	float		d;
@@ -1747,12 +1747,12 @@ static void OptimizeIsland( optIsland_t *island ) {
 	RegenerateTriangles( island );
 }
 
-#if 0
 /*
 ================
 AddVertexToIsland_r
 ================
 */
+#if 0
 static void AddVertexToIsland_r( optVertex_t *vert, optIsland_t *island ) {
 	optEdge_t	*e;
 
@@ -1789,7 +1789,6 @@ static void AddVertexToIsland_r( optVertex_t *vert, optIsland_t *island ) {
 }
 #endif
 
-#if 0
 /*
 ====================
 SeparateIslands
@@ -1804,6 +1803,7 @@ doing this, because PointInSourceTris() can give a bad answer if
 the source list has triangles not used in the optimization
 ====================
 */
+#if 0
 static void SeparateIslands( optimizeGroup_t *opt ) {
 	int		i;
 	optIsland_t	island;
@@ -1851,7 +1851,7 @@ static void DontSeparateIslands( optimizeGroup_t *opt ) {
 	OptimizeIsland( &island );
 }
 
-#if 0
+
 /*
 ====================
 PointInSourceTris
@@ -1859,6 +1859,7 @@ PointInSourceTris
 This is a sloppy bounding box check
 ====================
 */
+#if 0
 static bool PointInSourceTris( float x, float y, float z, optimizeGroup_t *opt ) {
 	mapTri_t	*tri;
 	idBounds	b;
@@ -1884,6 +1885,7 @@ static bool PointInSourceTris( float x, float y, float z, optimizeGroup_t *opt )
 	return false;
 }
 #endif
+
 /*
 ====================
 OptimizeOptList

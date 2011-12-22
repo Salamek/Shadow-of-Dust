@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,10 +25,10 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../../../idlib/precompiled.h"
-#pragma hdrstop
 
-#include "roqParam.h"
+#include "sys/platform.h"
+
+#include "tools/compilers/roqvq/roqParam.h"
 
 //
 // read a parameter file in (true I bloddy well had to do this again) (and yet again to c++)
@@ -50,7 +50,7 @@ void roqParam::InitFromFile( const char *fileName )
 		common->Printf("Error: can't open param file %s\n", fileName);
 		return;
 	}
-	
+
 	common->Printf("initFromFile: %s\n", fileName);
 
 	fullSearch = false;
@@ -83,7 +83,7 @@ void roqParam::InitFromFile( const char *fileName )
 		if ( !src->ReadToken( &token ) ) {
 			break;
 		}
-		
+
 		readarg = 0;
 // input dir
 		if (token.Icmp( "input_dir") == 0) {
@@ -153,7 +153,7 @@ void roqParam::InitFromFile( const char *fileName )
 			hasSound = true;
 			continue;
 		}
-// outfile	
+// outfile
 		if (token.Icmp( "filename") == 0) {
 			src->ReadToken( &token );
 			outputFilename = token;
@@ -195,7 +195,7 @@ void roqParam::InitFromFile( const char *fileName )
 			readarg++;
 			continue;
 		}
-//	key_color	r g b	
+//	key_color	r g b
 		if (token.Icmp( "key_color") == 0) {
 			keyR = src->ParseInt();
 			keyG = src->ParseInt();
@@ -264,7 +264,7 @@ void roqParam::InitFromFile( const char *fileName )
 
 			field = 0;
 			realnum = 0;
-			do {	
+			do {
 				src->ReadToken(&token);
 				if ( token.Icmp( "end_input") != 0 ) {
 					idStr arg1, arg2, arg3;
@@ -310,7 +310,7 @@ void roqParam::InitFromFile( const char *fileName )
 						}
 						else if (( arg1[0] != '[' ) && ( arg2[0] == '[') && ( arg3[0] =='[')) {  //a double ranger...
 							int files1,files2;
-							
+
 							file2[field] = arg1;
 							range[field] = 2;
 							files1 = parseRange(arg2, field, skipnum, startnum, endnum, numfiles, padding, numpadding);
@@ -327,7 +327,7 @@ void roqParam::InitFromFile( const char *fileName )
 						else	{
 							common->Error("Error: invalid range on open (%s %s %s)\n", arg1.c_str(), arg2.c_str(), arg3.c_str() );
 						}
-					} 					
+					}
 					field++;
 				}
 			} while (token.Icmp( "end_input"));
@@ -346,29 +346,29 @@ void roqParam::GetNthInputFileName( idStr &fileName, int n ) {
 	if ( n > realnum ) n = realnum;
 // overcome starting at zero by ++ing and then --ing.
 	if (TwentyFourToThirty()) { n++; n = (n/5) * 4 + (n % 5); n--; }
-	
+
 	i = 0;
 	myfield = 0;
-	
+
 	while (i <= n) {
 		i += numfiles[myfield++];
 	}
 	myfield--;
 	i -= numfiles[myfield];
-	
+
 	if ( range[myfield] == 1 ) {
-		
+
 		strcpy( left, file[myfield] );
 		strp = strstr( left, "*" );
 		*strp++ = 0;
 		sprintf(right, "%s", strp);
-		
+
 		if ( startnum[myfield] <= endnum[myfield] ) {
 			index = startnum[myfield] + ((n-i)*skipnum[myfield]);
 		} else {
 			index = startnum[myfield] - ((n-i)*skipnum[myfield]);
 		}
-		
+
 		if ( padding[myfield] == true ) {
 			if (useTimecodeForRange) {
 				hrs = index/(30*60*60) ;
@@ -394,18 +394,18 @@ void roqParam::GetNthInputFileName( idStr &fileName, int n ) {
 			}
 		}
 	} else if ( range[myfield] == 2 ) {
-		
+
 		strcpy( left, file[myfield] );
 		strp = strstr( left, "*" );
 		*strp++ = 0;
 		sprintf(right, "%s", strp);
-		
+
 		if ( startnum[myfield] <= endnum[myfield] ) {
 			index = startnum[myfield] + ((n-i)*skipnum[myfield]);
 		} else {
 			index = startnum[myfield] - ((n-i)*skipnum[myfield]);
 		}
-		
+
 		if ( padding[myfield] == true ) {
 			sprintf(tempfile, "%032d", index );
 			sprintf(fileName, "%s%s%s", left, &tempfile[ 32-numpadding[myfield] ], right );
@@ -417,13 +417,13 @@ void roqParam::GetNthInputFileName( idStr &fileName, int n ) {
 		strp = strstr( left, "*" );
 		*strp++ = 0;
 		sprintf(right, "%s", strp);
-		
+
 		if ( startnum2[myfield] <= endnum2[myfield] ) {
 			index = startnum2[myfield] + ((n-i)*skipnum2[myfield]);
 		} else {
 			index = startnum2[myfield] - ((n-i)*skipnum2[myfield]);
 		}
-		
+
 		if ( padding2[myfield] == true ) {
 			sprintf(tempfile, "%032d", index );
 			fileName += va( "\n%s%s%s", left, &tempfile[ 32-numpadding2[myfield] ], right );
@@ -445,19 +445,19 @@ const char* roqParam::GetNextImageFilename( void ) {
 		onFrame--;
 		justDeltaFlag = false;
 	}
-	
+
 	if ( addPath == true ) {
 		currentFile = currentPath + "/" + tempBuffer;
 	} else {
 		currentFile = tempBuffer;
-   	}
+	}
 	len = currentFile.Length();
 	for(i=0;i<len;i++) {
-	    if (currentFile[i] == '^') {
+		if (currentFile[i] == '^') {
 			currentFile[i] = ' ';
-	    }
+		}
 	}
-	
+
 	return currentFile.c_str();
 }
 

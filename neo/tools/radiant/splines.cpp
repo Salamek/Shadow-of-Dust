@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ void glBox(idVec4 &color, idVec3 &point, float size) {
 	qglEnd();
 
 	qglBegin(GL_LINES);
-  	qglVertex3f(mins[0],mins[1],mins[2]);
+	qglVertex3f(mins[0],mins[1],mins[2]);
 	qglVertex3f(mins[0],mins[1],maxs[2]);
 	qglVertex3f(mins[0],maxs[1],maxs[2]);
 	qglVertex3f(mins[0],maxs[1],mins[2]);
@@ -363,12 +363,12 @@ void idSplineList::addToRenderer() {
 		debugLine( colorYellow, maxs[0], mins[1], mins[2], maxs[0], maxs[1], mins[2]);
 		debugLine( colorYellow, maxs[0], maxs[1], mins[2], mins[0], maxs[1], mins[2]);
 		debugLine( colorYellow, mins[0], maxs[1], mins[2], mins[0], mins[1], mins[2]);
-		
+
 		debugLine( colorYellow, mins[0], mins[1], maxs[2], maxs[0], mins[1], maxs[2]);
 		debugLine( colorYellow, maxs[0], mins[1], maxs[2], maxs[0], maxs[1], maxs[2]);
 		debugLine( colorYellow, maxs[0], maxs[1], maxs[2], mins[0], maxs[1], maxs[2]);
 		debugLine( colorYellow, mins[0], maxs[1], maxs[2], mins[0], mins[1], maxs[2]);
-	
+
 	}
 
 	int step = 0;
@@ -428,7 +428,7 @@ idSplineList::draw
 ================
 */
 void idSplineList::draw(bool editMode) {
-        int i;
+		int i;
 
 	if (controlPoints.Num() == 0) {
 		return;
@@ -441,13 +441,13 @@ void idSplineList::draw(bool editMode) {
 
 	qglColor3fv( controlColor.ToFloatPtr() );
 	qglPointSize( 5 );
-	
+
 	qglBegin(GL_POINTS);
 	for (i = 0; i < controlPoints.Num(); i++) {
 		qglVertex3fv( (*controlPoints[i]).ToFloatPtr() );
 	}
 	qglEnd();
-	
+
 	if (editMode) {
 		for(i = 0; i < controlPoints.Num(); i++) {
 			glBox(activeColor, *controlPoints[i], 4);
@@ -613,7 +613,7 @@ const idVec3 *idSplineList::getPosition(long t) {
 	float timePassed = t - lastTime;
 	lastTime = t;
 
-	// convert to seconds	
+	// convert to seconds
 	timePassed /= 1000;
 
 	float distToTravel = timePassed * velocity;
@@ -860,8 +860,8 @@ idCameraDef::draw
 ================
 */
 void idCameraDef::draw( bool editMode ) {
-            // gcc doesn't allow casting away from bools
-            // why?  I've no idea...
+			// gcc doesn't allow casting away from bools
+			// why?  I've no idea...
 	if (cameraPosition) {
 		cameraPosition->draw((bool)((editMode || cameraRunning) && cameraEdit));
 		int count = targetPositions.Num();
@@ -958,7 +958,7 @@ void idCameraDef::getActiveSegmentInfo(int segment, idVec3 &origin, idVec3 &dire
 		buildCamera();
 	}
 	origin = *cameraSpline.getSegmentPoint(segment);
-	
+
 
 	idVec3 temp;
 
@@ -1026,7 +1026,7 @@ bool idCameraDef::getCameraInfo(long time, idVec3 &origin, idVec3 &direction, fl
 	}
 
 	origin = *cameraPosition->getPosition(time);
-	
+
 	*fv = fov.GetFOV(time);
 
 	idVec3 temp = origin;
@@ -1048,7 +1048,7 @@ bool idCameraDef::getCameraInfo(long time, idVec3 &origin, idVec3 &direction, fl
 	} else {
 		temp = *getActiveTarget()->getPosition(time);
 	}
-	
+
 	temp -= origin;
 	temp.Normalize();
 	direction = temp;
@@ -1066,7 +1066,7 @@ bool idCameraDef::waitEvent(int index) {
 	//	if (events[i]->getSegment() == index && events[i]->getType() == idCameraEvent::EVENT_WAIT) {
 	//		return true;
 	//	}
-    //}
+	//}
 	return false;
 }
 
@@ -1686,7 +1686,7 @@ const idVec3 *idInterpolatedPosition::getPosition( long t ) {
 	float timePassed = t - lastTime;
 	lastTime = t;
 
-	// convert to seconds	
+	// convert to seconds
 	timePassed /= 1000;
 
 	if (velocity != getBaseVelocity()) {
@@ -1940,7 +1940,7 @@ void idSplinePosition::parse( idParser *src ) {
 			target.parse( src );
 		}
 		else {
-			idCameraPosition::parseToken( token, src );	
+			idCameraPosition::parseToken( token, src );
 		}
 	}
 }
@@ -1969,7 +1969,7 @@ const idVec3 *idSplinePosition::getPosition(long t) {
 	float timePassed = t - lastTime;
 	lastTime = t;
 
-	// convert to seconds	
+	// convert to seconds
 	timePassed /= 1000;
 
 	float distToTravel = timePassed * velocity;

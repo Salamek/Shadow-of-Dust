@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,6 +29,12 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __MULTIPLAYERGAME_H__
 #define	__MULTIPLAYERGAME_H__
 
+#include "idlib/BitMsg.h"
+#include "idlib/Str.h"
+#include "ui/UserInterface.h"
+
+#include "GameBase.h"
+
 /*
 ===============================================================================
 
@@ -51,7 +57,7 @@ typedef enum {
 	GAME_TDM,
 	GAME_LASTMAN,
 #ifdef CTF
-    GAME_CTF,
+	GAME_CTF,
 	GAME_COUNT,
 #endif
 } gameType_t;
@@ -60,10 +66,10 @@ typedef enum {
 
 // Used by the UI
 typedef enum {
-    FLAGSTATUS_INBASE = 0,
-    FLAGSTATUS_TAKEN  = 1,
-    FLAGSTATUS_STRAY  = 2,
-    FLAGSTATUS_NONE   = 3
+	FLAGSTATUS_INBASE = 0,
+	FLAGSTATUS_TAKEN  = 1,
+	FLAGSTATUS_STRAY  = 2,
+	FLAGSTATUS_NONE   = 3
 } flagStatus_t;
 
 #endif
@@ -119,7 +125,7 @@ typedef enum {
 	SND_TWO,
 	SND_ONE,
 	SND_SUDDENDEATH,
-#ifdef CTF	
+#ifdef CTF
 	SND_FLAG_CAPTURED_YOURS,
 	SND_FLAG_CAPTURED_THEIRS,
 	SND_FLAG_RETURN,
@@ -266,7 +272,7 @@ public:
 	void			ProcessVoiceChat( int clientNum, bool team, int index );
 
 	void			Precache( void );
-	
+
 	// throttle UI switch rates
 	void			ThrottleUserInfo( void );
 	void			ToggleSpectate( void );
@@ -286,14 +292,14 @@ public:
 
 	void			ServerClientConnect( int clientNum );
 #ifdef CTF
-    void            ClearHUDStatus( void );
-    int             GetFlagPoints( int team );	// Team points in CTF
+	void            ClearHUDStatus( void );
+	int             GetFlagPoints( int team );	// Team points in CTF
 	void			SetFlagMsg( bool b );		// allow flag event messages to be sent
 	bool			IsFlagMsgOn( void );		// should flag event messages go through?
-    void			ClearGuis( void );
+	void			ClearGuis( void );
 
-    int             player_red_flag;            // Ent num of red flag carrier for HUD
-    int             player_blue_flag;           // Ent num of blue flag carrier for HUD
+	int             player_red_flag;            // Ent num of red flag carrier for HUD
+	int             player_blue_flag;           // Ent num of blue flag carrier for HUD
 
 #endif
 	void			PlayerStats( int clientNum, char *data, const int len );
@@ -388,7 +394,7 @@ private:
 #endif
 
 #ifndef CTF
-    // We declare this publically above so we can call it during a map restart.
+	// We declare this publically above so we can call it during a map restart.
 	void			ClearGuis( void );
 #endif
 
@@ -441,13 +447,13 @@ public:
 
 #ifdef CTF
 	idItemTeam *	GetTeamFlag( int team );
-    flagStatus_t    GetFlagStatus( int team );
+	flagStatus_t    GetFlagStatus( int team );
 	void			TeamScoreCTF( int team, int delta );
 	void			PlayerScoreCTF( int playerIdx, int delta );
 	// returns entityNum to team flag carrier, -1 if no flag carrier
 	int				GetFlagCarrier( int team );
-    void            UpdateScoreboardFlagStatus( void );
-	
+	void            UpdateScoreboardFlagStatus( void );
+
 	void			SetBestGametype( const char * map );
 	void			ReloadScoreboard();
 #endif
@@ -480,4 +486,3 @@ ID_INLINE bool idMultiplayerGame::IsInGame( int clientNum ) {
 }
 
 #endif	/* !__MULTIPLAYERGAME_H__ */
-

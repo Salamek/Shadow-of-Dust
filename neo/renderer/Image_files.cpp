@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,12 +26,13 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
 #include <jpeglib.h>
 
-#include "tr_local.h"
+#include "renderer/tr_local.h"
+
+#include "renderer/Image.h"
 
 /*
 
@@ -50,7 +51,6 @@ void R_LoadImage( const char *name, byte **pic, int *width, int *height, bool ma
  */
 
 extern "C" {
-
 	// hooks from jpeg lib to our system
 
 	void jpg_Error( const char *fmt, ... ) {
@@ -175,19 +175,19 @@ PCX files are used for 8 bit images
 */
 
 typedef struct {
-    char	manufacturer;
-    char	version;
-    char	encoding;
-    char	bits_per_pixel;
-    unsigned short	xmin,ymin,xmax,ymax;
-    unsigned short	hres,vres;
-    unsigned char	palette[48];
-    char	reserved;
-    char	color_planes;
-    unsigned short	bytes_per_line;
-    unsigned short	palette_type;
-    char	filler[58];
-    unsigned char	data;			// unbounded
+	char	manufacturer;
+	char	version;
+	char	encoding;
+	char	bits_per_pixel;
+	unsigned short	xmin,ymin,xmax,ymax;
+	unsigned short	hres,vres;
+	unsigned char	palette[48];
+	char	reserved;
+	char	color_planes;
+	unsigned short	bytes_per_line;
+	unsigned short	palette_type;
+	char	filler[58];
+	unsigned char	data;			// unbounded
 } pcx_t;
 
 
@@ -200,7 +200,7 @@ TGA files are used for 24/32 bit images
 */
 
 typedef struct _TargaHeader {
-	unsigned char 	id_length, colormap_type, image_type;
+	unsigned char	id_length, colormap_type, image_type;
 	unsigned short	colormap_index, colormap_length;
 	unsigned char	colormap_size;
 	unsigned short	x_origin, y_origin, width, height;
@@ -248,7 +248,7 @@ static void LoadBMP( const char *name, byte **pic, int *width, int *height, ID_T
 	int		row, column;
 	byte	*buf_p;
 	byte	*buffer;
-	size_t		length;
+	int		length;
 	BMPHeader_t bmpHeader;
 	byte		*bmpRGBA;
 
@@ -311,7 +311,7 @@ static void LoadBMP( const char *name, byte **pic, int *width, int *height, ID_T
 	}
 	if ( bmpHeader.fileSize != length )
 	{
-		common->Error( "LoadBMP: header size does not match file size (%u vs. %zd) (%s)\n", bmpHeader.fileSize, length, name );
+		common->Error( "LoadBMP: header size does not match file size (%u vs. %d) (%s)\n", bmpHeader.fileSize, length, name );
 	}
 	if ( bmpHeader.compression != 0 )
 	{
@@ -442,8 +442,8 @@ static void LoadPCX ( const char *filename, byte **pic, byte **palette, int *wid
 	pcx = (pcx_t *)raw;
 	raw = &pcx->data;
 
-  	xmax = LittleShort(pcx->xmax);
-    ymax = LittleShort(pcx->ymax);
+	xmax = LittleShort(pcx->xmax);
+	ymax = LittleShort(pcx->ymax);
 
 	if (pcx->manufacturer != 0x0a
 		|| pcx->version != 5
@@ -824,7 +824,6 @@ static void LoadJPG( const char *filename, unsigned char **pic, int *width, int 
   unsigned char *out;
   byte	*fbuffer;
   byte  *bbuf;
-  int    len;
 
   /* In this example we want to open the input file before doing anything else,
    * so that the setjmp() error recovery below can assume the file is open.
@@ -837,7 +836,8 @@ static void LoadJPG( const char *filename, unsigned char **pic, int *width, int 
   if ( pic ) {
 	*pic = NULL;		// until proven otherwise
   }
-  
+
+	int len;
 	idFile *f;
 
 	f = fileSystem->OpenFileRead( filename );
@@ -855,8 +855,6 @@ static void LoadJPG( const char *filename, unsigned char **pic, int *width, int 
 	fbuffer = (byte *)Mem_ClearedAlloc( len + 4096 );
 	f->Read( fbuffer, len );
 	fileSystem->CloseFile( f );
-  
-
 
   /* Step 1: allocate and initialize JPEG decompression object */
 
@@ -872,7 +870,7 @@ static void LoadJPG( const char *filename, unsigned char **pic, int *width, int 
 
   /* Step 2: specify data source (eg, a file) */
 
-	jpeg_mem_src(&cinfo, fbuffer, len);
+  jpeg_mem_src(&cinfo, fbuffer, len);
 
   /* Step 3: read file parameters with jpeg_read_header() */
 
@@ -922,13 +920,13 @@ static void LoadJPG( const char *filename, unsigned char **pic, int *width, int 
    * loop counter, so that we don't have to keep track ourselves.
    */
   while (cinfo.output_scanline < cinfo.output_height) {
-    /* jpeg_read_scanlines expects an array of pointers to scanlines.
-     * Here the array is only one element long, but you could ask for
-     * more than one scanline at a time if that's more convenient.
-     */
+	/* jpeg_read_scanlines expects an array of pointers to scanlines.
+	 * Here the array is only one element long, but you could ask for
+	 * more than one scanline at a time if that's more convenient.
+	 */
 	bbuf = ((out+(row_stride*cinfo.output_scanline)));
 	buffer = &bbuf;
-    (void) jpeg_read_scanlines(&cinfo, buffer, 1);
+	(void) jpeg_read_scanlines(&cinfo, buffer, 1);
   }
 
   // clear all the alphas to 255

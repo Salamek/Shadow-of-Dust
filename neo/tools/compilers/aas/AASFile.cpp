@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,12 +26,11 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/FileSystem.h"
+#include "framework/DeclEntityDef.h"
 
-#include "AASFile.h"
-#include "AASFile_local.h"
-
+#include "tools/compilers/aas/AASFile_local.h"
 
 /*
 ===============================================================================
@@ -1314,7 +1313,6 @@ void idAASFileLocal::DeleteClusters( void ) {
 	portals.Append( portal );
 
 	// first cluster is a dummy
-	//memset( &cluster, 0, sizeof( portal ) );
-	memset( &cluster, 0, sizeof( cluster ) ); //oh god this is joke ? :D copy/paste is bitch :D
+	memset( &cluster, 0, sizeof( cluster ) );
 	clusters.Append( cluster );
 }

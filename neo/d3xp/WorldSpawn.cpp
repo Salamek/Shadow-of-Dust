@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,22 +25,20 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-/*
-game_worldspawn.cpp
 
-Worldspawn class.  Each map has one worldspawn which handles global spawnargs.
+#include "sys/platform.h"
+#include "framework/FileSystem.h"
 
-*/
+#include "gamesys/SysCvar.h"
+#include "script/Script_Thread.h"
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
-
-#include "Game_local.h"
+#include "WorldSpawn.h"
 
 /*
 ================
 idWorldspawn
 
+Worldspawn class.  Each map has one worldspawn which handles global spawnargs.
 Every map should have exactly one worldspawn.
 ================
 */

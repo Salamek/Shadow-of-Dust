@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ public:
 	{
 		name = "";
 		shift[0] = shift[1] = 0.0;
-		rotate = 0;	
+		rotate = 0;
 		scale[0] = scale[1] = 0;
 		value = 0;
 	}
@@ -193,7 +193,7 @@ typedef struct {
 
 
 #define	MIN_PATCH_WIDTH		3
-#define	MIN_PATCH_HEIGHT 	3
+#define	MIN_PATCH_HEIGHT	3
 
 #define	MAX_PATCH_WIDTH		64
 #define	MAX_PATCH_HEIGHT	64
@@ -362,7 +362,7 @@ typedef struct trimodel_t
 
 enum EVAR_TYPES {
 	EVAR_STRING,
-	EVAR_INT,		
+	EVAR_INT,
 	EVAR_FLOAT,
 	EVAR_BOOL,
 	EVAR_COLOR,

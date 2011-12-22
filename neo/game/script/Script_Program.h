@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,16 +25,21 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include <utility>
+
 #ifndef __SCRIPT_PROGRAM_H__
 #define __SCRIPT_PROGRAM_H__
 
-class idScriptObject;
+#include "idlib/containers/StrList.h"
+#include "idlib/containers/StaticList.h"
+#include "idlib/containers/HashIndex.h"
+#include "idlib/math/Vector.h"
+
+#include "GameBase.h"
+
 class idEventDef;
 class idVarDef;
 class idTypeDef;
 class idEntity;
-class idThread;
 class idSaveGame;
 class idRestoreGame;
 
@@ -58,19 +63,17 @@ public:
 	void				Clear( void );
 
 private:
-	idStr 				name;
+	idStr				name;
 public:
 	const idEventDef	*eventdef;
 	idVarDef			*def;
 	const idTypeDef		*type;
-	int 				firstStatement;
-	int 				numStatements;
-	int 				parmTotal;
-	int 				locals; 			// total ints of parms + locals
-	int					filenum; 			// source file defined in
+	int					firstStatement;
+	int					numStatements;
+	int					parmTotal;
+	int					locals;			// total ints of parms + locals
+	int					filenum;			// source file defined in
 	idList<int>			parmSize;
-	idList<idVarDef *>    stackVars;
-	idList<idVarDef *>     deferredCopies;
 };
 
 typedef union eval_s {
@@ -78,8 +81,8 @@ typedef union eval_s {
 	float				_float;
 	float				vector[ 3 ];
 	function_t			*function;
-	int 				_int;
-	int 				entity;
+	int					_int;
+	int					entity;
 } eval_t;
 
 /***********************************************************************
@@ -93,8 +96,8 @@ Contains type information for variables and functions.
 class idTypeDef {
 private:
 	etype_t						type;
-	idStr 						name;
-	size_t							size;
+	idStr						name;
+	int							size;
 
 	// function types are more complex
 	idTypeDef					*auxType;					// return type
@@ -297,9 +300,9 @@ typedef union varEval_s {
 	float					*floatPtr;
 	idVec3					*vectorPtr;
 	function_t				*functionPtr;
-	int 					*intPtr;
+	int						*intPtr;
 	byte					*bytePtr;
-	int 					*entityNumberPtr;
+	int						*entityNumberPtr;
 	int						virtualFunction;
 	int						jumpOffset;
 	int						stackOffset;		// offset in stack for local variables
@@ -316,9 +319,8 @@ class idVarDef {
 public:
 	int						num;
 	varEval_t				value;
-	idVarDef *				scope; 			// function, namespace, or object the var was defined in
+	idVarDef *				scope;			// function, namespace, or object the var was defined in
 	int						numUsers;		// number of users if this is a constant
-	idVarDef *        copyOf;
 
 	typedef enum {
 		uninitialized, initializedVariable, initializedConstant, stackVariable
@@ -437,7 +439,7 @@ single idProgram.
 class idProgram {
 private:
 	idStrList									fileList;
-	idStr 										filename;
+	idStr										filename;
 	int											filenum;
 
 	int											numVariables;
@@ -515,7 +517,7 @@ public:
 	statement_t									&GetStatement( int index );
 	int											NumStatements( void ) { return statements.Num(); }
 
-	int 										GetReturnedInteger( void );
+	int											GetReturnedInteger( void );
 
 	void										ReturnFloat( float value );
 	void										ReturnInteger( int value );

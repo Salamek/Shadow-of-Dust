@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -147,19 +147,19 @@ void CDlgCamera::OnBtnAddtarget()
 void CDlgCamera::OnBtnDelevent()
 {
 	// TODO: Add your control notification handler code here
-	
+
 }
 
 void CDlgCamera::OnBtnDeltarget()
 {
 	// TODO: Add your control notification handler code here
-	
+
 }
 
 void CDlgCamera::OnDblclkComboSplines()
 {
 	// TODO: Add your control notification handler code here
-	
+
 }
 
 void CDlgCamera::OnSelchangeComboSplines()
@@ -193,7 +193,7 @@ void CDlgCamera::OnSelchangeListEvents()
 void CDlgCamera::OnDblclkListEvents()
 {
 	// TODO: Add your control notification handler code here
-	
+
 }
 
 void CDlgCamera::setupFromCamera()
@@ -229,7 +229,7 @@ BOOL CDlgCamera::OnInitDialog()
 	CDialog::OnInitDialog();
 	setupFromCamera();
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CDlgCamera::OnOK()
@@ -345,19 +345,19 @@ void CDlgCamera::OnFileSave()
 void CDlgCamera::OnTestcamera()
 {
 	// TODO: Add your control notification handler code here
-	
+
 }
 
 void CDlgCamera::OnBtnDeletepoints()
 {
 	// TODO: Add your control notification handler code here
-	
+
 }
 
 void CDlgCamera::OnBtnSelectall()
 {
 	// TODO: Add your control notification handler code here
-	
+
 }
 
 void CDlgCamera::OnRadioEditpoints()

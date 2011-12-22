@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,10 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../../renderer/tr_local.h"
-
+#include "idlib/containers/PlaneSet.h"
+#include "idlib/MapFile.h"
+#include "cm/CollisionModel.h"
+#include "renderer/tr_local.h"
 
 typedef struct primitive_s {
 	struct primitive_s *next;
@@ -309,7 +311,7 @@ node_t *AllocNode( void );
 
 // map.cpp
 
-bool 		LoadDMapFile( const char *filename );
+bool		LoadDMapFile( const char *filename );
 void		FreeOptimizeGroupList( optimizeGroup_t *groups );
 void		FreeDMapFile( void );
 

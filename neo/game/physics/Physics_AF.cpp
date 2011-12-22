@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,16 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/math/Quat.h"
+#include "idlib/Timer.h"
 
-#include "../Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "Entity.h"
+#include "Player.h"
+#include "WorldSpawn.h"
+
+#include "physics/Physics_AF.h"
 
 CLASS_DECLARATION( idPhysics_Base, idPhysics_AF )
 END_CLASS
@@ -993,7 +999,7 @@ idAFConstraint_UniversalJoint::SetShafts
 */
 void idAFConstraint_UniversalJoint::SetShafts( const idVec3 &cardanShaft1, const idVec3 &cardanShaft2 ) {
 	idVec3 cardanAxis;
-	float l;
+	float l id_attribute((unused));
 
 	shaft1 = cardanShaft1;
 	l = shaft1.Normalize();
@@ -1302,12 +1308,12 @@ void idAFConstraint_UniversalJoint::DebugDraw( void ) {
 	d1 = axis1 * body1->GetWorldAxis();
 
 	if ( master ) {
-        a2 = master->GetWorldOrigin() + anchor2 * master->GetWorldAxis();
+		a2 = master->GetWorldOrigin() + anchor2 * master->GetWorldAxis();
 		s2 = shaft2 * master->GetWorldAxis();
 		d2 = axis2 * master->GetWorldAxis();
 	}
 	else {
-        a2 = anchor2;
+		a2 = anchor2;
 		s2 = shaft2;
 		d2 = axis2;
 	}
@@ -5337,7 +5343,7 @@ void idPhysics_AF::Evolve( float timeStep ) {
 	idVec6 force;
 	idRotation rotation;
 	float vSqr, maxLinearVelocity, maxAngularVelocity;
-	
+
 	maxLinearVelocity = af_maxLinearVelocity.GetFloat() / timeStep;
 	maxAngularVelocity = af_maxAngularVelocity.GetFloat() / timeStep;
 
@@ -7962,7 +7968,7 @@ idPhysics_AF::ReadFromSnapshot
 ================
 */
 void idPhysics_AF::ReadFromSnapshot( const idBitMsgDelta &msg ) {
-	int i, num;
+	int i, num id_attribute((unused));
 	idCQuat quat;
 
 	current.atRest = msg.ReadLong();

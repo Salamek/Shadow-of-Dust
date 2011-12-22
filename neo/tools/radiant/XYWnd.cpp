@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -283,9 +283,9 @@ void VectorToAngles(idVec3 vec, idVec3 angles) {
 
 /*
  =======================================================================================================================
-    RotateLight target is relative to the light origin up and right are relative to the target up and right are
-    perpendicular and are on a plane through the target with the target vector as normal delta is the movement of the
-    target relative to the light
+	RotateLight target is relative to the light origin up and right are relative to the target up and right are
+	perpendicular and are on a plane through the target with the target vector as normal delta is the movement of the
+	target relative to the light
  =======================================================================================================================
 */
 void VectorSnapGrid(idVec3 &v) {
@@ -638,7 +638,7 @@ static unsigned s_stipple[32] = {
 
 /*
  =======================================================================================================================
-    WXY_WndProc
+	WXY_WndProc
  =======================================================================================================================
  */
 LONG WINAPI XYWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -2109,7 +2109,7 @@ bool MergeMenu(CMenu * pMenuDestination, const CMenu * pMenuAdd, bool bTopLevel 
 				return false;
 			}
 
-			// don't destroy the new menu		
+			// don't destroy the new menu
 			NewPopupMenu.Detach();
 		} // if (pSubMenu)
 	} // for (iLoop)
@@ -2130,7 +2130,7 @@ void CXYWnd::HandleDrop() {
 
 	if (!m_mnuDrop.GetSafeHmenu()) {		// first time, load it up
 		m_mnuDrop.CreatePopupMenu();
-		
+
 		CMenu *drop = new CMenu;
 		drop->LoadMenu( IDR_MENU_DROP );
 
@@ -2517,7 +2517,7 @@ bool CXYWnd::DragDelta(int x, int y, idVec3 &move) {
 
 /*
  =======================================================================================================================
-    NewBrushDrag
+	NewBrushDrag
  =======================================================================================================================
  */
 void CXYWnd::NewBrushDrag(int x, int y) {
@@ -2584,7 +2584,7 @@ void CXYWnd::NewBrushDrag(int x, int y) {
 
 /*
  =======================================================================================================================
-    XY_MouseMoved
+	XY_MouseMoved
  =======================================================================================================================
  */
 bool CXYWnd::XY_MouseMoved(int x, int y, int buttons) {
@@ -2734,8 +2734,8 @@ bool CXYWnd::XY_MouseMoved(int x, int y, int buttons) {
 
 /*
  =======================================================================================================================
-    DRAWING £
-    XY_DrawGrid
+	DRAWING £
+	XY_DrawGrid
  =======================================================================================================================
  */
 void CXYWnd::XY_DrawGrid() {
@@ -2863,10 +2863,10 @@ void CXYWnd::XY_DrawGrid() {
 				qglEnd ();
 				qglLineWidth(1);
 			}
-		}		
+		}
 	}
 
-	
+
 
 
 	// draw coordinate text if needed
@@ -2916,7 +2916,7 @@ void CXYWnd::XY_DrawGrid() {
 
 /*
  =======================================================================================================================
-    XY_DrawBlockGrid
+	XY_DrawBlockGrid
  =======================================================================================================================
  */
 void CXYWnd::XY_DrawBlockGrid() {
@@ -2990,7 +2990,7 @@ void CXYWnd::XY_DrawBlockGrid() {
 }
 
 void GLColoredBoxWithLabel(float x, float y, float size, idVec4 color, const char *text, idVec4 textColor, float xofs, float yofs, float lineSize) {
-	globalImages->BindNull();	
+	globalImages->BindNull();
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_BLEND);
@@ -3161,11 +3161,11 @@ void CXYWnd::DrawZIcon(void) {
 
 /*
  =======================================================================================================================
-    FilterBrush
+	FilterBrush
  =======================================================================================================================
  */
 bool FilterBrush(brush_t *pb) {
-	
+
 	if (!pb->owner) {
 		return false;	// during construction
 	}
@@ -3261,7 +3261,7 @@ bool FilterBrush(brush_t *pb) {
 		if (pb->modelHandle > 0) {
 			idRenderModel *model = pb->modelHandle;
 			if ( dynamic_cast<idRenderModelLiquid*>(model) ) {
-				return true;			
+				return true;
 			}
 		}
 	}
@@ -3306,9 +3306,9 @@ bool FilterBrush(brush_t *pb) {
 
 /*
  =======================================================================================================================
-    PATH LINES £
-    DrawPathLines Draws connections between entities. Needs to consider all entities, not just ones on screen, because
-    the lines can be visible when neither end is. Called for both camera view and xy view.
+	PATH LINES £
+	DrawPathLines Draws connections between entities. Needs to consider all entities, not just ones on screen, because
+	the lines can be visible when neither end is. Called for both camera view and xy view.
  =======================================================================================================================
  */
 void DrawPathLines(void) {
@@ -3792,7 +3792,7 @@ void CXYWnd::XY_Draw() {
 	// area selection hack
 	if (g_qeglobals.d_select_mode == sel_area) {
 		qglEnable(GL_BLEND);
-        qglPolygonMode ( GL_FRONT_AND_BACK , GL_FILL );
+		qglPolygonMode ( GL_FRONT_AND_BACK , GL_FILL );
 		qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		qglColor4f(0.0, 0.0, 1.0, 0.25);
 		qglRectf
@@ -3803,7 +3803,7 @@ void CXYWnd::XY_Draw() {
 			g_qeglobals.d_vAreaBR[nDim2]
 		);
 		qglDisable(GL_BLEND);
-        qglPolygonMode ( GL_FRONT_AND_BACK , GL_LINE );
+		qglPolygonMode ( GL_FRONT_AND_BACK , GL_LINE );
 		qglColor3f(1.0f, 1.0f, 1.0f);
 		qglRectf
 		(
@@ -4511,7 +4511,7 @@ void CXYWnd::DrawPrecisionCrosshair( void )
 	float x, y;
 	idVec4 crossEndColor (1.0f, 0.0f, 1.0f, 1.0f); // the RGBA color of the precision crosshair at its ends
 	idVec4 crossMidColor; // the RGBA color of the precision crosshair at the crossing point
-	
+
 	/// Transform the mouse coordinates into axis-correct map-coordinates
 	if( m_precisionCrosshairMode == PRECISION_CROSSHAIR_SNAP )
 		SnapToPoint( m_mouseX, m_mouseY, mouse3dPos );
@@ -4519,7 +4519,7 @@ void CXYWnd::DrawPrecisionCrosshair( void )
 		XY_ToPoint( m_mouseX, m_mouseY, mouse3dPos );
 	x = mouse3dPos[ m_axisHoriz ];
 	y = mouse3dPos[ m_axisVert ];
-	
+
 	/// Use the color specified by the user
 
 	crossEndColor[0] = g_qeglobals.d_savedinfo.colors[ COLOR_PRECISION_CROSSHAIR ][0];
@@ -4531,13 +4531,13 @@ void CXYWnd::DrawPrecisionCrosshair( void )
 
 	if( m_precisionCrosshairMode == PRECISION_CROSSHAIR_FREE )
 		crossMidColor[ 3 ] = 0.0f; // intersection-color is 100% transparent (alpha = 0.0f)
-	
+
 	/// Set up OpenGL states (for drawing smooth-shaded plain-colored lines)
 	qglEnable( GL_BLEND );
 	qglDisable( GL_TEXTURE_2D );
 	qglShadeModel( GL_SMOOTH );
 	qglBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-	
+
 	/// Draw a fullscreen-sized crosshair over the cursor
 	qglBegin( GL_LINES );
 	{
@@ -4550,7 +4550,7 @@ void CXYWnd::DrawPrecisionCrosshair( void )
 		qglVertex2f( x, y );
 		qglColor4fv( crossEndColor.ToFloatPtr() );
 		qglVertex2f( m_mcRight, y );
-		
+
 		/// Draw the vertical precision line (in two pieces)
 		qglColor4fv( crossEndColor.ToFloatPtr() );
 		qglVertex2f( x, m_mcTop );
@@ -4562,7 +4562,7 @@ void CXYWnd::DrawPrecisionCrosshair( void )
 		qglVertex2f( x, m_mcBottom );
 	}
 	qglEnd(); // GL_LINES
-	
+
 	// Radiant was in opaque, flat-shaded mode by default; restore this to prevent possible slowdown
 	qglShadeModel( GL_FLAT );
 	qglDisable( GL_BLEND );

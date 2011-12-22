@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -173,7 +173,7 @@ void SoundEditorInit( const idDict *spawnArgs ) {
 
 	g_SoundDialog->ShowWindow( SW_SHOW );
 	g_SoundDialog->SetFocus();
-	
+
 	if ( spawnArgs ) {
 		const char *name = spawnArgs->GetString( "name" );
 		const idDict *dict = gameEdit->MapGetEntityDict( name );
@@ -384,9 +384,9 @@ void CDialogSound::OnChangeEditVolume()
 	// send this notification unless you override the CDialog::OnInitDialog()
 	// function and call CRichEditCtrl().SetEventMask()
 	// with the ENM_CHANGE flag ORed into the mask.
-	
+
 	// TODO: Add your control notification handler code here
-	
+
 }
 
 HTREEITEM CDialogSound::AddStrList(const char *root, const idStrList &list, int id) {
@@ -471,13 +471,13 @@ void CDialogSound::AddSounds(bool rootItems) {
 	idStrList list(1024);
 	idStrList list2(1024);
 	HTREEITEM base = treeSounds.InsertItem("Sound Shaders");
-	
+
 	for( i = 0; i < declManager->GetNumDecls( DECL_SOUND ) ; i++ ) {
 		const idSoundShader *poo = declManager->SoundByIndex(i, false);
 		list.AddUnique( poo->GetFileName() );
 	}
 	list.Sort();
-	
+
 	for ( i = 0; i < list.Num(); i++ ) {
 		HTREEITEM child = treeSounds.InsertItem(list[i], base);
 		treeSounds.SetItemData(child, SOUNDPARENT);
@@ -489,7 +489,7 @@ void CDialogSound::AddSounds(bool rootItems) {
 				list2.Append( poo->GetName() );
 			}
 		}
-		list2.Sort();		
+		list2.Sort();
 		for (j = 0; j < list2.Num(); j++) {
 			HTREEITEM child2 = treeSounds.InsertItem( list2[j], child );
 			treeSounds.SetItemData(child2, SOUNDS);
@@ -499,7 +499,7 @@ void CDialogSound::AddSounds(bool rootItems) {
 
 	idFileList *files;
 	files = fileSystem->ListFilesTree( "sound", ".wav|.ogg", true );
-    AddStrList( "Wave files", files->GetList(), WAVES );
+	AddStrList( "Wave files", files->GetList(), WAVES );
 	fileSystem->FreeFileList( files );
 }
 
@@ -566,10 +566,10 @@ void CDialogSound::AddSpeakers() {
 BOOL CDialogSound::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	// Indicate the sound dialog is opened
 	com_editors |= EDITOR_SOUND;
-	
+
 	inUseTree = NULL;
 	AddSounds(true);
 	AddGroups();
@@ -578,7 +578,7 @@ BOOL CDialogSound::OnInitDialog()
 	SetWaveSize();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CDialogSound::OnBtnRefresh()
@@ -599,7 +599,7 @@ void CDialogSound::OnBtnPlaysound()
 			sw->PlayShaderDirectly(playSound);
 		}
 	}
-	
+
 }
 
 void CDialogSound::OnDblclkTreeSounds(NMHDR* pNMHDR, LRESULT* pResult)
@@ -609,7 +609,7 @@ void CDialogSound::OnDblclkTreeSounds(NMHDR* pNMHDR, LRESULT* pResult)
 	GetCursorPos( &pt );
 	treeSounds.ScreenToClient( &pt );
 	HTREEITEM item = treeSounds.HitTest( pt );
-	
+
 	if (item) {
 		DWORD dw = treeSounds.GetItemData( item );
 		if ( dw == SOUNDS || dw == INUSESOUNDS ) {
@@ -655,7 +655,7 @@ void CDialogSound::OnSelchangedTreeSounds(NMHDR* pNMHDR, LRESULT* pResult)
 			}
 		}
 	}
-	
+
 	*pResult = 0;
 }
 
@@ -803,7 +803,7 @@ idStr CDialogSound::RebuildItemName(const char *root, HTREEITEM item) {
 			break;
 		}
 	}
- 	return strParent;
+	return strParent;
 }
 
 

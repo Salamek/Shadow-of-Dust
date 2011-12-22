@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,6 +26,11 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
+#include "idlib/containers/List.h"
+#include "idlib/geometry/DrawVert.h"
+#include "renderer/Model.h"
+
+class idDemoFile;
 
 typedef struct {
 	const idMaterial	*material;
@@ -43,8 +48,8 @@ public:
 	void	Clear();
 
 	void	WriteToDemo( idDemoFile *demo );
-	void	ReadFromDemo( idDemoFile *demo );	
-	
+	void	ReadFromDemo( idDemoFile *demo );
+
 	void	EmitToCurrentView( float modelMatrix[16], bool depthHack );
 	void	EmitFullScreen();
 
@@ -67,4 +72,3 @@ private:
 	idList<glIndex_t>		indexes;
 	idList<idDrawVert>	verts;
 };
-

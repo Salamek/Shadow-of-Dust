@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,14 +26,17 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
-#include "../Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "Player.h"
+#include "Camera.h"
+
+#include "script/Script_Thread.h"
 
 const idEventDef EV_Thread_Execute( "<execute>", NULL );
 const idEventDef EV_Thread_SetCallback( "<script_setcallback>", NULL );
-																	
+
 // script callable events
 const idEventDef EV_Thread_TerminateThread( "terminate", "d" );
 const idEventDef EV_Thread_Pause( "pause", NULL );
@@ -285,7 +288,7 @@ idThread::idThread
 */
 idThread::idThread( idEntity *self, const function_t *func ) {
 	assert( self );
-	
+
 	Init();
 	SetThreadName( self->name );
 	interpreter.EnterObjectFunction( self, func, false );
@@ -440,7 +443,7 @@ void idThread::Init( void ) {
 
 	threadNum = threadIndex;
 	threadList.Append( this );
-	
+
 	creationTime = gameLocal.time;
 	lastExecuteTime = 0;
 	manualControl = false;
@@ -814,7 +817,7 @@ void idThread::Error( const char *fmt, ... ) const {
 	vsprintf( text, fmt, argptr );
 	va_end( argptr );
 
-	interpreter.Error("%s", text );
+	interpreter.Error( text );
 }
 
 /*
@@ -830,7 +833,7 @@ void idThread::Warning( const char *fmt, ... ) const {
 	vsprintf( text, fmt, argptr );
 	va_end( argptr );
 
-	interpreter.Warning("%s", text );
+	interpreter.Warning( text );
 }
 
 /*
@@ -936,7 +939,7 @@ void idThread::WaitFrame( void ) {
 /***********************************************************************
 
   Script callable events
-	
+
 ***********************************************************************/
 
 /*
@@ -1434,7 +1437,7 @@ void idThread::Event_OnSignal( int signal, idEntity *ent, const char *func ) {
 	if ( !ent ) {
 		Error( "Entity not found" );
 	}
-	
+
 	if ( ( signal < 0 ) || ( signal >= NUM_SIGNALS ) ) {
 		Error( "Signal out of range" );
 	}
@@ -1456,7 +1459,7 @@ void idThread::Event_ClearSignalThread( int signal, idEntity *ent ) {
 	if ( !ent ) {
 		Error( "Entity not found" );
 	}
-	
+
 	if ( ( signal < 0 ) || ( signal >= NUM_SIGNALS ) ) {
 		Error( "Signal out of range" );
 	}

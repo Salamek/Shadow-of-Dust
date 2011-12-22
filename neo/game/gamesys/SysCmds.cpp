@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,12 +26,23 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/LangDict.h"
+#include "framework/async/NetworkSystem.h"
+#include "framework/FileSystem.h"
 
-#include "../Game_local.h"
+#include "gamesys/TypeInfo.h"
+#include "gamesys/SysCvar.h"
+#include "script/Script_Thread.h"
+#include "ai/AI.h"
+#include "anim/Anim_Testmodel.h"
+#include "Entity.h"
+#include "Moveable.h"
+#include "WorldSpawn.h"
+#include "Fx.h"
+#include "Misc.h"
 
-#include "TypeInfo.h"
+#include "SysCmds.h"
 
 /*
 ==================
@@ -87,7 +98,7 @@ void Cmd_EntityList_f( const idCmdArgs &args ) {
 		size += check->spawnArgs.Allocated();
 	}
 
-	gameLocal.Printf( "...%d entities\n...%zu bytes of spawnargs\n", count, size );
+	gameLocal.Printf( "...%d entities\n...%zd bytes of spawnargs\n", count, size );
 }
 
 /*
@@ -395,7 +406,7 @@ argv(0) god
 ==================
 */
 void Cmd_God_f( const idCmdArgs &args ) {
-	const char  *msg;
+	const char	*msg;
 	idPlayer	*player;
 
 	player = gameLocal.GetLocalPlayer();
@@ -424,7 +435,7 @@ argv(0) notarget
 ==================
 */
 void Cmd_Notarget_f( const idCmdArgs &args ) {
-	const char  *msg;
+	const char	*msg;
 	idPlayer	*player;
 
 	player = gameLocal.GetLocalPlayer();
@@ -451,7 +462,7 @@ argv(0) noclip
 ==================
 */
 void Cmd_Noclip_f( const idCmdArgs &args ) {
-	const char  *msg;
+	const char	*msg;
 	idPlayer	*player;
 
 	player = gameLocal.GetLocalPlayer();
@@ -611,7 +622,7 @@ Cmd_AddChatLine_f
 ==================
 */
 static void Cmd_AddChatLine_f( const idCmdArgs &args ) {
-	gameLocal.mpGame.AddChatLine("%s", args.Argv( 1 ) );
+	gameLocal.mpGame.AddChatLine( args.Argv( 1 ) );
 }
 
 /*
@@ -1209,11 +1220,12 @@ PrintFloat
 static void PrintFloat( float f ) {
 	char buf[128];
 	int i;
+
 	for ( i = sprintf( buf, "%3.2f", f ); i < 7; i++ ) {
 		buf[i] = ' ';
 	}
 	buf[i] = '\0';
-	gameLocal.Printf("%s", buf );
+	gameLocal.Printf( buf );
 }
 
 /*
@@ -1438,7 +1450,7 @@ static void Cmd_ListAnims_f( const idCmdArgs &args ) {
 			}
 		}
 
-		gameLocal.Printf( "%zu memory used in %d entity animators\n", size, num );
+		gameLocal.Printf( "%zd memory used in %d entity animators\n", size, num );
 	}
 }
 
@@ -2044,7 +2056,7 @@ static void Cmd_CloseViewNotes_f( const idCmdArgs &args ) {
 	if ( !player ) {
 		return;
 	}
-	
+
 	player->hud->SetStateString( "viewcomments", "" );
 	player->hud->HandleNamedEvent( "hideViewComments" );
 }
@@ -2199,7 +2211,7 @@ void Cmd_NextGUI_f( const idCmdArgs &args ) {
 			if ( ent->spawnArgs.GetString( "gui", NULL ) != NULL ) {
 				break;
 			}
-			
+
 			if ( ent->spawnArgs.GetString( "gui2", NULL ) != NULL ) {
 				break;
 			}
@@ -2207,7 +2219,7 @@ void Cmd_NextGUI_f( const idCmdArgs &args ) {
 			if ( ent->spawnArgs.GetString( "gui3", NULL ) != NULL ) {
 				break;
 			}
-			
+
 			// try the next entity
 			gameLocal.lastGUIEnt = ent;
 		}
@@ -2242,7 +2254,7 @@ void Cmd_NextGUI_f( const idCmdArgs &args ) {
 
 	assert( geom->facePlanes != NULL );
 
-	modelMatrix = idMat4( renderEnt->axis, renderEnt->origin );	
+	modelMatrix = idMat4( renderEnt->axis, renderEnt->origin );
 	normal = geom->facePlanes[ 0 ].Normal() * renderEnt->axis;
 	center = geom->bounds.GetCenter() * modelMatrix;
 
@@ -2280,7 +2292,7 @@ void Cmd_TestId_f( const idCmdArgs &args ) {
 	if ( idStr::Cmpn( id, STRTABLE_ID, STRTABLE_ID_LENGTH ) != 0 ) {
 		id = STRTABLE_ID + id;
 	}
-	gameLocal.mpGame.AddChatLine( common->GetLanguageDict()->GetString( id ), "<nothing>", "<nothing>", "<nothing>" );	
+	gameLocal.mpGame.AddChatLine( common->GetLanguageDict()->GetString( id ), "<nothing>", "<nothing>", "<nothing>" );
 }
 
 /*

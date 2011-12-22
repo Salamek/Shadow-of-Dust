@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,13 +37,13 @@ class idPointListInterface {
 public:
 						idPointListInterface() { selectedPoints.Clear(); };
 						~idPointListInterface() {};
-	
+
 	virtual int			numPoints() { return 0; }
 	virtual void		addPoint( const float x, const float y, const float z ) {}
 	virtual void		addPoint( const idVec3 &v ) {}
 	virtual void		removePoint( int index ) {}
 	virtual idVec3 *	getPoint( int index ) { return NULL; }
-	
+
 	int					numSelectedPoints() { return selectedPoints.Num(); }
 	idVec3 *			getSelectedPoint( int index );
 	int					selectPointByRay( const idVec3 &origin, const idVec3 &direction, bool single );
@@ -142,7 +142,7 @@ struct idVelocity {
 // can either be a look at or origin position for a camera
 class idCameraPosition : public idPointListInterface {
 public:
-	
+
 						idCameraPosition() { time = 0; name = "position"; }
 						idCameraPosition( const char *p ) { name = p; }
 						idCameraPosition( long t ) { time = t; }

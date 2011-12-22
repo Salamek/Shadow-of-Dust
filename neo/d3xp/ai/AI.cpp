@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,17 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/math/Quat.h"
+#include "framework/DeclEntityDef.h"
 
-#include "../Game_local.h"
+#include "gamesys/SysCvar.h"
+#include "Moveable.h"
+#include "Fx.h"
+#include "SmokeParticles.h"
+#include "Misc.h"
+
+#include "ai/AI.h"
 
 static const char *moveCommandString[ NUM_MOVE_COMMANDS ] = {
 	"MOVE_NONE",
@@ -1193,8 +1200,6 @@ void idAI::Think( void ) {
 				PlayChatter();
 				CheckBlink();
 				break;
-			default:
-			break;
 			}
 		}
 
@@ -2164,7 +2169,7 @@ bool idAI::StepDirection( float dir ) {
 			if ( z <= ceilingPos.z ) {
 				start.x = org.x;
 				start.y = org.y;
-                start.z = z;
+				start.z = z;
 			} else {
 				start = ceilingPos;
 			}
@@ -2251,7 +2256,7 @@ bool idAI::NewWanderDir( const idVec3 &dest ) {
 	if ( gameLocal.random.RandomInt() & 1 ) {
 		for( tdir = 0; tdir <= 315; tdir += 45 ) {
 			if ( tdir != turnaround && StepDirection( tdir ) ) {
-                return true;
+				return true;
 			}
 		}
 	} else {
@@ -2309,8 +2314,6 @@ bool idAI::GetMovePos( idVec3 &seekPos ) {
 		seekPos = org;
 		return false;
 		break;
-	default:
-	break;
 	}
 
 	if ( move.moveCommand == MOVE_TO_ENTITY ) {
@@ -2955,9 +2958,9 @@ idAI::AdjustFlyingAngles
 */
 void idAI::AdjustFlyingAngles( void ) {
 	idVec3	vel;
-	float 	speed;
-	float 	roll;
-	float 	pitch;
+	float	speed;
+	float	roll;
+	float	pitch;
 
 	vel = physicsObj.GetLinearVelocity();
 
@@ -3622,7 +3625,7 @@ void idAI::Activate( idEntity *activator ) {
 
 		// update the script in cinematics so that entities don't start anims or show themselves a frame late.
 		if ( cinematic ) {
-            UpdateAIScript();
+			UpdateAIScript();
 
 			// make sure our model gets updated
 			animator.ForceUpdate();
@@ -3773,7 +3776,7 @@ void idAI::SetEnemyPosition( void ) {
 	idActor		*enemyEnt = enemy.GetEntity();
 	int			enemyAreaNum;
 	int			areaNum;
-	int			lastVisibleReachableEnemyAreaNum = 0;
+	int			lastVisibleReachableEnemyAreaNum;
 	aasPath_t	path;
 	idVec3		pos;
 	bool		onGround;
@@ -4957,10 +4960,10 @@ bool idAI::UpdateAnimationControllers( void ) {
 	idVec3		focusPos;
 	idQuat		jawQuat;
 	idVec3		left;
-	idVec3 		dir;
-	idVec3 		orientationJointPos;
-	idVec3 		localDir;
-	idAngles 	newLookAng;
+	idVec3		dir;
+	idVec3		orientationJointPos;
+	idVec3		localDir;
+	idAngles	newLookAng;
 	idAngles	diff;
 	idMat3		mat;
 	idMat3		axis;
@@ -5015,7 +5018,7 @@ bool idAI::UpdateAnimationControllers( void ) {
 
 	idEntity *focusEnt = focusEntity.GetEntity();
 	if ( !allowJointMod || !allowEyeFocus || ( gameLocal.time >= focusTime ) ) {
-	    focusPos = GetEyePosition() + orientationJointAxis[ 0 ] * 512.0f;
+		focusPos = GetEyePosition() + orientationJointAxis[ 0 ] * 512.0f;
 	} else if ( focusEnt == NULL ) {
 		// keep looking at last position until focusTime is up
 		focusPos = currentFocusPos;

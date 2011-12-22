@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,14 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "framework/FileSystem.h"
+#include "framework/async/NetworkSystem.h"
+#include "renderer/RenderSystem.h"
+
+#include "gamesys/SysCmds.h"
+#include "Entity.h"
+#include "Player.h"
 
 #include "Game_local.h"
 
@@ -728,7 +734,7 @@ void idGameLocal::NetworkEventWarning( const entityNetEvent_t *event, const char
 	va_end( argptr );
 	idStr::Append( buf, sizeof(buf), "\n" );
 
-	common->DWarning("%s\n", buf );
+	common->DWarning( buf );
 }
 
 /*
@@ -764,7 +770,7 @@ void idGameLocal::ServerProcessEntityNetworkEventQueue( void ) {
 			}
 		}
 
-		entityNetEvent_t* freedEvent = eventQueue.Dequeue();
+		entityNetEvent_t* freedEvent id_attribute((unused)) = eventQueue.Dequeue();
 		assert( freedEvent == event );
 		eventQueue.Free( event );
 	}
@@ -1312,7 +1318,7 @@ void idGameLocal::ClientProcessEntityNetworkEventQueue( void ) {
 			}
 		}
 
-		entityNetEvent_t* freedEvent = eventQueue.Dequeue();
+		entityNetEvent_t* freedEvent id_attribute((unused)) = eventQueue.Dequeue();
 		assert( freedEvent == event );
 		eventQueue.Free( event );
 	}

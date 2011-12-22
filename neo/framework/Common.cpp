@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,28 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/containers/HashTable.h"
+#include "idlib/LangDict.h"
+#include "idlib/MapFile.h"
+#include "cm/CollisionModel.h"
+#include "framework/async/AsyncNetwork.h"
+#include "framework/async/NetworkSystem.h"
+#include "framework/BuildVersion.h"
+#include "framework/Licensee.h"
+#include "framework/Console.h"
+#include "framework/Session.h"
+#include "framework/Game.h"
+#include "framework/KeyInput.h"
+#include "framework/EventLoop.h"
+#include "renderer/Image.h"
+#include "renderer/Model.h"
+#include "renderer/ModelManager.h"
+#include "renderer/RenderSystem.h"
+#include "tools/compilers/compiler_public.h"
+#include "tools/compilers/aas/AASFileManager.h"
 
-#include "../renderer/Image.h"
+#include "framework/Common.h"
 
 #define	MAX_PRINT_MSG_SIZE	4096
 #define MAX_WARNING_LIST	256
@@ -62,7 +80,7 @@ idCVar com_asyncInput( "com_asyncInput", "0", CVAR_BOOL|CVAR_SYSTEM, "sample inp
 #define ASYNCSOUND_INFO "0: mix sound inline, 1: memory mapped async mix, 2: callback mixing, 3: write async mix"
 #if defined( MACOS_X )
 idCVar com_asyncSound( "com_asyncSound", "2", CVAR_INTEGER|CVAR_SYSTEM|CVAR_ROM, ASYNCSOUND_INFO );
-#elif defined( __linux__ )
+#elif defined( __unix__ )
 idCVar com_asyncSound( "com_asyncSound", "3", CVAR_INTEGER|CVAR_SYSTEM|CVAR_ROM, ASYNCSOUND_INFO );
 #else
 idCVar com_asyncSound( "com_asyncSound", "1", CVAR_INTEGER|CVAR_SYSTEM, ASYNCSOUND_INFO, 0, 1 );
@@ -193,7 +211,7 @@ private:
 	idStrList					warningList;
 	idStrList					errorList;
 
-	uintptr_t							gameDLL;
+	uintptr_t					gameDLL;
 
 	idLangDict					languageDict;
 
@@ -1087,7 +1105,6 @@ void idCommonLocal::WriteConfiguration( void ) {
 	com_developer.SetBool( false );
 
 	WriteConfigToFile( CONFIG_FILE );
-
 	// restore the developer cvar
 	com_developer.SetBool( developer );
 }
@@ -1353,8 +1370,9 @@ static void Com_Crash_f( const idCmdArgs &args ) {
 		commonLocal.Printf( "crash may only be used in developer mode\n" );
 		return;
 	}
+
 #ifdef __GNUC__
-  __builtin_trap();
+	__builtin_trap();
 #else
 	* ( int * ) 0 = 0x12345678;
 #endif
@@ -2487,7 +2505,7 @@ void idCommonLocal::Frame( void ) {
 
 		// the FPU stack better be empty at this point or some bad code or compiler bug left values on the stack
 		if ( !Sys_FPU_StackIsEmpty() ) {
-			Printf("%s", Sys_FPU_GetState() );
+			Printf( Sys_FPU_GetState() );
 			FatalError( "idCommon::Frame: the FPU stack is not empty at the end of the frame\n" );
 		}
 	}
@@ -2730,7 +2748,7 @@ idCommonLocal::SetMachineSpec
 =================
 */
 void idCommonLocal::SetMachineSpec( void ) {
-	cpuid_t	cpu = Sys_GetProcessorId();
+	int cpu = Sys_GetProcessorId();
 	double ghz = Sys_ClockTicksPerSecond() * 0.000000001f;
 	int vidRam = Sys_GetVideoRam();
 	int sysRam = Sys_GetSystemRam();
@@ -2833,6 +2851,7 @@ void idCommonLocal::Init( int argc, const char **argv, const char *cmdline ) {
 		// game specific initialization
 		InitGame();
 
+		// don't add startup commands if no CD key is present
 
 		if ( !AddStartupCommands() ) {
 			// if the user didn't give any commands, run default action

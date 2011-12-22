@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,11 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
+#include "idlib/hashing/MD4.h"
+#include "renderer/tr_local.h"
 
-#include "tr_local.h"
+#include "renderer/Image.h"
 
 /*
 PROBLEM: compressed textures may break the zero clamp rule!
@@ -233,7 +234,7 @@ GLenum idImage::SelectInternalFormat( const byte **dataPtrs, int numDataPtrs, in
 
 			cor = scan[0] | scan[1] | scan[2];
 			cand = scan[0] & scan[1] & scan[2];
-			
+
 			// if rgb are all the same, the or and and will match
 			rgbDiffer |= ( cor ^ cand );
 
@@ -615,7 +616,8 @@ void idImage::GenerateImage( const byte *pic, int width, int height,
 		R_SetBorderTexels( (byte *)scaledBuffer, width, height, rgba );
 	}
 
-	if ( generatorFunction == NULL && ( (depth == TD_BUMP && globalImages->image_writeNormalTGA.GetBool()) || (depth != TD_BUMP && globalImages->image_writeTGA.GetBool()) ) ) {		// Optionally write out the texture to a .tga
+	if ( generatorFunction == NULL && ( (depth == TD_BUMP && globalImages->image_writeNormalTGA.GetBool()) || (depth != TD_BUMP && globalImages->image_writeTGA.GetBool()) ) ) {
+		// Optionally write out the texture to a .tga
 		char filename[MAX_IMAGE_NAME];
 		ImageProgramStringToCompressedFileName( imgName, filename );
 		char *ext = strrchr(filename, '.');
@@ -1382,9 +1384,8 @@ bool idImage::CheckPrecompressedImage( bool fullLoad ) {
 		return false;
 	}
 
-	int len = f->Length();
-	int size_dd = sizeof( ddsFileHeader_t );
-	if ( len < size_dd ) {
+	int	len = f->Length();
+	if ( len < sizeof( ddsFileHeader_t ) ) {
 		fileSystem->CloseFile( f );
 		return false;
 	}
@@ -1465,35 +1466,35 @@ void idImage::UploadPrecompressedImage( byte *data, int len ) {
 
 	uploadWidth = header->dwWidth;
 	uploadHeight = header->dwHeight;
-    if ( header->ddspf.dwFlags & DDSF_FOURCC ) {
-        switch ( header->ddspf.dwFourCC ) {
-        case DDS_MAKEFOURCC( 'D', 'X', 'T', '1' ):
+	if ( header->ddspf.dwFlags & DDSF_FOURCC ) {
+		switch ( header->ddspf.dwFourCC ) {
+		case DDS_MAKEFOURCC( 'D', 'X', 'T', '1' ):
 			if ( header->ddspf.dwFlags & DDSF_ALPHAPIXELS ) {
 				internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
 			} else {
 				internalFormat = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
 			}
-            break;
-        case DDS_MAKEFOURCC( 'D', 'X', 'T', '3' ):
-            internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
-            break;
-        case DDS_MAKEFOURCC( 'D', 'X', 'T', '5' ):
-            internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-            break;
+			break;
+		case DDS_MAKEFOURCC( 'D', 'X', 'T', '3' ):
+			internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
+			break;
+		case DDS_MAKEFOURCC( 'D', 'X', 'T', '5' ):
+			internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+			break;
 		case DDS_MAKEFOURCC( 'R', 'X', 'G', 'B' ):
 			internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 			break;
-        default:
-            common->Warning( "Invalid compressed internal format\n" );
-            return;
-        }
-    } else if ( ( header->ddspf.dwFlags & DDSF_RGBA ) && header->ddspf.dwRGBBitCount == 32 ) {
+		default:
+			common->Warning( "Invalid compressed internal format\n" );
+			return;
+		}
+	} else if ( ( header->ddspf.dwFlags & DDSF_RGBA ) && header->ddspf.dwRGBBitCount == 32 ) {
 		externalFormat = GL_BGRA_EXT;
 		internalFormat = GL_RGBA8;
-    } else if ( ( header->ddspf.dwFlags & DDSF_RGB ) && header->ddspf.dwRGBBitCount == 32 ) {
-        externalFormat = GL_BGRA_EXT;
+	} else if ( ( header->ddspf.dwFlags & DDSF_RGB ) && header->ddspf.dwRGBBitCount == 32 ) {
+		externalFormat = GL_BGRA_EXT;
 		internalFormat = GL_RGBA8;
-    } else if ( ( header->ddspf.dwFlags & DDSF_RGB ) && header->ddspf.dwRGBBitCount == 24 ) {
+	} else if ( ( header->ddspf.dwFlags & DDSF_RGB ) && header->ddspf.dwRGBBitCount == 24 ) {
 		if ( header->ddspf.dwFlags & DDSF_ID_INDEXCOLOR ) {
 			externalFormat = GL_COLOR_INDEX;
 			internalFormat = GL_COLOR_INDEX8_EXT;
@@ -1672,14 +1673,11 @@ PurgeImage
 */
 void idImage::PurgeImage() {
 	if ( texnum != TEXTURE_NOT_LOADED ) {
-		#ifdef _WIN32
-			if ( qglDeleteTextures ) {
-		#endif
+#ifdef _WIN32
 		// sometimes is NULL when exiting with an error
+		if ( qglDeleteTextures )
+#endif
 			qglDeleteTextures( 1, &texnum );	// this should be the ONLY place it is ever called!
-		#ifdef _WIN32
-			}
-		#endif
 		texnum = TEXTURE_NOT_LOADED;
 	}
 
@@ -2030,10 +2028,10 @@ void idImage::UploadScratch( const byte *data, int cols, int rows ) {
 		// a smear across the entire polygon
 #if 1
 		qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-		qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );	
+		qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 #else
 		qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-		qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );	
+		qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 #endif
 	}
 }
@@ -2209,7 +2207,7 @@ void idImage::Print() const {
 		common->Printf( "<BAD REPEAT:%i>", repeat );
 		break;
 	}
-	
+
 	common->Printf( "%4ik ", StorageSize() / 1024 );
 
 	common->Printf( " %s\n", imgName.c_str() );

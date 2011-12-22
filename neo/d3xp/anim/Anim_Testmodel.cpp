@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,6 +25,15 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
+
+#include "sys/platform.h"
+#include "renderer/ModelManager.h"
+
+#include "gamesys/SysCvar.h"
+#include "Player.h"
+
+#include "anim/Anim_Testmodel.h"
+
 /*
 =============================================================================
 
@@ -48,14 +57,9 @@ move around it to view it from different angles.
 =============================================================================
 */
 
-#include "../../idlib/precompiled.h"
-#pragma hdrstop
-
-#include "../Game_local.h"
-
 CLASS_DECLARATION( idAnimatedEntity, idTestModel )
 	EVENT( EV_FootstepLeft,			idTestModel::Event_Footstep )
-	EVENT( EV_FootstepRight,		idTestModel::Event_Footstep )	
+	EVENT( EV_FootstepRight,		idTestModel::Event_Footstep )
 END_CLASS
 
 /*
@@ -120,7 +124,7 @@ void idTestModel::Spawn( void ) {
 	physicsObj.SetSelf( this );
 	physicsObj.SetOrigin( GetPhysics()->GetOrigin() );
 	physicsObj.SetAxis( GetPhysics()->GetAxis() );
-	
+
 	if ( spawnArgs.GetVector( "mins", NULL, bounds[0] ) ) {
 		spawnArgs.GetVector( "maxs", NULL, bounds[1] );
 		physicsObj.SetClipBox( bounds, 1.0f );
@@ -157,7 +161,7 @@ void idTestModel::Spawn( void ) {
 			head.GetEntity()->SetOrigin( origin );
 			head.GetEntity()->SetAxis( GetPhysics()->GetAxis() );
 			head.GetEntity()->BindToJoint( this, animator.GetJointName( joint ), true );
-		
+
 			headAnimator = head.GetEntity()->GetAnimator();
 
 			// set up the list of joints to copy to the head
@@ -324,7 +328,7 @@ void idTestModel::Think( void ) {
 				}
 				break;
 			}
-			
+
 			mode = g_testModelAnimate.GetInteger();
 		}
 
@@ -414,7 +418,7 @@ void idTestModel::NextAnim( const idCmdArgs &args ) {
 	headAnim = 0;
 	if ( headAnimator ) {
 		headAnimator->ClearAllAnims( gameLocal.time, 0 );
-        headAnim = headAnimator->GetAnim( animname );
+		headAnim = headAnimator->GetAnim( animname );
 		if ( !headAnim ) {
 			headAnim = headAnimator->GetAnim( "idle" );
 		}
@@ -456,7 +460,7 @@ void idTestModel::PrevAnim( const idCmdArgs &args ) {
 	headAnim = 0;
 	if ( headAnimator ) {
 		headAnimator->ClearAllAnims( gameLocal.time, 0 );
-        headAnim = headAnimator->GetAnim( animname );
+		headAnim = headAnimator->GetAnim( animname );
 		if ( !headAnim ) {
 			headAnim = headAnimator->GetAnim( "idle" );
 		}
@@ -565,7 +569,7 @@ void idTestModel::TestAnim( const idCmdArgs &args ) {
 	headAnim = 0;
 	if ( headAnimator ) {
 		headAnimator->ClearAllAnims( gameLocal.time, 0 );
-        headAnim = headAnimator->GetAnim( animname );
+		headAnim = headAnimator->GetAnim( animname );
 		if ( !headAnim ) {
 			headAnim = headAnimator->GetAnim( "idle" );
 			if ( !headAnim ) {
@@ -767,7 +771,7 @@ void idTestModel::TestModel_f( const idCmdArgs &args ) {
 			if ( name[ 0 ] != '_' ) {
 				name.DefaultFileExtension( ".ase" );
 			}
-			
+
 #ifndef _D3XP
 			// Maya ascii format is supported natively now
 			if ( strstr( name, ".ma" ) || strstr( name, ".mb" ) ) {

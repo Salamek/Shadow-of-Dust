@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ public:
 
 protected:
 	DECLARE_MESSAGE_MAP()
-	bool m_DragPreviewActive;	
+	bool m_DragPreviewActive;
 public:
 	afx_msg void OnNcLButtonDblClk(UINT nHitTest, CPoint point);
 	void SetDialog ( CWnd* dlg , int ID );
@@ -55,5 +55,3 @@ public:
 	afx_msg void OnDestroy();
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 };
-
-

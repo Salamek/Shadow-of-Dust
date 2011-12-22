@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,10 +26,12 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
-
+#include "sys/platform.h"
+#include "renderer/ModelManager.h"
+#include "Entity.h"
 #include "Game_local.h"
+
+#include "SmokeParticles.h"
 
 static const char *smokeParticle_SnapshotName = "_SmokeParticle_Snapshot_";
 
@@ -216,7 +218,7 @@ bool idSmokeParticles::EmitSmoke( const idDeclParticle *smoke, const int systemS
 		}
 
 		// see how many particles we should emit this tic
-		// FIXME: 			smoke.privateStartTime += stage->timeOffset;
+		// FIXME:			smoke.privateStartTime += stage->timeOffset;
 		int		finalParticleTime = stage->cycleMsec * stage->spawnBunching;
 		int		deltaMsec = gameLocal.time - systemStartTime;
 

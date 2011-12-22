@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __MATH_SIMD_ALTIVEC_H__
 #define __MATH_SIMD_ALTIVEC_H__
 
+#include "idlib/math/Simd_Generic.h"
+
 /*
 ===============================================================================
 
@@ -40,7 +42,7 @@ If you have questions concerning this license or the applicable additional terms
 // Defines for enabling parts of the library
 
 // Turns on/off the simple math routines (add, sub, div, etc)
-#define ENABLE_SIMPLE_MATH	
+#define ENABLE_SIMPLE_MATH
 
 // Turns on/off the dot routines
 #define ENABLE_DOT
@@ -91,7 +93,9 @@ If you have questions concerning this license or the applicable additional terms
 // then we take a big performance hit from unaligned stores.
 //#define VERTEXCACHE_ALIGNED
 
-
+// This turns on support for PPC intrinsics in the SIMD_AltiVec.cpp file. Right now it's only used for frsqrte. GCC
+// supports these intrinsics but XLC does not.
+#define PPC_INTRINSICS
 
 // This assumes that the idDrawVert array that is used in DeriveUnsmoothedTangents is aligned. If its not aligned,
 // then we don't get any speedup
@@ -104,10 +108,7 @@ If you have questions concerning this license or the applicable additional terms
 //#define DRAWVERT_PADDED
 
 class idSIMD_AltiVec : public idSIMD_Generic {
-#if defined(MACOS_X) && defined(__ppc__)
-// This turns on support for PPC intrinsics in the SIMD_AltiVec.cpp file. Right now it's only used for frsqrte. GCC
-// supports these intrinsics but XLC does not.
-#define PPC_INTRINSICS
+#if defined(__GNUC__) && defined(__ALTIVEC__)
 public:
 
 	virtual const char * VPCALL GetName( void ) const;
@@ -115,10 +116,10 @@ public:
 #ifdef ENABLE_SIMPLE_MATH
 	// Basic math, works for both aligned and unaligned data
 	virtual void VPCALL Add( float *dst, const float constant, const float *src, const int count );
-    virtual void VPCALL Add( float *dst, const float *src0, const float *src1, const int count );
+	virtual void VPCALL Add( float *dst, const float *src0, const float *src1, const int count );
 	virtual void VPCALL Sub( float *dst, const float constant, const float *src, const int count );
 	virtual void VPCALL Sub( float *dst, const float *src0, const float *src1, const int count );
- 	virtual void VPCALL Mul( float *dst, const float constant, const float *src, const int count);
+	virtual void VPCALL Mul( float *dst, const float constant, const float *src, const int count);
 	virtual void VPCALL Mul( float *dst, const float *src0, const float *src1, const int count );
 	virtual void VPCALL Div( float *dst, const float constant, const float *divisor, const int count );
 	virtual void VPCALL Div( float *dst, const float *src0, const float *src1, const int count );
@@ -152,7 +153,7 @@ public:
 	virtual void VPCALL CmpLE( byte *dst,			const byte bitNum,		const float *src0,		const float constant,	const int count );
 #endif
 
-#ifdef ENABLE_MINMAX	
+#ifdef ENABLE_MINMAX
 	// Min/Max. Expects data structures in contiguous memory
 	virtual void VPCALL MinMax( float &min,			float &max,				const float *src,		const int count );
 	virtual	void VPCALL MinMax( idVec2 &min,		idVec2 &max,			const idVec2 *src,		const int count );
@@ -168,7 +169,7 @@ public:
 	virtual void VPCALL ClampMax( float *dst,		const float *src,		const float max,		const int count );
 #endif
 
-    // These are already using memcpy and memset functions. Leaving default implementation
+	// These are already using memcpy and memset functions. Leaving default implementation
 //	virtual void VPCALL Memcpy( void *dst,			const void *src,		const int count );
 //	virtual void VPCALL Memset( void *dst,			const int val,			const int count );
 
@@ -225,7 +226,7 @@ public:
 	virtual void VPCALL DeriveTangents( idPlane *planes, idDrawVert *verts, const int numVerts, const int *indexes, const int numIndexes );
 	virtual void VPCALL DeriveUnsmoothedTangents( idDrawVert *verts, const dominantTri_s *dominantTris, const int numVerts );
 	virtual void VPCALL NormalizeTangents( idDrawVert *verts, const int numVerts );
-#endif	
+#endif
 
 #ifdef ENABLE_CREATE
 	virtual void VPCALL CreateTextureSpaceLightVectors( idVec3 *lightVectors, const idVec3 &lightOrigin, const idDrawVert *verts, const int numVerts, const int *indexes, const int numIndexes );

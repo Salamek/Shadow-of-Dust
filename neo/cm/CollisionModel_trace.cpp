@@ -4,7 +4,7 @@
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
+This file is part of the Doom 3 GPL Source Code ("Doom 3 Source Code").
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,10 +34,9 @@ If you have questions concerning this license or the applicable additional terms
 ===============================================================================
 */
 
-#include "../idlib/precompiled.h"
-#pragma hdrstop
+#include "sys/platform.h"
 
-#include "CollisionModel_local.h"
+#include "cm/CollisionModel_local.h"
 
 /*
 ===============================================================================
@@ -198,7 +197,7 @@ void idCollisionModelManagerLocal::TraceThroughAxialBSPTree_r( cm_traceWork_t *t
 	else if ( frac2 > 1.0f ) {
 		frac2 = 1.0f;
 	}
-		
+
 	midf = p1f + (p2f - p1f)*frac2;
 
 	mid[0] = p1[0] + frac2*(p2[0] - p1[0]);
