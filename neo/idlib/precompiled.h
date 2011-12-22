@@ -33,8 +33,6 @@ If you have questions concerning this license or the applicable additional terms
 
 //-----------------------------------------------------
 
-#define ID_TIME_T time_t
-
 #ifdef _WIN32
 
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// prevent auto literal to string conversion
@@ -78,8 +76,6 @@ If you have questions concerning this license or the applicable additional terms
 #pragma warning(disable : 4996)				// unsafe string operations
 
 #include <malloc.h>							// no malloc.h on mac or unix
-#include <windows.h>						// for qgl.h
-#undef FindText								// stupid namespace poluting Microsoft monkeys
 
 #endif /* _WIN32 */
 
@@ -90,21 +86,10 @@ If you have questions concerning this license or the applicable additional terms
 	#define NDEBUG
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <string.h>
-#include <assert.h>
-#include <time.h>
-#include <ctype.h>
-#include <typeinfo>
-#include <errno.h>
-#include <math.h>
-#include <stdint.h>
-
 //-----------------------------------------------------
 
 // non-portable system services
+#include "../sys/platform.h"
 #include "../sys/sys_public.h"
 
 // id lib
@@ -112,7 +97,6 @@ If you have questions concerning this license or the applicable additional terms
 
 // framework
 #include "../framework/BuildVersion.h"
-#include "../framework/BuildDefines.h"
 #include "../framework/Licensee.h"
 #include "../framework/CmdSystem.h"
 #include "../framework/CVarSystem.h"
@@ -162,12 +146,8 @@ const int MAX_EXPRESSION_REGISTERS = 4096;
 #include "../tools/compilers/aas/AASFile.h"
 #include "../tools/compilers/aas/AASFileManager.h"
 
-// game
-#if defined(_D3XP)
-#include "../d3xp/Game.h"
-#else
-#include "../game/Game.h"
-#endif
+// game interface
+#include "../framework/Game.h"
 
 //-----------------------------------------------------
 
@@ -175,11 +155,7 @@ const int MAX_EXPRESSION_REGISTERS = 4096;
 
 #ifdef GAME_DLL
 
-#if defined(_D3XP)
-#include "../d3xp/Game_local.h"
-#else
-#include "../game/Game_local.h"
-#endif
+#include "Game_local.h"
 
 #else
 

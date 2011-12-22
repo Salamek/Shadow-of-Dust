@@ -29,168 +29,6 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __SYS_PUBLIC__
 #define __SYS_PUBLIC__
 
-/*
-===============================================================================
-
-	Non-portable system services.
-
-===============================================================================
-*/
-
-
-// Win32
-#if defined(WIN32) || defined(_WIN32)
-
-#define	BUILD_STRING					"win-x86"
-#define BUILD_OS_ID						0
-#define	CPUSTRING						"x86"
-#define CPU_EASYARGS					1
-
-#define ALIGN16( x )					__declspec(align(16)) x
-#define PACKED
-
-#define _alloca16( x )					((void *)((((uintptr_t)_alloca( (x)+15 )) + 15) & ~15))
-
-#define PATHSEPERATOR_STR				"\\"
-#define PATHSEPERATOR_CHAR				'\\'
-
-#define ID_INLINE						__forceinline
-#define ID_STATIC_TEMPLATE				static
-
-#define assertmem( x, y )				assert( _CrtIsValidPointer( x, y, true ) )
-
-#define THREAD_RETURN_TYPE				dword
-
-#if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
-	#define ID_LITTLE_ENDIAN			1
-#endif
-
-#endif
-
-
-// Mac OSX
-#if defined(MACOS_X) || defined(__APPLE__)
-
-#define BUILD_STRING				"MacOSX-universal"
-#define BUILD_OS_ID					1
-#ifdef __ppc__
-	#define	CPUSTRING					"ppc"
-	#define CPU_EASYARGS				0
-#elif defined(__i386__)
-	#define	CPUSTRING					"x86"
-	#define CPU_EASYARGS				1
-#endif
-
-#define ALIGN16( x )					x __attribute__ ((aligned (16)))
-
-#ifdef __MWERKS__
-#define PACKED
-#include <alloca.h>
-#else
-#define PACKED							__attribute__((packed))
-#endif
-
-#define _alloca							alloca
-#define _alloca16( x )					((void *)((((uintptr_t)alloca( (x)+15 )) + 15) & ~15))
-
-#define PATHSEPERATOR_STR				"/"
-#define PATHSEPERATOR_CHAR				'/'
-
-#define __cdecl
-#define ASSERT							assert
-
-#define ID_INLINE						inline
-#define ID_STATIC_TEMPLATE
-
-#define assertmem( x, y )
-
-#define THREAD_RETURN_TYPE				void *
-
-#endif
-
-
-// Unix
-#ifdef __unix__
-
-#define BUILD_OS_ID					2
-
-#ifdef __linux__
-	#define BUILD_OS "linux"
-#elif defined(__FreeBSD__)
-	#define BUILD_OS "FreeBSD"
-#elif defined(__DragonFly__)
-	#define BUILD_OS "DragonFly"
-#elif defined(__OpenBSD__)
-	#define BUILD_OS "OpenBSD"
-#elif defined(__NetBSD__)
-	#define BUILD_OS "NetBSD"
-#else
-	#error unknown operating system!
-#endif
-
-#ifdef __i386__
-	#define CPUSTRING					"x86"
-	#define CPU_EASYARGS				1
-#elif defined(__x86_64__)
-	#define CPUSTRING					"x86_64"
-	#define CPU_EASYARGS				0
-#elif defined(__ppc__)
-	#define CPUSTRING					"ppc"
-	#define CPU_EASYARGS				0
-#else
-	#error unknown cpu architecture!
-#endif
-
-#define	BUILD_STRING					(BUILD_OS "-" CPUSTRING)
-
-#define _alloca							alloca
-#define _alloca16( x )					((void *)((((uintptr_t)alloca( (x)+15 )) + 15) & ~15))
-
-#define ALIGN16( x )					x
-#define PACKED							__attribute__((packed))
-
-#define PATHSEPERATOR_STR				"/"
-#define PATHSEPERATOR_CHAR				'/'
-
-#define __cdecl
-#define ASSERT							assert
-
-#define ID_INLINE						inline
-#define ID_STATIC_TEMPLATE
-
-#define assertmem( x, y )
-
-#define THREAD_RETURN_TYPE				void *
-
-#endif
-
-
-#if !defined(ID_LITTLE_ENDIAN) && !defined(ID_BIG_ENDIAN)
-	#if defined(__BYTE_ORDER__) && defined(__ORDER_LITTLE_ENDIAN__)
-		#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-			#define ID_LITTLE_ENDIAN
-		#endif
-	#elif defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__)
-		#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-			#define ID_BIG_ENDIAN
-		#endif
-	#endif
-#endif
-
-#if !defined(ID_LITTLE_ENDIAN) && !defined(ID_BIG_ENDIAN)
-	#if defined(__i386__) || defined(__x86_64__)
-		#define ID_LITTLE_ENDIAN		1
-	#elif defined(__ppc__)
-		#define ID_BIG_ENDIAN			1
-	#endif
-#endif
-
-#ifdef __GNUC__
-#define id_attribute(x) __attribute__(x)
-#else
-#define id_attribute(x)
-#endif
-
 typedef enum {
 	CPUID_NONE							= 0x00000,
 	CPUID_UNSUPPORTED					= 0x00001,	// unsupported (386/486)
@@ -264,15 +102,15 @@ typedef enum {
 	M_DELTAZ
 } sys_mEvents;
 
-typedef struct sysEvent_s {
+struct sysEvent_t {
 	sysEventType_t	evType;
 	int				evValue;
 	int				evValue2;
 	int				evPtrLength;		// bytes of data pointed to by evPtr, for journaling
 	void *			evPtr;				// this must be manually freed if not NULL
-} sysEvent_t;
+};
 
-typedef struct sysMemoryStats_s {
+struct sysMemoryStats_t {
 	int memoryLoad;
 	int totalPhysical;
 	int availPhysical;
@@ -281,7 +119,7 @@ typedef struct sysMemoryStats_s {
 	int totalVirtual;
 	int availVirtual;
 	int availExtendedVirtual;
-} sysMemoryStats_t;
+};
 
 template<class type> class idList;		// for Sys_ListFiles
 
