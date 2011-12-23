@@ -415,7 +415,7 @@ void idAsyncNetwork::Heartbeat_f( const idCmdArgs &args ) {
 		common->Printf( "server is not running\n" );
 		return;
 	}
-	server.MasterHeartbeat( true );
+	//server.MasterHeartbeat( true );
 }
 
 /*

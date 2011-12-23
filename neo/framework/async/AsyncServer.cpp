@@ -38,8 +38,6 @@ const int EMPTY_RESEND_TIME				= 500;
 const int PING_RESEND_TIME				= 500;
 const int NOINPUT_IDLE_TIME				= 30000;
 
-const int HEARTBEAT_MSEC				= 5*60*1000;
-
 // must be kept in sync with authReplyMsg_t
 const char* authReplyMsg[] = {
 	//	"Waiting for authorization",
@@ -79,13 +77,14 @@ idAsyncServer::idAsyncServer( void ) {
 	gameFrame = 0;
 	gameTime = 0;
 	gameTimeResidual = 0;
+	gameTimeResidual = 0;
 	memset( challenges, 0, sizeof( challenges ) );
 	memset( userCmds, 0, sizeof( userCmds ) );
 	for ( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		ClearClient( i );
 	}
 	serverReloadingEngine = false;
-	nextHeartbeatTime = 0;
+	//nextHeartbeatTime = 0;
 	nextAsyncStatsTime = 0;
 	noRconOutput = true;
 	lastAuthTime = 0;
@@ -189,8 +188,8 @@ void idAsyncServer::Spawn( void ) {
 
 	active = true;
 
-	nextHeartbeatTime = 0;
-	nextAsyncStatsTime = 0;
+	//nextHeartbeatTime = 0;
+	//nextAsyncStatsTime = 0;
 
 	ExecuteMapChange();
 }
@@ -370,7 +369,7 @@ void idAsyncServer::ExecuteMapChange( void ) {
 	}
 
 	// serverTime gets reset, force a heartbeat so timings restart
-	MasterHeartbeat( true );
+	//MasterHeartbeat( true );
 }
 
 /*
@@ -1461,7 +1460,8 @@ void idAsyncServer::ProcessAuthMessage( const idBitMsg &msg ) {
 		challenges[ i ].authState = CDK_OK;
 		common->Printf( "client %s %s is authed\n", Sys_NetAdrToString( client_from ), client_guid );
 	} else {
-		const char *msg;
+		challenges[ i ].authState = CDK_OK; //client is ok
+		/*const char *msg;
 		if ( replyMsg != AUTH_REPLY_PRINT ) {
 			msg = authReplyMsg[ replyMsg ];
 		} else {
@@ -1472,7 +1472,7 @@ void idAsyncServer::ProcessAuthMessage( const idBitMsg &msg ) {
 		common->DPrintf( "auth: client %s %s - %s %s\n", Sys_NetAdrToString( client_from ), client_guid, authReplyStr[ reply ], l_msg );
 		challenges[ i ].authReply = reply;
 		challenges[ i ].authReplyMsg = replyMsg;
-		challenges[ i ].authReplyPrint = replyPrintMsg;
+		challenges[ i ].authReplyPrint = replyPrintMsg;*/
 	}
 }
 
@@ -1534,7 +1534,8 @@ void idAsyncServer::ProcessChallengeMessage( const netadr_t from, const idBitMsg
 		// no CD Key check for LAN clients
 		challenges[i].authState = CDK_OK;
 	} else {
-		if ( idAsyncNetwork::LANServer.GetBool() ) {
+		challenges[i].authState = CDK_OK;
+		/*if ( idAsyncNetwork::LANServer.GetBool() ) {
 			common->Printf( "net_LANServer is enabled. Client %s is not a LAN address, will be rejected\n", Sys_NetAdrToString( from ) );
 			challenges[ i ].authState = CDK_ONLYLAN;
 		} else {
@@ -1548,7 +1549,7 @@ void idAsyncServer::ProcessChallengeMessage( const netadr_t from, const idBitMsg
 			// protocol 1.37 addition
 			outMsg.WriteByte( fileSystem->RunningD3XP() );
 			serverPort.SendPacket( idAsyncNetwork::GetMasterAddress(), outMsg.GetData(), outMsg.GetSize() );
-		}
+		}*/
 	}
 }
 
@@ -2416,7 +2417,7 @@ void idAsyncServer::RunFrame( void ) {
 	} while( gameTimeResidual < USERCMD_MSEC );
 
 	// send heart beat to master servers
-	MasterHeartbeat();
+	//MasterHeartbeat();
 
 	// check for clients that timed out
 	CheckClientTimeouts();
@@ -2588,7 +2589,7 @@ void idAsyncServer::PrintOOB( const netadr_t to, int opcode, const char *string 
 idAsyncServer::MasterHeartbeat
 ==================
 */
-void idAsyncServer::MasterHeartbeat( bool force ) {
+/*void idAsyncServer::MasterHeartbeat( bool force ) {
 	if ( idAsyncNetwork::LANServer.GetBool() ) {
 		if ( force ) {
 			common->Printf( "net_LANServer is enabled. Not sending heartbeats\n" );
@@ -2615,7 +2616,7 @@ void idAsyncServer::MasterHeartbeat( bool force ) {
 			serverPort.SendPacket( adr, outMsg.GetData(), outMsg.GetSize() );
 		}
 	}
-}
+}*/
 
 /*
 ===============
