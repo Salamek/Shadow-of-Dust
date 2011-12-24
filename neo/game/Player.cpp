@@ -1042,7 +1042,7 @@ idInventory::HasAmmo
 ===============
 */
 int idInventory::HasAmmo( const char *weapon_classname, bool includeClip, idPlayer* owner ) {		//_D3XP
-	int ammoRequired;
+	int ammoRequired = 0;
 	ammo_t ammo_i = AmmoIndexForWeaponClass( weapon_classname, &ammoRequired );
 
 #ifdef _D3XP
@@ -3039,7 +3039,7 @@ void idPlayer::UpdateHudAmmo( idUserInterface *_hud ) {
 
 #ifdef _D3XP
 	//Make sure the hud always knows how many bloodstone charges there are
-	int ammoRequired;
+	int ammoRequired = 0;
 	ammo_t ammo_i = inventory.AmmoIndexForWeaponClass( "weapon_bloodstone_passive", &ammoRequired );
 	int bloodstoneAmmo = inventory.HasAmmo( ammo_i, ammoRequired );
 	_hud->SetStateString("player_bloodstone_ammo", va("%i", bloodstoneAmmo));
