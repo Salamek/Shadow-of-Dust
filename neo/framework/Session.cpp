@@ -2084,7 +2084,7 @@ bool idSessionLocal::ProcessEvent( const sysEvent_t *event ) {
 		StartMenu();
 		return true;
 	}
-
+	
 	// let the pull-down console take it if desired
 	if ( console->ProcessEvent( event, false ) ) {
 		return true;

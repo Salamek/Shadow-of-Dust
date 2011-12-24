@@ -67,12 +67,12 @@ static byte s_scantokey[128] = {
 /* 30 */ '\'', '`', K_SHIFT, '\\', 'z', 'x', 'c', 'v',
 /* 38 */ 'b', 'n', 'm', ',', '.', '/', K_SHIFT, K_KP_STAR,
 /* 40 */ K_ALT, ' ', K_CAPSLOCK, K_F1, K_F2, K_F3, K_F4, K_F5,
-/* 48 */ K_F6, K_F7, K_F8, K_F9, K_F10, K_PAUSE, 0, K_HOME,
-/* 50 */ K_UPARROW, K_PGUP, K_KP_MINUS, K_LEFTARROW, K_KP_5, K_RIGHTARROW, K_KP_PLUS, K_END,
-/* 58 */ K_DOWNARROW, K_PGDN, K_INS, K_DEL, 0, 0, '\\', K_F11,
+/* 48 */ K_F6, K_F7, K_F8, K_F9, K_F10, K_PAUSE, 0, '7',
+/* 50 */ '8', 0, K_KP_MINUS, '4', K_KP_5, '6', K_KP_PLUS, K_END,
+/* 58 */ '2', '3', K_INS, K_DEL, 0, 0, '\\', K_F11,
 /* 60 */ K_F12, K_HOME, K_UPARROW, K_PGUP, K_LEFTARROW, 0, K_RIGHTARROW, K_END,
-/* 68 */ K_DOWNARROW, K_PGDN, K_INS, K_DEL, K_ENTER, K_CTRL, K_PAUSE, 0,
-/* 70 */ '/', K_ALT, 0, 0, 0, 0, 0, 0,
+/* 68 */ K_ENTER, K_PGDN, '/', K_DEL, K_ENTER, K_CTRL, K_HOME, K_UPARROW,
+/* 70 */ K_PGUP, K_LEFTARROW, K_RIGHTARROW, K_END, K_DOWNARROW, K_PGDN, 0, 0,
 /* 78 */ 0, 0, 0, 0, 0, 0, 0, 0
 };
 
@@ -364,6 +364,7 @@ void Posix_PollInput() {
 				#ifdef XEVT_DBG2
 					printf("SE_KEY press %d\n", key_event->keycode);
 				#endif
+				//common->Warning("%d --> %d",key_event->keycode,s_scantokey[key_event->keycode]);
 				Posix_QueEvent( SE_KEY, s_scantokey[key_event->keycode], true, 0, NULL);
 				lookupRet = XLookupString(key_event, buf, sizeof(buf), &keysym, NULL);
 				if (lookupRet > 0) {
