@@ -1,6 +1,6 @@
 /* Localized versions of Info.plist keys */
 
-CFBundleName = "Doom 3";
+CFBundleName = "Shadow of Dust";
 CFBundleShortVersionString = "1.1 b2847";
-CFBundleGetInfoString = "Doom 3 version 1.1 b2847, Copyright 2006 Id Software";
+CFBundleGetInfoString = "Shadow of Dust version 1.1 b2847, Copyright 2006 Id Software";
 NSHumanReadableCopyright = "Copyright 2006 Id Software";

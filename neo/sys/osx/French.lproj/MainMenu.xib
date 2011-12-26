@@ -41,7 +41,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSMenuItem" id="1047004441">
 						<reference key="NSMenu" ref="464068045"/>
-						<string key="NSTitle">Doom 3</string>
+						<string key="NSTitle">Shadow of Dust</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -55,12 +55,12 @@
 						</object>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="232210142">
-							<string key="NSTitle">Doom 3</string>
+							<string key="NSTitle">Shadow of Dust</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="767897274">
 									<reference key="NSMenu" ref="232210142"/>
-									<string key="NSTitle">À propos de Doom 3</string>
+									<string key="NSTitle">À propos de Shadow of Dust</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="390664490"/>
@@ -129,7 +129,7 @@
 								</object>
 								<object class="NSMenuItem" id="489355146">
 									<reference key="NSMenu" ref="232210142"/>
-									<string key="NSTitle">Masquer Doom 3</string>
+									<string key="NSTitle">Masquer Shadow of Dust</string>
 									<string key="NSKeyEquiv">h</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -166,7 +166,7 @@
 								</object>
 								<object class="NSMenuItem" id="787002328">
 									<reference key="NSMenu" ref="232210142"/>
-									<string key="NSTitle">Quitter Doom 3</string>
+									<string key="NSTitle">Quitter Shadow of Dust</string>
 									<string key="NSKeyEquiv">q</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>

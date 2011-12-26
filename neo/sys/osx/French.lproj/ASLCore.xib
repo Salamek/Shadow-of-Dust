@@ -285,7 +285,7 @@
 				<nil key="helpTagText"/>
 				<nil key="helpTagExtendedText"/>
 				<nil key="classID"/>
-				<string key="title">Préférences de Doom 3</string>
+				<string key="title">Préférences de Shadow of Dust</string>
 				<object class="IBHIRootControl" key="rootControl" id="511958236">
 					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
@@ -1444,7 +1444,7 @@
 				<nil key="helpTagText"/>
 				<nil key="helpTagExtendedText"/>
 				<nil key="classID"/>
-				<string key="title">Doom 3</string>
+				<string key="title">Shadow of Dust</string>
 				<object class="IBHIRootControl" key="rootControl" id="661490458">
 					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>

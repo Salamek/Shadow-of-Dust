@@ -58,7 +58,7 @@
     <reference idRef="249"/>
     <object class="IBCarbonWindow" id="250">
       <string name="windowRect">640 261 881 829 </string>
-      <string name="title">Préférences de Doom 3</string>
+      <string name="title">Préférences de Shadow of Dust</string>
       <object name="rootControl" class="IBCarbonRootControl" id="251">
         <string name="bounds">0 0 241 568 </string>
         <string name="viewFrame">0 0 568 241 </string>
@@ -271,7 +271,7 @@
     </object>
     <object class="IBCarbonWindow" id="305">
       <string name="windowRect">648 341 776 734 </string>
-      <string name="title">Doom 3</string>
+      <string name="title">Shadow of Dust</string>
       <object name="rootControl" class="IBCarbonRootControl" id="307">
         <string name="bounds">0 0 128 393 </string>
         <string name="viewFrame">0 0 393 128 </string>

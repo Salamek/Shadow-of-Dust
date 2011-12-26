@@ -285,7 +285,7 @@
 				<nil key="helpTagText"/>
 				<nil key="helpTagExtendedText"/>
 				<nil key="classID"/>
-				<string key="title">Doom 3 Preferences</string>
+				<string key="title">Shadow of Dust Preferences</string>
 				<object class="IBHIRootControl" key="rootControl" id="727139665">
 					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
@@ -1493,7 +1493,7 @@
 				<nil key="helpTagText"/>
 				<nil key="helpTagExtendedText"/>
 				<nil key="classID"/>
-				<string key="title">Doom 3</string>
+				<string key="title">Shadow of Dust</string>
 				<object class="IBHIRootControl" key="rootControl" id="315518737">
 					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
@@ -1594,7 +1594,7 @@
 							<integer value="0" key="layoutSuspended"/>
 							<reference key="instantiationProperties" ref="0"/>
 							<nil key="classID"/>
-							<string key="title">Please insert the disc "Doom 3" or press Quit.</string>
+							<string key="title">Please insert the disc "Shadow of Dust" or press Quit.</string>
 							<nil key="textColor"/>
 							<integer value="0" key="usesTextColor"/>
 							<integer value="0" key="justification"/>
@@ -2972,7 +2972,7 @@
 				<nil key="helpTagText"/>
 				<nil key="helpTagExtendedText"/>
 				<nil key="classID"/>
-				<string key="title">Doom 3 Registration</string>
+				<string key="title">Shadow of Dust Registration</string>
 				<object class="IBHIRootControl" key="rootControl" id="728448707">
 					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
@@ -3129,7 +3129,7 @@ WFgnLg</string>
 							<integer value="0" key="layoutSuspended"/>
 							<reference key="instantiationProperties" ref="0"/>
 							<nil key="classID"/>
-							<string key="title">Doom 3 Registration Code:</string>
+							<string key="title">Shadow of Dust Registration Code:</string>
 							<nil key="textColor"/>
 							<integer value="0" key="usesTextColor"/>
 							<integer value="0" key="justification"/>

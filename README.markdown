@@ -1,5 +1,5 @@
 # Shadow Dust
-Shadow Dust is a opensource implementation of idtech4 engine for mmorpg game. This project is based on the Doom 3 GPL source code, release by id Software on 2011.
+Shadow of Dust is a opensource implementation of idtech4 engine for mmorpg game. This project is based on the Doom 3 GPL source code, release by id Software on 2011.
 
 ## Compiling on Linux
 The build system uses CMake, so you just need to run cmake ./CMakeList.txt from the neo directory. In a Archlinux system:
@@ -8,7 +8,7 @@ The build system uses CMake, so you just need to run cmake ./CMakeList.txt from 
 pacman -Sy cmake
 ```
 ```bash
-cd ./project2/neo
+cd ./Shadow-of-Dust/neo
 ```
 ```bash
 cmake ./CMakeList.txt

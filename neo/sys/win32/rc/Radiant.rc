@@ -2491,7 +2491,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDR_MAINFRAME           "Doom 3"
+    IDR_MAINFRAME           "Shadow of Dust"
     IDR_RADIANTYPE          "\nRadian\nRadian\n\n\nRadiant.Document\nRadian Document"
     IDR_SHADERTYPE          "\nUntitled\nSHADER Document\nShader Files (*.shader)\n.shader\nShaderFileType\nSHADER File Type\nSHADER\nShader Files\n"
 END

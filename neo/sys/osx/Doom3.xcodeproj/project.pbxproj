@@ -229,7 +229,7 @@
 		812259B10912BFDC005D34B9 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812259A40912BFDC005D34B9 /* IOKit.framework */; };
 		812259B30912BFDC005D34B9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812259A60912BFDC005D34B9 /* OpenGL.framework */; };
 		812259B70912C056005D34B9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812259B40912C056005D34B9 /* CoreAudio.framework */; };
-		812259FF0912C27D005D34B9 /* Doom 3.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 812259FD0912C27C005D34B9 /* Doom 3.rsrc */; };
+		812259FF0912C27D005D34B9 /* Shadow of Dust.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 812259FD0912C27C005D34B9 /* Shadow of Dust.rsrc */; };
 		81225A000912C27D005D34B9 /* Doom3.icns in Resources */ = {isa = PBXBuildFile; fileRef = 812259FE0912C27C005D34B9 /* Doom3.icns */; };
 		81225A0D0912C2D3005D34B9 /* ASLCore.nib in Resources */ = {isa = PBXBuildFile; fileRef = 81225A0B0912C2D3005D34B9 /* ASLCore.nib */; };
 		81225A100912C2E9005D34B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81225A0E0912C2E9005D34B9 /* Localizable.strings */; };
@@ -663,7 +663,7 @@
 		812259A40912BFDC005D34B9 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		812259A60912BFDC005D34B9 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		812259B40912C056005D34B9 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
-		812259FD0912C27C005D34B9 /* Doom 3.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "Doom 3.rsrc"; sourceTree = "<group>"; };
+		812259FD0912C27C005D34B9 /* Shadow of Dust.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "Shadow of Dust.rsrc"; sourceTree = "<group>"; };
 		812259FE0912C27C005D34B9 /* Doom3.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Doom3.icns; sourceTree = "<group>"; };
 		81225A0C0912C2D3005D34B9 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ASLCore.nib; sourceTree = "<group>"; };
 		81225A0F0912C2E9005D34B9 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -674,7 +674,7 @@
 		81225B840912C731005D34B9 /* game.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = game.xcodeproj; sourceTree = "<group>"; };
 		81326DC1099C162D003C4788 /* curl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = curl.xcodeproj; path = SubProjects/curl.xcodeproj; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* Doom 3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Doom 3.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* Shadow of Dust.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shadow of Dust.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -717,7 +717,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* Doom 3.app */,
+				8D1107320486CEB800E47090 /* Shadow of Dust.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -749,7 +749,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				812259FD0912C27C005D34B9 /* Doom 3.rsrc */,
+				812259FD0912C27C005D34B9 /* Shadow of Dust.rsrc */,
 				812259FE0912C27C005D34B9 /* Doom3.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
@@ -1318,9 +1318,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1107260486CEB800E47090 /* Doom 3 */ = {
+		8D1107260486CEB800E47090 /* Shadow of Dust */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8191F1600912BBCD006AB5A4 /* Build configuration list for PBXNativeTarget "Doom 3" */;
+			buildConfigurationList = 8191F1600912BBCD006AB5A4 /* Build configuration list for PBXNativeTarget "Shadow of Dust" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
@@ -1334,10 +1334,10 @@
 				81225B8D0912C73C005D34B9 /* PBXTargetDependency */,
 				81326DCB099C163E003C4788 /* PBXTargetDependency */,
 			);
-			name = "Doom 3";
+			name = "Shadow of Dust";
 			productInstallPath = "$(HOME)/Applications";
 			productName = Doom3;
-			productReference = 8D1107320486CEB800E47090 /* Doom 3.app */;
+			productReference = 8D1107320486CEB800E47090 /* Shadow of Dust.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1385,7 +1385,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* Doom 3 */,
+				8D1107260486CEB800E47090 /* Shadow of Dust */,
 			);
 		};
 /* End PBXProject section */
@@ -1442,7 +1442,7 @@
 			files = (
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
-				812259FF0912C27D005D34B9 /* Doom 3.rsrc in Resources */,
+				812259FF0912C27D005D34B9 /* Shadow of Dust.rsrc in Resources */,
 				81225A000912C27D005D34B9 /* Doom3.icns in Resources */,
 				81225A0D0912C2D3005D34B9 /* ASLCore.nib in Resources */,
 				81225A100912C2E9005D34B9 /* Localizable.strings in Resources */,
@@ -1768,7 +1768,7 @@
 					OpenAL,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "Doom 3";
+				PRODUCT_NAME = "Shadow of Dust";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -1806,7 +1806,7 @@
 					OpenAL,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "Doom 3";
+				PRODUCT_NAME = "Shadow of Dust";
 				SYMROOT = build;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -1867,7 +1867,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8191F1600912BBCD006AB5A4 /* Build configuration list for PBXNativeTarget "Doom 3" */ = {
+		8191F1600912BBCD006AB5A4 /* Build configuration list for PBXNativeTarget "Shadow of Dust" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8191F1610912BBCD006AB5A4 /* Debug */,
