@@ -50,7 +50,7 @@ If you have questions concerning this license or the applicable additional terms
 #endif
 
 // the "gameversion" client command will print this plus compile date
-#define	GAME_VERSION			"baseDOOM-1"
+#define	GAME_VERSION			"shadow-of-dust-1"
 
 #define	MAX_CLIENTS				32
 #define	GENTITYNUM_BITS			12

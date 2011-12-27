@@ -6,8 +6,6 @@ Working idtech4 on modern systems with doom3 game files (original doom3)
 
 Here starts a real fun!
 --------------------------------------------------------------------------------
-++ Ehm... maybe some name for new game we are working on ?
-++ Time to rename project ? (in source files and so)
 ++ Edit menu and route new game on some testing map
 ++ Set up testing server
 ++ Server/Client this will be loooooong dream less night(s)

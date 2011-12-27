@@ -123,11 +123,7 @@ THREAD_RETURN_TYPE Sys_AsyncThread( void * ) {
  ==============
  */
 const char *Sys_DefaultSavePath(void) {
-#if defined( ID_DEMO_BUILD )
-	sprintf( savepath, "%s/.doom3-demo", getenv( "HOME" ) );
-#else
-	sprintf( savepath, "%s/.doom3", getenv( "HOME" ) );
-#endif
+	sprintf( savepath, "%s/.shadow-of-dust", getenv( "HOME" ) );
 	return savepath.c_str();
 }
 /*

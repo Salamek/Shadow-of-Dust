@@ -1,4 +1,4 @@
-project(doom3)
+project(shadow-of-dust)
 cmake_minimum_required(VERSION 2.6)
 
 # TODO
@@ -603,15 +603,15 @@ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang" AND NOT MING
 endif()
 
 if (CORE)
-	add_executable(doom3.${cpu}
+	add_executable(shadow-of-dust.${cpu}
 		${src_core}
 		${src_sys_base}
 		${src_sys_core}
 	)
 
-	set_target_properties(doom3.${cpu} PROPERTIES COMPILE_DEFINITIONS "__DOOM_DLL__")
-	set_target_properties(doom3.${cpu} PROPERTIES LINK_FLAGS "${ldflags}")
-	target_link_libraries(doom3.${cpu}
+	set_target_properties(shadow-of-dust.${cpu} PROPERTIES COMPILE_DEFINITIONS "__DOOM_DLL__")
+	set_target_properties(shadow-of-dust.${cpu} PROPERTIES LINK_FLAGS "${ldflags}")
+	target_link_libraries(shadow-of-dust.${cpu}
 		idlib${cpu}
 		${X11_X11_LIB} ${X11_Xext_LIB} ${Xxf86vm}
 		${OPENGL_gl_LIBRARY}
@@ -626,7 +626,7 @@ if (CORE)
 endif()
 
 if (DEDICATED)
-	add_executable(doom3ded.${cpu}
+	add_executable(shadow-of-dust-ded.${cpu}
 		${src_core}
 		${src_stub_openal}
 		${src_stub_gl}
@@ -635,9 +635,9 @@ if (DEDICATED)
 		${src_sys_dedicated}
 	)
 
-	set_target_properties(doom3ded.${cpu} PROPERTIES COMPILE_DEFINITIONS "ID_DEDICATED;__DOOM_DLL__")
-	set_target_properties(doom3ded.${cpu} PROPERTIES LINK_FLAGS "${ldflags}")
-	target_link_libraries(doom3ded.${cpu}
+	set_target_properties(shadow-of-dust-ded.${cpu} PROPERTIES COMPILE_DEFINITIONS "ID_DEDICATED;__DOOM_DLL__")
+	set_target_properties(shadow-of-dust-ded.${cpu} PROPERTIES LINK_FLAGS "${ldflags}")
+	target_link_libraries(shadow-of-dust-ded.${cpu}
 		idlib${cpu}
 		${VORBISFILE_LIBRARIES}
 		${VORBIS_LIBRARIES}

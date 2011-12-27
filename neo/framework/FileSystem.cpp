@@ -2006,6 +2006,8 @@ void idFileSystemLocal::Path_f( const idCmdArgs &args ) {
 			}
 		} else {
 			common->Printf( "%s/%s\n", sp->dir->path.c_str(), sp->dir->gamedir.c_str() );
+			common->Printf( "%s <---> %s\n", sp->dir->path.c_str(), sp->dir->gamedir.c_str() );
+
 		}
 	}
 	common->Printf( "game DLL: 0x%x in pak: 0x%x\n", fileSystemLocal.gameDLLChecksum, fileSystemLocal.gamePakChecksum );
@@ -3169,12 +3171,6 @@ idFile *idFileSystemLocal::OpenFileReadFlags( const char *relativePath, int sear
 
 	// edge case
 	if ( relativePath[0] == '\0' ) {
-		return NULL;
-	}
-
-	// make sure the doomkey file is only readable by game at initialization
-	// any other time the key should only be accessed in memory using the provided functions
-	if( common->IsInitialized() && ( idStr::Icmp( relativePath, CDKEY_FILE ) == 0 || idStr::Icmp( relativePath, XPKEY_FILE ) == 0 ) ) {
 		return NULL;
 	}
 

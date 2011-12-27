@@ -34,21 +34,17 @@ If you have questions concerning this license or the applicable additional terms
 ===============================================================================
 */
 
-#define GAME_NAME						"DOOM 3"		// appears on window titles and errors
+#define GAME_NAME						"Shadow of Dust"		// appears on window titles and errors
 
-#define ENGINE_VERSION					"DOOM 1.3.1"	// printed in console
+#define ENGINE_VERSION					"Shadow of Dust 1.3.2"	// printed in console
 
 // paths
 #define	CD_BASEDIR						"Doom"
-#ifdef ID_DEMO_BUILD
-	#define BASE_GAMEDIR					"demo"
-#else
-	#define	BASE_GAMEDIR					"base"
-#endif
+#define	BASE_GAMEDIR					"base"
 
 // filenames
 #define	CD_EXE							"doom.exe"
-#define CONFIG_FILE						"DoomConfig.cfg"
+#define CONFIG_FILE						"Config.cfg"
 
 // base folder where the source code lives
 #define SOURCE_CODE_BASE_FOLDER			"neo"
@@ -98,18 +94,6 @@ If you have questions concerning this license or the applicable additional terms
 #define	WIN32_FAKE_WINDOW_CLASS_NAME	"DOOM3_WGL_FAKE"
 
 // Linux info
-#ifdef ID_DEMO_BUILD
-	#define LINUX_DEFAULT_PATH			"/usr/local/games/doom3-demo"
-#else
-	#define LINUX_DEFAULT_PATH			"/usr/local/games/doom3"
-#endif
-
-// CD Key file info
-// goes into BASE_GAMEDIR whatever the fs_game is set to
-// two distinct files for easier win32 installer job
-#define CDKEY_FILE						"doomkey"
-#define XPKEY_FILE						"xpkey"
-#define CDKEY_TEXT						"\n// Do not give this file to ANYONE.\n" \
-										"// id Software or Zenimax will NEVER ask you to send this file to them.\n"
+#define LINUX_DEFAULT_PATH			"/usr/local/games/shadow-of-dust"
 
 #define CONFIG_SPEC						"config.spec"
