@@ -56,15 +56,11 @@ char	*Sys_GetClipboardData( void );	// note that this isn't journaled...
 void	Sys_Print( const char *msg );
 //===========================================================================
 
-int main(int argc, const char *argv[]) {
-	return NSApplicationMain(argc, argv);
+int main(int argc, char *argv[]) {
+	return NSApplicationMain(argc, (const char **)argv);
 }
 
 //===========================================================================
-
-void Sys_Sleep( const int time ) {
-	sleep( time );
-}
 
 void EditorPrintConsole( const char *test ) {
 }

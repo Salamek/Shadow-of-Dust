@@ -53,20 +53,12 @@ void idSysLocal::DebugVPrintf( const char *fmt, va_list arg ) {
 	Sys_DebugVPrintf( fmt, arg );
 }
 
-double idSysLocal::GetClockTicks( void ) {
-	return Sys_GetClockTicks();
-}
-
-double idSysLocal::ClockTicksPerSecond( void ) {
-	return Sys_ClockTicksPerSecond();
+unsigned int idSysLocal::GetMilliseconds( void ) {
+	return Sys_Milliseconds();
 }
 
 int idSysLocal::GetProcessorId( void ) {
 	return Sys_GetProcessorId();
-}
-
-const char *idSysLocal::GetProcessorString( void ) {
-	return Sys_GetProcessorString();
 }
 
 const char *idSysLocal::FPU_GetState( void ) {

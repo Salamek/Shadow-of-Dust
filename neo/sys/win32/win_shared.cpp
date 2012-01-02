@@ -49,25 +49,6 @@ If you have questions concerning this license or the applicable additional terms
 
 /*
 ================
-Sys_Milliseconds
-================
-*/
-int Sys_Milliseconds( void ) {
-	int sys_curtime;
-	static int sys_timeBase;
-	static bool	initialized = false;
-
-	if ( !initialized ) {
-		sys_timeBase = timeGetTime();
-		initialized = true;
-	}
-	sys_curtime = timeGetTime() - sys_timeBase;
-
-	return sys_curtime;
-}
-
-/*
-================
 Sys_GetSystemRam
 
 	returns amount of physical memory in MB
@@ -110,8 +91,11 @@ returns in megabytes
 ================
 */
 int Sys_GetVideoRam( void ) {
-#if defined(ID_DEDICATED) || defined(__MINGW32__)
+#if defined(ID_DEDICATED)
 	return 0;
+#elif !defined(_MFC_VER)
+	// no <atlbase.h> (MinGW, VS Express etc.), so assume the min. req. 64Mb
+	return 64;
 #else
 	unsigned int retSize = 64;
 

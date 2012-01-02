@@ -31,6 +31,7 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "renderer/RenderSystem.h"
 #include "sound/sound.h"
+#include "sys/sys_public.h"
 
 /*
 ==============================================================
@@ -45,10 +46,8 @@ public:
 	virtual void			DebugPrintf( const char *fmt, ... )id_attribute((format(printf,2,3)));
 	virtual void			DebugVPrintf( const char *fmt, va_list arg );
 
-	virtual double			GetClockTicks( void );
-	virtual double			ClockTicksPerSecond( void );
+	virtual unsigned int	GetMilliseconds( void );
 	virtual int				GetProcessorId( void );
-	virtual const char *	GetProcessorString( void );
 	virtual const char *	FPU_GetState( void );
 	virtual bool			FPU_StackIsEmpty( void );
 	virtual void			FPU_SetFTZ( bool enable );

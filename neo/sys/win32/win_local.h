@@ -86,8 +86,6 @@ char	*Sys_GetCurrentUser( void );
 
 void	Win_SetErrorText( const char *text );
 
-int		Sys_GetCPUId( void );
-
 int		MapKey (int key);
 
 
@@ -124,8 +122,6 @@ struct Win32Vars_t {
 
 	OSVERSIONINFOEX	osversion;
 
-	int				cpuid;
-
 	// when we get a windows message, we store the time off so keyboard processing
 	// can know the exact time of an event (not really needed now that we use async direct input)
 	int				sysMsgTime;
@@ -152,7 +148,6 @@ struct Win32Vars_t {
 	// desktop gamma is saved here for restoration at exit
 
 	static idCVar	sys_arch;
-	static idCVar	sys_cpustring;
 	static idCVar	in_mouse;
 	static idCVar	win_allowAltTab;
 	static idCVar	win_notaskkeys;
@@ -164,9 +159,6 @@ struct Win32Vars_t {
 	static idCVar	win_viewlog;
 	static idCVar	win_timerUpdate;
 	static idCVar	win_allowMultipleInstances;
-
-	CRITICAL_SECTION criticalSections[MAX_CRITICAL_SECTIONS];
-	HANDLE			backgroundDownloadSemaphore;
 
 	HINSTANCE		hInstDI;			// direct input
 

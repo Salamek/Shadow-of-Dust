@@ -28,7 +28,6 @@ If you have questions concerning this license or the applicable additional terms
 
 // -*- mode: objc -*-
 #import <unistd.h>
-#import <pthread.h>
 
 #import <Foundation/Foundation.h>
 #import <Carbon/Carbon.h>
@@ -38,6 +37,8 @@ If you have questions concerning this license or the applicable additional terms
 #import <fenv.h>
 #import <ucontext.h>
 #import <mach/thread_status.h>
+
+#import <SDL_main.h>
 
 #import "sys/platform.h"
 #import "idlib/Str.h"
@@ -243,7 +244,7 @@ extern void CL_Quit_f(void);
 {
 	NSAutoreleasePool *pool;
 	int argc = 0;
-	const char *argv[MAX_ARGC];
+	char *argv[MAX_ARGC];
 	NSProcessInfo *processInfo;
 	NSArray *arguments;
 	unsigned int argumentIndex, argumentCount;
@@ -338,9 +339,9 @@ extern void CL_Quit_f(void);
 	// Finder passes the process serial number as only argument after the program path
 	// nuke it if we see it
 	if ( argc > 1 && strncmp( argv[ 1 ], "-psn", 4 ) ) {
-		common->Init( argc-1, &argv[1], NULL );
+		common->Init( argc-1, &argv[1] );
 	} else {
-		common->Init( 0, NULL, NULL );
+		common->Init( 0, NULL );
 	}
 
 	Posix_LateInit( );
@@ -461,38 +462,6 @@ Sys_Shutdown
 void Sys_Shutdown( void ) {
 	savepath.Clear();
 	Posix_Shutdown();
-}
-
-
-/*
-===============
-Sys_GetProcessorId
-===============
-*/
-int Sys_GetProcessorId( void ) {
-	int cpuid = CPUID_GENERIC;
-#if defined(__ppc__)
-	cpuid |= CPUID_ALTIVEC;
-#elif defined(__i386__)
-	cpuid |= CPUID_INTEL | CPUID_MMX | CPUID_SSE | CPUID_SSE2 | CPUID_SSE3 | CPUID_HTT | CPUID_CMOV | CPUID_FTZ | CPUID_DAZ;
-#endif
-	return cpuid;
-}
-
-/*
-===============
-Sys_GetProcessorString
-===============
-*/
-const char *Sys_GetProcessorString( void ) {
-#if defined(__ppc__)
-	return "ppc CPU with AltiVec extensions";
-#elif defined(__i386__)
-	return "x86 CPU with MMX/SSE/SSE2/SSE3 extensions";
-#else
-	#error
-	return NULL;
-#endif
 }
 
 /*
@@ -641,79 +610,6 @@ void Sys_FPE_handler( int signum, siginfo_t *info, void *context ) {
 }
 
 /*
-===============
-Sys_GetClockTicks
-===============
-*/
-double Sys_GetClockTicks( void ) {
-	// NOTE that this only affects idTimer atm, which is only used for performance timing during developement
-#warning FIXME: implement Sys_GetClockTicks
-	return 0.0;
-}
-
-/*
-===============
-Sys_ClockTicksPerSecond
-===============
-*/
-double Sys_ClockTicksPerSecond(void) {
-	// Our strategy is to query both Gestalt & IOKit and then take the larger of the two values.
-
-	long gestaltSpeed, ioKitSpeed = -1;
-
-	// GESTALT
-
-	// gestaltProcClkSpeedMHz available in 10.3 needs to be used because CPU speeds have now
-	// exceeded the signed long that Gestalt returns.
-	long osVers;
-	OSErr err;
-	Gestalt(gestaltSystemVersion, &osVers);
-	if (osVers >= 0x1030)
-		err = Gestalt(gestaltProcClkSpeedMHz, &gestaltSpeed);
-	else
-	{
-		err = Gestalt(gestaltProcClkSpeed, &gestaltSpeed);
-		if (err == noErr)
-			gestaltSpeed = gestaltSpeed / 1000000;
-	}
-
-	// IO KIT
-
-	mach_port_t masterPort;
-	CFMutableDictionaryRef matchDict = nil;
-	io_iterator_t itThis;
-	io_service_t service = nil;
-
-	if (IOMasterPort(MACH_PORT_NULL, &masterPort))
-		goto bail;
-
-	matchDict = IOServiceNameMatching("cpus");
-	if (IOServiceGetMatchingServices(masterPort, matchDict, &itThis))
-		goto bail;
-
-	service = IOIteratorNext(itThis);
-	while(service)
-	{
-		io_service_t ioCpu = NULL;
-		if (IORegistryEntryGetChildEntry(service, kIODeviceTreePlane, &ioCpu))
-			goto bail;
-
-		if (ioCpu)
-		{
-			CFDataRef data = (CFDataRef)IORegistryEntryCreateCFProperty(ioCpu, CFSTR("clock-frequency"),kCFAllocatorDefault,0);
-			if (data)
-				ioKitSpeed = *((unsigned long*)CFDataGetBytePtr(data)) / 1000000;
-		}
-		service = IOIteratorNext(itThis);
-	}
-
-	// Return the larger value
-
-bail:
-	return ( ioKitSpeed > gestaltSpeed ? ioKitSpeed : gestaltSpeed ) * 1000000.f;
-}
-
-/*
 ================
 Sys_GetSystemRam
 returns in megabytes
@@ -837,8 +733,8 @@ void OSX_GetVideoCard( int& outVendorId, int& outDeviceId )
 main
 ===============
 */
-int main( int argc, const char *argv[] ) {
-	return NSApplicationMain( argc, argv );
+int main( int argc, char *argv[] ) {
+	return NSApplicationMain( argc, (const char **)argv );
 }
 
 bool FormatRegCode(const char* inRegCode, char* outRegCode)
@@ -975,80 +871,3 @@ static OSErr DoRegCodeDialog( char* ioRegCode1 )
 
 	return regCodeInfo.okPressed ? (OSErr)noErr : (OSErr)userCanceledErr;
 }
-
-/*
-=================
-Sys_AsyncThread
-=================
-*/
-THREAD_RETURN_TYPE Sys_AsyncThread( void * ) {
-	while ( 1 ) {
-		usleep( 16666 );
-		common->Async();
-		Sys_TriggerEvent( TRIGGER_EVENT_ONE );
-		pthread_testcancel();
-	}
-
-	return (THREAD_RETURN_TYPE) 0;
-}
-
-
-#if defined(__ppc__)
-
-/*
- ================
- Sys_FPU_SetDAZ
- ================
- */
-void Sys_FPU_SetDAZ( bool enable ) {
-}
-
-/*
- ================
- Sys_FPU_SetFTZ
- ================
- */
-void Sys_FPU_SetFTZ( bool enable ) {
-}
-
-
-#elif defined(__i386__)
-
-#include <xmmintrin.h>
-
-/*
- ================
- Sys_FPU_SetDAZ
- ================
- */
-void Sys_FPU_SetDAZ( bool enable ) {
-	uint32_t dwData;
-	uint32_t enable_l = (uint32_t) enable;
-
-	enable_l = enable_l & 1;
-	enable_l = enable_l << 6;
-	dwData = _mm_getcsr(); // store MXCSR to dwData
-	dwData = dwData & 0xffbf;
-	dwData = dwData | enable_l;
-	_mm_setcsr(dwData); // load MXCSR with dwData
-}
-
-/*
- ================
- Sys_FPU_SetFTZ
- ================
- */
-void Sys_FPU_SetFTZ( bool enable ) {
-
-	uint32_t dwData;
-	uint32_t enable_l = (uint32_t) enable;
-
-	enable_l = enable_l & 1;
-	enable_l = enable_l << 15;
-	dwData = _mm_getcsr(); // store MXCSR to dwData
-	dwData = dwData & 0x7fff;
-	dwData = dwData | enable_l;
-	_mm_setcsr(dwData); // load MXCSR with dwData
-}
-
-#endif

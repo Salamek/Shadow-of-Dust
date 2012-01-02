@@ -29,13 +29,8 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef WIN32
 	#include <io.h>	// for _read
 #else
-	#if !__MACH__ && __MWERKS__
-		#include <types.h>
-		#include <stat.h>
-	#else
-		#include <sys/types.h>
-		#include <sys/stat.h>
-	#endif
+	#include <sys/types.h>
+	#include <sys/stat.h>
 	#include <unistd.h>
 #endif
 
@@ -216,8 +211,8 @@ static pureExclusion_t pureExclusions[] = {
 	{ 0,	0,	NULL,											".gui",		excludeExtension },
 	{ 0,	0,	NULL,											".pd",		excludeExtension },
 	{ 0,	0,	NULL,											".lang",	excludeExtension },
-	{ 0,	0,	"sound/VO",										".ogg",		excludePathPrefixAndExtension },
-	{ 0,	0,	"sound/VO",										".wav",		excludePathPrefixAndExtension },
+	{ 0,	0,	"sound/vo",										".ogg",		excludePathPrefixAndExtension },
+	{ 0,	0,	"sound/vo",										".wav",		excludePathPrefixAndExtension },
 #if	defined DOOM3_PURE_SPECIAL_CASES
 	// add any special-case files or paths for pure servers here
 	{ 0,	0,	"sound/ed/marscity/vo_intro_cutscene.ogg",		NULL,		excludeFullName },
@@ -406,7 +401,7 @@ public:
 	static void				TouchFileList_f( const idCmdArgs &args );
 
 private:
-	friend THREAD_RETURN_TYPE	BackgroundDownloadThread( void *parms );
+	friend int				BackgroundDownloadThread( void *pexit );
 
 	searchpath_t *			searchPaths;
 	int						readCount;			// total bytes read
@@ -433,6 +428,7 @@ private:
 	backgroundDownload_t *	backgroundDownloads;
 	backgroundDownload_t	defaultBackgroundDownload;
 	xthreadInfo				backgroundThread;
+	bool					backgroundThread_exit;
 
 	idList<pack_t *>		serverPaks;
 	bool					loadedFileFromDir;		// set to true once a file was loaded from a directory - can't switch to pure anymore
@@ -520,6 +516,7 @@ idFileSystemLocal::idFileSystemLocal( void ) {
 	loadedFileFromDir = false;
 	restartGamePakChecksum = 0;
 	memset( &backgroundThread, 0, sizeof( backgroundThread ) );
+	backgroundThread_exit = false;
 	addonPaks = NULL;
 }
 
@@ -600,14 +597,12 @@ FILE *idFileSystemLocal::OpenOSFile( const char *fileName, const char *mode, idS
 	idStr fpath, entry;
 	idStrList list;
 
-#ifndef __MWERKS__
 #ifndef WIN32
 	// some systems will let you fopen a directory
 	struct stat buf;
 	if ( stat( fileName, &buf ) != -1 && !S_ISREG(buf.st_mode) ) {
 		return NULL;
 	}
-#endif
 #endif
 	fp = fopen( fileName, mode );
 	if ( !fp && fs_caseSensitiveOS.GetBool() ) {
@@ -2006,8 +2001,6 @@ void idFileSystemLocal::Path_f( const idCmdArgs &args ) {
 			}
 		} else {
 			common->Printf( "%s/%s\n", sp->dir->path.c_str(), sp->dir->gamedir.c_str() );
-			common->Printf( "%s <---> %s\n", sp->dir->path.c_str(), sp->dir->gamedir.c_str() );
-
 		}
 	}
 	common->Printf( "game DLL: 0x%x in pak: 0x%x\n", fileSystemLocal.gameDLLChecksum, fileSystemLocal.gamePakChecksum );
@@ -2926,6 +2919,11 @@ Frees all resources and closes all files
 void idFileSystemLocal::Shutdown( bool reloading ) {
 	searchpath_t *sp, *next, *loop;
 
+	backgroundThread_exit = true;
+	Sys_TriggerEvent();
+	Sys_DestroyThread(backgroundThread);
+	backgroundThread_exit = false;
+
 	gameFolder.Clear();
 
 	serverPaks.Clear();
@@ -3615,8 +3613,10 @@ BackgroundDownload
 Reads part of a file from a background thread.
 ===================
 */
-THREAD_RETURN_TYPE BackgroundDownloadThread( void *parms ) {
-	while( 1 ) {
+int BackgroundDownloadThread( void *pexit ) {
+	bool *exit = (bool *)pexit;
+
+	while (!(*exit)) {
 		Sys_EnterCriticalSection();
 		backgroundDownload_t	*bgl = fileSystemLocal.backgroundDownloads;
 		if ( !bgl ) {
@@ -3728,7 +3728,7 @@ THREAD_RETURN_TYPE BackgroundDownloadThread( void *parms ) {
 #endif
 		}
 	}
-	return (THREAD_RETURN_TYPE) 0;
+	return 0;
 }
 
 /*
@@ -3738,10 +3738,7 @@ idFileSystemLocal::StartBackgroundReadThread
 */
 void idFileSystemLocal::StartBackgroundDownloadThread() {
 	if ( !backgroundThread.threadHandle ) {
-		Sys_CreateThread( BackgroundDownloadThread, NULL, THREAD_NORMAL, backgroundThread, "backgroundDownload", g_threads, &g_thread_count );
-		if ( !backgroundThread.threadHandle ) {
-			common->Warning( "idFileSystemLocal::StartBackgroundDownloadThread: failed" );
-		}
+		Sys_CreateThread( BackgroundDownloadThread, &backgroundThread_exit, backgroundThread, "backgroundDownload" );
 	} else {
 		common->Printf( "background thread already running\n" );
 	}

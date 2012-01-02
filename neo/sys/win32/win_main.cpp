@@ -50,8 +50,9 @@ If you have questions concerning this license or the applicable additional terms
 #include <sys/stat.h>
 #endif
 
+#include <SDL_main.h>
+
 idCVar Win32Vars_t::sys_arch( "sys_arch", "", CVAR_SYSTEM | CVAR_INIT, "" );
-idCVar Win32Vars_t::sys_cpustring( "sys_cpustring", "detect", CVAR_SYSTEM | CVAR_INIT, "" );
 idCVar Win32Vars_t::in_mouse( "in_mouse", "1", CVAR_SYSTEM | CVAR_BOOL, "enable mouse input" );
 idCVar Win32Vars_t::win_allowAltTab( "win_allowAltTab", "0", CVAR_SYSTEM | CVAR_BOOL, "allow Alt-Tab when fullscreen" );
 idCVar Win32Vars_t::win_notaskkeys( "win_notaskkeys", "0", CVAR_SYSTEM | CVAR_INTEGER, "disable windows task keys" );
@@ -66,17 +67,7 @@ idCVar Win32Vars_t::win_allowMultipleInstances( "win_allowMultipleInstances", "0
 
 Win32Vars_t	win32;
 
-static char		sys_cmdline[MAX_STRING_CHARS];
-
-// not a hard limit, just what we keep track of for debugging
-xthreadInfo *g_threads[MAX_THREADS];
-
-int g_thread_count = 0;
-
 static sysMemoryStats_t exeLaunchMemoryStats;
-
-static	xthreadInfo	threadInfo;
-static	HANDLE		hTimer;
 
 /*
 ================
@@ -89,123 +80,12 @@ void Sys_GetExeLaunchMemoryStatus( sysMemoryStats_t &stats ) {
 
 /*
 ==================
-Sys_Createthread
-==================
-*/
-void Sys_CreateThread(  xthread_t function, void *parms, xthreadPriority priority, xthreadInfo &info, const char *name, xthreadInfo *threads[MAX_THREADS], int *thread_count ) {
-	DWORD id;
-	HANDLE temp = CreateThread(	NULL,	// LPSECURITY_ATTRIBUTES lpsa,
-									0,		// DWORD cbStack,
-									(LPTHREAD_START_ROUTINE)function,	// LPTHREAD_START_ROUTINE lpStartAddr,
-									parms,	// LPVOID lpvThreadParm,
-									0,		//   DWORD fdwCreate,
-									&id);
-
-	info.threadId = id;
-	info.threadHandle = (intptr_t) temp;
-	if (priority == THREAD_HIGHEST) {
-		SetThreadPriority( (HANDLE)info.threadHandle, THREAD_PRIORITY_HIGHEST );		//  we better sleep enough to do this
-	} else if (priority == THREAD_ABOVE_NORMAL ) {
-		SetThreadPriority( (HANDLE)info.threadHandle, THREAD_PRIORITY_ABOVE_NORMAL );
-	}
-	info.name = name;
-	if ( *thread_count < MAX_THREADS ) {
-		threads[(*thread_count)++] = &info;
-	} else {
-		common->DPrintf("WARNING: MAX_THREADS reached\n");
-	}
-}
-
-/*
-==================
-Sys_DestroyThread
-==================
-*/
-void Sys_DestroyThread( xthreadInfo& info ) {
-	WaitForSingleObject( (HANDLE)info.threadHandle, INFINITE);
-	CloseHandle( (HANDLE)info.threadHandle );
-	info.threadHandle = 0;
-}
-
-/*
-==================
 Sys_Sentry
 ==================
 */
 void Sys_Sentry() {
 	int j = 0;
 }
-
-/*
-==================
-Sys_GetThreadName
-==================
-*/
-const char* Sys_GetThreadName(int *index) {
-	size_t id = GetCurrentThreadId();
-	for( int i = 0; i < g_thread_count; i++ ) {
-		if ( id == g_threads[i]->threadId ) {
-			if ( index ) {
-				*index = i;
-			}
-			return g_threads[i]->name;
-		}
-	}
-	if ( index ) {
-		*index = -1;
-	}
-	return "main";
-}
-
-
-/*
-==================
-Sys_EnterCriticalSection
-==================
-*/
-void Sys_EnterCriticalSection( int index ) {
-	assert( index >= 0 && index < MAX_CRITICAL_SECTIONS );
-	if ( TryEnterCriticalSection( &win32.criticalSections[index] ) == 0 ) {
-		EnterCriticalSection( &win32.criticalSections[index] );
-//		Sys_DebugPrintf( "busy lock '%s' in thread '%s'\n", lock->name, Sys_GetThreadName() );
-	}
-}
-
-/*
-==================
-Sys_LeaveCriticalSection
-==================
-*/
-void Sys_LeaveCriticalSection( int index ) {
-	assert( index >= 0 && index < MAX_CRITICAL_SECTIONS );
-	LeaveCriticalSection( &win32.criticalSections[index] );
-}
-
-/*
-==================
-Sys_WaitForEvent
-==================
-*/
-void Sys_WaitForEvent( int index ) {
-	assert( index == 0 );
-	if ( !win32.backgroundDownloadSemaphore ) {
-		win32.backgroundDownloadSemaphore = CreateEvent( NULL, TRUE, FALSE, NULL );
-	}
-	WaitForSingleObject( win32.backgroundDownloadSemaphore, INFINITE );
-	ResetEvent( win32.backgroundDownloadSemaphore );
-}
-
-/*
-==================
-Sys_TriggerEvent
-==================
-*/
-void Sys_TriggerEvent( int index ) {
-	assert( index == 0 );
-	SetEvent( win32.backgroundDownloadSemaphore );
-}
-
-
 
 #pragma optimize( "", on )
 
@@ -438,15 +318,6 @@ void Sys_DebugVPrintf( const char *fmt, va_list arg ) {
 	msg[ sizeof(msg)-1 ] = '\0';
 
 	OutputDebugString( msg );
-}
-
-/*
-==============
-Sys_Sleep
-==============
-*/
-void Sys_Sleep( int msec ) {
-	Sleep( msec );
 }
 
 /*
@@ -869,76 +740,6 @@ void Sys_In_Restart_f( const idCmdArgs &args ) {
 	Sys_InitInput();
 }
 
-
-/*
-==================
-Sys_AsyncThread
-==================
-*/
-static THREAD_RETURN_TYPE Sys_AsyncThread( void *parm ) {
-	int		wakeNumber;
-	int		startTime;
-
-	startTime = Sys_Milliseconds();
-	wakeNumber = 0;
-
-	while ( 1 ) {
-#ifdef WIN32
-		// this will trigger 60 times a second
-		int r = WaitForSingleObject( hTimer, 100 );
-		if ( r != WAIT_OBJECT_0 ) {
-			OutputDebugString( "idPacketServer::PacketServerInterrupt: bad wait return" );
-		}
-#endif
-
-#if 0
-		wakeNumber++;
-		int		msec = Sys_Milliseconds();
-		int		deltaTime = msec - startTime;
-		startTime = msec;
-
-		char	str[1024];
-		sprintf( str, "%i ", deltaTime );
-		OutputDebugString( str );
-#endif
-
-
-		common->Async();
-	}
-
-	return (THREAD_RETURN_TYPE) 0;
-}
-
-/*
-==============
-Sys_StartAsyncThread
-
-Start the thread that will call idCommon::Async()
-==============
-*/
-void Sys_StartAsyncThread( void ) {
-	// create an auto-reset event that happens 60 times a second
-	hTimer = CreateWaitableTimer( NULL, false, NULL );
-	if ( !hTimer ) {
-		common->Error( "idPacketServer::Spawn: CreateWaitableTimer failed" );
-	}
-
-	LARGE_INTEGER	t;
-	t.HighPart = t.LowPart = 0;
-	SetWaitableTimer( hTimer, &t, USERCMD_MSEC, NULL, NULL, TRUE );
-
-	Sys_CreateThread( Sys_AsyncThread, NULL, THREAD_ABOVE_NORMAL, threadInfo, "Async", g_threads,  &g_thread_count );
-
-#ifdef SET_THREAD_AFFINITY
-	// give the async thread an affinity for the second cpu
-	SetThreadAffinityMask( (HANDLE)threadInfo.threadHandle, 2 );
-#endif
-
-	if ( !threadInfo.threadHandle ) {
-		common->Error( "Sys_StartAsyncThread: failed" );
-	}
-}
-
 /*
 ================
 Sys_AlreadyRunning
@@ -1044,85 +845,6 @@ void Sys_Init( void ) {
 		win32.sys_arch.SetString( "unknown Windows variant" );
 	}
 
-	//
-	// CPU type
-	//
-	if ( !idStr::Icmp( win32.sys_cpustring.GetString(), "detect" ) ) {
-		idStr string;
-
-		common->Printf( "%1.0f MHz ", Sys_ClockTicksPerSecond() / 1000000.0f );
-
-		win32.cpuid = Sys_GetCPUId();
-
-		string.Clear();
-
-		if ( win32.cpuid & CPUID_AMD ) {
-			string += "AMD CPU";
-		} else if ( win32.cpuid & CPUID_INTEL ) {
-			string += "Intel CPU";
-		} else if ( win32.cpuid & CPUID_UNSUPPORTED ) {
-			string += "unsupported CPU";
-		} else {
-			string += "generic CPU";
-		}
-
-		string += " with ";
-		if ( win32.cpuid & CPUID_MMX ) {
-			string += "MMX & ";
-		}
-		if ( win32.cpuid & CPUID_3DNOW ) {
-			string += "3DNow! & ";
-		}
-		if ( win32.cpuid & CPUID_SSE ) {
-			string += "SSE & ";
-		}
-		if ( win32.cpuid & CPUID_SSE2 ) {
-			string += "SSE2 & ";
-		}
-		if ( win32.cpuid & CPUID_SSE3 ) {
-			string += "SSE3 & ";
-		}
-		if ( win32.cpuid & CPUID_HTT ) {
-			string += "HTT & ";
-		}
-		string.StripTrailing( " & " );
-		string.StripTrailing( " with " );
-		win32.sys_cpustring.SetString( string );
-	} else {
-		common->Printf( "forcing CPU type to " );
-		idLexer src( win32.sys_cpustring.GetString(), idStr::Length( win32.sys_cpustring.GetString() ), "sys_cpustring" );
-		idToken token;
-
-		int id = CPUID_NONE;
-		while( src.ReadToken( &token ) ) {
-			if ( token.Icmp( "generic" ) == 0 ) {
-				id |= CPUID_GENERIC;
-			} else if ( token.Icmp( "intel" ) == 0 ) {
-				id |= CPUID_INTEL;
-			} else if ( token.Icmp( "amd" ) == 0 ) {
-				id |= CPUID_AMD;
-			} else if ( token.Icmp( "mmx" ) == 0 ) {
-				id |= CPUID_MMX;
-			} else if ( token.Icmp( "3dnow" ) == 0 ) {
-				id |= CPUID_3DNOW;
-			} else if ( token.Icmp( "sse" ) == 0 ) {
-				id |= CPUID_SSE;
-			} else if ( token.Icmp( "sse2" ) == 0 ) {
-				id |= CPUID_SSE2;
-			} else if ( token.Icmp( "sse3" ) == 0 ) {
-				id |= CPUID_SSE3;
-			} else if ( token.Icmp( "htt" ) == 0 ) {
-				id |= CPUID_HTT;
-			}
-		}
-		if ( id == CPUID_NONE ) {
-			common->Printf( "WARNING: unknown sys_cpustring '%s'\n", win32.sys_cpustring.GetString() );
-			id = CPUID_GENERIC;
-		}
-		win32.cpuid = id;
-	}
-
-	common->Printf( "%s\n", win32.sys_cpustring.GetString() );
 	common->Printf( "%d MB System Memory\n", Sys_GetSystemRam() );
 	common->Printf( "%d MB Video Memory\n", Sys_GetVideoRam() );
 }
@@ -1134,24 +856,6 @@ Sys_Shutdown
 */
 void Sys_Shutdown( void ) {
 	CoUninitialize();
-}
-
-/*
-================
-Sys_GetProcessorId
-================
-*/
-int Sys_GetProcessorId( void ) {
-	return win32.cpuid;
-}
-
-/*
-================
-Sys_GetProcessorString
-================
-*/
-const char *Sys_GetProcessorString( void ) {
-	return win32.sys_cpustring.GetString();
 }
 
 //=======================================================================
@@ -1220,29 +924,20 @@ int Sys_FPU_PrintStateFlags( char *ptr, int ctrl, int stat, int tags, int inof, 
 WinMain
 ==================
 */
-int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow ) {
-
+int main(int argc, char *argv[]) {
 	const HCURSOR hcurSave = ::SetCursor( LoadCursor( 0, IDC_WAIT ) );
 
 	Sys_SetPhysicalWorkMemory( 192 << 20, 1024 << 20 );
 
 	Sys_GetCurrentMemoryStatus( exeLaunchMemoryStats );
 
-	win32.hInstance = hInstance;
-	idStr::Copynz( sys_cmdline, lpCmdLine, sizeof( sys_cmdline ) );
+	win32.hInstance = GetModuleHandle(NULL);
 
 	// done before Com/Sys_Init since we need this for error output
 	Sys_CreateConsole();
 
 	// no abort/retry/fail errors
 	SetErrorMode( SEM_FAILCRITICALERRORS );
-
-	for ( int i = 0; i < MAX_CRITICAL_SECTIONS; i++ ) {
-		InitializeCriticalSection( &win32.criticalSections[i] );
-	}
-
-	// get the initial time base
-	Sys_Milliseconds();
 
 #ifdef DEBUG
 	// disable the painfully slow MS heap check every 1024 allocs
@@ -1252,7 +947,11 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 //	Sys_FPU_EnableExceptions( TEST_FPU_EXCEPTIONS );
 	Sys_FPU_SetPrecision( FPU_PRECISION_DOUBLE_EXTENDED );
 
-	common->Init( 0, NULL, lpCmdLine );
+	if ( argc > 1 ) {
+		common->Init( argc-1, &argv[1] );
+	} else {
+		common->Init( 0, NULL );
+	}
 
 #if TEST_FPU_EXCEPTIONS != 0
 	common->Printf( Sys_FPU_GetState() );
@@ -1263,8 +962,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		DisableTaskKeys( TRUE, FALSE, /*( win32.win_notaskkeys.GetInteger() == 2 )*/ FALSE );
 	}
 #endif
-
-	Sys_StartAsyncThread();
 
 	// hide or show the early console as necessary
 	if ( win32.win_viewlog.GetInteger() || com_skipRenderer.GetBool() || idAsyncNetwork::serverDedicated.GetInteger() ) {
@@ -1281,7 +978,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	::SetCursor( hcurSave );
 
 	// Launch the script debugger
-	if ( strstr( lpCmdLine, "+debugger" ) ) {
+	if ( strstr( GetCommandLine(), "+debugger" ) ) {
 		// DebuggerClientInit( lpCmdLine );
 		return 0;
 	}

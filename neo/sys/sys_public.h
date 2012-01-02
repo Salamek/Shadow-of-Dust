@@ -33,18 +33,12 @@ typedef enum {
 	CPUID_NONE							= 0x00000,
 	CPUID_UNSUPPORTED					= 0x00001,	// unsupported (386/486)
 	CPUID_GENERIC						= 0x00002,	// unrecognized processor
-	CPUID_INTEL							= 0x00004,	// Intel
-	CPUID_AMD							= 0x00008,	// AMD
 	CPUID_MMX							= 0x00010,	// Multi Media Extensions
 	CPUID_3DNOW							= 0x00020,	// 3DNow!
 	CPUID_SSE							= 0x00040,	// Streaming SIMD Extensions
 	CPUID_SSE2							= 0x00080,	// Streaming SIMD Extensions 2
 	CPUID_SSE3							= 0x00100,	// Streaming SIMD Extentions 3 aka Prescott's New Instructions
 	CPUID_ALTIVEC						= 0x00200,	// AltiVec
-	CPUID_HTT							= 0x01000,	// Hyper-Threading Technology
-	CPUID_CMOV							= 0x02000,	// Conditional Move (CMOV) and fast floating point comparison (FCOMI) instructions
-	CPUID_FTZ							= 0x04000,	// Flush-To-Zero mode (denormal results are flushed to zero)
-	CPUID_DAZ							= 0x08000	// Denormals-Are-Zero mode (denormal source operands are set to zero)
 } cpuid_t;
 
 typedef enum {
@@ -143,30 +137,19 @@ void			Sys_Printf( const char *msg, ... )id_attribute((format(printf,1,2)));
 void			Sys_DebugPrintf( const char *fmt, ... )id_attribute((format(printf,1,2)));
 void			Sys_DebugVPrintf( const char *fmt, va_list arg );
 
-// a decent minimum sleep time to avoid going below the process scheduler speeds
-#define			SYS_MINSLEEP	20
-
 // allow game to yield CPU time
-// NOTE: due to SYS_MINSLEEP this is very bad portability karma, and should be completely removed
+// NOTE: due to SDL_TIMESLICE this is very bad portability karma, and should be completely removed
 void			Sys_Sleep( int msec );
 
 // Sys_Milliseconds should only be used for profiling purposes,
 // any game related timing information should come from event timestamps
-int				Sys_Milliseconds( void );
-
-// for accurate performance testing
-double			Sys_GetClockTicks( void );
-double			Sys_ClockTicksPerSecond( void );
+unsigned int	Sys_Milliseconds( void );
 
 // returns a selection of the CPUID_* flags
 int				Sys_GetProcessorId( void );
-const char *	Sys_GetProcessorString( void );
 
 // returns true if the FPU stack is empty
 bool			Sys_FPU_StackIsEmpty( void );
-
-// empties the FPU stack
-void			Sys_FPU_ClearStack( void );
 
 // returns the FPU state as a string
 const char *	Sys_FPU_GetState( void );
@@ -180,10 +163,10 @@ void			Sys_FPU_SetPrecision( int precision );
 // sets the FPU rounding mode
 void			Sys_FPU_SetRounding( int rounding );
 
-// sets Flush-To-Zero mode (only available when CPUID_FTZ is set)
+// sets Flush-To-Zero mode
 void			Sys_FPU_SetFTZ( bool enable );
 
-// sets Denormals-Are-Zero mode (only available when CPUID_DAZ is set)
+// sets Denormals-Are-Zero mode
 void			Sys_FPU_SetDAZ( bool enable );
 
 // returns amount of system ram
@@ -358,38 +341,34 @@ void			Sys_ShutdownNetworking( void );
 ==============================================================
 */
 
-typedef THREAD_RETURN_TYPE (*xthread_t)( void * );
+struct SDL_Thread;
 
-typedef enum {
-	THREAD_NORMAL,
-	THREAD_ABOVE_NORMAL,
-	THREAD_HIGHEST
-} xthreadPriority;
+typedef int (*xthread_t)( void * );
 
 typedef struct {
-	const char *	name;
-	intptr_t		threadHandle;
-	size_t			threadId;
+	const char		*name;
+	SDL_Thread		*threadHandle;
+	unsigned int	threadId;
 } xthreadInfo;
 
-const int MAX_THREADS				= 10;
-extern xthreadInfo *g_threads[MAX_THREADS];
-extern int			g_thread_count;
-
-void				Sys_CreateThread( xthread_t function, void *parms, xthreadPriority priority, xthreadInfo &info, const char *name, xthreadInfo *threads[MAX_THREADS], int *thread_count );
+void				Sys_CreateThread( xthread_t function, void *parms, xthreadInfo &info, const char *name );
 void				Sys_DestroyThread( xthreadInfo& info ); // sets threadHandle back to 0
 
 // find the name of the calling thread
-// if index != NULL, set the index in g_threads array (use -1 for "main" thread)
+// if index != NULL, set the index in threads array (use -1 for "main" thread)
 const char *		Sys_GetThreadName( int *index = 0 );
 
-const int MAX_CRITICAL_SECTIONS		= 4;
+extern void Sys_InitThreads();
+extern void Sys_ShutdownThreads();
+
+const int MAX_CRITICAL_SECTIONS		= 5;
 
 enum {
 	CRITICAL_SECTION_ZERO = 0,
 	CRITICAL_SECTION_ONE,
 	CRITICAL_SECTION_TWO,
-	CRITICAL_SECTION_THREE
+	CRITICAL_SECTION_THREE,
+	CRITICAL_SECTION_SYS
 };
 
 void				Sys_EnterCriticalSection( int index = CRITICAL_SECTION_ZERO );
@@ -420,10 +399,8 @@ public:
 	virtual void			DebugPrintf( const char *fmt, ... )id_attribute((format(printf,2,3))) = 0;
 	virtual void			DebugVPrintf( const char *fmt, va_list arg ) = 0;
 
-	virtual double			GetClockTicks( void ) = 0;
-	virtual double			ClockTicksPerSecond( void ) = 0;
+	virtual unsigned int	GetMilliseconds( void ) = 0;
 	virtual int				GetProcessorId( void ) = 0;
-	virtual const char *	GetProcessorString( void ) = 0;
 	virtual const char *	FPU_GetState( void ) = 0;
 	virtual bool			FPU_StackIsEmpty( void ) = 0;
 	virtual void			FPU_SetFTZ( bool enable ) = 0;

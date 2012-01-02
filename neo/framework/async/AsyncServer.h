@@ -167,7 +167,7 @@ public:
 	void				SendReliableGameMessageExcluding( int clientNum, const idBitMsg &msg );
 	void				LocalClientSendReliableMessage( const idBitMsg &msg );
 
-	//void				MasterHeartbeat( bool force = false );
+	void				MasterHeartbeat( bool force = false );
 	void				DropClient( int clientNum, const char *reason );
 
 	void				PacifierUpdate( void );

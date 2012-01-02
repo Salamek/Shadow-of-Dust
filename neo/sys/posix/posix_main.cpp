@@ -34,7 +34,6 @@ If you have questions concerning this license or the applicable additional terms
 #include <sys/mman.h>
 #include <sys/time.h>
 #include <pwd.h>
-#include <pthread.h>
 #include <dlfcn.h>
 #include <termios.h>
 #include <signal.h>
@@ -90,9 +89,7 @@ void Posix_Exit(int ret) {
 	}
 	// at this point, too late to catch signals
 	Posix_ClearSigs();
-	if ( asyncThread.threadHandle ) {
-		Sys_DestroyThread( asyncThread );
-	}
+
 	// process spawning. it's best when it happens after everything has shut down
 	if ( exit_spawn[0] ) {
 		Sys_DoStartProcess( exit_spawn, false );
@@ -152,37 +149,6 @@ Sys_Quit
 */
 void Sys_Quit(void) {
 	Posix_Exit( EXIT_SUCCESS );
-}
-
-/*
-================
-Sys_Milliseconds
-================
-*/
-/* base time in seconds, that's our origin
-   timeval:tv_sec is an int:
-   assuming this wraps every 0x7fffffff - ~68 years since the Epoch (1970) - we're safe till 2038
-   using unsigned long data type to work right with Sys_XTimeToSysTime */
-unsigned long sys_timeBase = 0;
-/* current time in ms, using sys_timeBase as origin
-   NOTE: sys_timeBase*1000 + curtime -> ms since the Epoch
-	 0x7fffffff ms - ~24 days
-		 or is it 48 days? the specs say int, but maybe it's casted from unsigned int?
-*/
-int Sys_Milliseconds( void ) {
-	int curtime;
-	struct timeval tp;
-
-	gettimeofday(&tp, NULL);
-
-	if (!sys_timeBase) {
-		sys_timeBase = tp.tv_sec;
-		return tp.tv_usec / 1000;
-	}
-
-	curtime = (tp.tv_sec - sys_timeBase) * 1000 + tp.tv_usec / 1000;
-
-	return curtime;
 }
 
 /*
@@ -442,22 +408,6 @@ ID_TIME_T Sys_FileTimeStamp(FILE * fp) {
 	return st.st_mtime;
 }
 
-void Sys_Sleep(int msec) {
-	if ( msec < 20 ) {
-		static int last = 0;
-		int now = Sys_Milliseconds();
-		if ( now - last > 1000 ) {
-			Sys_Printf("WARNING: Sys_Sleep - %d < 20 msec is not portable\n", msec);
-			last = now;
-		}
-		// ignore that sleep call, keep going
-		return;
-	}
-	// use nanosleep? keep sleeping if signal interrupt?
-	if (usleep(msec * 1000) == -1)
-		Sys_Printf("usleep: %s\n", strerror(errno));
-}
-
 char *Sys_GetClipboardData(void) {
 	Sys_Printf( "TODO: Sys_GetClipboardData\n" );
 	return NULL;
@@ -476,9 +426,6 @@ void Sys_FlushCacheMemory(void *base, int bytes)
 
 bool Sys_FPU_StackIsEmpty( void ) {
 	return true;
-}
-
-void Sys_FPU_ClearStack( void ) {
 }
 
 const char *Sys_FPU_GetState( void ) {
@@ -542,12 +489,8 @@ Posix_EarlyInit
 ===============
 */
 void Posix_EarlyInit( void ) {
-	memset( &asyncThread, 0, sizeof( asyncThread ) );
 	exit_spawn[0] = '\0';
 	Posix_InitSigs();
-	// set the base time
-	Sys_Milliseconds();
-	Posix_InitPThreads();
 }
 
 /*
@@ -563,7 +506,6 @@ void Posix_LateInit( void ) {
 #ifndef ID_DEDICATED
 	common->Printf( "%d MB Video Memory\n", Sys_GetVideoRam() );
 #endif
-	Posix_StartAsyncThread( );
 }
 
 /*

@@ -39,24 +39,16 @@ If you have questions concerning this license or the applicable additional terms
 
 #define	MAX_OSPATH			256
 
-static	int		frameNum;
+static	unsigned int		frameNum;
 
-int Sys_Milliseconds( void ) {
+unsigned int Sys_Milliseconds( void ) {
 	return frameNum * 16;
-}
-
-double Sys_GetClockTicks( void ) {
-	return frameNum * 16.0;
-}
-
-double Sys_ClockTicksPerSecond( void ) {
-	return 1000.0;
 }
 
 void	Sys_Sleep( int msec ) {
 }
 
-void	Sys_CreateThread(  xthread_t function, void *parms, xthreadPriority priority, xthreadInfo& info ) {
+void	Sys_CreateThread( xthread_t function, void *parms, xthreadInfo& info, const char *name ) {
 }
 
 void Sys_DestroyThread( xthreadInfo& info ) {
@@ -105,11 +97,6 @@ void idPort::SendPacket( const netadr_t to, const void *data, int size ) {
 }
 
 //==========================================================
-
-double	idTimer::base;
-
-void idTimer::InitBaseClockTicks( void ) const {
-}
 
 //==========================================================
 

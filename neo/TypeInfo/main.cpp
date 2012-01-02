@@ -188,10 +188,7 @@ int				Sys_ListFiles( const char *directory, const char *extension, idStrList &l
 
 #endif
 
-xthreadInfo *	g_threads[MAX_THREADS];
-int				g_thread_count;
-
-void			Sys_CreateThread( xthread_t function, void *parms, xthreadPriority priority, xthreadInfo &info, const char *name, xthreadInfo *threads[MAX_THREADS], int *thread_count ) {}
+void			Sys_CreateThread( xthread_t function, void *parms, xthreadInfo &info, const char *name ) {}
 void			Sys_DestroyThread( xthreadInfo& info ) {}
 
 void			Sys_EnterCriticalSection( int index ) {}
@@ -211,7 +208,6 @@ void			idSysLocal::DebugVPrintf( const char *fmt, va_list arg ) {}
 double			idSysLocal::GetClockTicks( void ) { return 0.0; }
 double			idSysLocal::ClockTicksPerSecond( void ) { return 1.0; }
 int				idSysLocal::GetProcessorId( void ) { return 0; }
-const char *	idSysLocal::GetProcessorString( void ) { return ""; }
 const char *	idSysLocal::FPU_GetState( void ) { return ""; }
 bool			idSysLocal::FPU_StackIsEmpty( void ) { return true; }
 void			idSysLocal::FPU_SetFTZ( bool enable ) {}

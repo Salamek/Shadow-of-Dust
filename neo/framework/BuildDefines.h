@@ -98,7 +98,7 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef ID_ENFORCE_KEY
 #	if !defined( ID_DEDICATED ) && !defined( ID_DEMO_BUILD )
-#		define ID_ENFORCE_KEY 1
+#		define ID_ENFORCE_KEY 0
 #	else
 #		define ID_ENFORCE_KEY 0
 #	endif
@@ -147,3 +147,7 @@ DOOM III gold:	33
 // special game init ids
 #define GAME_INIT_ID_INVALID	(-1)
 #define GAME_INIT_ID_MAP_LOAD	(-2)
+
+// threads
+
+#define MAX_THREADS				(10)

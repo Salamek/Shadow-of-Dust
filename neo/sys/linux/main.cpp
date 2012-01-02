@@ -26,7 +26,6 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include <pthread.h>
 #include <errno.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -36,6 +35,8 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef ID_MCHECK
 #include <mcheck.h>
 #endif
+
+#include <SDL_main.h>
 
 #include "sys/platform.h"
 #include "framework/Licensee.h"
@@ -55,66 +56,6 @@ Sys_InitScanTable
 */
 void Sys_InitScanTable( void ) {
 	common->DPrintf( "TODO: Sys_InitScanTable\n" );
-}
-
-/*
-=================
-Sys_AsyncThread
-=================
-*/
-THREAD_RETURN_TYPE Sys_AsyncThread( void * ) {
-	int now;
-	int next;
-	int	want_sleep;
-
-	// multi tick compensate for poor schedulers (Linux 2.4)
-	int ticked, to_ticked;
-	now = Sys_Milliseconds();
-	ticked = now >> 4;
-	while (1) {
-		// sleep
-		now = Sys_Milliseconds();
-		next = ( now & 0xFFFFFFF0 ) + 0x10;
-		want_sleep = ( next-now-1 ) * 1000;
-		if ( want_sleep > 0 ) {
-			usleep( want_sleep ); // sleep 1ms less than true target
-		}
-
-		// compensate if we slept too long
-		now = Sys_Milliseconds();
-		to_ticked = now >> 4;
-
-		// show ticking statistics - every 100 ticks, print a summary
-		#if 0
-			#define STAT_BUF 100
-			static int stats[STAT_BUF];
-			static int counter = 0;
-			// how many ticks to play
-			stats[counter] = to_ticked - ticked;
-			counter++;
-			if (counter == STAT_BUF) {
-				Sys_DebugPrintf("\n");
-				for( int i = 0; i < STAT_BUF; i++) {
-					if ( ! (i & 0xf) ) {
-						Sys_DebugPrintf("\n");
-					}
-					Sys_DebugPrintf( "%d ", stats[i] );
-				}
-				Sys_DebugPrintf("\n");
-				counter = 0;
-			}
-		#endif
-
-		while ( ticked < to_ticked ) {
-			common->Async();
-			ticked++;
-			Sys_TriggerEvent( TRIGGER_EVENT_ONE );
-		}
-		// thread exit
-		pthread_testcancel();
-	}
-
-	return (THREAD_RETURN_TYPE) 0;
 }
 
 /*
@@ -205,116 +146,6 @@ void Sys_Shutdown( void ) {
 
 /*
 ===============
-Sys_GetProcessorId
-===============
-*/
-static char cpustring[13] = "generic\0";
-
-#if defined(__x86_64__) || defined(__i386__)
-#if __x86_64__
-#	define REG_b "rbx"
-#	define REG_S "rsi"
-#elif __i386__
-#	define REG_b "ebx"
-#	define REG_S "esi"
-#endif
-
-#define cpuid(index,eax,ebx,ecx,edx)		\
-	__asm__ volatile						\
-	(	"mov %%" REG_b ", %%" REG_S "\n\t"	\
-		"cpuid\n\t"							\
-		"xchg %%" REG_b ", %%" REG_S		\
-		:	"=a" (eax), "=S" (ebx),			\
-			"=c" (ecx), "=d" (edx)			\
-		: "0" (index));
-
-int Sys_GetProcessorId( void ) {
-	int eax, ebx, ecx, edx;
-	int max_std_level, max_ext_level, std_caps=0, ext_caps=0;
-	union { int i[3]; char c[12]; } vendor;
-
-	int i = CPUID_GENERIC;
-
-	cpuid(0, max_std_level, ebx, ecx, edx);
-	vendor.i[0] = ebx;
-	vendor.i[1] = edx;
-	vendor.i[2] = ecx;
-
-	strncpy(cpustring, vendor.c, 12);
-	cpustring[12] = 0;
-
-	Sys_Printf("Detected '%s' CPU with", cpustring);
-
-	if (max_std_level >= 1) {
-		cpuid(1, eax, ebx, ecx, std_caps);
-
-#ifdef __MMX__
-		if (std_caps & (1<<23)) {
-			Sys_Printf(" MMX");
-			i |= CPUID_MMX;
-		}
-#endif
-#ifdef __SSE__
-		if (std_caps & (1<<25)) {
-			Sys_Printf(" SSE");
-			i |= CPUID_SSE;
-		}
-#endif
-#ifdef __SSE2__
-		if (std_caps & (1<<26)) {
-			Sys_Printf(" SSE2");
-			i |= CPUID_SSE2;
-		}
-#endif
-#ifdef __SSE3__
-		if (ecx & 1) {
-			Sys_Printf(" SSE3");
-			i |= CPUID_SSE3;
-		}
-#endif
-	}
-
-	cpuid(0x80000000, max_ext_level, ebx, ecx, edx);
-
-	if (max_ext_level >= 0x80000001) {
-		cpuid(0x80000001, eax, ebx, ecx, ext_caps);
-
-#ifdef __3dNOW__
-		if (ext_caps & (1U<<31)) {
-			Sys_Printf(" 3DNOW");
-			i |= CPUID_3DNOW;
-		}
-#endif
-#ifdef __MMX__
-		if (ext_caps & (1<<23)) {
-			if (!(i & CPUID_MMX))
-				Sys_Printf(" MMX");
-			i |= CPUID_MMX;
-		}
-#endif
-	}
-
-	Sys_Printf("\n");
-
-	return i;
-}
-#else
-int Sys_GetProcessorId( void ) {
-	return CPUID_GENERIC;
-}
-#endif
-
-/*
-===============
-Sys_GetProcessorString
-===============
-*/
-const char *Sys_GetProcessorString( void ) {
-	return cpustring;
-}
-
-/*
-===============
 Sys_FPU_EnableExceptions
 ===============
 */
@@ -329,99 +160,6 @@ Sys_FPE_handler
 void Sys_FPE_handler( int signum, siginfo_t *info, void *context ) {
 	assert( signum == SIGFPE );
 	Sys_Printf( "FPE\n" );
-}
-
-/*
-===============
-Sys_GetClockticks
-===============
-*/
-double Sys_GetClockTicks( void ) {
-#if defined( __i386__ )
-	unsigned long lo, hi;
-
-	__asm__ __volatile__ (
-						  "push %%ebx\n"			\
-						  "xor %%eax,%%eax\n"		\
-						  "cpuid\n"					\
-						  "rdtsc\n"					\
-						  "mov %%eax,%0\n"			\
-						  "mov %%edx,%1\n"			\
-						  "pop %%ebx\n"
-						  : "=r" (lo), "=r" (hi) );
-	return (double) lo + (double) 0xFFFFFFFF * hi;
-#else
-	return 0.0;
-#endif
-}
-
-/*
-===============
-MeasureClockTicks
-===============
-*/
-double MeasureClockTicks( void ) {
-	double t0, t1;
-
-	t0 = Sys_GetClockTicks( );
-	Sys_Sleep( 1000 );
-	t1 = Sys_GetClockTicks( );
-	return t1 - t0;
-}
-
-/*
-===============
-Sys_ClockTicksPerSecond
-===============
-*/
-double Sys_ClockTicksPerSecond(void) {
-	static bool		init = false;
-	static double	ret;
-
-	int		fd, len, pos, end;
-	char	buf[ 4096 ];
-
-	if ( init ) {
-		return ret;
-	}
-
-	fd = open( "/proc/cpuinfo", O_RDONLY );
-	if ( fd == -1 ) {
-		common->Printf( "couldn't read /proc/cpuinfo\n" );
-		ret = MeasureClockTicks();
-		init = true;
-		common->Printf( "measured CPU frequency: %g MHz\n", ret / 1000000.0 );
-		return ret;
-	}
-	len = read( fd, buf, 4096 );
-	close( fd );
-	pos = 0;
-	while ( pos < len ) {
-		if ( !idStr::Cmpn( buf + pos, "cpu MHz", 7 ) ) {
-			pos = strchr( buf + pos, ':' ) - buf + 2;
-			end = strchr( buf + pos, '\n' ) - buf;
-			if ( pos < len && end < len ) {
-				buf[end] = '\0';
-				ret = atof( buf + pos );
-			} else {
-				common->Printf( "failed parsing /proc/cpuinfo\n" );
-				ret = MeasureClockTicks();
-				init = true;
-				common->Printf( "measured CPU frequency: %g MHz\n", ret / 1000000.0 );
-				return ret;
-			}
-			common->Printf( "/proc/cpuinfo CPU frequency: %g MHz\n", ret );
-			ret *= 1000000;
-			init = true;
-			return ret;
-		}
-		pos = strchr( buf + pos, '\n' ) - buf + 1;
-	}
-	common->Printf( "failed parsing /proc/cpuinfo\n" );
-	ret = MeasureClockTicks();
-	init = true;
-	common->Printf( "measured CPU frequency: %g MHz\n", ret / 1000000.0 );
-	return ret;
 }
 
 /*
@@ -567,52 +305,6 @@ void idSysLocal::OpenURL( const char *url, bool quit ) {
 void Sys_DoPreferences( void ) { }
 
 /*
-================
-Sys_FPU_SetDAZ
-================
-*/
-void Sys_FPU_SetDAZ( bool enable ) {
-	/*
-	DWORD dwData;
-
-	_asm {
-		movzx	ecx, byte ptr enable
-		and		ecx, 1
-		shl		ecx, 6
-		STMXCSR	dword ptr dwData
-		mov		eax, dwData
-		and		eax, ~(1<<6)	// clear DAX bit
-		or		eax, ecx		// set the DAZ bit
-		mov		dwData, eax
-		LDMXCSR	dword ptr dwData
-	}
-	*/
-}
-
-/*
-================
-Sys_FPU_SetFTZ
-================
-*/
-void Sys_FPU_SetFTZ( bool enable ) {
-	/*
-	DWORD dwData;
-
-	_asm {
-		movzx	ecx, byte ptr enable
-		and		ecx, 1
-		shl		ecx, 15
-		STMXCSR	dword ptr dwData
-		mov		eax, dwData
-		and		eax, ~(1<<15)	// clear FTZ bit
-		or		eax, ecx		// set the FTZ bit
-		mov		dwData, eax
-		LDMXCSR	dword ptr dwData
-	}
-	*/
-}
-
-/*
 ===============
 mem consistency stuff
 ===============
@@ -641,7 +333,7 @@ void abrt_func( mcheck_status status ) {
 main
 ===============
 */
-int main(int argc, const char **argv) {
+int main(int argc, char **argv) {
 #ifdef ID_MCHECK
 	// must have -lmcheck linkage
 	mcheck( abrt_func );
@@ -651,9 +343,9 @@ int main(int argc, const char **argv) {
 	Posix_EarlyInit( );
 
 	if ( argc > 1 ) {
-		common->Init( argc-1, &argv[1], NULL );
+		common->Init( argc-1, &argv[1] );
 	} else {
-		common->Init( 0, NULL, NULL );
+		common->Init( 0, NULL );
 	}
 
 	Posix_LateInit( );

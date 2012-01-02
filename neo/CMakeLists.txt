@@ -24,7 +24,8 @@ cmake_minimum_required(VERSION 2.6)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/sys/cmake")
 set(CMAKE_SKIP_RPATH ON CACHE BOOL "Skip RPATH" FORCE)
 
-include(CheckCCompilerFlag)
+include(CheckCXXCompilerFlag)
+include(CheckFunctionExists)
 
 option(CORE			"Build the core" ON)
 option(GAME			"Build the base game code" ON)
@@ -69,6 +70,13 @@ endif()
 find_package(JPEG REQUIRED)
 include_directories(${JPEG_INCLUDE_DIR})
 
+set(CMAKE_REQUIRED_INCLUDES ${JPEG_INCLUDE_DIR})
+set(CMAKE_REQUIRED_LIBRARIES ${JPEG_LIBRARY})
+CHECK_FUNCTION_EXISTS("jpeg_mem_src" jpeg_has_mem_src)
+if (jpeg_has_mem_src)
+	add_definitions(-DHAVE_JPEG_MEM_SRC)
+endif ()
+
 find_package(OGG REQUIRED)
 include_directories(${OGG_INCLUDE_DIR})
 
@@ -83,6 +91,9 @@ include_directories(${OPENAL_INCLUDE_DIR})
 
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
+
+find_package(SDL REQUIRED)
+include_directories(${SDL_INCLUDE_DIR})
 
 if (UNIX AND NOT APPLE)
 	find_package(X11 REQUIRED)
@@ -116,30 +127,28 @@ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
 	endif()
 
 	set(CMAKE_C_FLAGS_DEBUG "-g -D_DEBUG -O1")
-	set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 	set(CMAKE_C_FLAGS_DEBUGALL "-g -ggdb -D_DEBUG")
-	set(CMAKE_CXX_FLAGS_DEBUGALL ${CMAKE_C_FLAGS_DEBUGALL})
 	set(CMAKE_C_FLAGS_RELEASE "-O3 -ffast-math -fno-unsafe-math-optimizations -fomit-frame-pointer")
-	set(CMAKE_CXX_FLAGS_RELEASE ${CMAKE_C_FLAGS_RELEASE})
 	set(CMAKE_C_FLAGS_RELWITHDEBINFO "-g -O3 -ffast-math -fno-unsafe-math-optimizations -fomit-frame-pointer")
-	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO ${CMAKE_C_FLAGS_RELWITHDEBINFO})
 	set(CMAKE_C_FLAGS_MINSIZEREL "-Os -ffast-math -fno-unsafe-math-optimizations -fomit-frame-pointer")
-	set(CMAKE_CXX_FLAGS_MINSIZEREL ${CMAKE_C_FLAGS_MINSIZEREL})
+
+	set(CMAKE_CXX_FLAGS_DEBUGALL ${CMAKE_C_FLAGS_DEBUGALL})
 
 	add_definitions(-fno-strict-aliasing)
 
-	CHECK_C_COMPILER_FLAG("-fvisibility=hidden" cc_has_fvisibility)
-	if (cc_has_fvisibility)
-		add_definitions(-fvisibility=hidden)
+	CHECK_CXX_COMPILER_FLAG("-fvisibility=hidden" cxx_has_fvisibility)
+	if (NOT cxx_has_fvisibility)
+		message(FATAL_ERROR "Compiler does not support -fvisibility")
 	endif()
+	add_definitions(-fvisibility=hidden)
 
 	# TODO fix these warnings
 	add_definitions(-Wno-sign-compare)
 	add_definitions(-Wno-switch)
 	add_definitions(-Wno-format-security)
 
-	CHECK_C_COMPILER_FLAG("-Woverloaded-virtual" cc_has_Woverload_virtual)
-	if (cc_has_Woverload_virtual)
+	CHECK_CXX_COMPILER_FLAG("-Woverloaded-virtual" cxx_has_Woverload_virtual)
+	if (cxx_has_Woverload_virtual)
 		add_definitions(-Woverloaded-virtual)
 	endif()
 
@@ -150,8 +159,8 @@ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
 			add_definitions(-arch x86_64 -mmacosx-version-min=10.6)
 			set(ldflags ${ldflags} "-arch x86_64 -mmacosx-version-min=10.6")
 		elseif (cpu STREQUAL "x86")
-			CHECK_C_COMPILER_FLAG("-arch i386" cc_has_arch_i386)
-			if (cc_has_arch_i386)
+			CHECK_CXX_COMPILER_FLAG("-arch i386" cxx_has_arch_i386)
+			if (cxx_has_arch_i386)
 				add_definitions(-arch i386)
 				set(ldflags ${ldflags} "-arch i386")
 			endif()
@@ -159,8 +168,8 @@ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
 			add_definitions(-mmacosx-version-min=10.4)
 			set(ldflags ${ldflags} "-mmacosx-version-min=10.4")
 		elseif (cpu STREQUAL "ppc")
-			CHECK_C_COMPILER_FLAG("-arch ppc" cc_has_arch_ppc)
-			if (cc_has_arch_ppc)
+			CHECK_CXX_COMPILER_FLAG("-arch ppc" cxx_has_arch_ppc)
+			if (cxx_has_arch_ppc)
 				add_definitions(-arch ppc)
 				set(ldflags ${ldflags} "-arch ppc")
 			endif()
@@ -178,19 +187,26 @@ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
 			set(ldflags ${ldflags} "-m32")
 		endif()
 
-		if (MINGW)
-			set(ldflags ${ldflags} "-mwindows")
-		else()
-			set(sys_libs ${sys_libs} pthread)
-		endif()
-
 		if (os STREQUAL "linux")
 			set(sys_libs ${sys_libs} dl)
 		endif()
 	endif()
+elseif (MSVC)
+	add_definitions(/W4)
+	add_definitions(/wd4714) # 'function' marked as __forceinline not inlined
+	add_definitions(/wd4996) # 'function': was declared deprecated
+	set(CMAKE_C_FLAGS_DEBUG "-D_DEBUG /Od /Zi /MDd")
+	set(CMAKE_C_FLAGS_RELEASE "/Ox /Oy /MD")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO "/Ox /Oy /Zi /MD")
+	set(CMAKE_C_FLAGS_MINSIZEREL "/Ox /Oy /Os /MD")
 else()
 	message(FATAL_ERROR "Unsupported compiler")
 endif()
+
+set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
+set(CMAKE_CXX_FLAGS_RELEASE ${CMAKE_C_FLAGS_RELEASE})
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO ${CMAKE_C_FLAGS_RELWITHDEBINFO})
+set(CMAKE_CXX_FLAGS_MINSIZEREL ${CMAKE_C_FLAGS_MINSIZEREL})
 
 # mingw and msvc
 if (WIN32)
@@ -201,11 +217,16 @@ if (WIN32)
 		dinput8
 		ksuser
 		dxguid
-		dxerr8
 		winmm
 		iphlpapi
 		wsock32
 	)
+
+	if (MINGW)
+		list(APPEND sys_libs dxerr8)
+	else()
+		list(APPEND sys_libs dxerr)
+	endif()
 endif()
 
 message(STATUS "Building ${CMAKE_BUILD_TYPE} for ${os}.${cpu}")
@@ -516,6 +537,8 @@ set(src_game
 	game/physics/Force_Grab.cpp
 )
 
+
+
 set(src_core
 	${src_renderer}
 	${src_framework}
@@ -538,10 +561,11 @@ set(src_sys_dedicated	sys/linux/dedicated.cpp)
 
 if (APPLE)
 	set(src_sys_base
+		sys/cpu.cpp
+		sys/threads.cpp
 		sys/sys_local.cpp
 		sys/posix/posix_net.cpp
 		sys/posix/posix_signal.cpp
-		sys/posix/posix_threads.cpp
 		sys/posix/posix_main.cpp
 	)
 
@@ -559,6 +583,8 @@ if (APPLE)
 	)
 elseif (WIN32)
 	set(src_sys_base
+		sys/cpu.cpp
+		sys/threads.cpp
 		sys/sys_local.cpp
 		sys/win32/win_cpu.cpp
 #		sys/win32/win_gamma.cpp
@@ -578,10 +604,11 @@ elseif (WIN32)
 	)
 else()
 	set(src_sys_base
+		sys/cpu.cpp
+		sys/threads.cpp
 		sys/sys_local.cpp
 		sys/posix/posix_net.cpp
 		sys/posix/posix_signal.cpp
-		sys/posix/posix_threads.cpp
 		sys/posix/posix_main.cpp
 		sys/linux/main.cpp
 	)
@@ -603,7 +630,7 @@ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang" AND NOT MING
 endif()
 
 if (CORE)
-	add_executable(shadow-of-dust.${cpu}
+	add_executable(shadow-of-dust.${cpu} WIN32
 		${src_core}
 		${src_sys_base}
 		${src_sys_core}
@@ -621,12 +648,13 @@ if (CORE)
 		${VORBIS_LIBRARIES}
 		${CURL_LIBRARY}
 		${JPEG_LIBRARY}
+		${SDL_LIBRARY}
 		${sys_libs}
 	)
 endif()
 
 if (DEDICATED)
-	add_executable(shadow-of-dust-ded.${cpu}
+	add_executable(shadow-of-dustded.${cpu} WIN32
 		${src_core}
 		${src_stub_openal}
 		${src_stub_gl}
@@ -643,6 +671,7 @@ if (DEDICATED)
 		${VORBIS_LIBRARIES}
 		${CURL_LIBRARY}
 		${JPEG_LIBRARY}
+		${SDL_LIBRARY}
 		${sys_libs}
 	)
 endif()
@@ -656,3 +685,4 @@ if (GAME)
 	set_target_properties(game${cpu} PROPERTIES INSTALL_NAME_DIR "@executable_path")
 	target_link_libraries(game${cpu} idlib${cpu})
 endif()
+

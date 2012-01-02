@@ -53,23 +53,27 @@ If you have questions concerning this license or the applicable additional terms
 #define PATHSEPERATOR_CHAR			'\\'
 
 #ifdef _MSC_VER
+#ifdef GAME_DLL
+#define ID_GAME_API					__declspec(dllexport)
+#else
+#define ID_GAME_API
+#endif
 #define ALIGN16( x )				__declspec(align(16)) x
-#define PACKED						__attribute__((packed))
+#define PACKED
 #define ID_INLINE					__forceinline
 #define ID_STATIC_TEMPLATE			static
 #define assertmem( x, y )			assert( _CrtIsValidPointer( x, y, true ) )
 #else
+#ifdef GAME_DLL
+#define ID_GAME_API					__attribute__((visibility ("default")))
+#else
+#define ID_GAME_API
+#endif
 #define ALIGN16( x )				x __attribute__ ((aligned (16)))
-#define PACKED
+#define PACKED						__attribute__((packed))
 #define ID_INLINE					inline
 #define ID_STATIC_TEMPLATE
 #define assertmem( x, y )
-#endif
-
-#define THREAD_RETURN_TYPE			DWORD
-
-#if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
-	#define ID_LITTLE_ENDIAN			1
 #endif
 
 #endif
@@ -88,14 +92,15 @@ If you have questions concerning this license or the applicable additional terms
 	#define CPU_EASYARGS			1
 #endif
 
+#ifdef GAME_DLL
+#define ID_GAME_API					__attribute__((visibility ("default")))
+#else
+#define ID_GAME_API
+#endif
+
 #define ALIGN16( x )				x __attribute__ ((aligned (16)))
 
-#ifdef __MWERKS__
-#define PACKED
-#include <alloca.h>
-#else
 #define PACKED						__attribute__((packed))
-#endif
 
 #define _alloca						alloca
 #define _alloca16( x )				((void *)((((uintptr_t)alloca( (x)+15 )) + 15) & ~15))
@@ -110,8 +115,6 @@ If you have questions concerning this license or the applicable additional terms
 #define ID_STATIC_TEMPLATE
 
 #define assertmem( x, y )
-
-#define THREAD_RETURN_TYPE			void *
 
 #endif
 
@@ -153,6 +156,12 @@ If you have questions concerning this license or the applicable additional terms
 #define _alloca						alloca
 #define _alloca16( x )				((void *)((((uintptr_t)alloca( (x)+15 )) + 15) & ~15))
 
+#ifdef GAME_DLL
+#define ID_GAME_API					__attribute__((visibility ("default")))
+#else
+#define ID_GAME_API
+#endif
+
 #define ALIGN16( x )				x
 #define PACKED						__attribute__((packed))
 
@@ -167,30 +176,8 @@ If you have questions concerning this license or the applicable additional terms
 
 #define assertmem( x, y )
 
-#define THREAD_RETURN_TYPE			void *
-
 #endif
 
-
-#if !defined(ID_LITTLE_ENDIAN) && !defined(ID_BIG_ENDIAN)
-	#if defined(__BYTE_ORDER__) && defined(__ORDER_LITTLE_ENDIAN__)
-		#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-			#define ID_LITTLE_ENDIAN
-		#endif
-	#elif defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__)
-		#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-			#define ID_BIG_ENDIAN
-		#endif
-	#endif
-#endif
-
-#if !defined(ID_LITTLE_ENDIAN) && !defined(ID_BIG_ENDIAN)
-	#if defined(__i386__) || defined(__x86_64__)
-		#define ID_LITTLE_ENDIAN		1
-	#elif defined(__ppc__)
-		#define ID_BIG_ENDIAN			1
-	#endif
-#endif
 
 #ifdef __GNUC__
 #define id_attribute(x) __attribute__(x)
@@ -198,7 +185,10 @@ If you have questions concerning this license or the applicable additional terms
 #define id_attribute(x)
 #endif
 
-#include <inttypes.h>
+#if !defined(_MSC_VER)
+	// MSVC does not provide this C99 header
+	#include <inttypes.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>

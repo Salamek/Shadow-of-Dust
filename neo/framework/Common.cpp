@@ -26,6 +26,8 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
+#include <SDL.h>
+
 #include "sys/platform.h"
 #include "idlib/containers/HashTable.h"
 #include "idlib/LangDict.h"
@@ -133,7 +135,7 @@ class idCommonLocal : public idCommon {
 public:
 								idCommonLocal( void );
 
-	virtual void				Init( int argc, const char **argv, const char *cmdline );
+	virtual void				Init( int argc, char **argv );
 	virtual void				Shutdown( void );
 	virtual void				Quit( void );
 	virtual bool				IsInitialized( void ) const;
@@ -181,7 +183,7 @@ private:
 	void						InitRenderSystem( void );
 	void						InitSIMD( void );
 	bool						AddStartupCommands( void );
-	void						ParseCommandLine( int argc, const char **argv );
+	void						ParseCommandLine( int argc, char **argv );
 	void						ClearCommandLine( void );
 	bool						SafeMode( void );
 	void						CheckToolMode( void );
@@ -218,11 +220,12 @@ private:
 #ifdef ID_WRITE_VERSION
 	idCompressor *				config_compressor;
 #endif
+
+	SDL_TimerID					async_timer;
 };
 
 idCommonLocal	commonLocal;
 idCommon *		common = &commonLocal;
-
 
 /*
 ==================
@@ -248,6 +251,8 @@ idCommonLocal::idCommonLocal( void ) {
 #ifdef ID_WRITE_VERSION
 	config_compressor = NULL;
 #endif
+
+	async_timer = NULL;
 }
 
 /*
@@ -834,7 +839,7 @@ idCmdArgs	com_consoleLines[MAX_CONSOLE_LINES];
 idCommonLocal::ParseCommandLine
 ==================
 */
-void idCommonLocal::ParseCommandLine( int argc, const char **argv ) {
+void idCommonLocal::ParseCommandLine( int argc, char **argv ) {
 	int i;
 
 	com_numConsoleLines = 0;
@@ -1105,6 +1110,8 @@ void idCommonLocal::WriteConfiguration( void ) {
 	com_developer.SetBool( false );
 
 	WriteConfigToFile( CONFIG_FILE );
+	//session->WriteCDKey( );
+
 	// restore the developer cvar
 	com_developer.SetBool( developer );
 }
@@ -2748,8 +2755,6 @@ idCommonLocal::SetMachineSpec
 =================
 */
 void idCommonLocal::SetMachineSpec( void ) {
-	int cpu = Sys_GetProcessorId();
-	double ghz = Sys_ClockTicksPerSecond() * 0.000000001f;
 	int vidRam = Sys_GetVideoRam();
 	int sysRam = Sys_GetSystemRam();
 	bool oldCard = false;
@@ -2757,15 +2762,18 @@ void idCommonLocal::SetMachineSpec( void ) {
 
 	renderSystem->GetCardCaps( oldCard, nv10or20 );
 
-	Printf( "Detected\n \t%.2f GHz CPU\n\t%i MB of System memory\n\t%i MB of Video memory on %s\n\n", ghz, sysRam, vidRam, ( oldCard ) ? "a less than optimal video architecture" : "an optimal video architecture" );
+	if (oldCard)
+		Printf( "Detected\n\t%i MB of System memory\n\t%i MB of Video memory on a less than optimal video architecture\n\n", sysRam, vidRam );
+	else
+		Printf( "Detected\n\t%i MB of System memory\n\t%i MB of Video memory on an optimal video architecture\n\n", sysRam, vidRam );
 
-	if ( ghz >= 2.75f && vidRam >= 512 && sysRam >= 1024 && !oldCard ) {
+	if ( vidRam >= 512 && sysRam >= 1024 && !oldCard ) {
 		Printf( "This system qualifies for Ultra quality!\n" );
 		com_machineSpec.SetInteger( 3 );
-	} else if ( ghz >= ( ( cpu & CPUID_AMD ) ? 1.9f : 2.19f ) && vidRam >= 256 && sysRam >= 512 && !oldCard ) {
+	} else if ( vidRam >= 256 && sysRam >= 512 && !oldCard ) {
 		Printf( "This system qualifies for High quality!\n" );
 		com_machineSpec.SetInteger( 2 );
-	} else if ( ghz >= ( ( cpu & CPUID_AMD ) ? 1.1f : 1.25f ) && vidRam >= 128 && sysRam >= 384 ) {
+	} else if ( vidRam >= 128 && sysRam >= 384 ) {
 		Printf( "This system qualifies for Medium quality.\n" );
 		com_machineSpec.SetInteger( 1 );
 	} else {
@@ -2775,12 +2783,30 @@ void idCommonLocal::SetMachineSpec( void ) {
 	com_videoRam.SetInteger( vidRam );
 }
 
+static unsigned int AsyncTimer(unsigned int interval, void *) {
+	common->Async();
+	Sys_TriggerEvent(TRIGGER_EVENT_ONE);
+
+	// calculate the next interval to get as close to 60fps as possible
+	unsigned int now = SDL_GetTicks();
+	unsigned int tick = com_ticNumber * USERCMD_MSEC;
+
+	if (now >= tick)
+		return 1;
+
+	return tick - now;
+}
+
 /*
 =================
 idCommonLocal::Init
 =================
 */
-void idCommonLocal::Init( int argc, const char **argv, const char *cmdline ) {
+void idCommonLocal::Init( int argc, char **argv ) {
+	SDL_Init(SDL_INIT_TIMER);
+
+	Sys_InitThreads();
+
 	try {
 
 		// set interface pointers used by idLib
@@ -2796,12 +2822,6 @@ void idCommonLocal::Init( int argc, const char **argv, const char *cmdline ) {
 		ClearWarnings( GAME_NAME " initialization" );
 
 		// parse command line options
-		idCmdArgs args;
-		if ( cmdline ) {
-			// tokenize if the OS doesn't do it for us
-			args.TokenizeString( cmdline, true );
-			argv = args.GetArgs( &argc );
-		}
 		ParseCommandLine( argc, argv );
 
 		// init console command system
@@ -2852,8 +2872,11 @@ void idCommonLocal::Init( int argc, const char **argv, const char *cmdline ) {
 		InitGame();
 
 		// don't add startup commands if no CD key is present
-
+#if ID_ENFORCE_KEY
+		if ( !session->CDKeysAreValid( false ) || !AddStartupCommands() ) {
+#else
 		if ( !AddStartupCommands() ) {
+#endif
 			// if the user didn't give any commands, run default action
 			session->StartMenu( true );
 		}
@@ -2878,6 +2901,11 @@ void idCommonLocal::Init( int argc, const char **argv, const char *cmdline ) {
 	catch( idException & ) {
 		Sys_Error( "Error during initialization" );
 	}
+
+	async_timer = SDL_AddTimer(USERCMD_MSEC, AsyncTimer, NULL);
+
+	if (!async_timer)
+		Sys_Error("Error while starting the async timer");
 }
 
 
@@ -2887,8 +2915,12 @@ idCommonLocal::Shutdown
 =================
 */
 void idCommonLocal::Shutdown( void ) {
-
 	com_shuttingDown = true;
+
+	if (async_timer) {
+		SDL_RemoveTimer(async_timer);
+		async_timer = NULL;
+	}
 
 	idAsyncNetwork::server.Kill();
 	idAsyncNetwork::client.Shutdown();
@@ -2929,6 +2961,8 @@ void idCommonLocal::Shutdown( void ) {
 
 	// shutdown idLib
 	idLib::ShutDown();
+
+	Sys_ShutdownThreads();
 }
 
 /*
