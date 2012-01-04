@@ -223,6 +223,7 @@ int Sys_ListFiles( const char *directory, const char *extension, idStrList &list
 	return list.Num();
 }
 
+#ifdef MACOS_X
 /*
 ============================================================================
 EVENT LOOP
@@ -298,6 +299,7 @@ Sys_ClearEvents
 void Sys_ClearEvents( void ) {
 	eventHead = eventTail = 0;
 }
+#endif
 
 /*
 ================
@@ -657,12 +659,12 @@ void tty_FlushIn() {
 
 /*
 ================
-Posix_ConsoleInput
+Sys__ConsoleInput
 Checks for a complete line of text typed in at the console.
 Return NULL if a complete line is not ready.
 ================
 */
-char *Posix_ConsoleInput( void ) {
+char *Sys_ConsoleInput( void ) {
 	if ( tty_enabled ) {
 		char	key;
 		bool	hidden = false;
@@ -912,6 +914,7 @@ char *Posix_ConsoleInput( void ) {
 	return NULL;
 }
 
+#ifdef MACOS_X
 /*
 called during frame loops, pacifier updates etc.
 this is only for console input polling and misc mouse grab tasks
@@ -919,7 +922,7 @@ the actual mouse and keyboard input is in the Sys_Poll logic
 */
 void Sys_GenerateEvents( void ) {
 	char *s;
-	if ( ( s = Posix_ConsoleInput() ) ) {
+	if ( ( s = Sys_ConsoleInput() ) ) {
 		char *b;
 		int len;
 
@@ -929,6 +932,7 @@ void Sys_GenerateEvents( void ) {
 		Posix_QueEvent( SE_CONSOLE, 0, 0, len, b );
 	}
 }
+#endif
 
 /*
 ===============

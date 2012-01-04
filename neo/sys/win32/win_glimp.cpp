@@ -49,8 +49,6 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "sys/win32/win_local.h"
 
-static void		GLW_InitExtensions( void );
-
 // WGL_ARB_extensions_string
 static PFNWGLGETEXTENSIONSSTRINGARBPROC wglGetExtensionsStringARB;
 
@@ -305,16 +303,6 @@ static void GLW_GetWGLExtensionsWithFakeWindow( void ) {
 }
 
 //=============================================================================
-
-/*
-====================
-GLW_WM_CREATE
-====================
-*/
-void GLW_WM_CREATE( HWND hWnd ) {
-}
-
-
 
 /*
 ====================

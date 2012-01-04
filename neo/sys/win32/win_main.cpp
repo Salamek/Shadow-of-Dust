@@ -52,17 +52,9 @@ If you have questions concerning this license or the applicable additional terms
 
 #include <SDL_main.h>
 
-idCVar Win32Vars_t::sys_arch( "sys_arch", "", CVAR_SYSTEM | CVAR_INIT, "" );
-idCVar Win32Vars_t::in_mouse( "in_mouse", "1", CVAR_SYSTEM | CVAR_BOOL, "enable mouse input" );
-idCVar Win32Vars_t::win_allowAltTab( "win_allowAltTab", "0", CVAR_SYSTEM | CVAR_BOOL, "allow Alt-Tab when fullscreen" );
-idCVar Win32Vars_t::win_notaskkeys( "win_notaskkeys", "0", CVAR_SYSTEM | CVAR_INTEGER, "disable windows task keys" );
-idCVar Win32Vars_t::win_username( "win_username", "", CVAR_SYSTEM | CVAR_INIT, "windows user name" );
-idCVar Win32Vars_t::win_xpos( "win_xpos", "3", CVAR_SYSTEM | CVAR_ARCHIVE | CVAR_INTEGER, "horizontal position of window" );
-idCVar Win32Vars_t::win_ypos( "win_ypos", "22", CVAR_SYSTEM | CVAR_ARCHIVE | CVAR_INTEGER, "vertical position of window" );
 idCVar Win32Vars_t::win_outputDebugString( "win_outputDebugString", "0", CVAR_SYSTEM | CVAR_BOOL, "" );
 idCVar Win32Vars_t::win_outputEditString( "win_outputEditString", "1", CVAR_SYSTEM | CVAR_BOOL, "" );
 idCVar Win32Vars_t::win_viewlog( "win_viewlog", "0", CVAR_SYSTEM | CVAR_INTEGER, "" );
-idCVar Win32Vars_t::win_timerUpdate( "win_timerUpdate", "0", CVAR_SYSTEM | CVAR_BOOL, "allows the game to be updated while dragging the window" );
 idCVar Win32Vars_t::win_allowMultipleInstances( "win_allowMultipleInstances", "0", CVAR_SYSTEM | CVAR_BOOL, "allow multiple instances running concurrently" );
 
 Win32Vars_t	win32;
@@ -77,127 +69,6 @@ Sys_GetExeLaunchMemoryStatus
 void Sys_GetExeLaunchMemoryStatus( sysMemoryStats_t &stats ) {
 	stats = exeLaunchMemoryStats;
 }
-
-/*
-==================
-Sys_Sentry
-==================
-*/
-void Sys_Sentry() {
-	int j = 0;
-}
-
-#pragma optimize( "", on )
-
-#ifdef DEBUG
-
-
-static unsigned int debug_total_alloc = 0;
-static unsigned int debug_total_alloc_count = 0;
-static unsigned int debug_current_alloc = 0;
-static unsigned int debug_current_alloc_count = 0;
-static unsigned int debug_frame_alloc = 0;
-static unsigned int debug_frame_alloc_count = 0;
-
-idCVar sys_showMallocs( "sys_showMallocs", "0", CVAR_SYSTEM, "" );
-
-// _HOOK_ALLOC, _HOOK_REALLOC, _HOOK_FREE
-
-typedef struct CrtMemBlockHeader
-{
-	struct _CrtMemBlockHeader *pBlockHeaderNext;	// Pointer to the block allocated just before this one:
-	struct _CrtMemBlockHeader *pBlockHeaderPrev;	// Pointer to the block allocated just after this one
-   char *szFileName;    // File name
-   int nLine;           // Line number
-   size_t nDataSize;    // Size of user block
-   int nBlockUse;       // Type of block
-   long lRequest;       // Allocation number
-	byte		gap[4];								// Buffer just before (lower than) the user's memory:
-} CrtMemBlockHeader;
-
-#include <crtdbg.h>
-
-/*
-==================
-Sys_AllocHook
-
-	called for every malloc/new/free/delete
-==================
-*/
-int Sys_AllocHook( int nAllocType, void *pvData, size_t nSize, int nBlockUse, long lRequest, const unsigned char * szFileName, int nLine )
-{
-	CrtMemBlockHeader	*pHead;
-	byte				*temp;
-
-	if ( nBlockUse == _CRT_BLOCK )
-	{
-	  return( TRUE );
-	}
-
-	// get a pointer to memory block header
-	temp = ( byte * )pvData;
-	temp -= 32;
-	pHead = ( CrtMemBlockHeader * )temp;
-
-	switch( nAllocType ) {
-		case	_HOOK_ALLOC:
-			debug_total_alloc += nSize;
-			debug_current_alloc += nSize;
-			debug_frame_alloc += nSize;
-			debug_total_alloc_count++;
-			debug_current_alloc_count++;
-			debug_frame_alloc_count++;
-			break;
-
-		case	_HOOK_FREE:
-			assert( pHead->gap[0] == 0xfd && pHead->gap[1] == 0xfd && pHead->gap[2] == 0xfd && pHead->gap[3] == 0xfd );
-
-			debug_current_alloc -= pHead->nDataSize;
-			debug_current_alloc_count--;
-			debug_total_alloc_count++;
-			debug_frame_alloc_count++;
-			break;
-
-		case	_HOOK_REALLOC:
-			assert( pHead->gap[0] == 0xfd && pHead->gap[1] == 0xfd && pHead->gap[2] == 0xfd && pHead->gap[3] == 0xfd );
-
-			debug_current_alloc -= pHead->nDataSize;
-			debug_total_alloc += nSize;
-			debug_current_alloc += nSize;
-			debug_frame_alloc += nSize;
-			debug_total_alloc_count++;
-			debug_current_alloc_count--;
-			debug_frame_alloc_count++;
-			break;
-	}
-	return( TRUE );
-}
-
-/*
-==================
-Sys_DebugMemory_f
-==================
-*/
-void Sys_DebugMemory_f( void ) {
-	common->Printf( "Total allocation %8dk in %d blocks\n", debug_total_alloc / 1024, debug_total_alloc_count );
-	common->Printf( "Current allocation %8dk in %d blocks\n", debug_current_alloc / 1024, debug_current_alloc_count );
-}
-
-/*
-==================
-Sys_MemFrame
-==================
-*/
-void Sys_MemFrame( void ) {
-	if( sys_showMallocs.GetInteger() ) {
-		common->Printf("Frame: %8dk in %5d blocks\n", debug_frame_alloc / 1024, debug_frame_alloc_count );
-	}
-
-	debug_frame_alloc = 0;
-	debug_frame_alloc_count = 0;
-}
-
-#endif
 
 /*
 ==================
@@ -225,6 +96,8 @@ void Sys_Error( const char *error, ... ) {
 	va_start( argptr, error );
 	vsprintf( text, error, argptr );
 	va_end( argptr);
+
+	printf("%s", text);
 
 	Conbuf_AppendText( text );
 	Conbuf_AppendText( "\n" );
@@ -280,6 +153,8 @@ void Sys_Printf( const char *fmt, ... ) {
 	va_end(argptr);
 	msg[sizeof(msg)-1] = '\0';
 
+	printf("%s", msg);
+
 	if ( win32.win_outputDebugString.GetBool() ) {
 		OutputDebugString( msg );
 	}
@@ -303,6 +178,8 @@ void Sys_DebugPrintf( const char *fmt, ... ) {
 	msg[ sizeof(msg)-1 ] = '\0';
 	va_end( argptr );
 
+	printf("%s", msg);
+
 	OutputDebugString( msg );
 }
 
@@ -316,6 +193,8 @@ void Sys_DebugVPrintf( const char *fmt, va_list arg ) {
 
 	idStr::vsnPrintf( msg, MAXPRINTMSG-1, fmt, arg );
 	msg[ sizeof(msg)-1 ] = '\0';
+
+	printf("%s", msg);
 
 	OutputDebugString( msg );
 }
@@ -582,165 +461,6 @@ void Sys_DLL_Unload( uintptr_t dllHandle ) {
 }
 
 /*
-========================================================================
-
-EVENT LOOP
-
-========================================================================
-*/
-
-#define	MAX_QUED_EVENTS		256
-#define	MASK_QUED_EVENTS	( MAX_QUED_EVENTS - 1 )
-
-sysEvent_t	eventQue[MAX_QUED_EVENTS];
-int			eventHead = 0;
-int			eventTail = 0;
-
-/*
-================
-Sys_QueEvent
-
-Ptr should either be null, or point to a block of data that can
-be freed by the game later.
-================
-*/
-void Sys_QueEvent( int time, sysEventType_t type, int value, int value2, int ptrLength, void *ptr ) {
-	sysEvent_t	*ev;
-
-	ev = &eventQue[ eventHead & MASK_QUED_EVENTS ];
-
-	if ( eventHead - eventTail >= MAX_QUED_EVENTS ) {
-		common->Printf("Sys_QueEvent: overflow\n");
-		// we are discarding an event, but don't leak memory
-		if ( ev->evPtr ) {
-			Mem_Free( ev->evPtr );
-		}
-		eventTail++;
-	}
-
-	eventHead++;
-
-	ev->evType = type;
-	ev->evValue = value;
-	ev->evValue2 = value2;
-	ev->evPtrLength = ptrLength;
-	ev->evPtr = ptr;
-}
-
-/*
-=============
-Sys_PumpEvents
-
-This allows windows to be moved during renderbump
-=============
-*/
-void Sys_PumpEvents( void ) {
-	MSG msg;
-
-	// pump the message loop
-	while( PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE ) ) {
-		if ( !GetMessage( &msg, NULL, 0, 0 ) ) {
-			common->Quit();
-		}
-
-		// save the msg time, because wndprocs don't have access to the timestamp
-		if ( win32.sysMsgTime && win32.sysMsgTime > (int)msg.time ) {
-			// don't ever let the event times run backwards
-//			common->Printf( "Sys_PumpEvents: win32.sysMsgTime (%i) > msg.time (%i)\n", win32.sysMsgTime, msg.time );
-		} else {
-			win32.sysMsgTime = msg.time;
-		}
-
-#ifdef ID_ALLOW_TOOLS
-		if ( GUIEditorHandleMessage ( &msg ) ) {
-			continue;
-		}
-#endif
-
-		TranslateMessage (&msg);
-		DispatchMessage (&msg);
-	}
-}
-
-/*
-================
-Sys_GenerateEvents
-================
-*/
-void Sys_GenerateEvents( void ) {
-	static int entered = false;
-	char *s;
-
-	if ( entered ) {
-		return;
-	}
-	entered = true;
-
-	// pump the message loop
-	Sys_PumpEvents();
-
-	// make sure mouse and joystick are only called once a frame
-	IN_Frame();
-
-	// check for console commands
-	s = Sys_ConsoleInput();
-	if ( s ) {
-		char	*b;
-		int		len;
-
-		len = strlen( s ) + 1;
-		b = (char *)Mem_Alloc( len );
-		strcpy( b, s );
-		Sys_QueEvent( 0, SE_CONSOLE, 0, 0, len, b );
-	}
-
-	entered = false;
-}
-
-/*
-================
-Sys_ClearEvents
-================
-*/
-void Sys_ClearEvents( void ) {
-	eventHead = eventTail = 0;
-}
-
-/*
-================
-Sys_GetEvent
-================
-*/
-sysEvent_t Sys_GetEvent( void ) {
-	sysEvent_t	ev;
-
-	// return if we have data
-	if ( eventHead > eventTail ) {
-		eventTail++;
-		return eventQue[ ( eventTail - 1 ) & MASK_QUED_EVENTS ];
-	}
-
-	// return the empty event
-	memset( &ev, 0, sizeof( ev ) );
-
-	return ev;
-}
-
-//================================================================
-
-/*
-=================
-Sys_In_Restart_f
-
-Restart the input subsystem
-=================
-*/
-void Sys_In_Restart_f( const idCmdArgs &args ) {
-	Sys_ShutdownInput();
-	Sys_InitInput();
-}
-
-/*
 ================
 Sys_AlreadyRunning
 
@@ -766,9 +486,6 @@ Sys_Init
 The cvar system must already be setup
 ================
 */
-#define OSR2_BUILD_NUMBER 1111
-#define WIN98_BUILD_NUMBER 1998
-
 void Sys_Init( void ) {
 
 	CoInitialize( NULL );
@@ -780,18 +497,12 @@ void Sys_Init( void ) {
 	// get WM_TIMER messages pumped every millisecond
 //	SetTimer( NULL, 0, 100, NULL );
 
-	cmdSystem->AddCommand( "in_restart", Sys_In_Restart_f, CMD_FL_SYSTEM, "restarts the input system" );
 #ifdef DEBUG
 	cmdSystem->AddCommand( "createResourceIDs", CreateResourceIDs_f, CMD_FL_TOOL, "assigns resource IDs in _resouce.h files" );
 #endif
 #if 0
 	cmdSystem->AddCommand( "setAsyncSound", Sys_SetAsyncSound_f, CMD_FL_SYSTEM, "set the async sound option" );
 #endif
-
-	//
-	// Windows user name
-	//
-	win32.win_username.SetString( Sys_GetCurrentUser() );
 
 	//
 	// Windows version
@@ -806,43 +517,6 @@ void Sys_Init( void ) {
 	}
 	if ( win32.osversion.dwPlatformId == VER_PLATFORM_WIN32s ) {
 		Sys_Error( GAME_NAME " doesn't run on Win32s" );
-	}
-
-	if( win32.osversion.dwPlatformId == VER_PLATFORM_WIN32_NT ) {
-		if( win32.osversion.dwMajorVersion <= 4 ) {
-			win32.sys_arch.SetString( "WinNT (NT)" );
-		} else if( win32.osversion.dwMajorVersion == 5 && win32.osversion.dwMinorVersion == 0 ) {
-			win32.sys_arch.SetString( "Win2K (NT)" );
-		} else if( win32.osversion.dwMajorVersion == 5 && win32.osversion.dwMinorVersion == 1 ) {
-			win32.sys_arch.SetString( "WinXP (NT)" );
-		} else if ( win32.osversion.dwMajorVersion == 6 ) {
-			win32.sys_arch.SetString( "Vista" );
-		} else {
-			win32.sys_arch.SetString( "Unknown NT variant" );
-		}
-	} else if( win32.osversion.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS ) {
-		if( win32.osversion.dwMajorVersion == 4 && win32.osversion.dwMinorVersion == 0 ) {
-			// Win95
-			if( win32.osversion.szCSDVersion[1] == 'C' ) {
-				win32.sys_arch.SetString( "Win95 OSR2 (95)" );
-			} else {
-				win32.sys_arch.SetString( "Win95 (95)" );
-			}
-		} else if( win32.osversion.dwMajorVersion == 4 && win32.osversion.dwMinorVersion == 10 ) {
-			// Win98
-			if( win32.osversion.szCSDVersion[1] == 'A' ) {
-				win32.sys_arch.SetString( "Win98SE (95)" );
-			} else {
-				win32.sys_arch.SetString( "Win98 (95)" );
-			}
-		} else if( win32.osversion.dwMajorVersion == 4 && win32.osversion.dwMinorVersion == 90 ) {
-			// WinMe
-			win32.sys_arch.SetString( "WinMe (95)" );
-		} else {
-			win32.sys_arch.SetString( "Unknown 95 variant" );
-		}
-	} else {
-		win32.sys_arch.SetString( "unknown Windows variant" );
 	}
 
 	common->Printf( "%d MB System Memory\n", Sys_GetSystemRam() );
@@ -875,37 +549,6 @@ void Win_Frame( void ) {
 			Sys_ShowConsole( win32.win_viewlog.GetInteger(), false );
 		}
 		win32.win_viewlog.ClearModified();
-	}
-}
-
-/*
-====================
-GetExceptionCodeInfo
-====================
-*/
-const char *GetExceptionCodeInfo( UINT code ) {
-	switch( code ) {
-		case EXCEPTION_ACCESS_VIOLATION: return "The thread tried to read from or write to a virtual address for which it does not have the appropriate access.";
-		case EXCEPTION_ARRAY_BOUNDS_EXCEEDED: return "The thread tried to access an array element that is out of bounds and the underlying hardware supports bounds checking.";
-		case EXCEPTION_BREAKPOINT: return "A breakpoint was encountered.";
-		case EXCEPTION_DATATYPE_MISALIGNMENT: return "The thread tried to read or write data that is misaligned on hardware that does not provide alignment. For example, 16-bit values must be aligned on 2-byte boundaries; 32-bit values on 4-byte boundaries, and so on.";
-		case EXCEPTION_FLT_DENORMAL_OPERAND: return "One of the operands in a floating-point operation is denormal. A denormal value is one that is too small to represent as a standard floating-point value.";
-		case EXCEPTION_FLT_DIVIDE_BY_ZERO: return "The thread tried to divide a floating-point value by a floating-point divisor of zero.";
-		case EXCEPTION_FLT_INEXACT_RESULT: return "The result of a floating-point operation cannot be represented exactly as a decimal fraction.";
-		case EXCEPTION_FLT_INVALID_OPERATION: return "This exception represents any floating-point exception not included in this list.";
-		case EXCEPTION_FLT_OVERFLOW: return "The exponent of a floating-point operation is greater than the magnitude allowed by the corresponding type.";
-		case EXCEPTION_FLT_STACK_CHECK: return "The stack overflowed or underflowed as the result of a floating-point operation.";
-		case EXCEPTION_FLT_UNDERFLOW: return "The exponent of a floating-point operation is less than the magnitude allowed by the corresponding type.";
-		case EXCEPTION_ILLEGAL_INSTRUCTION: return "The thread tried to execute an invalid instruction.";
-		case EXCEPTION_IN_PAGE_ERROR: return "The thread tried to access a page that was not present, and the system was unable to load the page. For example, this exception might occur if a network connection is lost while running a program over the network.";
-		case EXCEPTION_INT_DIVIDE_BY_ZERO: return "The thread tried to divide an integer value by an integer divisor of zero.";
-		case EXCEPTION_INT_OVERFLOW: return "The result of an integer operation caused a carry out of the most significant bit of the result.";
-		case EXCEPTION_INVALID_DISPOSITION: return "An exception handler returned an invalid disposition to the exception dispatcher. Programmers using a high-level language such as C should never encounter this exception.";
-		case EXCEPTION_NONCONTINUABLE_EXCEPTION: return "The thread tried to continue execution after a noncontinuable exception occurred.";
-		case EXCEPTION_PRIV_INSTRUCTION: return "The thread tried to execute an instruction whose operation is not allowed in the current machine mode.";
-		case EXCEPTION_SINGLE_STEP: return "A trace trap or other single-instruction mechanism signaled that one instruction has been executed.";
-		case EXCEPTION_STACK_OVERFLOW: return "The thread used up its stack.";
-		default: return "Unknown exception";
 	}
 }
 
@@ -957,12 +600,6 @@ int main(int argc, char *argv[]) {
 	common->Printf( Sys_FPU_GetState() );
 #endif
 
-#ifndef	ID_DEDICATED
-	if ( win32.win_notaskkeys.GetInteger() ) {
-		DisableTaskKeys( TRUE, FALSE, /*( win32.win_notaskkeys.GetInteger() == 2 )*/ FALSE );
-	}
-#endif
-
 	// hide or show the early console as necessary
 	if ( win32.win_viewlog.GetInteger() || com_skipRenderer.GetBool() || idAsyncNetwork::serverDedicated.GetInteger() ) {
 		Sys_ShowConsole( 1, true );
@@ -989,10 +626,6 @@ int main(int argc, char *argv[]) {
 	while( 1 ) {
 
 		Win_Frame();
-
-#ifdef DEBUG
-		Sys_MemFrame();
-#endif
 
 		// set exceptions, even if some crappy syscall changes them!
 		Sys_FPU_EnableExceptions( TEST_FPU_EXCEPTIONS );

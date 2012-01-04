@@ -198,13 +198,13 @@ void			Sys_DLL_Unload( uintptr_t dllHandle );
 void			Sys_GenerateEvents( void );
 sysEvent_t		Sys_GetEvent( void );
 void			Sys_ClearEvents( void );
+char			*Sys_ConsoleInput( void );
 
 // input is tied to windows, so it needs to be started up and shut down whenever
 // the main window is recreated
 void			Sys_InitInput( void );
 void			Sys_ShutdownInput( void );
 void			Sys_InitScanTable( void );
-const unsigned char *Sys_GetScanTable( void );
 unsigned char	Sys_GetConsoleKey( bool shifted );
 // map a scancode key to a char
 // does nothing on win32, as SE_KEY == SE_CHAR there
