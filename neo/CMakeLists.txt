@@ -95,16 +95,6 @@ include_directories(${OPENGL_INCLUDE_DIR})
 find_package(SDL REQUIRED)
 include_directories(${SDL_INCLUDE_DIR})
 
-if (UNIX AND NOT APPLE)
-	find_package(X11 REQUIRED)
-	include_directories(${X11_INCLUDE_DIR})
-
-	if (os MATCHES ".*bsd" OR os STREQUAL "dragonfly")
-		set(Xxf86vm /usr/local/lib/libXxf86vm.so)
-	else()
-		set(Xxf86vm Xxf86vm)
-	endif()
-endif()
 
 if (CURL)
 	find_package(CURL REQUIRED)
@@ -564,8 +554,6 @@ if (APPLE)
 	set(src_sys_core
 		sys/glimp.cpp
 		sys/glimp_ati_fragment_shader.cpp
-		sys/osx/PickMonitor.cpp
-		sys/osx/PreferencesDialog.cpp
 		sys/osx/DOOMController.mm
 		sys/osx/macosx_misc.mm
 	)
@@ -621,7 +609,6 @@ if (CORE)
 	set_target_properties(shadow-of-dust.${cpu} PROPERTIES LINK_FLAGS "${ldflags}")
 	target_link_libraries(shadow-of-dust.${cpu}
 		idlib${cpu}
-		${X11_X11_LIB} ${X11_Xext_LIB} ${Xxf86vm}
 		${OPENGL_gl_LIBRARY}
 		${OPENAL_LIBRARY}
 		${OGG_LIBRARIES}
