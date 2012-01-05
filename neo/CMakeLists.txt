@@ -146,34 +146,34 @@ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
 
 		if (cpu STREQUAL "x86_64")
 			add_definitions(-arch x86_64 -mmacosx-version-min=10.6)
-			set(ldflags ${ldflags} "-arch x86_64 -mmacosx-version-min=10.6")
+			set(ldflags "${ldflags} -arch x86_64 -mmacosx-version-min=10.6")
 		elseif (cpu STREQUAL "x86")
 			CHECK_CXX_COMPILER_FLAG("-arch i386" cxx_has_arch_i386)
 			if (cxx_has_arch_i386)
 				add_definitions(-arch i386)
-				set(ldflags ${ldflags} "-arch i386")
+				set(ldflags "${ldflags} -arch i386")
 			endif()
 
 			add_definitions(-mmacosx-version-min=10.4)
-			set(ldflags ${ldflags} "-mmacosx-version-min=10.4")
+			set(ldflags "${ldflags} -mmacosx-version-min=10.4")
 		elseif (cpu STREQUAL "ppc")
 			CHECK_CXX_COMPILER_FLAG("-arch ppc" cxx_has_arch_ppc)
 			if (cxx_has_arch_ppc)
 				add_definitions(-arch ppc)
-				set(ldflags ${ldflags} "-arch ppc")
+				set(ldflags "${ldflags} -arch ppc")
 			endif()
 
 			add_definitions(-mmacosx-version-min=10.4)
-			set(ldflags ${ldflags} "-mmacosx-version-min=10.4")
+			set(ldflags "${ldflags} -mmacosx-version-min=10.4")
 		else()
 			message(FATAL_ERROR "Unsupported CPU architecture for OSX")
 		endif()
 
-		set(sys_libs ${sys_libs} "-framework Carbon -framework Cocoa -framework OpenGL -framework OpenAL -framework IOKit")
+		set(sys_libs "${sys_libs} -framework Carbon -framework Cocoa -framework OpenGL -framework OpenAL -framework IOKit")
 	else()
 		if (cpu STREQUAL "x86" AND X86)
 			add_definitions(-m32)
-			set(ldflags ${ldflags} "-m32")
+			set(ldflags "${ldflags} -m32")
 		endif()
 
 		if (os STREQUAL "linux")
@@ -541,6 +541,13 @@ set(src_stub_util		sys/stub/util_stub.cpp)
 set(src_sys_dedicated	sys/linux/dedicated.cpp)
 
 if (APPLE)
+	set(OSX_RESOURCE_FILES
+		"${CMAKE_CURRENT_SOURCE_DIR}/sys/osx/Doom3.icns"
+		"${CMAKE_CURRENT_SOURCE_DIR}/sys/osx/Doom 3.rsrc"
+	)
+
+	set_source_files_properties(${OSX_RESOURCE_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+	
 	set(src_sys_base
 		sys/cpu.cpp
 		sys/threads.cpp
@@ -556,6 +563,8 @@ if (APPLE)
 		sys/glimp_ati_fragment_shader.cpp
 		sys/osx/DOOMController.mm
 		sys/osx/macosx_misc.mm
+		sys/osx/SDLMain.m
+		${OSX_RESOURCE_FILES}
 	)
 elseif (WIN32)
 	set(src_sys_base
@@ -599,7 +608,7 @@ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang" AND NOT MING
 endif()
 
 if (CORE)
-	add_executable(shadow-of-dust.${cpu} WIN32
+	add_executable(shadow-of-dust.${cpu} WIN32 MACOSX_BUNDLE
 		${src_core}
 		${src_sys_base}
 		${src_sys_core}
@@ -607,6 +616,7 @@ if (CORE)
 
 	set_target_properties(shadow-of-dust.${cpu} PROPERTIES COMPILE_DEFINITIONS "__DOOM_DLL__")
 	set_target_properties(shadow-of-dust.${cpu} PROPERTIES LINK_FLAGS "${ldflags}")
+	set_target_properties(shadow-of-dust.${cpu} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PROJECT_SOURCE_DIR}/sys/osx/Info.plist)
 	target_link_libraries(shadow-of-dust.${cpu}
 		idlib${cpu}
 		${OPENGL_gl_LIBRARY}
@@ -622,7 +632,7 @@ if (CORE)
 endif()
 
 if (DEDICATED)
-	add_executable(shadow-of-dustded.${cpu} WIN32
+	add_executable(shadow-of-dustded.${cpu} WIN32 MACOSX_BUNDLE
 		${src_core}
 		${src_stub_openal}
 		${src_stub_gl}
