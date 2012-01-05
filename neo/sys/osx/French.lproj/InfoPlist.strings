@@ -1,6 +1,0 @@
-/* Localized versions of Info.plist keys */
-
-CFBundleName = "Shadow of Dust";
-CFBundleShortVersionString = "1.1 b2847";
-CFBundleGetInfoString = "Shadow of Dust version 1.1 b2847, Copyright 2006 Id Software";
-NSHumanReadableCopyright = "Copyright 2006 Id Software";

@@ -562,12 +562,11 @@ if (APPLE)
 	)
 
 	set(src_sys_core
-		sys/posix/posix_input.cpp
+		sys/glimp.cpp
+		sys/glimp_ati_fragment_shader.cpp
 		sys/osx/PickMonitor.cpp
 		sys/osx/PreferencesDialog.cpp
 		sys/osx/DOOMController.mm
-		sys/osx/macosx_event.mm
-		sys/osx/macosx_glimp.mm
 		sys/osx/macosx_misc.mm
 	)
 elseif (WIN32)
