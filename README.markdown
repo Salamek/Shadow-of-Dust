@@ -17,16 +17,16 @@ cmake ./CMakeList.txt
 make -j 2
 ```
 ## Compiling on Windows
-Windows is not supported right now...
+Windows is not tested
 
 ## Compiling on Mac
-MAC OS X is not supported right now
+MAC OS X is not tested
 
 ## License
 See COPYING.txt for the GNU GENERAL PUBLIC LICENSE
 
-ADDITIONAL TERMS:  The Doom 3 GPL Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the 
-GNU GPL which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
+ADDITIONAL TERMS:  The Shadow of Dust GPL Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the 
+GNU GPL which accompanied the Shadow of Dust Source Code.  If not, please request a copy in writing from id Software at id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
 ## Readme
-See README.txt for the original Doom 3 source release readme.
+See README.txt for the original Shadow of Dust source release readme.
