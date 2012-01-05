@@ -26,35 +26,20 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-// -*- mode: objc -*-
-#import <unistd.h>
+#include <sys/param.h>
+#include <sys/ucontext.h>
+#include <unistd.h>
+#include <fenv.h>
+#include <mach/thread_status.h>
+#include <AppKit/AppKit.h>
 
-#import <Foundation/Foundation.h>
-#import <Carbon/Carbon.h>
-#import <AppKit/AppKit.h>
-#import <OpenGL/gl.h>
+#include <SDL_main.h>
 
-#import <fenv.h>
-#import <ucontext.h>
-#import <mach/thread_status.h>
+#include "sys/platform.h"
+#include "idlib/Str.h"
+#include "framework/Common.h"
 
-#import <SDL_main.h>
-
-#import "sys/platform.h"
-#import "idlib/Str.h"
-#import "framework/Licensee.h"
-#import "framework/Common.h"
-#import "sys/osx/macosx_common.h"
-#import "sys/osx/macosx_local.h"
-#import "sys/osx/macosx_sys.h"
-
-#import "DOOMController.h"
-
-#define	MAX_KEYS		256
-
-static idStr			savepath;
-
-extern	bool	key_overstrikeMode;
+#include "sys/posix/posix_public.h"
 
 #define TEST_FPU_EXCEPTIONS			\
 FPU_EXCEPTION_INVALID_OPERATION |		\
@@ -65,378 +50,30 @@ FPU_EXCEPTION_DIVIDE_BY_ZERO |			\
 /* FPU_EXCEPTION_INEXACT_RESULT | */		\
 0
 
-#define kRegKey @"RegCode"
-
-static const ControlID	kRegCode1EditText =	{ 'RegC', 1 };
-
-struct RegCodeInfo
-{
-	char							prefRegCode1[256];
-	bool							okPressed;
-	WindowRef						window;
-	ControlRef						regCode1EditText;
-};
-
-static OSErr DoRegCodeDialog( char* ioRegCode1 );
-
-
-@interface DOOMController (Private)
-- (void)quakeMain;
-- (BOOL)checkRegCodes;
-- (BOOL)checkOS;
-@end
-
-@implementation DOOMController
-
-/*
-+ (void)initialize;
-{
-	static bool initialized = NO;
-
-	[super initialize];
-	if ( initialized ) {
-		return;
-	}
-	initialized = YES;
-}
-*/
-
-#define MAX_ARGC 1024
-
-- (void)applicationDidFinishLaunching:(NSNotification *)notification;
-{
-	NS_DURING {
-		NSAssert(sizeof(bool) == 1, @"sizeof(bool) should equal 1 byte");
-		[self quakeMain];
-	} NS_HANDLER {
-		Sys_Error( (const char *)[ [ localException reason ] cString ] );
-	} NS_ENDHANDLER;
-	Sys_Quit();
-}
-
-- (void)applicationWillHide:(NSNotification *)notification;
-{
-	Sys_ShutdownInput();
-}
-
-- (void)applicationWillUnhide:(NSNotification *)notification;
-{
-	Sys_InitInput();
-}
-
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
-{
-	common->Quit();
-	return NSTerminateLater;	// we never reach this
-}
-
-#if 0
-// Actions
-
-- (IBAction)paste:(id)sender;
-{
-	int shiftWasDown, insertWasDown;
-	unsigned int currentTime;
-
-	currentTime = Sys_Milliseconds();
-	// Save the original keyboard state
-	shiftWasDown = keys[K_SHIFT].down;
-	insertWasDown = keys[K_INS].down;
-	// Fake a Shift-Insert keyboard event
-	keys[K_SHIFT].down = true;
-	Posix_QueEvent(currentTime, SE_KEY, K_INS, true, 0, NULL);
-	Posix_QueEvent(currentTime, SE_KEY, K_INS, false, 0, NULL);
-	// Restore the original keyboard state
-	keys[K_SHIFT].down = shiftWasDown;
-	keys[K_INS].down = insertWasDown;
-}
-
-extern void CL_Quit_f(void);
-//extern void SetProgramPath(const char *path);
-
-
-- (IBAction)requestTerminate:(id)sender;
-{
-	//osxQuit();
-	common->Quit();
-}
-
-- (void)showBanner;
-{
-	static bool hasShownBanner = NO;
-
-	if (!hasShownBanner) {
-		//cvar_t *showBanner;
-
-		hasShownBanner = YES;
-		//showBanner = Cvar_Get("cl_showBanner", "1", 0);
-		//if ( showBanner->integer != 0 ) {
-		if ( true ) {
-			NSPanel *splashPanel;
-			NSImage *bannerImage;
-			NSRect bannerRect;
-			NSImageView *bannerImageView;
-
-			bannerImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForImageResource:@"banner.jpg"]];
-			bannerRect = NSMakeRect(0.0, 0.0, [bannerImage size].width, [bannerImage size].height);
-
-			splashPanel = [[NSPanel alloc] initWithContentRect:bannerRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
-
-			bannerImageView = [[NSImageView alloc] initWithFrame:bannerRect];
-			[bannerImageView setImage:bannerImage];
-			[splashPanel setContentView:bannerImageView];
-			[bannerImageView release];
-
-			[splashPanel center];
-			[splashPanel setHasShadow:YES];
-			[splashPanel orderFront: nil];
-			[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:2.5]];
-			[splashPanel close];
-
-			[bannerImage release];
-		}
-	}
-}
-
-// Services
-
-- (void)connectToServer:(NSPasteboard *)pasteboard userData:(NSString *)data error:(NSString **)error;
-{
-	NSArray *pasteboardTypes;
-
-	pasteboardTypes = [pasteboard types];
-	if ([pasteboardTypes containsObject:NSStringPboardType]) {
-		NSString *requestedServer;
-
-		requestedServer = [pasteboard stringForType:NSStringPboardType];
-		if (requestedServer) {
-			Cbuf_AddText( va( "connect %s\n", [requestedServer cString]));
-			return;
-		}
-	}
-	*error = @"Unable to connect to server:  could not find string on pasteboard";
-}
-
-- (void)performCommand:(NSPasteboard *)pasteboard userData:(NSString *)data error:(NSString **)error;
-{
-	NSArray *pasteboardTypes;
-
-	pasteboardTypes = [pasteboard types];
-	if ([pasteboardTypes containsObject:NSStringPboardType]) {
-		NSString *requestedCommand;
-
-		requestedCommand = [pasteboard stringForType:NSStringPboardType];
-		if (requestedCommand) {
-			Cbuf_AddText(va("%s\n", [requestedCommand cString]));
-			return;
-		}
-	}
-	*error = @"Unable to perform command:  could not find string on pasteboard";
-}
-
-#endif // commented out all the banners and actions
-
-@end
-
-@implementation DOOMController (Private)
-
-- (void)quakeMain
-{
-	NSAutoreleasePool *pool;
-	int argc = 0;
-	char *argv[MAX_ARGC];
-	NSProcessInfo *processInfo;
-	NSArray *arguments;
-	unsigned int argumentIndex, argumentCount;
-	//const char *cddir;
-	//NSFileManager *defaultManager;
-	//bool tryAgain;
-
-	pool = [[NSAutoreleasePool alloc] init];
-
-	[NSApp setServicesProvider:self];
-
-	processInfo = [NSProcessInfo processInfo];
-	arguments = [processInfo arguments];
-	argumentCount = [arguments count];
-	for (argumentIndex = 0; argumentIndex < argumentCount; argumentIndex++) {
-		argv[argc++] = strdup([[arguments objectAtIndex:argumentIndex] cString]);
-	}
-	if (![[NSFileManager defaultManager] changeCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]]) {
-		Sys_Error("Could not access application resources");
-	}
-	//cddir = macosx_scanForLibraryDirectory();
-	/*
-	do {
-		tryAgain = NO;
-		defaultManager = [NSFileManager defaultManager];
-		if (![defaultManager fileExistsAtPath:@"./base/default.cfg"] && (!cddir || *cddir == '\0' || ![defaultManager fileExistsAtPath:[NSString stringWithFormat:@"%s/baseq3/pak0.pk3", cddir]])) {
-			NSString *message;
-
-			if (!cddir || *cddir == '\0') {
-				message = [NSString stringWithFormat:@"Could not find DOOM levels."];
-			} else if (![defaultManager fileExistsAtPath:[NSString stringWithFormat:@"%s", cddir]]) {
-				message = [NSString stringWithFormat:@"Could not find DOOM levels:  '%s' does not exist.", cddir];
-			} else {
-				message = [NSString stringWithFormat:@"Could not find DOOM levels:  '%s' is not a complete DOOM installation.", cddir];
-			}
-			switch (NSRunAlertPanel(@"DOOM", @"%@", @"Quit", @"Find...", nil, message)) {
-				case NSAlertDefaultReturn:
-				default:
-					Sys_Quit();
-					break;
-				case NSAlertAlternateReturn:
-					tryAgain = YES;
-					break;
-			}
-			if (tryAgain) {
-				NSOpenPanel *openPanel;
-				int result;
-
-				openPanel = [NSOpenPanel openPanel];
-				[openPanel setAllowsMultipleSelection:NO];
-				[openPanel setCanChooseDirectories:YES];
-				[openPanel setCanChooseFiles:NO];
-				result = [openPanel runModalForDirectory:nil file:nil];
-				if (result == NSOKButton) {
-					NSArray *filenames;
-
-					filenames = [openPanel filenames];
-					if ([filenames count] == 1) {
-						NSString *cdPath;
-
-						cdPath = [filenames objectAtIndex:0];
-						[[NSUserDefaults standardUserDefaults] setObject:cdPath forKey:@"CDPath"];
-						cddir = strdup([cdPath cString]);
-					}
-				}
-			}
-		}
-	} while (tryAgain);
-	*/
-/*
-	if (cddir && *cddir != '\0') {
-		SetProgramPath([[[NSString stringWithCString:cddir] stringByAppendingPathComponent:@"/x"] cString]);
-	}
-*/
-
-	//Sys_FPU_EnableExceptions( TEST_FPU_EXCEPTIONS );
-
-	Posix_EarlyInit( );
-
-#ifndef _DEBUG
-	if ( [self checkOS] == FALSE) {
-		common->Quit();
-	}
-
-	if ( [self checkDVD] == FALSE) {
-		common->Quit();
-	}
-#endif
-
-	// need strncmp, can't use idlib before init
-#undef strncmp
-	// Finder passes the process serial number as only argument after the program path
-	// nuke it if we see it
-	if ( argc > 1 && strncmp( argv[ 1 ], "-psn", 4 ) ) {
-		common->Init( argc-1, &argv[1] );
-	} else {
-		common->Init( 0, NULL );
-	}
-
-	Posix_LateInit( );
-
-	[NSApp activateIgnoringOtherApps:YES];
-
-	while (1) {
-#ifdef OMNI_TIMER
-		OTPeriodicTimerReset();
-		OTNodeStart(RootNode);
-#endif
-
-		// maintain exceptions in case system calls are turning them off (is that needed)
-		//Sys_FPU_EnableExceptions( TEST_FPU_EXCEPTIONS );
-
-		common->Frame();
-
-		// We should think about doing this less frequently than every frame
-		[pool release];
-		pool = [[NSAutoreleasePool alloc] init];
-#ifdef OMNI_TIMER
-		OTNodeStop(RootNode);
-#endif
-	}
-
-	[pool release];
-}
-
-- (BOOL)checkRegCodes
-{
-	BOOL retval;
-	NSString *cdKey;
-	NSUserDefaults *userDefaults;
-
-	userDefaults = [NSUserDefaults standardUserDefaults];
-	cdKey = [userDefaults stringForKey:kRegKey];
-
-	retval = TRUE;
-	if ( cdKey == nil || [cdKey length] == 0 ) {
-		char regCode[256];
-		if ( DoRegCodeDialog( regCode ) != noErr ) {
-			retval = FALSE;
-		}
-		else {
-			[userDefaults setObject:[NSString stringWithCString: regCode] forKey:kRegKey];
-			[userDefaults synchronize];
-		}
-	}
-	return retval;
-}
-
-- (BOOL)checkOS
-{
-	OSErr	err;
-	long gestaltOSVersion;
-	err = Gestalt(gestaltSystemVersion, &gestaltOSVersion);
-	if ( err || gestaltOSVersion < 0x1038 ) {
-		NSBundle *thisBundle = [ NSBundle mainBundle ];
-		NSString *messsage = [ thisBundle localizedStringForKey:@"InsufficientOS" value:@"No translation" table:nil ];
-		NSRunAlertPanel(@GAME_NAME, messsage, nil, nil, nil);
-		return FALSE;
-	}
-	return TRUE;
-}
-
-- (BOOL)checkDVD
-{
-	return TRUE;
-}
-
-@end
-
 /*
 ==============
 Sys_EXEPath
 ==============
 */
 const char *Sys_EXEPath( void ) {
-	static char exepath[ 1024 ];
-	strncpy( exepath, [ [ [ NSBundle mainBundle ] bundlePath ] cString ], 1024 );
+	static char exepath[ MAXPATHLEN ];
+	strncpy( exepath, [ [ [ NSBundle mainBundle ] bundlePath ] cString ], MAXPATHLEN );
 	return exepath;
 }
 
 /*
- ==========
- Sys_DefaultSavePath
- ==========
- */
+==========
+Sys_DefaultSavePath
+==========
+*/
 const char *Sys_DefaultSavePath(void) {
+	static char savepath[ MAXPATHLEN ];
 #if defined( ID_DEMO_BUILD )
 	sprintf( savepath, "%s/Library/Application Support/Shadow of Dust Demo", [NSHomeDirectory() cString] );
 #else
 	sprintf( savepath, "%s/Library/Application Support/Shadow of Dust", [NSHomeDirectory() cString] );
 #endif
-	return savepath.c_str();
+	return savepath;
 }
 
 /*
@@ -445,12 +82,14 @@ Sys_DefaultBasePath
 ==========
 */
 const char *Sys_DefaultBasePath(void) {
-	static char basepath[ 1024 ];
-	strncpy( basepath, [ [ [ NSBundle mainBundle ] bundlePath ] cString ], 1024 );
+	static char basepath[ MAXPATHLEN ];
+
+	strncpy( basepath, [ [ [ NSBundle mainBundle ] bundlePath ] cString ], MAXPATHLEN );
 	char *snap = strrchr( basepath, '/' );
 	if ( snap ) {
 		*snap = '\0';
 	}
+
 	return basepath;
 }
 
@@ -460,7 +99,6 @@ Sys_Shutdown
 ===============
 */
 void Sys_Shutdown( void ) {
-	savepath.Clear();
 	Posix_Shutdown();
 }
 
@@ -625,37 +263,6 @@ int Sys_GetSystemRam( void ) {
 		return 1024;
 }
 
-/*
-================
-Sys_GetVideoRam
-returns in megabytes
-================
-*/
-int Sys_GetVideoRam( void ) {
-	unsigned int i;
-	CFTypeRef typeCode;
-	long vramStorage = 64;
-	const short MAXDISPLAYS = 8;
-	CGDisplayCount displayCount;
-	io_service_t dspPorts[MAXDISPLAYS];
-	CGDirectDisplayID displays[MAXDISPLAYS];
-
-	CGGetOnlineDisplayList( MAXDISPLAYS, displays, &displayCount );
-
-	for ( i = 0; i < displayCount; i++ ) {
-		if ( Sys_DisplayToUse() == displays[i] ) {
-			dspPorts[i] = CGDisplayIOServicePort(displays[i]);
-			typeCode = IORegistryEntryCreateCFProperty( dspPorts[i], CFSTR("IOFBMemorySize"), kCFAllocatorDefault, kNilOptions );
-			if( typeCode && CFGetTypeID( typeCode ) == CFNumberGetTypeID() ) {
-				CFNumberGetValue( ( CFNumberRef )typeCode, kCFNumberSInt32Type, &vramStorage );
-				vramStorage /= (1024*1024);
-			}
-		}
-	}
-
-	return vramStorage;
-}
-
 bool OSX_GetCPUIdentification( int& cpuId, bool& oldArchitecture )
 {
 	long cpu;
@@ -734,140 +341,36 @@ main
 ===============
 */
 int main( int argc, char *argv[] ) {
-	return NSApplicationMain( argc, (const char **)argv );
-}
+	NSAutoreleasePool *pool;
 
-bool FormatRegCode(const char* inRegCode, char* outRegCode)
-{
-	// Clean up the reg code. Remove spaces. Accept only numbers/letters.
-	char* dst = outRegCode;
-	const char* src = inRegCode;
-	while (*src)
-	{
-		if (isalnum(*src))
-			*dst++ = *src;
-		else if (*src != ' ')
-			return false;
-		src++;
-	}
-	*dst = 0;
+	pool = [[NSAutoreleasePool alloc] init];
 
-	// Reg codes are 18 characters in length
-	return strlen(outRegCode) == 18;
-}
+	if (![[NSFileManager defaultManager] changeCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]])
+		Sys_Error("Could not access application resources");
 
-/*
- ===============
- RegCodeHandler
- ===============
- */
-static pascal OSStatus RegCodeHandler( EventHandlerCallRef, EventRef inEvent, void* inUserData )
-{
-#if 1
-	// FIXME: the CD key API has changed for startup check support and expansion pack key support
-	return noErr;
-#else
-	HICommand			cmd;
-	OSStatus			result = eventNotHandledErr;
-	RegCodeInfo*		regCodeInfo = (RegCodeInfo*)inUserData;
+	//Sys_FPU_EnableExceptions(TEST_FPU_EXCEPTIONS);
 
-	GetEventParameter( inEvent, kEventParamDirectObject, typeHICommand, NULL, sizeof( cmd ), NULL, &cmd );
+	Posix_EarlyInit();
 
-	switch ( cmd.commandID ) {
-		case kHICommandOK:
-			bool fValid;
-			Size actualSize;
-			char cntrl[256];
-			char doomKey[256];
-			char strippedKey[256];
+	if (argc > 1)
+		common->Init(argc - 1, &argv[1]);
+	else
+		common->Init(0, NULL);
 
-			fValid = false;
-			strippedKey[0] = doomKey[0] = NULL;
-			GetControlData ( regCodeInfo->regCode1EditText, kControlEntireControl, kControlEditTextTextTag, 256, cntrl, &actualSize );
-			cntrl[actualSize] = NULL;
-			if ( FormatRegCode( cntrl, strippedKey ) ) {
-				strncat( doomKey, strippedKey, 16 );
-				strcat( doomKey, " " );
-				strncat( doomKey, strippedKey + 16, 2 );
-				fValid = session->CheckKey( doomKey );
-			}
-			if ( fValid ) {
-				strcpy( regCodeInfo->prefRegCode1, doomKey );
-				session->SetCDKey( doomKey );
-			}
-			else {
-				unsigned char theError[512];
-				unsigned char theExplanation[512];
-				CFStringRef theErrorStr = CFCopyLocalizedString( CFSTR("DVD_KEY_ERROR"), "" );
-				CFStringRef theExplanationStr = CFCopyLocalizedString( CFSTR("DVD_KEY_EXPLANATION"), "" );
-				c2pstrcpy( theError, CFStringGetCStringPtr( theErrorStr, kCFStringEncodingMacRoman ) );
-				c2pstrcpy( theExplanation, CFStringGetCStringPtr( theExplanationStr, kCFStringEncodingMacRoman )  );
+	Posix_LateInit();
 
-				StandardAlert(kAlertStopAlert, theError, theExplanation, NULL, NULL);
+	[NSApp activateIgnoringOtherApps:YES];
 
-				// Highlight the invalid reg code
-				ClearKeyboardFocus(regCodeInfo->window);
-				SetKeyboardFocus( regCodeInfo->window, regCodeInfo->regCode1EditText, kControlEditTextPart );
-				ControlEditTextSelectionRec sel = {0, 32000};
-				SetControlData (regCodeInfo->regCode1EditText, kControlEntireControl, kControlEditTextSelectionTag, sizeof(sel), &sel);
-				break;
-			}
+	while (1) {
+		// maintain exceptions in case system calls are turning them off (is that needed)
+		//Sys_FPU_EnableExceptions(TEST_FPU_EXCEPTIONS);
 
-			regCodeInfo->okPressed = true;
-			QuitAppModalLoopForWindow( regCodeInfo->window );
-			result = noErr;
+		common->Frame();
 
-			break;
-
-		case kHICommandCancel:
-			regCodeInfo->okPressed = false;
-			QuitAppModalLoopForWindow( regCodeInfo->window );
-			result = noErr;
-			break;
-
-	}
-	return result;
-#endif
-}
-
-/*
- ===============
- DoRegCodeDialog
- ===============
- */
-static OSErr DoRegCodeDialog( char* ioRegCode1 )
-{
-	OSErr err;
-	RegCodeInfo regCodeInfo;
-	memset(&regCodeInfo, 0, sizeof(regCodeInfo));
-
-	IBNibRef aslNib;
-	CFBundleRef theBundle = CFBundleGetMainBundle();
-	err = CreateNibReferenceWithCFBundle( theBundle, CFSTR("ASLCore"), &aslNib );
-	err = ::CreateWindowFromNib( aslNib, CFSTR("Reg Code Sheet"), &regCodeInfo.window );
-	if (err != noErr)
-		return err;
-
-	GetControlByID( regCodeInfo.window, &kRegCode1EditText, &regCodeInfo.regCode1EditText );
-	assert( regCodeInfo.regCode1EditText );
-	SetKeyboardFocus( regCodeInfo.window, regCodeInfo.regCode1EditText, kControlEditTextPart );
-	ControlEditTextSelectionRec sel = {0, 32000};
-	SetControlData (regCodeInfo.regCode1EditText, kControlEntireControl, kControlEditTextSelectionTag, sizeof(sel), &sel);
-
-	EventTypeSpec cmdEvent = { kEventClassCommand, kEventCommandProcess };
-	EventHandlerUPP handler = NewEventHandlerUPP( RegCodeHandler );
-	InstallWindowEventHandler( regCodeInfo.window, handler, 1, &cmdEvent, &regCodeInfo, NULL );
-
-	RepositionWindow( regCodeInfo.window, NULL, kWindowAlertPositionOnMainScreen );
-	ShowWindow( regCodeInfo.window );
-
-	RunAppModalLoopForWindow( regCodeInfo.window );
-
-	DisposeWindow( regCodeInfo.window );
-
-	if (regCodeInfo.okPressed) {
-		strcpy(ioRegCode1, regCodeInfo.prefRegCode1);
+		// We should think about doing this less frequently than every frame
+		[pool release];
+		pool = [[NSAutoreleasePool alloc] init];
 	}
 
-	return regCodeInfo.okPressed ? (OSErr)noErr : (OSErr)userCanceledErr;
+	[pool release];
 }
