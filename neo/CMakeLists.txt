@@ -54,6 +54,9 @@ if (cpu STREQUAL "x86_64" AND X86)
 	set(cpu "x86")
 endif()
 
+# game library suffix
+set(gamesuffix ${cpu})
+
 # target os
 if (APPLE)
 	set(os "macosx")
@@ -64,6 +67,19 @@ endif()
 # build type
 if (NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+endif()
+
+# precompiled libraries from the shadow-of-dust-libs repo
+if (DOOM3LIBS)
+	if (CMAKE_CROSSCOMPILING)
+		set(CMAKE_FIND_ROOT_PATH ${DOOM3LIBS})
+	else()
+		set(ENV{CMAKE_PREFIX_PATH} ${DOOM3LIBS})
+	endif()
+
+	# these are too stupid, give them a hint
+	set(ENV{OPENALDIR} ${DOOM3LIBS})
+	set(ENV{SDLDIR} ${DOOM3LIBS})
 endif()
 
 # libs
@@ -94,7 +110,6 @@ include_directories(${OPENGL_INCLUDE_DIR})
 
 find_package(SDL REQUIRED)
 include_directories(${SDL_INCLUDE_DIR})
-
 
 if (CURL)
 	find_package(CURL REQUIRED)
@@ -142,6 +157,9 @@ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
 	endif()
 
 	if (APPLE)
+		# no suffix for .dylib
+		set(gamesuffix "")
+
 		add_definitions(-DMACOS_X=1)
 
 		if (cpu STREQUAL "x86_64")
@@ -169,7 +187,7 @@ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
 			message(FATAL_ERROR "Unsupported CPU architecture for OSX")
 		endif()
 
-		set(sys_libs "${sys_libs} -framework Carbon -framework Cocoa -framework OpenGL -framework OpenAL -framework IOKit")
+		set(sys_libs ${sys_libs} "-framework Carbon -framework Cocoa -framework OpenGL -framework OpenAL -framework IOKit")
 	else()
 		if (cpu STREQUAL "x86" AND X86)
 			add_definitions(-m32)
@@ -182,6 +200,10 @@ if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
 	endif()
 elseif (MSVC)
 	add_definitions(/W4)
+	add_definitions(/wd4100) # unreferenced formal parameter
+	add_definitions(/wd4127) # conditional expression is constant
+	add_definitions(/wd4244) # possible loss of data
+	add_definitions(/wd4245) # signed/unsigned mismatch
 	add_definitions(/wd4714) # 'function' marked as __forceinline not inlined
 	add_definitions(/wd4996) # 'function': was declared deprecated
 	set(CMAKE_C_FLAGS_DEBUG "-D_DEBUG /Od /Zi /MDd")
@@ -207,7 +229,6 @@ if (WIN32)
 		iphlpapi
 		wsock32
 	)
-
 endif()
 
 message(STATUS "Building ${CMAKE_BUILD_TYPE} for ${os}.${cpu}")
@@ -519,7 +540,6 @@ set(src_game
 )
 
 
-
 set(src_core
 	${src_renderer}
 	${src_framework}
@@ -542,12 +562,12 @@ set(src_sys_dedicated	sys/linux/dedicated.cpp)
 
 if (APPLE)
 	set(OSX_RESOURCE_FILES
-		"${CMAKE_CURRENT_SOURCE_DIR}/sys/osx/Doom3.icns"
-		"${CMAKE_CURRENT_SOURCE_DIR}/sys/osx/Doom 3.rsrc"
+			"${CMAKE_CURRENT_SOURCE_DIR}/sys/osx/Doom3.icns"
+			"${CMAKE_CURRENT_SOURCE_DIR}/sys/osx/Shadow of Dust.rsrc"
 	)
 
 	set_source_files_properties(${OSX_RESOURCE_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-	
+
 	set(src_sys_base
 		sys/cpu.cpp
 		sys/threads.cpp
@@ -570,6 +590,8 @@ elseif (WIN32)
 	set(src_sys_base
 		sys/cpu.cpp
 		sys/threads.cpp
+		sys/glimp.cpp
+		sys/events.cpp
 		sys/sys_local.cpp
 		sys/win32/win_cpu.cpp
 		sys/win32/win_input.cpp
@@ -577,6 +599,7 @@ elseif (WIN32)
 		sys/win32/win_net.cpp
 		sys/win32/win_shared.cpp
 		sys/win32/win_syscon.cpp
+		sys/win32/SDL_win32_main.c
 	)
 
 	set(src_sys_core
@@ -602,23 +625,24 @@ endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(idlib${cpu} STATIC ${src_idlib})
+add_library(idlib STATIC ${src_idlib})
 if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang" AND NOT MINGW)
-	set_target_properties(idlib${cpu} PROPERTIES COMPILE_FLAGS "-fPIC")
+	set_target_properties(idlib PROPERTIES COMPILE_FLAGS "-fPIC")
 endif()
 
 if (CORE)
-	add_executable(shadow-of-dust.${cpu} WIN32 MACOSX_BUNDLE
+	add_executable(shadow-of-dust WIN32 MACOSX_BUNDLE
 		${src_core}
 		${src_sys_base}
 		${src_sys_core}
 	)
 
-	set_target_properties(shadow-of-dust.${cpu} PROPERTIES COMPILE_DEFINITIONS "__DOOM_DLL__")
-	set_target_properties(shadow-of-dust.${cpu} PROPERTIES LINK_FLAGS "${ldflags}")
-	set_target_properties(shadow-of-dust.${cpu} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PROJECT_SOURCE_DIR}/sys/osx/Info.plist)
-	target_link_libraries(shadow-of-dust.${cpu}
-		idlib${cpu}
+	set_target_properties(shadow-of-dust PROPERTIES COMPILE_DEFINITIONS "__DOOM_DLL__")
+	set_target_properties(shadow-of-dust PROPERTIES LINK_FLAGS "${ldflags}")
+	set_target_properties(shadow-of-dust PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PROJECT_SOURCE_DIR}/sys/osx/Info.plist)
+
+	target_link_libraries(shadow-of-dust
+		idlib
 		${OPENGL_gl_LIBRARY}
 		${OPENAL_LIBRARY}
 		${OGG_LIBRARIES}
@@ -632,7 +656,7 @@ if (CORE)
 endif()
 
 if (DEDICATED)
-	add_executable(shadow-of-dustded.${cpu} WIN32 MACOSX_BUNDLE
+	add_executable(shadow-of-dustded WIN32 MACOSX_BUNDLE
 		${src_core}
 		${src_stub_openal}
 		${src_stub_gl}
@@ -641,10 +665,10 @@ if (DEDICATED)
 		${src_sys_dedicated}
 	)
 
-	set_target_properties(shadow-of-dust-ded.${cpu} PROPERTIES COMPILE_DEFINITIONS "ID_DEDICATED;__DOOM_DLL__")
-	set_target_properties(shadow-of-dust-ded.${cpu} PROPERTIES LINK_FLAGS "${ldflags}")
-	target_link_libraries(shadow-of-dust-ded.${cpu}
-		idlib${cpu}
+	set_target_properties(shadow-of-dustded PROPERTIES COMPILE_DEFINITIONS "ID_DEDICATED;__DOOM_DLL__")
+	set_target_properties(shadow-of-dustded PROPERTIES LINK_FLAGS "${ldflags}")
+	target_link_libraries(shadow-of-dustded
+		idlib
 		${VORBISFILE_LIBRARIES}
 		${VORBIS_LIBRARIES}
 		${CURL_LIBRARY}
@@ -655,12 +679,11 @@ if (DEDICATED)
 endif()
 
 if (GAME)
-	add_library(game${cpu} SHARED ${src_game})
-	set_target_properties(game${cpu} PROPERTIES PREFIX "")
-	set_target_properties(game${cpu} PROPERTIES COMPILE_DEFINITIONS "GAME_DLL;_D3XP;CTF")
-	set_target_properties(game${cpu} PROPERTIES COMPILE_FLAGS "-I${CMAKE_CURRENT_SOURCE_DIR}/game")
-	set_target_properties(game${cpu} PROPERTIES LINK_FLAGS "${ldflags}")
-	set_target_properties(game${cpu} PROPERTIES INSTALL_NAME_DIR "@executable_path")
-	target_link_libraries(game${cpu} idlib${cpu})
+	add_library(game${gamesuffix} SHARED ${src_game})
+	set_target_properties(game${gamesuffix} PROPERTIES PREFIX "")
+	set_target_properties(game${gamesuffix} PROPERTIES COMPILE_DEFINITIONS "GAME_DLL;_D3XP;CTF")
+	set_target_properties(game${gamesuffix} PROPERTIES COMPILE_FLAGS "-I${CMAKE_CURRENT_SOURCE_DIR}/game")
+	set_target_properties(game${gamesuffix} PROPERTIES LINK_FLAGS "${ldflags}")
+	set_target_properties(game${gamesuffix} PROPERTIES INSTALL_NAME_DIR "@executable_path")
+	target_link_libraries(game${gamesuffix} idlib)
 endif()
-

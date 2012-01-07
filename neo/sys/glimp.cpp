@@ -33,7 +33,6 @@ If you have questions concerning this license or the applicable additional terms
 #include "framework/Licensee.h"
 
 #include "renderer/tr_local.h"
-
 #if defined(MACOS_X)
 #include "sys/glimp_ati_fragment_shader.h"
 #elif defined(_WIN32)
@@ -53,12 +52,9 @@ bool GLimp_Init(glimpParms_t parms) {
 	assert(SDL_WasInit(SDL_INIT_VIDEO));
 
 	Uint32 flags = SDL_OPENGL;
-	flags |= SDL_HWSURFACE;
-	
+
 	if (parms.fullScreen)
-	{
 		flags |= SDL_FULLSCREEN;
-	}
 
 	SDL_Surface *surf = NULL;
 
@@ -76,28 +72,18 @@ bool GLimp_Init(glimpParms_t parms) {
 			switch (i / 4) {
 			case 2 :
 				if (colorbits == 24)
-				{
 					colorbits = 16;
-				}
 				break;
 			case 1 :
 				if (depthbits == 24)
-				{
 					depthbits = 16;
-				}
 				else if (depthbits == 16)
-				{
 					depthbits = 8;
-				}
 			case 3 :
 				if (stencilbits == 24)
-				{
 					stencilbits = 16;
-				}
 				else if (stencilbits == 16)
-				{
 					stencilbits = 8;
-				}
 			}
 		}
 
@@ -108,44 +94,30 @@ bool GLimp_Init(glimpParms_t parms) {
 		if ((i % 4) == 3) {
 			// reduce colorbits
 			if (tcolorbits == 24)
-			{
 				tcolorbits = 16;
-			}
 		}
 
 		if ((i % 4) == 2) {
 			// reduce depthbits
 			if (tdepthbits == 24)
-			{
 				tdepthbits = 16;
-			}
 			else if (tdepthbits == 16)
-			{
 				tdepthbits = 8;
-			}
 		}
 
 		if ((i % 4) == 1) {
 			// reduce stencilbits
 			if (tstencilbits == 24)
-			{
 				tstencilbits = 16;
-			}
 			else if (tstencilbits == 16)
-			{
 				tstencilbits = 8;
-			}
 			else
-			{
 				tstencilbits = 0;
-			}
 		}
 
 		int channelcolorbits = 4;
 		if (tcolorbits == 24)
-		{
 			channelcolorbits = 8;
-		}
 
 		SDL_WM_SetCaption(GAME_NAME, GAME_NAME);
 
@@ -163,12 +135,9 @@ bool GLimp_Init(glimpParms_t parms) {
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, parms.multiSamples);
 
 		if (SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, r_swapInterval.GetInteger()) < 0)
-		{
 			common->Warning("SDL_GL_SWAP_CONTROL not supported");
-		}
 
 		surf = SDL_SetVideoMode(parms.width, parms.height, colorbits, flags);
-
 		if (!surf) {
 			common->DPrintf("Couldn't set GL mode %d/%d/%d: %s",
 							channelcolorbits, tdepthbits, tstencilbits, SDL_GetError());
@@ -254,10 +223,8 @@ GLimp_SetGamma
 =================
 */
 void GLimp_SetGamma(unsigned short red[256], unsigned short green[256], unsigned short blue[256]) {
-	if (SDL_SetGammaRamp(red, green, blue)<0)
-	{
+	if (SDL_SetGammaRamp(red, green, blue))
 		common->Warning("Couldn't set gamma ramp: %s", SDL_GetError());
-	}
 }
 
 /*
@@ -290,9 +257,7 @@ GLExtension_t GLimp_ExtensionPointer(const char *name) {
 	// special case for ATI_fragment_shader calls to map to ATI_text_fragment_shader routines
 	GLExtension_t res = GLimp_ExtensionPointer_ATI_fragment_shader(name);
 	if (res)
-	{
 		return res;
-	}
 #endif
 
 	return (GLExtension_t)SDL_GL_GetProcAddress(name);
@@ -307,20 +272,11 @@ int Sys_GetVideoRam() {
 	assert(SDL_WasInit(SDL_INIT_VIDEO));
 
 	if (sys_videoRam.GetInteger())
-	{
 		return sys_videoRam.GetInteger();
-	}
+
+	common->Printf("guessing video ram (use +set sys_videoRam to force)\n");
 
 	const SDL_VideoInfo *vi = SDL_GetVideoInfo();
-	common->Printf("guessing video ram (use +set sys_videoRam to force)\n");
-	if(vi->hw_available)
-	{
-		common->Printf("Created the video surface in video memory\n");
-		return vi->video_mem;
-	}
-	else
-	{
-		common->Printf("Created the video surface in system memory\n");
-		return 64; //Default ammount of ram
-	}
+
+	return vi->video_mem;
 }

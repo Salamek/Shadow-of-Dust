@@ -89,7 +89,7 @@ If you have questions concerning this license or the applicable additional terms
 #define EDITOR_WINDOWTEXT				"DOOMEdit"
 
 // win32 info
-#define WIN32_CONSOLE_CLASS				"DOOM 3 WinConsole"
+#define WIN32_CONSOLE_CLASS				"Shadow of Dust WinConsole"
 #define	WIN32_WINDOW_CLASS_NAME			"DOOM3"
 #define	WIN32_FAKE_WINDOW_CLASS_NAME	"DOOM3_WGL_FAKE"
 
@@ -97,3 +97,8 @@ If you have questions concerning this license or the applicable additional terms
 #define LINUX_DEFAULT_PATH			"/usr/local/games/shadow-of-dust"
 
 #define CONFIG_SPEC						"config.spec"
+
+#define CDKEY_FILE						"doomkey"
+#define XPKEY_FILE						"xpkey"
+#define CDKEY_TEXT						"\n// Do not give this file to ANYONE.\n" \
+				

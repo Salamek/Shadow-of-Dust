@@ -581,7 +581,7 @@ void tty_FlushIn() {
 
 /*
 ================
-Sys__ConsoleInput
+Sys_ConsoleInput
 Checks for a complete line of text typed in at the console.
 Return NULL if a complete line is not ready.
 ================

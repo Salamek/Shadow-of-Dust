@@ -411,6 +411,7 @@ sysEvent_t Sys_GetEvent() {
 
 			if (!key) {
 				unsigned char c;
+
 				// check if its an unmapped console key
 				if (ev.key.keysym.unicode == (c = Sys_GetConsoleKey(false))) {
 					key = c;
@@ -418,9 +419,7 @@ sysEvent_t Sys_GetEvent() {
 					key = c;
 				} else {
 					if (ev.type == SDL_KEYDOWN)
-					{
 						common->Warning("unmapped SDL key %d (0x%x)", ev.key.keysym.sym, ev.key.keysym.unicode);
-					}
 					return res_none;
 				}
 			}

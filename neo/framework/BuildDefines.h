@@ -88,13 +88,9 @@ If you have questions concerning this license or the applicable additional terms
 	#define	ID_ALLOW_TOOLS
 #endif
 
-#ifndef ID_ENFORCE_KEY
-#	if !defined( ID_DEDICATED ) && !defined( ID_DEMO_BUILD )
-#		define ID_ENFORCE_KEY 0
-#	else
-#		define ID_ENFORCE_KEY 0
-#	endif
-#endif
+
+#define ID_ENFORCE_KEY 0
+
 
 #ifndef ID_OPENAL
 #	if !defined( ID_DEDICATED )

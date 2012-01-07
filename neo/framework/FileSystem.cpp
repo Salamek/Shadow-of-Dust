@@ -211,8 +211,8 @@ static pureExclusion_t pureExclusions[] = {
 	{ 0,	0,	NULL,											".gui",		excludeExtension },
 	{ 0,	0,	NULL,											".pd",		excludeExtension },
 	{ 0,	0,	NULL,											".lang",	excludeExtension },
-	{ 0,	0,	"sound/vo",										".ogg",		excludePathPrefixAndExtension },
-	{ 0,	0,	"sound/vo",										".wav",		excludePathPrefixAndExtension },
+	{ 0,	0,	"sound/VO",										".ogg",		excludePathPrefixAndExtension },
+	{ 0,	0,	"sound/VO",										".wav",		excludePathPrefixAndExtension },
 #if	defined DOOM3_PURE_SPECIAL_CASES
 	// add any special-case files or paths for pure servers here
 	{ 0,	0,	"sound/ed/marscity/vo_intro_cutscene.ogg",		NULL,		excludeFullName },
@@ -3169,6 +3169,12 @@ idFile *idFileSystemLocal::OpenFileReadFlags( const char *relativePath, int sear
 
 	// edge case
 	if ( relativePath[0] == '\0' ) {
+		return NULL;
+	}
+
+	// make sure the doomkey file is only readable by game at initialization
+	// any other time the key should only be accessed in memory using the provided functions
+	if( common->IsInitialized() && ( idStr::Icmp( relativePath, CDKEY_FILE ) == 0 || idStr::Icmp( relativePath, XPKEY_FILE ) == 0 ) ) {
 		return NULL;
 	}
 

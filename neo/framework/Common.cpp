@@ -81,8 +81,6 @@ idCVar com_preciseTic( "com_preciseTic", "1", CVAR_BOOL|CVAR_SYSTEM, "run one ga
 idCVar com_asyncInput( "com_asyncInput", "0", CVAR_BOOL|CVAR_SYSTEM, "sample input from the async thread" );
 #define ASYNCSOUND_INFO "0: mix sound inline, 1: memory mapped async mix, 2: callback mixing, 3: write async mix"
 #if defined( __unix__ ) && !defined( MACOS_X )
-idCVar com_asyncSound( "com_asyncSound", "2", CVAR_INTEGER|CVAR_SYSTEM|CVAR_ROM, ASYNCSOUND_INFO );
-#elif defined( __unix__ )
 idCVar com_asyncSound( "com_asyncSound", "3", CVAR_INTEGER|CVAR_SYSTEM|CVAR_ROM, ASYNCSOUND_INFO );
 #else
 idCVar com_asyncSound( "com_asyncSound", "1", CVAR_INTEGER|CVAR_SYSTEM, ASYNCSOUND_INFO, 0, 1 );
@@ -1051,7 +1049,7 @@ void idCommonLocal::WriteConfiguration( void ) {
 	com_developer.SetBool( false );
 
 	WriteConfigToFile( CONFIG_FILE );
-	//session->WriteCDKey( );
+	session->WriteCDKey( );
 
 	// restore the developer cvar
 	com_developer.SetBool( developer );
@@ -2749,9 +2747,8 @@ void idCommonLocal::Init( int argc, char **argv ) {
 #endif
 
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO))
-	{
 		Sys_Error("Error while initializing SDL: %s", SDL_GetError());
-	}
+
 	Sys_InitThreads();
 
 	try {
@@ -2852,9 +2849,7 @@ void idCommonLocal::Init( int argc, char **argv ) {
 	async_timer = SDL_AddTimer(USERCMD_MSEC, AsyncTimer, NULL);
 
 	if (!async_timer)
-	{
 		Sys_Error("Error while starting the async timer: %s", SDL_GetError());
-	}
 }
 
 
@@ -2910,7 +2905,7 @@ void idCommonLocal::Shutdown( void ) {
 	idLib::ShutDown();
 
 	Sys_ShutdownThreads();
-	
+
 	SDL_Quit();
 }
 

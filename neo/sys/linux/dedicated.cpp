@@ -32,7 +32,6 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "sys/linux/local.h"
 
-
 /*
 ================
 Sys_GetVideoRam

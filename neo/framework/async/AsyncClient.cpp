@@ -1268,16 +1268,16 @@ void idAsyncClient::ProcessServersListMessage( const netadr_t from, const idBitM
 idAsyncClient::ProcessAuthKeyMessage
 ==================
 */
-/*
 void idAsyncClient::ProcessAuthKeyMessage( const netadr_t from, const idBitMsg &msg ) {
 	authKeyMsg_t		authMsg;
 	char				read_string[ MAX_STRING_CHARS ];
+	const char			*retkey;
 	authBadKeyStatus_t	authBadStatus;
 	int					key_index;
 	bool				valid[ 2 ];
 	idStr				auth_msg;
 
-	if ( clientState != CS_CONNECTING ) {
+	if ( clientState != CS_CONNECTING && !session->WaitingForGameAuth() ) {
 		common->Printf( "clientState != CS_CONNECTING, not waiting for game auth, authKey ignored\n" );
 		return;
 	}
@@ -1316,6 +1316,9 @@ void idAsyncClient::ProcessAuthKeyMessage( const netadr_t from, const idBitMsg &
 		}
 		common->DPrintf( "auth deny: %s\n", auth_msg.c_str() );
 
+		// keys to be cleared. applies to both net connect and game auth
+		session->ClearCDKey( valid );
+
 		// get rid of the bad key - at least that's gonna annoy people who stole a fake key
 		if ( clientState == CS_CONNECTING ) {
 			while ( 1 ) {
@@ -1343,9 +1346,10 @@ void idAsyncClient::ProcessAuthKeyMessage( const netadr_t from, const idBitMsg &
 		msg.ReadString( read_string, MAX_STRING_CHARS );
 		cvarSystem->SetCVarString( "com_guid", read_string );
 		common->Printf( "guid set to %s\n", read_string );
+		session->CDKeysAuthReply( true, NULL );
 	}
 }
-*/
+
 /*
 ==================
 idAsyncClient::ProcessVersionMessage
@@ -1539,10 +1543,10 @@ void idAsyncClient::ConnectionlessMessage( const netadr_t from, const idBitMsg &
 			return;
 		}
 
-		/*if ( idStr::Icmp( string, "authKey" ) == 0 ) {
+		if ( idStr::Icmp( string, "authKey" ) == 0 ) {
 			ProcessAuthKeyMessage( from, msg );
 			return;
-		}*/
+		}
 
 		if ( idStr::Icmp( string, "newVersion" ) == 0 ) {
 			ProcessVersionMessage( from, msg );
@@ -1697,6 +1701,12 @@ void idAsyncClient::SetupConnection( void ) {
 			// if we don't have a com_guid, this will request a direct reply from auth with it
 			msg.WriteByte( cvarSystem->GetCVarString( "com_guid" )[0] ? 1 : 0 );
 			// send the main key, and flag an extra byte to add XP key
+			msg.WriteString( session->GetCDKey( false ) );
+			const char *xpkey = session->GetCDKey( true );
+			msg.WriteByte( xpkey ? 1 : 0 );
+			if ( xpkey ) {
+				msg.WriteString( xpkey );
+			}
 			clientPort.SendPacket( idAsyncNetwork::GetMasterAddress(), msg.GetData(), msg.GetSize() );
 		}
 	} else {
@@ -1996,7 +2006,7 @@ void idAsyncClient::HandleDownloads( void ) {
 						idStr fullPath = f->GetFullPath();
 						fileSystem->CloseFile( f );
 						if ( session->MessageBox( MSG_YESNO, common->GetLanguageDict()->GetString ( "#str_04331" ), common->GetLanguageDict()->GetString ( "#str_04332" ), true, "yes" )[0] ) {
-							if ( updateMime == FILE_EXEC ) {
+							if ( updateMime == DL_FILE_EXEC ) {
 								sys->StartProcess( fullPath, true );
 							} else {
 								sys->OpenURL( va( "file://%s", fullPath.c_str() ), true );
@@ -2138,6 +2148,28 @@ void idAsyncClient::HandleDownloads( void ) {
 			cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "reconnect\n" );
 		}
 	}
+}
+
+/*
+===============
+idAsyncClient::SendAuthCheck
+===============
+*/
+bool idAsyncClient::SendAuthCheck( const char *cdkey, const char *xpkey ) {
+	idBitMsg	msg;
+	byte		msgBuf[MAX_MESSAGE_SIZE];
+
+	msg.Init( msgBuf, sizeof( msgBuf ) );
+	msg.WriteShort( CONNECTIONLESS_MESSAGE_ID );
+	msg.WriteString( "gameAuth" );
+	msg.WriteLong( ASYNC_PROTOCOL_VERSION );
+	msg.WriteByte( cdkey ? 1 : 0 );
+	msg.WriteString( cdkey ? cdkey : "" );
+	msg.WriteByte( xpkey ? 1 : 0 );
+	msg.WriteString( xpkey ? xpkey : "" );
+	InitPort();
+	clientPort.SendPacket( idAsyncNetwork::GetMasterAddress(), msg.GetData(), msg.GetSize() );
+	return true;
 }
 
 /*
