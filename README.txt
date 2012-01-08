@@ -9,20 +9,6 @@ LICENSE
 GENERAL NOTES
 =============
 
-
-Compiling on GNU/Linux x86:
----------------------------
-
-The build system uses CMake, so you just need to run cmake ./CMakeList.txt from the neo directory.
-
-Compiling on win32:
--------------------
-win32 is not tested
-
-Compiling on MacOS X:
----------------------------
-MAC OS X is not tested
-
 MayaImport:
 ---------------------------
 
