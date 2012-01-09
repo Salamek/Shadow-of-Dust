@@ -72,18 +72,28 @@ bool GLimp_Init(glimpParms_t parms) {
 			switch (i / 4) {
 			case 2 :
 				if (colorbits == 24)
+				{
 					colorbits = 16;
+				}
 				break;
 			case 1 :
 				if (depthbits == 24)
+				{
 					depthbits = 16;
+				}
 				else if (depthbits == 16)
+				{
 					depthbits = 8;
+				}
 			case 3 :
 				if (stencilbits == 24)
+				{
 					stencilbits = 16;
+				}
 				else if (stencilbits == 16)
+				{
 					stencilbits = 8;
+				}
 			}
 		}
 
@@ -94,30 +104,44 @@ bool GLimp_Init(glimpParms_t parms) {
 		if ((i % 4) == 3) {
 			// reduce colorbits
 			if (tcolorbits == 24)
+			{
 				tcolorbits = 16;
+			}
 		}
 
 		if ((i % 4) == 2) {
 			// reduce depthbits
 			if (tdepthbits == 24)
+			{
 				tdepthbits = 16;
+			}
 			else if (tdepthbits == 16)
+			{
 				tdepthbits = 8;
+			}
 		}
 
 		if ((i % 4) == 1) {
 			// reduce stencilbits
 			if (tstencilbits == 24)
+			{
 				tstencilbits = 16;
+			}
 			else if (tstencilbits == 16)
+			{
 				tstencilbits = 8;
+			}
 			else
+			{
 				tstencilbits = 0;
+			}
 		}
 
 		int channelcolorbits = 4;
 		if (tcolorbits == 24)
+		{
 			channelcolorbits = 8;
+		}
 
 		SDL_WM_SetCaption(GAME_NAME, GAME_NAME);
 
@@ -135,7 +159,9 @@ bool GLimp_Init(glimpParms_t parms) {
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, parms.multiSamples);
 
 		if (SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, r_swapInterval.GetInteger()) < 0)
+		{
 			common->Warning("SDL_GL_SWAP_CONTROL not supported");
+		}
 
 		surf = SDL_SetVideoMode(parms.width, parms.height, colorbits, flags);
 		if (!surf) {
@@ -171,7 +197,9 @@ bool GLimp_Init(glimpParms_t parms) {
 	PFNWGLGETEXTENSIONSSTRINGARBPROC wglGetExtensionsStringARB = (PFNWGLGETEXTENSIONSSTRINGARBPROC)GLimp_ExtensionPointer("wglGetExtensionsStringARB");
 
 	if (wglGetExtensionsStringARB)
+	{
 		glConfig.wgl_extensions_string = (const char *)wglGetExtensionsStringARB(wglGetCurrentDC());
+	}
 
 	// the editors still rely on these vars
 	SDL_SysWMinfo info;
@@ -224,7 +252,9 @@ GLimp_SetGamma
 */
 void GLimp_SetGamma(unsigned short red[256], unsigned short green[256], unsigned short blue[256]) {
 	if (SDL_SetGammaRamp(red, green, blue))
+	{
 		common->Warning("Couldn't set gamma ramp: %s", SDL_GetError());
+	}
 }
 
 /*
@@ -257,7 +287,9 @@ GLExtension_t GLimp_ExtensionPointer(const char *name) {
 	// special case for ATI_fragment_shader calls to map to ATI_text_fragment_shader routines
 	GLExtension_t res = GLimp_ExtensionPointer_ATI_fragment_shader(name);
 	if (res)
+	{
 		return res;
+	}
 #endif
 
 	return (GLExtension_t)SDL_GL_GetProcAddress(name);
@@ -272,11 +304,20 @@ int Sys_GetVideoRam() {
 	assert(SDL_WasInit(SDL_INIT_VIDEO));
 
 	if (sys_videoRam.GetInteger())
+	{
 		return sys_videoRam.GetInteger();
+	}
 
 	common->Printf("guessing video ram (use +set sys_videoRam to force)\n");
 
 	const SDL_VideoInfo *vi = SDL_GetVideoInfo();
 
-	return vi->video_mem;
+	if(vi->video_mem)
+	{
+	   return vi->video_mem;
+	}
+	else
+	{
+	   return 64;
+	}
 }
