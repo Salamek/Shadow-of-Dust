@@ -29,12 +29,12 @@ make -j 2
 ```
 ## Compiling on Windows
 
-For Win32:
+###For Win32:
 ```cmd
 cmake -G "Visual Studio 10" -DDOOM3LIBS=/path/to/doom3-libs/i686-w64-mingw32 /path/to/repository/neo
 ```
 
-For Win64:
+###For Win64:
 ```cmd
 cmake -G "Visual Studio 10 Win64" -DDOOM3LIBS=/path/to/doom3-libs/x86_64-w64-mingw32 /path/to/repository/neo
 ```
