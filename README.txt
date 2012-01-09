@@ -24,14 +24,12 @@ See COPYING.txt for the GNU GENERAL PUBLIC LICENSE
 ADDITIONAL TERMS:  The Shadow of Dust GPL Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU GPL which accompanied the Shadow of Dust Source Code.
 
 EXCLUDED CODE:  The code described below and contained in the Shadow of Dust GPL Source Code release is not part of the Program covered by the GPL and is expressly excluded from its terms.  You are solely responsible for obtaining from the copyright holder a license for such code and complying with the applicable license terms.
+
 PropTree 
 ---------------------------------------------------------------------------
 neo/tools/common/PropTree/*
 
 Copyright (C) 1998-2001 Scott Ramsay
-sramsay@gonavi.com
-http://www.gonavi.com
-
 This material is provided "as is", with absolutely no warranty expressed
 or implied. Any use is at your own risk.
  
@@ -40,9 +38,6 @@ without fee, provided the above notices are retained on all copies.
 Permission to modify the code and to distribute modified code is granted,
 provided the above notices are retained, and a notice that the code was
 modified is included with the above copyright notice.
- 
-If you use this code, drop me an email.  I'd like to know if you find the code
-useful.
 
 Base64 implementation
 ---------------------------------------------------------------------------
