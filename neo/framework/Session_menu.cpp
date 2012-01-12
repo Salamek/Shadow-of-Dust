@@ -888,7 +888,7 @@ void idSessionLocal::HandleMainMenuCommands( const char *menuCommand ) {
 			}
 			if ( !vcmd.Icmp( "eax" ) ) {
 				if ( cvarSystem->GetCVarBool( "s_useEAXReverb" ) ) {
-					int eax = soundSystem->IsEAXAvailable();
+					int eax = soundSystem->IsEFXAvailable();
 					switch ( eax ) {
 					case 1:
 						// when you restart

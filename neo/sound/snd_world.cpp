@@ -48,7 +48,39 @@ void idSoundWorldLocal::Init( idRenderWorld *renderWorld ) {
 	listenerQU.Zero();
 	listenerArea = 0;
 	listenerAreaName = "Undefined";
-	listenerEnvironmentID = -2;
+
+	if (idSoundSystemLocal::useEFXReverb) {
+		if (!soundSystemLocal.alIsAuxiliaryEffectSlot(listenerSlot)) {
+			alGetError();
+
+			soundSystemLocal.alGenAuxiliaryEffectSlots(1, &listenerSlot);
+			ALuint e = alGetError();
+			if (e != AL_NO_ERROR) {
+				common->Warning("idSoundWorldLocal::Init: alGenAuxiliaryEffectSlots failed: 0x%x", e);
+				listenerSlot = AL_EFFECTSLOT_NULL;
+			}
+		}
+
+		if (!soundSystemLocal.alIsFilter(listenerFilter)) {
+			alGetError();
+
+			soundSystemLocal.alGenFilters(1, &listenerFilter);
+			ALuint e = alGetError();
+			if (e != AL_NO_ERROR) {
+				common->Warning("idSoundWorldLocal::Init: alGenFilters failed: 0x%x", e);
+				listenerFilter = AL_FILTER_NULL;
+			} else {
+				soundSystemLocal.alFilteri(listenerFilter, AL_FILTER_TYPE, AL_FILTER_LOWPASS);
+				// original EAX occusion value was -1150
+				// default OCCLUSIONLFRATIO is 0.25
+
+				// pow(10.0, (-1150*0.25)/2000.0)
+				soundSystemLocal.alFilterf(listenerFilter, AL_LOWPASS_GAIN, 0.718208f);
+				// pow(10.0, -1150/2000.0)
+				soundSystemLocal.alFilterf(listenerFilter, AL_LOWPASS_GAINHF, 0.266073f);
+			}
+		}
+	}
 
 	gameMsec = 0;
 	game44kHz = 0;
@@ -107,6 +139,19 @@ void idSoundWorldLocal::Shutdown() {
 	}
 
 	AVIClose();
+
+	if (idSoundSystemLocal::useEFXReverb) {
+		if (soundSystemLocal.alIsAuxiliaryEffectSlot(listenerSlot)) {
+			soundSystemLocal.alAuxiliaryEffectSloti(listenerSlot, AL_EFFECTSLOT_EFFECT, AL_EFFECTSLOT_NULL);
+			soundSystemLocal.alDeleteAuxiliaryEffectSlots(1, &listenerSlot);
+			listenerSlot = AL_EFFECTSLOT_NULL;
+		}
+
+		if (soundSystemLocal.alIsFilter(listenerFilter)) {
+			soundSystemLocal.alDeleteFilters(1, &listenerFilter);
+			listenerFilter = AL_FILTER_NULL;
+		}
+	}
 
 	for ( i = 0; i < emitters.Num(); i++ ) {
 		if ( emitters[i] ) {
@@ -251,13 +296,13 @@ void idSoundWorldLocal::ProcessDemoCommand( idDemoFile *readDemo ) {
 		return;
 	}
 
-	soundDemoCommand_t	dc;
+	int dc;
 
-	if ( !readDemo->ReadInt( (int&)dc ) ) {
+	if ( !readDemo->ReadInt( dc ) ) {
 		return;
 	}
 
-	switch( dc ) {
+	switch( (soundDemoCommand_t)dc ) {
 	case SCMD_STATE:
 		// we need to protect this from the async thread
 		// other instances of calling idSoundWorldLocal::ReadFromSaveGame do this while the sound code is muted
@@ -450,39 +495,27 @@ void idSoundWorldLocal::MixLoop( int current44kHz, int numSpeakers, float *final
 	alListenerfv( AL_POSITION, listenerPosition );
 	alListenerfv( AL_ORIENTATION, listenerOrientation );
 
-#if ID_OPENAL_EAX
-	if ( soundSystemLocal.s_useEAXReverb.GetBool() ) {
-		if ( soundSystemLocal.efxloaded ) {
-			idSoundEffect *effect = NULL;
-			int EnvironmentID = -1;
-			idStr defaultStr( "default" );
-			idStr listenerAreaStr( listenerArea );
+	if (idSoundSystemLocal::useEFXReverb && soundSystemLocal.efxloaded) {
+		ALuint effect = 0;
+		idStr s(listenerArea);
 
-			soundSystemLocal.EFXDatabase.FindEffect( listenerAreaStr, &effect, &EnvironmentID );
-			if (!effect)
-				soundSystemLocal.EFXDatabase.FindEffect( listenerAreaName, &effect, &EnvironmentID );
-			if (!effect)
-				soundSystemLocal.EFXDatabase.FindEffect( defaultStr, &effect, &EnvironmentID );
+		bool found = soundSystemLocal.EFXDatabase.FindEffect(s, &effect);
+		if (!found) {
+			s = listenerAreaName;
+			found = soundSystemLocal.EFXDatabase.FindEffect(s, &effect);
+		}
+		if (!found) {
+			s = "default";
+			found = soundSystemLocal.EFXDatabase.FindEffect(s, &effect);
+		}
 
-			// only update if change in settings
-			if ( soundSystemLocal.s_muteEAXReverb.GetBool() || ( listenerEnvironmentID != EnvironmentID ) ) {
-				EAXREVERBPROPERTIES EnvironmentParameters;
-
-				// get area reverb setting from EAX Manager
-				if ( ( effect ) && ( effect->data) && ( memcpy( &EnvironmentParameters, effect->data, effect->datasize ) ) ) {
-					if ( soundSystemLocal.s_muteEAXReverb.GetBool() ) {
-						EnvironmentParameters.lRoom = -10000;
-						EnvironmentID = -2;
-					}
-					if ( soundSystemLocal.alEAXSet ) {
-						soundSystemLocal.alEAXSet( &EAXPROPERTYID_EAX_FXSlot0, EAXREVERB_ALLPARAMETERS, 0, &EnvironmentParameters, sizeof( EnvironmentParameters ) );
-					}
-				}
-				listenerEnvironmentID = EnvironmentID;
-			}
+		// only update if change in settings
+		if (found && listenerEffect != effect) {
+			EFXprintf("Switching to EFX '%s' (#%u)\n", s.c_str(), effect);
+			listenerEffect = effect;
+			soundSystemLocal.alAuxiliaryEffectSloti(listenerSlot, AL_EFFECTSLOT_EFFECT, effect);
 		}
 	}
-#endif
 
 	// debugging option to mute all but a single soundEmitter
 	if ( idSoundSystemLocal::s_singleEmitter.GetInteger() > 0 && idSoundSystemLocal::s_singleEmitter.GetInteger() < emitters.Num() ) {
@@ -1741,18 +1774,22 @@ void idSoundWorldLocal::AddChannelContribution( idSoundEmitterLocal *sound, idSo
 				alSourcef( chan->openalSource, AL_GAIN, ( volume ) < ( 1.0f ) ? ( volume ) : ( 1.0f ) );
 			}
 			alSourcei( chan->openalSource, AL_LOOPING, ( looping && chan->soundShader->entries[0]->hardwareBuffer ) ? AL_TRUE : AL_FALSE );
-// TODO is this correct? (was: "!defined(MACOS_X)")
-#if ID_OPENAL_EAX
+#if 1
 			alSourcef( chan->openalSource, AL_REFERENCE_DISTANCE, mind );
 			alSourcef( chan->openalSource, AL_MAX_DISTANCE, maxd );
 #endif
 			alSourcef( chan->openalSource, AL_PITCH, ( slowmoActive && !chan->disallowSlow ) ? ( slowmoSpeed ) : ( 1.0f ) );
-#if ID_OPENAL_EAX
-			long lOcclusion = ( enviroSuitActive ? -1150 : 0);
-			if ( soundSystemLocal.alEAXSet ) {
-				soundSystemLocal.alEAXSet( &EAXPROPERTYID_EAX_Source, EAXSOURCE_OCCLUSION, chan->openalSource, &lOcclusion, sizeof(lOcclusion) );
+
+			if (idSoundSystemLocal::useEFXReverb) {
+				if (enviroSuitActive) {
+					alSourcei(chan->openalSource, AL_DIRECT_FILTER, listenerFilter);
+					alSource3i(chan->openalSource, AL_AUXILIARY_SEND_FILTER, listenerSlot, 0, listenerFilter);
+				} else {
+					alSource3i(chan->openalSource, AL_AUXILIARY_SEND_FILTER, listenerSlot, 0, AL_FILTER_NULL);
+				}
 			}
-#endif
+
+
 			if ( ( !looping && chan->leadinSample->hardwareBuffer ) || ( looping && chan->soundShader->entries[0]->hardwareBuffer ) ) {
 				// handle uncompressed (non streaming) single shot and looping sounds
 				if ( chan->triggered ) {
@@ -1770,11 +1807,6 @@ void idSoundWorldLocal::AddChannelContribution( idSoundEmitterLocal *sound, idSo
 					chan->lastopenalStreamingBuffer[1] = chan->openalStreamingBuffer[1];
 					chan->lastopenalStreamingBuffer[2] = chan->openalStreamingBuffer[2];
 					alGenBuffers( 3, &chan->openalStreamingBuffer[0] );
-#if ID_OPENAL_EAX
-					if ( soundSystemLocal.alEAXSetBufferMode ) {
-						soundSystemLocal.alEAXSetBufferMode( 3, &chan->openalStreamingBuffer[0], alGetEnumValue( ID_ALCHAR "AL_STORAGE_ACCESSIBLE" ) );
-					}
-#endif
 					buffers[0] = chan->openalStreamingBuffer[0];
 					buffers[1] = chan->openalStreamingBuffer[1];
 					buffers[2] = chan->openalStreamingBuffer[2];
