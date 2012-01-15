@@ -1478,7 +1478,7 @@ bool idAsyncClient::ValidatePureServerChecksums( const netadr_t from, const idBi
 			cmdSystem->BufferCommandText( CMD_EXEC_NOW, "disconnect" );
 			return false;
 		default:
-			return true;
+			break;
 	}
 	return true;
 }
