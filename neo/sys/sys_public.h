@@ -115,6 +115,12 @@ struct sysMemoryStats_t {
 	int availExtendedVirtual;
 };
 
+
+typedef struct vidmode_s {
+	const char *description;
+	int         width, height;
+} vidmode_t;
+
 template<class type> class idList;		// for Sys_ListFiles
 
 
@@ -171,6 +177,9 @@ void			Sys_FPU_SetDAZ( bool enable );
 
 // returns amount of system ram
 int				Sys_GetSystemRam( void );
+
+// returns video modes
+int		Sys_GetVideoModes( void );
 
 // returns amount of video ram
 int				Sys_GetVideoRam( void );

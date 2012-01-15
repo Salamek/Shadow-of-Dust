@@ -70,16 +70,16 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 # precompiled libraries from the shadow-of-dust-libs repo
-if (DOOM3LIBS)
+if (SODLIBS)
 	if (CMAKE_CROSSCOMPILING)
-		set(CMAKE_FIND_ROOT_PATH ${DOOM3LIBS})
+		set(CMAKE_FIND_ROOT_PATH ${SODLIBS})
 	else()
-		set(ENV{CMAKE_PREFIX_PATH} ${DOOM3LIBS})
+		set(ENV{CMAKE_PREFIX_PATH} ${SODLIBS})
 	endif()
 
 	# these are too stupid, give them a hint
-	set(ENV{OPENALDIR} ${DOOM3LIBS})
-	set(ENV{SDLDIR} ${DOOM3LIBS})
+	set(ENV{OPENALDIR} ${SODLIBS})
+	set(ENV{SDLDIR} ${SODLIBS})
 endif()
 
 # libs
@@ -563,8 +563,8 @@ set(src_sys_dedicated	sys/linux/dedicated.cpp)
 
 if (APPLE)
 	set(OSX_RESOURCE_FILES
-			"${CMAKE_CURRENT_SOURCE_DIR}/sys/osx/Doom3.icns"
-			"${CMAKE_CURRENT_SOURCE_DIR}/sys/osx/Shadow of Dust.rsrc"
+			"${CMAKE_SOURCE_DIR}/sys/osx/Doom3.icns"
+			"${CMAKE_SOURCE_DIR}/sys/osx/Doom 3.rsrc"
 	)
 
 	set_source_files_properties(${OSX_RESOURCE_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
@@ -624,7 +624,7 @@ else()
 	)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_SOURCE_DIR})
 
 add_library(idlib STATIC ${src_idlib})
 if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang" AND NOT MINGW)
@@ -683,7 +683,7 @@ if (GAME)
 	add_library(game${gamesuffix} SHARED ${src_game})
 	set_target_properties(game${gamesuffix} PROPERTIES PREFIX "")
 	set_target_properties(game${gamesuffix} PROPERTIES COMPILE_DEFINITIONS "GAME_DLL;_D3XP;CTF")
-	set_target_properties(game${gamesuffix} PROPERTIES COMPILE_FLAGS "-I${CMAKE_CURRENT_SOURCE_DIR}/game")
+	set_target_properties(game${gamesuffix} PROPERTIES COMPILE_FLAGS "-I${CMAKE_SOURCE_DIR}/game")
 	set_target_properties(game${gamesuffix} PROPERTIES LINK_FLAGS "${ldflags}")
 	set_target_properties(game${gamesuffix} PROPERTIES INSTALL_NAME_DIR "@executable_path")
 	target_link_libraries(game${gamesuffix} idlib)

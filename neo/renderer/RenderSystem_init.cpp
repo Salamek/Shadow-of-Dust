@@ -550,12 +550,25 @@ the values from r_customWidth, amd r_customHeight
 will be used instead.
 ====================
 */
-typedef struct vidmode_s {
+/*
+typedef struct {
 	const char *description;
 	int         width, height;
 } vidmode_t;
+*/
 
-vidmode_t r_vidModes[] = {
+static int	s_numVidModes;
+
+
+
+
+static bool R_GetModeInfo( int *width, int *height, int mode ) {
+	vidmode_t	*vm;
+
+	Sys_GetVideoModes();
+
+
+	vidmode_t r_vidModes[] = {
 	{ "Mode  0: 320x240",		320,	240 },
 	{ "Mode  1: 400x300",		400,	300 },
 	{ "Mode  2: 512x384",		512,	384 },
@@ -565,11 +578,12 @@ vidmode_t r_vidModes[] = {
 	{ "Mode  6: 1152x864",		1152,	864 },
 	{ "Mode  7: 1280x1024",		1280,	1024 },
 	{ "Mode  8: 1600x1200",		1600,	1200 },
+	{ "Mode  9: 1920x1080",		1920,	1080 },
+	{ "Mode  10: 1920x1200",	1920,	1200 },
 };
-static int	s_numVidModes = ( sizeof( r_vidModes ) / sizeof( r_vidModes[0] ) );
 
-static bool R_GetModeInfo( int *width, int *height, int mode ) {
-	vidmode_t	*vm;
+
+	static int	s_numVidModes = ( sizeof( r_vidModes ) / sizeof( r_vidModes[0] ) );
 
 	if ( mode < -1 ) {
 		return false;
@@ -810,13 +824,13 @@ R_ListModes_f
 ==============
 */
 static void R_ListModes_f( const idCmdArgs &args ) {
-	int i;
+	/*int i;
 
 	common->Printf( "\n" );
 	for ( i = 0; i < s_numVidModes; i++ ) {
 		common->Printf( "%s\n", r_vidModes[i].description );
 	}
-	common->Printf( "\n" );
+	common->Printf( "\n" );*/
 }
 
 

@@ -39,11 +39,9 @@ If you have questions concerning this license or the applicable additional terms
 #define ENGINE_VERSION					"Shadow of Dust 1.3.2"	// printed in console
 
 // paths
-#define	CD_BASEDIR						"Doom"
 #define	BASE_GAMEDIR					"base"
 
 // filenames
-#define	CD_EXE							"doom.exe"
 #define CONFIG_FILE						"Config.cfg"
 
 // base folder where the source code lives
@@ -90,8 +88,6 @@ If you have questions concerning this license or the applicable additional terms
 
 // win32 info
 #define WIN32_CONSOLE_CLASS				"Shadow of Dust WinConsole"
-#define	WIN32_WINDOW_CLASS_NAME			"DOOM3"
-#define	WIN32_FAKE_WINDOW_CLASS_NAME	"DOOM3_WGL_FAKE"
 
 // Linux info
 #define LINUX_DEFAULT_PATH			"/usr/local/games/shadow-of-dust"

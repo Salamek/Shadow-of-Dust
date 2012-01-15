@@ -296,6 +296,42 @@ GLExtension_t GLimp_ExtensionPointer(const char *name) {
 }
 
 /*
+=================
+Sys_GetVideoModes
+=================
+*/
+int Sys_GetVideoModes()
+{
+	SDL_Rect** modes;
+	int i;
+
+	/* Get available fullscreen/hardware modes */
+	modes = SDL_ListModes(NULL, SDL_FULLSCREEN|SDL_HWSURFACE);
+
+	/* Check if there are any modes available */
+	if (modes == (SDL_Rect**)0)
+	{
+		common->Warning("No modes available!\n");
+	}
+
+	/* Check if our resolution is restricted */
+	if (modes == (SDL_Rect**)-1)
+	{
+		common->Printf("All resolutions available.\n");
+	}
+	else
+	{
+		for (i=0; modes[i]; ++i)
+		{
+		  common->Printf("  %d x %d\n", modes[i]->w, modes[i]->h);
+		}
+	}
+
+	return 0;
+}
+
+
+/*
 ================
 Sys_GetVideoRam
 ================
