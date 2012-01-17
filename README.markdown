@@ -36,12 +36,12 @@ git clone git@github.com:Salamek/shadow-of-dust-win-libs.git
 
 ###For Win32:
 ```cmd
-cmake -G "Visual Studio 10" -DDOOM3LIBS=./shadow-of-dust-win-libs/i686-w64-mingw32 ./neo
+cmake -G "Visual Studio 10" -DSODLIBS=./shadow-of-dust-win-libs/i686-w64-mingw32 ./neo
 ```
 
 ###For Win64:
 ```cmd
-cmake -G "Visual Studio 10 Win64" -DDOOM3LIBS=./shadow-of-dust-win-libs/doom3-libs/x86_64-w64-mingw32 ./neo
+cmake -G "Visual Studio 10 Win64" -DSODLIBS=./shadow-of-dust-win-libs/doom3-libs/x86_64-w64-mingw32 ./neo
 ```
 
 ## Compiling on Mac

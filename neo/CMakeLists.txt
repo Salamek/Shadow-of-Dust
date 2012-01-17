@@ -70,16 +70,16 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 # precompiled libraries from the shadow-of-dust-libs repo
-if (SODLIBS)
+if (DSODLIBS)
 	if (CMAKE_CROSSCOMPILING)
-		set(CMAKE_FIND_ROOT_PATH ${SODLIBS})
+		set(CMAKE_FIND_ROOT_PATH ${DSODLIBS})
 	else()
-		set(ENV{CMAKE_PREFIX_PATH} ${SODLIBS})
+		set(ENV{CMAKE_PREFIX_PATH} ${DSODLIBS})
 	endif()
 
 	# these are too stupid, give them a hint
-	set(ENV{OPENALDIR} ${SODLIBS})
-	set(ENV{SDLDIR} ${SODLIBS})
+	set(ENV{OPENALDIR} ${DSODLIBS})
+	set(ENV{SDLDIR} ${DSODLIBS})
 endif()
 
 # libs
