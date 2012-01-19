@@ -1745,6 +1745,7 @@ void R_SetColorMappings( void ) {
 	int		i, j;
 	float	g, b;
 	int		inf;
+	unsigned short gammaTable[256];
 
 	b = r_brightness.GetFloat();
 	g = r_gamma.GetFloat();
@@ -1767,10 +1768,10 @@ void R_SetColorMappings( void ) {
 			inf = 0xffff;
 		}
 
-		tr.gammaTable[i] = inf;
+		gammaTable[i] = inf;
 	}
 
-	GLimp_SetGamma( tr.gammaTable, tr.gammaTable, tr.gammaTable );
+	GLimp_SetGamma( gammaTable, gammaTable, gammaTable );
 }
 
 
@@ -2103,7 +2104,6 @@ void idRenderSystemLocal::Clear( void ) {
 	guiRecursionLevel = 0;
 	guiModel = NULL;
 	demoGuiModel = NULL;
-	memset( gammaTable, 0, sizeof( gammaTable ) );
 	takingScreenshot = false;
 }
 
@@ -2143,9 +2143,6 @@ void idRenderSystemLocal::Init( void ) {
 	globalImages->Init();
 
 	idCinematic::InitCinematic( );
-
-	// build brightness translation tables
-	R_SetColorMappings();
 
 	R_InitMaterials();
 
